@@ -44,7 +44,7 @@ public class DocxOutputImpl extends DefaultHandler {
     private boolean footnotesInitialised = false;
     private XWPFFootnote footnote;
     private String paragraphStyle = "Normal";
-    private int runNumber = -1;
+    private int runNumber = -1; // TODO: How to get rid of this?
     private int runCharactersNumber = -1;
 
     private BigInteger numbering;
@@ -180,6 +180,8 @@ public class DocxOutputImpl extends DefaultHandler {
         private XWPFHyperlinkRun createHyperlinkRun(@NotNull String uri) {
             // https://stackoverflow.com/questions/55275241/how-to-add-a-hyperlink-to-the-footer-of-a-xwpfdocument-using-apache-poi
             // https://github.com/apache/poi/pull/153
+            assert paragraph.size() > 0;
+
             // Create a relationship ID for this link.
             String rId = paragraph.getLast().getPart().getPackagePart().addExternalRelationship(
                     uri, XWPFRelation.HYPERLINK.getRelation()
@@ -197,6 +199,9 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         private void createImage(Attributes attributes) throws SAXException {
+            assert paragraph.size() > 0;
+            assert run != null;
+
             Map<String, String> attr = SAXHelpers.attributes(attributes);
 
             if (! attr.containsKey("fileref")) {
@@ -585,7 +590,7 @@ public class DocxOutputImpl extends DefaultHandler {
             // Hard to implement: you may have a <personname><firstname>, both must be represented as character
             // styles in DOCX, but a run may only have one such style... Hence, don't represent any, to be consistent.
             // Still, the text within the tag must still appear in the output!
-            System.err.println("Ignoring tag: " + qName + ". The content will not be lost, however.");
+            System.err.println(getLocationString() + "ignoring tag: " + qName + ". The content will not be lost, however.");
         } else if (SAXHelpers.isAuthorGroupTag(qName)) {
             if (! currentLevel.peekInfo()) {
                 throw new DocxException("unexpected author group outside an info container.");
@@ -613,7 +618,7 @@ public class DocxOutputImpl extends DefaultHandler {
             warnUnknownAttributes(attributes);
         }
 
-        else if (SAXHelpers.isTitleTag(qName)) {
+        else if (SAXHelpers.isTitleTag(qName) && ! currentLevel.peekFigure()) {
             paragraph = Stream.of(doc.createParagraph()).collect(Collectors.toCollection(ArrayDeque::new));
             runNumber = 0;
 
@@ -893,12 +898,33 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         // Media tags: for now, only images are implemented.
-        else if (SAXHelpers.isInlineMediaObjectTag(qName)) {
+        else if (SAXHelpers.isFigureTag(qName)) {
+            // TODO: What if the title is BEFORE the image? Should it be output AFTER?
+            // TODO: Or is a caption BEFORE always considered a title, and a caption if AFTER?
+            // TODO: What about the attributes left on the <mediaobject>?
+            currentLevel.push(Level.FIGURE);
+
+            if (paragraph.size() > 0) {
+                paragraph.removeLast();
+            }
+            paragraph.addLast(doc.createParagraph());
+            run = paragraph.getLast().createRun();
+            runNumber = 0;
+            runCharactersNumber = 0;
             warnUnknownAttributes(attributes);
-        } else if (SAXHelpers.isMediaObjectTag(qName)) {
+        } else if (SAXHelpers.isMediaObjectTag(qName) && currentLevel.peekFigure()) {
+            // Not many things to do here, everything is handled at the level of the figure.
+            paragraph.addLast(doc.createParagraph());
+            run = paragraph.getLast().createRun();
+            runNumber = 0;
+            runCharactersNumber = 0;
+            warnUnknownAttributes(attributes);
+        } else if (SAXHelpers.isInlineMediaObjectTag(qName)) {
+            warnUnknownAttributes(attributes);
+        } else if (SAXHelpers.isMediaObjectTag(qName) && ! currentLevel.peekFigure()) {
+            // TODO: Warn if using this case, because it is hard to distinguish from <figure>?
             paragraph.removeLast();
             paragraph.addLast(doc.createParagraph());
-            runNumber = 0;
 
             Map<String, String> attr = SAXHelpers.attributes(attributes);
             if (attr.containsKey("align")) {
@@ -907,7 +933,7 @@ public class DocxOutputImpl extends DefaultHandler {
             warnUnknownAttributes(attr, Stream.of("align"));
 
             run = paragraph.getLast().createRun();
-            runNumber += 1;
+            runNumber = 0;
             runCharactersNumber = 0;
         } else if (SAXHelpers.isImageDataTag(qName)) {
             h.createImage(attributes); // Already warns about unknown attributes.
@@ -915,7 +941,8 @@ public class DocxOutputImpl extends DefaultHandler {
             // Nothing to do, as everything is under <db:imagedata>.
             // TODO: check if there is only one imagedata per imageobject?
             warnUnknownAttributes(attributes);
-        } else if (SAXHelpers.isCaptionTag(qName)) { // TODO: <db:caption> may also appear in tables and other items; use currentLevel or is this implementation good enough?
+        } else if (SAXHelpers.isCaptionTag(qName) || (currentLevel.peekFigure() && SAXHelpers.isTitleTag(qName))) {
+            // TODO: <db:caption> may also appear in tables and other items; use currentLevel or is this implementation good enough?
             paragraph.removeLast();
             paragraph.addLast(doc.createParagraph());
             runNumber = 0;
@@ -1070,9 +1097,7 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         // Catch-all for the remaining tags.
-        else if (SAXHelpers.isBelowAuthor(qName)) {
-            // Ignore. See author/editor/authorgroup for discussion.
-        } else {
+        else {
             throw new DocxException("unknown tag " + qName + ". Stack head: " + currentLevel.peek());
         }
 
@@ -1116,7 +1141,7 @@ public class DocxOutputImpl extends DefaultHandler {
             currentLevel.pop(Level.SECTION, new DocxException("unexpected end of section"));
             currentSectionDepth -= 1;
             ensureNoTextAllowed();
-        } else if (SAXHelpers.isTitleTag(qName)) {
+        } else if (SAXHelpers.isTitleTag(qName) && ! currentLevel.peekFigure()) {
             ensureNoTextAllowed();
             restoreParagraphStyle();
         }
@@ -1136,7 +1161,7 @@ public class DocxOutputImpl extends DefaultHandler {
         else if (SAXHelpers.isParagraphTag(qName)) {
             paragraphNumber += 1;
 
-            if (currentLevel.peekTable()) {
+            if (currentLevel.peekTable() && paragraph.getLast().getRuns().size() == 0) {
                 paragraph.removeLast();
             }
             if (currentLevel.peekList()) {
@@ -1204,7 +1229,11 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // Media: nothing to do.
         else if (SAXHelpers.isInlineMediaObjectTag(qName) || SAXHelpers.isMediaObjectTag(qName)
-                || SAXHelpers.isImageDataTag(qName) || SAXHelpers.isImageObjectTag(qName)) {
+                || SAXHelpers.isImageDataTag(qName) || SAXHelpers.isImageObjectTag(qName)
+                || (SAXHelpers.isTitleTag(qName) && currentLevel.peekFigure())) {
+            ensureNoTextAllowed();
+        } else if (SAXHelpers.isFigureTag(qName)) {
+            currentLevel.pop(Level.FIGURE, new DocxException("unexpected end of figure"));
             ensureNoTextAllowed();
         } else if (SAXHelpers.isCaptionTag(qName)) {
             restoreParagraphStyle();

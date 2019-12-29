@@ -104,6 +104,7 @@ public class LevelStack {
         return peek() == Level.SECTION_INFO;
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean peekInfo() {
         return peekSectionInfo() || peekRootArticleInfo() || peekRootBookInfo();
     }
@@ -114,6 +115,10 @@ public class LevelStack {
 
     public boolean peekTable() {
         return peek() == Level.TABLE;
+    }
+
+    public boolean peekFigure() {
+        return peek() == Level.FIGURE;
     }
 
     public boolean peekList() {

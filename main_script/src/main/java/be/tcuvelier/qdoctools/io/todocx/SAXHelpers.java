@@ -154,6 +154,10 @@ public class SAXHelpers {
         return compare(qName, "programlisting");
     }
 
+    public static boolean isFigureTag(String qName) {
+        return compare(qName, "figure");
+    }
+
     public static boolean isInlineMediaObjectTag(String qName) {
         return compare(qName, "inlinemediaobject");
     }
