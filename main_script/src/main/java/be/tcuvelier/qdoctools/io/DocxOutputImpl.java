@@ -380,6 +380,12 @@ public class DocxOutputImpl extends DefaultHandler {
                 continue;
             }
 
+            // Special message for ubiquitous linking attributes.
+            if (key.equals("href")) {
+                System.err.println(getLocationString() + "ubiquitous linking attributes like " + key + " are not supported.");
+                continue;
+            }
+
             System.err.println(getLocationString() + "unknown attribute " + key + ".");
         }
     }
