@@ -244,11 +244,12 @@ public class DocxOutputImpl extends DefaultHandler {
                 throw new DocxException("unknown image extension " + filename + ".");
             }
 
+            // Actually add the image.
             try {
                 run.addPicture(new FileInputStream(filePath.toFile()), format,
                         filePath.getFileName().toString(), width, height);
             } catch (IOException | InvalidFormatException e) {
-                throw new DocxException("there was a problem reading the image", e);
+                throw new DocxException("there was a problem adding the image to the output file", e);
             }
         }
 
