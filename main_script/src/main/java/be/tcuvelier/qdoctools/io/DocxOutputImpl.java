@@ -564,6 +564,44 @@ public class DocxOutputImpl extends DefaultHandler {
             warnUnknownAttributes(attributes);
         }
 
+        else if (SAXHelpers.isAuthorTag(qName) || SAXHelpers.isEditorTag(qName)) {
+            // TODO: don't enter this if in an authorgroup.
+            if (! currentLevel.peekInfo()) {
+                throw new DocxException("unexpected author outside an info container.");
+            }
+
+            paragraph = Stream.of(doc.createParagraph()).collect(Collectors.toCollection(ArrayDeque::new));
+            runNumber = 0;
+
+            paragraph.getLast().setStyle(DocBookBlock.tagToStyleID(SAXHelpers.isAuthorTag(qName) ? "author" : "editor", attributes));
+
+            run = paragraph.getLast().createRun();
+            runCharactersNumber = 0;
+            warnUnknownAttributes(attributes);
+        } else if (SAXHelpers.isBelowAuthor(qName)) {
+            // Hard to implement: you may have a <personname><firstname>, both must be represented as character
+            // styles in DOCX, but a run may only have one such style... Hence, don't represent any, to be consistent.
+            // Still, the text within the tag must still appear in the output!
+            System.err.println("Ignoring tag: " + qName + ". The content will not be lost, however.");
+        } else if (SAXHelpers.isAuthorGroupTag(qName)) {
+            if (! currentLevel.peekInfo()) {
+                throw new DocxException("unexpected author group outside an info container.");
+            }
+
+            throw new DocxException("authorgroup not implemented.");
+
+            // TODO: First, encode "Authors:", then a list of authors or editors.
+            // TODO: What about other credits? Implement some kind of fuzzy matching in case of a typo (with a warning)! http://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/StringUtils.html#getLevenshteinDistance%28java.lang.CharSequence,%20java.lang.CharSequence%29?
+//            paragraph = Stream.of(doc.createParagraph()).collect(Collectors.toCollection(ArrayDeque::new));
+//            runNumber = 0;
+//
+//            paragraph.getLast().setStyle(DocBookBlock.tagToStyleID("authorgroup", attributes));
+//
+//            run = paragraph.getLast().createRun();
+//            runCharactersNumber = 0;
+//            warnUnknownAttributes(attributes);
+        }
+
         else if (SAXHelpers.isSectionTag(qName)) {
             currentLevel.push(Level.SECTION);
             currentSectionDepth += 1;
@@ -1029,7 +1067,9 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         // Catch-all for the remaining tags.
-        else {
+        else if (SAXHelpers.isBelowAuthor(qName)) {
+            // Ignore. See author/editor/authorgroup for discussion.
+        } else {
             throw new DocxException("unknown tag " + qName + ". Stack head: " + currentLevel.peek());
         }
 
@@ -1055,6 +1095,10 @@ public class DocxOutputImpl extends DefaultHandler {
                     new DocxException("unexpected end of info")
             );
             ensureNoTextAllowed();
+        } else if (SAXHelpers.isAuthorTag(qName) || SAXHelpers.isEditorTag(qName)) {
+            // TODO: don't enter this if in an authorgroup. Should rather end the list item.
+            ensureNoTextAllowed();
+            restoreParagraphStyle();
         } else if (SAXHelpers.isSectionTag(qName)) {
             currentLevel.pop(Level.SECTION, new DocxException("unexpected end of section"));
             currentSectionDepth -= 1;
@@ -1091,6 +1135,10 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // Inline tags: ensure the formatting is no more included in the next runs.
         else if (DocBookFormatting.isRunFormatting(qName)) {
+            if (currentFormatting.size() == 0) {
+                throw new DocxException("Assertion failed: end of formatting [" + qName + "], but no current formatting");
+            }
+
             currentFormatting.remove(currentFormatting.size() - 1);
             run = paragraph.getLast().createRun();
             runNumber += 1;
@@ -1217,7 +1265,9 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         // Catch-all.
-        else {
+        else if (SAXHelpers.isBelowAuthor(qName)) {
+            // Ignore. See author/editor/authorgroup for discussion.
+        } else {
             throw new DocxException("unknown tag " + qName + ". Stack head: " + currentLevel.peek() + ".");
         }
 

@@ -16,7 +16,7 @@ public enum DocBookFormatting {
     GUI_BUTTON, GUI_ICON, GUI_LABEL, GUI_MENU, GUI_MENU_ITEM, GUI_SUBMENU, HARDWARE, INTERFACE, INTERFACE_DEFINITION,
     KEY_CODE, KEY_SYMBOL, MOUSE_BUTTON, PACKAGE, PROPERTY, RETURN_VALUE, STRUCTURE_NAME, SYMBOL, TOKEN, TYPE,
     ABBREVIATION, ACRONYM, MARKUP, PRODUCT_NUMBER, POB, STREET, CITY, STATE, POST_CODE, COUNTRY, OTHER_ADDRESS,
-    PHONE, FAX, HONORIFIC, FIRST_NAME, GIVEN_NAME, SURNAME, LINEAGE, OTHER_NAME,
+    PHONE, FAX, // HONORIFIC, FIRST_NAME, GIVEN_NAME, SURNAME, LINEAGE, OTHER_NAME,
     // Bold.
     COMMAND, SHORTCUT,
     // Italic.
@@ -91,13 +91,13 @@ public enum DocBookFormatting {
             new Triple<>(COUNTRY, "country", "Country"),
             new Triple<>(OTHER_ADDRESS, "otheraddr", "OtherAddress"),
             new Triple<>(PHONE, "phone", "Phone"),
-            new Triple<>(FAX, "fax", "Fax"),
-            new Triple<>(HONORIFIC, "honorific", "Honorific"),
-            new Triple<>(FIRST_NAME, "firstname", "FirstName"),
-            new Triple<>(GIVEN_NAME, "givenname", "GivenName"),
-            new Triple<>(SURNAME, "surname", "Surname"),
-            new Triple<>(LINEAGE, "lineage", "Lineage"),
-            new Triple<>(OTHER_NAME, "othername", "OtherName")
+            new Triple<>(FAX, "fax", "Fax")//,
+//            new Triple<>(HONORIFIC, "honorific", "Honorific"),
+//            new Triple<>(FIRST_NAME, "firstname", "FirstName"),
+//            new Triple<>(GIVEN_NAME, "givenname", "GivenName"),
+//            new Triple<>(SURNAME, "surname", "Surname"),
+//            new Triple<>(LINEAGE, "lineage", "Lineage"),
+//            new Triple<>(OTHER_NAME, "othername", "OtherName")
             // TODO: What to do with citerefentry, citetitle, quote, lineannotation, trademark, optional, citation, citebiblioid, comment, remark, productname?
     );
     public static final List<Triple<DocBookFormatting, String, String>> formattingBold = List.of(

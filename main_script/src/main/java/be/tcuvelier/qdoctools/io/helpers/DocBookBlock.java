@@ -11,6 +11,7 @@ import java.util.function.Predicate;
 public enum DocBookBlock {
     PROGRAM_LISTING, SCREEN, SYNOPSIS, LITERAL_LAYOUT,
     ARTICLE, BOOK, PART, CHAPTER,
+    AUTHOR, EDITOR, AUTHORGROUP,
     // https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/admon.xsl#L133
     CAUTION, IMPORTANT, NOTE, TIP, WARNING;
 
@@ -26,6 +27,12 @@ public enum DocBookBlock {
             new Triple<>(BOOK, "book", "Titlebook"),
             new Triple<>(PART, "part", "Titlepart"),
             new Triple<>(CHAPTER, "chapter", "Titlechapter")
+    );
+
+    private static final List<Triple<DocBookBlock, String, String>> metadata = List.of(
+            new Triple<>(AUTHOR, "author", "Author"),
+            new Triple<>(EDITOR, "editor", "Editor"),
+            new Triple<>(AUTHORGROUP, "authorgroup", "AuthorGroup")
     );
 
     private static final List<Triple<DocBookBlock, String, String>> admonitions = List.of(
@@ -53,6 +60,7 @@ public enum DocBookBlock {
         // Fill them.
         List<Triple<DocBookBlock, String, String>> whole = new ArrayList<>(preformatted);
         whole.addAll(roots);
+        whole.addAll(metadata);
         whole.addAll(admonitions);
 
         for (Triple<DocBookBlock, String, String> t: whole) {

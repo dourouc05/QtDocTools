@@ -34,6 +34,47 @@ public class SAXHelpers {
         return compare(qName, "info");
     }
 
+    public static boolean isAuthorTag(String qName) {
+        return compare(qName, "author");
+    }
+
+    public static boolean isEditorTag(String qName) {
+        return compare(qName, "editor");
+    }
+
+    public static boolean isAuthorGroupTag(String qName) {
+        return compare(qName, "authorgroup");
+    }
+
+    public static boolean isPersonNameTag(String qName) {
+        return compare(qName, "personname");
+    }
+
+    public static boolean isFirstNameTag(String qName) {
+        return compare(qName, "firstname");
+    }
+
+    public static boolean isHonorificTag(String qName) {
+        return compare(qName, "honorific");
+    }
+
+    public static boolean isLineageTag(String qName) {
+        return compare(qName, "lineage");
+    }
+
+    public static boolean isOtherNameTag(String qName) {
+        return compare(qName, "othername");
+    }
+
+    public static boolean isSurNameTag(String qName) {
+        return compare(qName, "surname");
+    }
+
+    public static boolean isBelowAuthor(String qName) {
+        return isPersonNameTag(qName) || isFirstNameTag(qName) || isHonorificTag(qName) || isLineageTag(qName)
+                || isOtherNameTag(qName) || isSurNameTag(qName);
+    }
+
     public static boolean isAbstractTag(String qName) {
         return compare(qName, "abstract");
     }

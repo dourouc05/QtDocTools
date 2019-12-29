@@ -104,6 +104,10 @@ public class LevelStack {
         return peek() == Level.SECTION_INFO;
     }
 
+    public boolean peekInfo() {
+        return peekSectionInfo() || peekRootArticleInfo() || peekRootBookInfo();
+    }
+
     public boolean peekBlockPreformatted() {
         return peek() == Level.BLOCK_PREFORMATTED;
     }
