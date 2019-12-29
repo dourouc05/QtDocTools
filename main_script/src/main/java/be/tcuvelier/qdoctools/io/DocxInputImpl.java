@@ -190,6 +190,10 @@ public class DocxInputImpl {
                 case "Titlechapter":
                     visitChapterTitle(p);
                     return;
+                case "Author":
+                case "Editor":
+                    visitAuthor(p);
+                    return;
                 case "ProgramListing":
                 case "Screen":
                 case "Synopsis":
@@ -242,13 +246,17 @@ public class DocxInputImpl {
             return abstractParagraphs;
         }
 
+        // Not all styles are allowed between a title and an abstract.
+        Set<String> allowedBetween = Set.of("Author", "Editor", "AuthorGroup");
+
         // Abstract is made of a sequence of paragraphs with the Abstract style, which implies that there is
         // no paragraph of another style in between.
         for (int i = pos + 1; i < paragraphs.size(); ++i) {
             String style = paragraphs.get(i).getStyleID();
             if (style != null && style.equals("Abstract")) {
                 abstractParagraphs.add(paragraphs.get(i));
-            } else {
+            }
+            if (! allowedBetween.contains(style)) {
                 break;
             }
         }
@@ -295,6 +303,12 @@ public class DocxInputImpl {
 
         dbStream.openBlockTag("chapter");
         visitTitleAndAbstract(p);
+    }
+
+    private void visitAuthor(@NotNull XWPFParagraph p) throws XMLStreamException {
+        dbStream.openParagraphTag("author");
+        visitRuns(p.getRuns());
+        dbStream.closeParagraphTag(); // </db:author>
     }
 
     private void visitPartTitle(@NotNull XWPFParagraph p) throws XMLStreamException {
