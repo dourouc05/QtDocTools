@@ -45,6 +45,8 @@ public class DocxInputImpl {
 
     private Set<Integer> captionPositions = new HashSet<>(); // Store position of paragraphs that have been recognised
     // as captions: find those that have not been, so the user can be warned when one of them is visited.
+    private Set<Integer> backwardCaptionPositions = new HashSet<>(); // Store positions of captions that have been seen
+    // *before* an actual image. They are interpreted as figures.
     private Set<Integer> abstractPositions = new HashSet<>();
 
     @SuppressWarnings("WeakerAccess")
@@ -155,8 +157,10 @@ public class DocxInputImpl {
             }
 
             if (p.getStyleID().equals("Caption")) {
-                if (! captionPositions.contains(doc.getPosOfParagraph(p))) {
-                    throw new XMLStreamException("Caption not expected.");
+                int pos = doc.getPosOfParagraph(p);
+                if (! captionPositions.contains(pos)) {
+                    backwardCaptionPositions.add(pos);
+//                    throw new XMLStreamException("Caption not expected.");
                 }
                 return;
             }
@@ -370,9 +374,20 @@ public class DocxInputImpl {
                 throw new XMLStreamException("Not yet implemented: multiple images per run."); // TODO: Several pictures per run? Seems unlikely.
             }
 
-            // This paragraph only contains an image, no need for a <db:para>, but rather a <db:mediaobject>.
+            // This paragraph only contains an image, no need for a <db:para>, but rather a <db:mediaobject> or
+            // a <db:figure>.
             // TODO: to be adapted if there are multiple pictures per run!
             isDisplayedFigure = p.getRuns().size() == 1;
+            boolean hasCaptionBefore = backwardCaptionPositions.contains(doc.getPosOfParagraph(p) - 1);
+
+            if (hasCaptionBefore) {
+                dbStream.openBlockTag("figure");
+                XWPFParagraph captionP = doc.getParagraphArray(doc.getPosOfParagraph(p) - 1);
+
+                dbStream.openParagraphTag("title");
+                visitRuns(captionP.getRuns());
+                dbStream.closeParagraphTag(); // </db:title>
+            }
 
             dbStream.openBlockTag("mediaobject");
             visitRuns(p.getRuns());
@@ -383,12 +398,16 @@ public class DocxInputImpl {
 
                 dbStream.openParagraphTag("caption");
                 visitRuns(doc.getParagraphs().get(pos + 1).getRuns());
-                dbStream.closeParagraphTag();
+                dbStream.closeParagraphTag(); // </db:caption>
 
                 captionPositions.add(pos + 1);
             }
 
             dbStream.closeBlockTag(); // </db:mediaobject>
+
+            if (hasCaptionBefore) {
+                dbStream.closeBlockTag(); // </db:figure>
+            }
 
             isDisplayedFigure = false;
         } else {

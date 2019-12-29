@@ -546,7 +546,7 @@ public class DocxOutputImpl extends DefaultHandler {
             paragraph.addLast(doc.createParagraph());
         }
 
-        paragraph.getLast().setStyle("Default");
+        paragraph.getLast().setStyle("Normal");
         for (int i = 0; i < paragraph.getLast().getRuns().size(); ++i) {
             paragraph.getLast().removeRun(0);
         }
