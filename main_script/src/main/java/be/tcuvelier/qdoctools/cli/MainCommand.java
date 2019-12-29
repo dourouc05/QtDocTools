@@ -13,6 +13,9 @@ import java.util.concurrent.Callable;
         MergeCommand.class
 }, mixinStandardHelpOptions = true, version = "QDocTools 0.1.0")
 public class MainCommand implements Callable<Void> {
+    // TODO: move all of this into another class, it does not belong to the CLI.
+    // TODO: move these files into the JAR, when building one. https://stackoverflow.com/questions/20389255/reading-a-resource-file-from-within-jar
+
     // Schemas.
     public final static String docBookRNGPath = "../import/from_qdoc_v2/schema/docbook52qdt/custom.rnc";
     public final static String dvpMLXSDPath = "../export/to_dvpml/schema/article.xsd";

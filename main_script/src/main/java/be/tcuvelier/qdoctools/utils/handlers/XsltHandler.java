@@ -17,6 +17,7 @@ public class XsltHandler {
     private final XsltExecutable saxonExecutable;
 
     public XsltHandler(String sheet) throws SaxonApiException {
+        // TODO: when deploying as JAR, do something like https://stackoverflow.com/questions/20389255/reading-a-resource-file-from-within-jar to get a Reader object for the style sheet.
         saxonProcessor = new Processor(false);
         saxonCompiler = saxonProcessor.newXsltCompiler();
         saxonExecutable = saxonCompiler.compile(new StreamSource(new File(sheet)));
