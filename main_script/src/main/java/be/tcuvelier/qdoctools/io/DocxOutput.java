@@ -41,7 +41,9 @@ public class DocxOutput {
 //        String test = "synthetic/admonitions";
 //        String test = "synthetic/admonitions_many";
 //        String test = "synthetic/spacing";
-        String test = "synthetic/footnote";
+//        String test = "synthetic/footnote";
+//        String test = "synthetic/author";
+        String test = "synthetic/editor";
 
 //        String test = "CPLEX";
 

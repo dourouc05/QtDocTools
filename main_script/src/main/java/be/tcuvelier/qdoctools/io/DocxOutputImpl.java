@@ -78,11 +78,13 @@ public class DocxOutputImpl extends DefaultHandler {
             nParagraphs -= 1;
         }
 
+        // Remove the footnotes of the template, and directly create the ones Word requires.
         int nFootnotes = doc.getFootnotes().size();
         while (nFootnotes > 0) {
             doc.removeFootnote(0);
             nFootnotes -= 1;
         }
+        initialiseFootnotes();
 
         // Reset the properties.
         POIXMLProperties props = doc.getProperties();
@@ -475,7 +477,8 @@ public class DocxOutputImpl extends DefaultHandler {
             footnotesInitialised = true;
             doc.createFootnotes();
 
-            // Create the first two "dummy" footnotes.
+            // Create the first two "dummy" footnotes. Without them, the document cannot be considered valid by Word
+            // (even though LibreOffice has no problem with it).
 
             // <w:footnote w:type="separator" w:id="-1"><w:p><w:r><w:separator/></w:r></w:p></w:footnote>
             footnote = doc.createFootnote();
@@ -756,8 +759,6 @@ public class DocxOutputImpl extends DefaultHandler {
             if (paragraph.size() < 1) {
                 throw new DocxException("unexpected end of footnote");
             }
-
-            initialiseFootnotes();
 
             // Loosely based on https://stackoverflow.com/questions/39939057/adding-footnotes-to-a-word-document, then modernised.
             footnote = doc.createFootnote();
@@ -1099,6 +1100,16 @@ public class DocxOutputImpl extends DefaultHandler {
             // TODO: don't enter this if in an authorgroup. Should rather end the list item.
             ensureNoTextAllowed();
             restoreParagraphStyle();
+        } else if (SAXHelpers.isBelowAuthor(qName)) {
+            // Create a run with just a space in it.
+            run = paragraph.getLast().createRun();
+            run.setText(" ");
+
+            // A new run for the rest of the text.
+            run = paragraph.getLast().createRun();
+            runNumber += 2;
+            runCharactersNumber = 0;
+            setRunFormatting();
         } else if (SAXHelpers.isSectionTag(qName)) {
             currentLevel.pop(Level.SECTION, new DocxException("unexpected end of section"));
             currentSectionDepth -= 1;
@@ -1265,9 +1276,7 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         // Catch-all.
-        else if (SAXHelpers.isBelowAuthor(qName)) {
-            // Ignore. See author/editor/authorgroup for discussion.
-        } else {
+        else {
             throw new DocxException("unknown tag " + qName + ". Stack head: " + currentLevel.peek() + ".");
         }
 
