@@ -551,7 +551,7 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         run = paragraph.getLast().createRun();
-        runNumber = 0;
+        runNumber += 1;
         runCharactersNumber = 0;
     }
 
@@ -898,11 +898,7 @@ public class DocxOutputImpl extends DefaultHandler {
 
             Map<String, String> attr = SAXHelpers.attributes(attributes);
 
-            if (paragraph.size() > 0) {
-                paragraph.removeLast();
-            }
-            paragraph.addLast(doc.createParagraph());
-            runNumber = 0;
+            createNewParagraph();
             paragraph.getLast().setStyle(DocBookBlock.tagToStyleID(qName, attributes));
 
             // For program listings, add the language as a first paragraph.
@@ -930,11 +926,7 @@ public class DocxOutputImpl extends DefaultHandler {
                 run.setBold(true);
                 run.setText(text);
 
-                paragraph.removeLast();
-                paragraph.addLast(doc.createParagraph());
-                run = paragraph.getLast().createRun();
-                runNumber = 0;
-                runCharactersNumber = 0;
+                createNewParagraph();
                 paragraph.getLast().setStyle(DocBookBlock.tagToStyleID(qName, attributes));
 
                 warnUnknownAttributes(attr, Stream.of("language", "continuation", "linenumbering", "startinglinenumber"));
@@ -959,29 +951,19 @@ public class DocxOutputImpl extends DefaultHandler {
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isMediaObjectTag(qName) && currentLevel.peekFigure()) {
             // Not many things to do here, everything is handled at the level of the figure.
-            if (paragraph.size() == 0 || paragraph.getLast().getRuns().size() > 0) {
-                paragraph.addLast(doc.createParagraph());
-            }
-            run = paragraph.getLast().createRun();
-            runNumber = 0;
-            runCharactersNumber = 0;
+            createNewParagraph();
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isInlineMediaObjectTag(qName)) {
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isMediaObjectTag(qName) && ! currentLevel.peekFigure()) {
             // TODO: Warn if using this case, because it is hard to distinguish from <figure>?
-            paragraph.removeLast();
-            paragraph.addLast(doc.createParagraph());
+            createNewParagraph();
 
             Map<String, String> attr = SAXHelpers.attributes(attributes);
             if (attr.containsKey("align")) {
                 paragraph.getLast().setAlignment(DocBookAlignment.docbookAttributeToParagraphAlignment(attr.get("align").toLowerCase()));
             }
             warnUnknownAttributes(attr, Stream.of("align"));
-
-            run = paragraph.getLast().createRun();
-            runNumber = 0;
-            runCharactersNumber = 0;
         } else if (SAXHelpers.isImageDataTag(qName)) {
             h.createImage(attributes); // Already warns about unknown attributes.
         } else if (SAXHelpers.isImageObjectTag(qName)) {
@@ -1081,18 +1063,12 @@ public class DocxOutputImpl extends DefaultHandler {
             }
 
             // Print the header for this segment, then prepare for the value.
-            paragraph.removeLast();
-            paragraph.addLast(doc.createParagraph());
+            createNewParagraph();
             paragraph.getLast().setStyle("DefinitionListTitle");
-            run = paragraph.getLast().createRun();
             run.setText(segmentedListHeaders.get(segmentNumber));
 
-            paragraph.removeLast();
-            paragraph.addLast(doc.createParagraph());
-            runNumber = 0;
+            createNewParagraph();
             paragraph.getLast().setStyle("DefinitionListItem");
-            run = paragraph.getLast().createRun();
-            runCharactersNumber = 0;
         }
 
         // Variable lists: quite similar to segmented lists, but a completely different content model.
@@ -1115,12 +1091,9 @@ public class DocxOutputImpl extends DefaultHandler {
                 throw new DocxException("unexpected segmented list content");
             }
 
-            paragraph.removeLast();
-            paragraph.addLast(doc.createParagraph());
-            runNumber = 0;
+            createNewParagraph();
             paragraph.getLast().setStyle("VariableListTitle");
             run = paragraph.getLast().createRun();
-            runNumber += 1;
             runCharactersNumber = 0;
             // Then directly inline content.
 
@@ -1167,7 +1140,8 @@ public class DocxOutputImpl extends DefaultHandler {
             ensureNoTextAllowed();
             restoreParagraphStyle();
         } else if (SAXHelpers.isBelowAuthor(qName)) {
-            // Create a run with just a space in it.
+            // Create a run with just a space in it, as the tag before probably does not end with a space.
+            // First name and family name should be separated with one space, for instance.
             run = paragraph.getLast().createRun();
             run.setText(" ");
 
