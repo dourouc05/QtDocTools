@@ -260,6 +260,7 @@ public class DocxInputImpl {
             String style = paragraphs.get(i).getStyleID();
             if (style != null && style.equals("Abstract")) {
                 abstractParagraphs.add(paragraphs.get(i));
+                continue;
             }
             if (! allowedBetween.contains(style)) {
                 break;
