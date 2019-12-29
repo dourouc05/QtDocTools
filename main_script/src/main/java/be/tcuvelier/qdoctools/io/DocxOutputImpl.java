@@ -1332,7 +1332,38 @@ public class DocxOutputImpl extends DefaultHandler {
         }
     }
 
-    public void processingInstruction (String target, String data) {
+    @SuppressWarnings("RedundantIfStatement")
+    private boolean isIgnorablePI(String target, String data) {
+        if (! target.equals("xml-model")) {
+            return false;
+        }
+
+        if (! data.startsWith("href=\"http://docbook.org/xml/")) {
+            return false;
+        }
+
+        if (! data.endsWith("/rng/docbook.rng\" schematypens=\"http://relaxng.org/ns/structure/1.0\"")
+                && ! data.endsWith("/sch/docbook.sch\" type=\"application/xml\" schematypens=\"http://purl.oclc.org/dsdl/schematron\"")) {
+            return false;
+        }
+
+        // The part that has not been tested is just the version of DocBook.
+        return true;
+    }
+
+    public void processingInstruction(String target, String data) {
+        // Don't warn for all processing instructions. For instance, Oxygen always inserts this at the beginning
+        // of a DocBook file (depending on the version of DocBook):
+        //      <?xml-model href="http://docbook.org/xml/5.1/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+        //      <?xml-model href="http://docbook.org/xml/5.1/sch/docbook.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+        // This warning is directed towards processing instructions in the middle of the text that are supposed
+        // to be used when generating HTML or PDF.
+        // The ignored processing instructions are still not round-tripped, but their loss is deemed not so important.
+        if (isIgnorablePI(target, data)) {
+            return;
+        }
+
         System.err.println("Processing instructions are not taken into account and will not be round-tripped.");
+        System.err.println("<?" + target + " " + data + "?>");
     }
 }

@@ -67,6 +67,7 @@ public class FileHelpers {
     }
 
     public static String changeExtension(String file, String extension) {
+        assert extension.startsWith(".");
         return file.replaceFirst("[.][^.]+$", "") + extension;
     }
 }
