@@ -6,14 +6,15 @@
 
     <groupId>be.tcuvelier.qdoctools</groupId>
     <artifactId>qdoctools</artifactId>
-    <version>0.1</version>
+    <version>0.1.0</version>
     <build>
         <plugins>
             <plugin>
+                <!-- Development build -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <!-- Java 10 is required -->
+                    <!-- Java 11 is required -->
                     <source>11</source>
                     <target>11</target>
                 </configuration>

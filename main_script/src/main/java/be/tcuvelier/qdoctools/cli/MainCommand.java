@@ -33,11 +33,6 @@ public class MainCommand implements Callable<Void> {
     // Merge operations.
     public final static String xsltMergeAfterProofreading = "../proofread/merge_after_proofread/xslt/after_proofreading.xsl";
 
-    // Being deprecated.
-    public final static String xsltDocBookToFO = "../proofread/proofread_todocx/xslt/main.xsl"; // TODO: Avoid copying things within this repo to use
-    // https://mvnrepository.com/artifact/org.docbook/docbook-xslt2 instead?
-    public final static String xfcDocBookToFO = "../proofread/proofread_todocx/xslt/styles.xfc"; // Partially based on http://www.xmlmind.com/foconverter/samples/styles.xfc
-
 
     @Override
     public Void call() {

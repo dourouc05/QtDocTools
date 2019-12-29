@@ -23,7 +23,7 @@ import picocli.CommandLine;
 public class Main {
     public static void main(String[] args) {
 //        String[] argv = {"qdoc", "-i", "C:\\Qt\\5.13.0\\Src", "-s", "C:\\Qt\\5.13.0\\mingw73_64", "-o", "C:\\Qt\\Doc513", "--qt-version", "5.13"};
-        String[] argv = {"qdoc", "-i", "C:\\Qt\\5.13.0\\Src", "-s", "C:\\Qt\\5.13.0\\mingw73_64", "-o", "C:\\Qt\\Doc513", "--qt-version", "5.13", "--no-convert-webxml"};
+//        String[] argv = {"qdoc", "-i", "C:\\Qt\\5.13.0\\Src", "-s", "C:\\Qt\\5.13.0\\mingw73_64", "-o", "C:\\Qt\\Doc513", "--qt-version", "5.13", "--no-convert-webxml"};
 
 //        String doc = "CPLEX";
 //        String doc = "07-0-qdoc-commands-includingexternalcode";
@@ -38,6 +38,11 @@ public class Main {
 //        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".db", "--disable-sanity-checks"};
 //        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\" + doc + ".docx"};
 
+//        submain(argv);
+        submain(args);
+    }
+
+    private static void submain(String[] argv) {
         CommandLine cl = new CommandLine(new MainCommand());
         cl.registerConverter(QtVersion.class, QtVersion::new);
         cl.parseWithHandler(new CommandLine.RunAll(), argv);
