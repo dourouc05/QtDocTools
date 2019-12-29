@@ -185,10 +185,11 @@ public class DocxOutputImpl extends DefaultHandler {
         private XWPFHyperlinkRun createHyperlinkRun(@NotNull String uri) {
             // https://stackoverflow.com/questions/55275241/how-to-add-a-hyperlink-to-the-footer-of-a-xwpfdocument-using-apache-poi
             // https://github.com/apache/poi/pull/153
+            // https://bz.apache.org/bugzilla/show_bug.cgi?id=64038
             assert paragraph.size() > 0;
 
             // Create a relationship ID for this link.
-            String rId = paragraph.getLast().getPart().getPackagePart().addExternalRelationship(
+            String rId = paragraph.getLast().getDocument().getPackagePart().addExternalRelationship(
                     uri, XWPFRelation.HYPERLINK.getRelation()
             ).getId();
 
