@@ -1,5 +1,6 @@
 package be.tcuvelier.qdoctools.cli;
 
+import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
 import java.util.concurrent.Callable;
@@ -10,7 +11,7 @@ import java.util.concurrent.Callable;
         ProofreadCommand.class,
         QdocCommand.class,
         MergeCommand.class
-})
+}, mixinStandardHelpOptions = true, version = "QDocTools 0.1.0")
 public class MainCommand implements Callable<Void> {
     // Schemas.
     public final static String docBookRNGPath = "../import/from_qdoc_v2/schema/docbook52qdt/custom.rnc";
@@ -32,10 +33,12 @@ public class MainCommand implements Callable<Void> {
     // Merge operations.
     public final static String xsltMergeAfterProofreading = "../proofread/merge_after_proofread/xslt/after_proofreading.xsl";
 
+    @CommandLine.Spec
+    CommandLine.Model.CommandSpec spec;
 
     @Override
     public Void call() {
-        // Nothing to do, everything is implemented in the subcommands.
-        return null;
+        // Using a subcommand is required, this command is just an umbrella and a place to store global things.
+        throw new CommandLine.ParameterException(spec.commandLine(), "Missing required subcommand\n");
     }
 }

@@ -45,6 +45,6 @@ public class Main {
     private static void submain(String[] argv) {
         CommandLine cl = new CommandLine(new MainCommand());
         cl.registerConverter(QtVersion.class, QtVersion::new);
-        cl.execute(argv);
+        System.exit(cl.execute(argv));
     }
 }
