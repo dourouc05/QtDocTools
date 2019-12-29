@@ -38,14 +38,19 @@ public class DocxOutputImpl extends DefaultHandler {
     XWPFDocument doc;
     private POIHelpers h = new POIHelpers();
 
-    private Deque<XWPFParagraph> paragraph;
+    // Paragraph being filled.
+    private Deque<XWPFParagraph> paragraph; // Paragraph being written while another paragraph is not finished yet,
+    // e.g. within footnotes.
+    private XWPFRun run; // Belongs to the last paragraph in the queue.
+
+    // Current state.
     private int paragraphNumber = -1;
-    private XWPFRun run;
+    private int runNumber = -1; // TODO: How to get rid of this?
+    private int runCharactersNumber = -1;
+
     private boolean footnotesInitialised = false;
     private XWPFFootnote footnote;
     private String paragraphStyle = "Normal";
-    private int runNumber = -1; // TODO: How to get rid of this?
-    private int runCharactersNumber = -1;
 
     private BigInteger numbering;
     private BigInteger lastFilledNumbering = BigInteger.ZERO;
@@ -511,6 +516,45 @@ public class DocxOutputImpl extends DefaultHandler {
         }
     }
 
+    private boolean isParagraphEmpty(XWPFParagraph p) {
+        assert p != null;
+        // Either no runs or just whitespace.
+        return p.getRuns().size() == 0 || p.getText().isBlank();
+    }
+
+    private void createNewParagraph() {
+        // If there is already a paragraph in the deque, maybe it's empty and still useable.
+        // Remember: this code only creates a document, it does not modify one. Moreover, for footnotes, paragraph
+        // creation does not use this mechanism, so that footnote paragraphs do not end up in doc.paragraphs.
+        XWPFParagraph pendingP = (paragraph.size() > 0) ? paragraph.getLast() : null;
+        List<XWPFParagraph> lp = doc.getParagraphs();
+        XWPFParagraph lastP = (lp.size() > 0) ? lp.get(lp.size() - 1) : null;
+        XWPFParagraph p = (pendingP != null) ? pendingP : lastP; // May still be null!
+
+        if (p != null && isParagraphEmpty(p)) {
+            if (paragraph.size() == 0 || paragraph.getLast() != p) {
+                paragraph.addLast(p);
+            }
+        }
+
+        // If it's not empty, remove it from the deque and create a new from scratch.
+        else {
+            if (paragraph.size() > 0) {
+                paragraph.removeLast();
+            }
+            paragraph.addLast(doc.createParagraph());
+        }
+
+        paragraph.getLast().setStyle("Default");
+        for (int i = 0; i < paragraph.getLast().getRuns().size(); ++i) {
+            paragraph.getLast().removeRun(0);
+        }
+
+        run = paragraph.getLast().createRun();
+        runNumber = 0;
+        runCharactersNumber = 0;
+    }
+
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         // Note: XInclude not supported right now. Could easily be done to export to DOCX, but the reverse would be
@@ -772,6 +816,7 @@ public class DocxOutputImpl extends DefaultHandler {
             }
 
             // Loosely based on https://stackoverflow.com/questions/39939057/adding-footnotes-to-a-word-document, then modernised.
+            // Hypothesis of the rest of the code: creating a footnote does *not* use doc.createParagraph().
             footnote = doc.createFootnote();
             paragraph.getLast().addFootnoteReference(footnote); // Creates a new run in the current paragraph.
 
@@ -910,17 +955,13 @@ public class DocxOutputImpl extends DefaultHandler {
             // TODO: What about the attributes left on the <mediaobject>?
             currentLevel.push(Level.FIGURE);
 
-            if (paragraph.size() > 0) {
-                paragraph.removeLast();
-            }
-            paragraph.addLast(doc.createParagraph());
-            run = paragraph.getLast().createRun();
-            runNumber = 0;
-            runCharactersNumber = 0;
+            createNewParagraph();
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isMediaObjectTag(qName) && currentLevel.peekFigure()) {
             // Not many things to do here, everything is handled at the level of the figure.
-            paragraph.addLast(doc.createParagraph());
+            if (paragraph.size() == 0 || paragraph.getLast().getRuns().size() > 0) {
+                paragraph.addLast(doc.createParagraph());
+            }
             run = paragraph.getLast().createRun();
             runNumber = 0;
             runCharactersNumber = 0;
@@ -949,16 +990,8 @@ public class DocxOutputImpl extends DefaultHandler {
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isCaptionTag(qName) || (currentLevel.peekFigure() && SAXHelpers.isTitleTag(qName))) {
             // TODO: <db:caption> may also appear in tables and other items; use currentLevel or is this implementation good enough?
-            paragraph.removeLast();
-            paragraph.addLast(doc.createParagraph());
-            runNumber = 0;
-
+            createNewParagraph();
             paragraph.getLast().setStyle("Caption");
-
-            run = paragraph.getLast().createRun();
-            runNumber += 1;
-            runCharactersNumber = 0;
-
             warnUnknownAttributes(attributes);
         }
 
