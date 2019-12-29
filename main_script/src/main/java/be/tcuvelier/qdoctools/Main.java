@@ -29,6 +29,7 @@ public class Main {
 //        String doc = "07-0-qdoc-commands-includingexternalcode";
 //        String doc = "16-qdoc-commands-status";
 //        String doc = "qmodbusrequest";
+        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-jump-0.20\\julia-jump.xml";
 
 //        String[] argv = {"merge",
 //                "-l", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\merge_after_proofread\\tests\\" + doc + "_before.xml",
@@ -38,8 +39,10 @@ public class Main {
 //        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".db", "--disable-sanity-checks"};
 //        String[] argv = {"proofread", "-i", "D:\\Thibaut\\Dvp\\QtDoc\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\" + doc + ".docx"};
 
-//        submain(argv);
-        submain(args);
+        String[] argv = {"proofread", "-i", doc};
+
+        submain(argv);
+//        submain(args);
     }
 
     private static void submain(String[] argv) {
