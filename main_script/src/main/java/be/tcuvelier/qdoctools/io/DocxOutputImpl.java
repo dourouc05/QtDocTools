@@ -842,7 +842,9 @@ public class DocxOutputImpl extends DefaultHandler {
 
             Map<String, String> attr = SAXHelpers.attributes(attributes);
 
-            paragraph.removeLast();
+            if (paragraph.size() > 0) {
+                paragraph.removeLast();
+            }
             paragraph.addLast(doc.createParagraph());
             runNumber = 0;
             paragraph.getLast().setStyle(DocBookBlock.tagToStyleID(qName, attributes));
@@ -1375,7 +1377,9 @@ public class DocxOutputImpl extends DefaultHandler {
 
             // If the previous run ends with white space, as it is not relevant in this run, remove it from
             // the beginning of this run (i.e. trim left).
-            if (runNumber > 0) {
+            // When adding text multiple times to the same run (i.e. runCharactersNumber > 0), the implemented
+            // test does not work as expected. 
+            if (runNumber > 0 && runCharactersNumber == 0) {
                 XWPFRun previous = paragraph.getLast().getRuns().get(runNumber - 1);
                 if (previous.getCTR().getFootnoteReferenceList().size() == 0) {
                     String prevText = previous.text();

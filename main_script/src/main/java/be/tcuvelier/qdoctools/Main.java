@@ -28,19 +28,20 @@ public class Main {
 //        String doc = "CPLEX";
 //        String doc = "07-0-qdoc-commands-includingexternalcode";
 //        String doc = "16-qdoc-commands-status";
-        String doc = "synthetic\\author";
+//        String doc = "synthetic\\author";
 //        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-jump-0.20\\julia-jump.xml";
+        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-jump-0.20\\spacing.xml";
 
 //        String[] argv = {"merge",
 //                "-l", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\merge_after_proofread\\tests\\" + doc + "_before.xml",
 //                "-r", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\merge_after_proofread\\tests\\" + doc + "_after.xml",
 //                "-m", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\merge_after_proofread\\tests\\" + doc + "_merged.xml"};
-        String[] argv = {"proofread", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".xml"};
+//        String[] argv = {"proofread", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".xml"};
 //        String[] argv = {"proofread", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".db"};
 //        String[] argv = {"proofread", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".db", "--disable-sanity-checks"};
 //        String[] argv = {"proofread", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\" + doc + ".docx"};
 
-//        String[] argv = {"proofread", "-i", doc};
+        String[] argv = {"proofread", "-i", doc};
 
         submain(argv);
 //        submain(args);

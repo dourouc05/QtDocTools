@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://docbook.org/xml/5.1/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://docbook.org/xml/5.1/sch/docbook.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<article xmlns="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink" version="5.1">
+    <info>
+        <title>Optimisation mathématique en Julia</title>
+        <abstract>
+            <para>Julia. </para>
+        </abstract>
+    </info>
+    <section>
+        <title>Création d'un modèle d'optimisation </title>
+        <para>Avant de travailler sur un modèle, il faut créer une instance de <code>Model</code>.
+            Il s'agit du point central d'un modèle d'optimisation : cet objet regroupe toutes les
+            variables et toutes les contraintes d'un modèle d'optimisation. Les opérations de
+            résolution ou de dualisation sont lancées au niveau du modèle. Il contient aussi une
+            référence vers un solveur. </para>
+    </section>
+</article>
