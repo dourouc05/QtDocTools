@@ -13,11 +13,9 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 public class TransformCore {
     public enum Format {
@@ -119,38 +117,21 @@ public class TransformCore {
     }
 
     public static void fromDvpMLToDocBook(String input, String output) throws SaxonApiException {
-        XsltHandler h = new XsltHandler(MainCommand.xsltDvpMLToDocBookPath);
-
-        // Run the transformation.
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        h.createTransformer(input, output, os).transform();
-
-        // If there were errors, print them out.
-        String errors = new String(os.toByteArray(), StandardCharsets.UTF_8);
-        if (errors.length() > 0) {
-            System.err.println(errors);
-        }
+        // TODO: What about the configuration file for this document? Generate one in all cases, I guess?
+        new XsltHandler(MainCommand.xsltDvpMLToDocBookPath).transform(input, output);
     }
 
     public static void fromDocBookToDvpML(String input, String output) throws SaxonApiException {
-        XsltHandler h = new XsltHandler(MainCommand.xsltDocBookToDvpMLPath);
-
-        // Run the transformation.
-        ByteArrayOutputStream os = new ByteArrayOutputStream();
-        h.createTransformer(input, output, os).transform();
-
-        // If there were errors, print them out.
-        String errors = new String(os.toByteArray(), StandardCharsets.UTF_8);
-        if (errors.length() > 0) {
-            System.err.println(errors);
-        }
+        // TODO: What about the configuration file for this document?
+        new XsltHandler(MainCommand.xsltDocBookToDvpMLPath).transform(input, output);
     }
 
     public static void fromDOCXToDocBook(String input, String output) throws IOException, XMLStreamException {
         new DocxInput(input).toDocBook(output);
     }
 
-    public static void fromDocBookToDOCX(String input, String output) throws IOException, ParserConfigurationException, SAXException, InvalidFormatException {
+    public static void fromDocBookToDOCX(String input, String output) throws IOException, ParserConfigurationException,
+            SAXException, InvalidFormatException {
         new DocxOutput(input).toDocx(output);
     }
 

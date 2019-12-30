@@ -63,4 +63,16 @@ public class XsltHandler {
         trans.setInitialTemplate(new QName(initialTemplate));
         return trans;
     }
+
+    public void transform(String input, String output) throws SaxonApiException {
+        // Run the transformation.
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        createTransformer(input, output, os).transform();
+
+        // If there were errors, print them out.
+        String errors = new String(os.toByteArray(), StandardCharsets.UTF_8);
+        if (errors.length() > 0) {
+            System.err.println(errors);
+        }
+    }
 }
