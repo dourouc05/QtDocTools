@@ -2,16 +2,12 @@ package be.tcuvelier.qdoctools.cli;
 
 import be.tcuvelier.qdoctools.utils.Configuration;
 import be.tcuvelier.qdoctools.utils.Pair;
-import be.tcuvelier.qdoctools.utils.QdocConsistencyChecks;
 import be.tcuvelier.qdoctools.utils.QtVersion;
 import be.tcuvelier.qdoctools.utils.handlers.QdocHandler;
 import be.tcuvelier.qdoctools.utils.handlers.XsltHandler;
-import be.tcuvelier.qdoctools.utils.helpers.FileHelpers;
+import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
 import be.tcuvelier.qdoctools.utils.helpers.ValidationHelper;
-import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.SaxonApiException;
-import net.sf.saxon.s9api.XdmAtomicValue;
-import net.sf.saxon.s9api.XsltTransformer;
 import org.xml.sax.SAXException;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;

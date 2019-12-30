@@ -1,15 +1,8 @@
 package be.tcuvelier.qdoctools.cli;
 
-import be.tcuvelier.qdoctools.utils.handlers.SanityCheckHandler;
-import be.tcuvelier.qdoctools.utils.helpers.FileHelpers;
-import be.tcuvelier.qdoctools.io.DocxInput;
-import be.tcuvelier.qdoctools.io.DocxOutput;
-import net.sf.saxon.s9api.SaxonApiException;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.concurrent.Callable;
 
 @Command(name = "upload", description = "Generates and uploads an article or a website")

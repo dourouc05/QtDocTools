@@ -1,16 +1,14 @@
 package be.tcuvelier.qdoctools.cli;
 
 import be.tcuvelier.qdoctools.utils.handlers.XsltHandler;
-import be.tcuvelier.qdoctools.utils.helpers.FileHelpers;
+import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.SaxonApiException;
 import net.sf.saxon.s9api.XdmAtomicValue;
 import net.sf.saxon.s9api.XsltTransformer;
-import org.xml.sax.SAXException;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.util.concurrent.Callable;
