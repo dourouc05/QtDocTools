@@ -1,4 +1,4 @@
-package be.tcuvelier.qdoctools.utils.handlers;
+package be.tcuvelier.qdoctools.core.handlers;
 
 import net.sf.saxon.s9api.*;
 import net.sf.saxon.trans.XPathException;

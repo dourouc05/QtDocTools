@@ -1,6 +1,6 @@
 package be.tcuvelier.qdoctools.cli;
 
-import be.tcuvelier.qdoctools.utils.handlers.XsltHandler;
+import be.tcuvelier.qdoctools.core.handlers.XsltHandler;
 import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.SaxonApiException;

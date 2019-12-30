@@ -1,7 +1,7 @@
 package be.tcuvelier.qdoctools;
 
 import be.tcuvelier.qdoctools.cli.MainCommand;
-import be.tcuvelier.qdoctools.utils.QtVersion;
+import be.tcuvelier.qdoctools.core.utils.QtVersion;
 import picocli.CommandLine;
 
 /**
