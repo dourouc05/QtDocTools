@@ -1,7 +1,6 @@
 package be.tcuvelier.qdoctools.consistency;
 
-import be.tcuvelier.qdoctools.core.SetHelpers;
-import be.tcuvelier.qdoctools.consistency.*;
+import be.tcuvelier.qdoctools.core.helpers.SetHelpers;
 import be.tcuvelier.qdoctools.core.utils.QtVersion;
 import net.sf.saxon.s9api.SaxonApiException;
 import org.jsoup.HttpStatusException;

@@ -1,4 +1,4 @@
-package be.tcuvelier.qdoctools.core;
+package be.tcuvelier.qdoctools.core.helpers;
 
 import be.tcuvelier.qdoctools.cli.MainCommand;
 import be.tcuvelier.qdoctools.core.handlers.ValidationHandler;

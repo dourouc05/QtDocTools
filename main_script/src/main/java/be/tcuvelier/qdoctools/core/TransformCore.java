@@ -1,11 +1,9 @@
 package be.tcuvelier.qdoctools.core;
 
-import be.tcuvelier.qdoctools.cli.MainCommand;
-import be.tcuvelier.qdoctools.io.DocxInput;
-import be.tcuvelier.qdoctools.io.DocxOutput;
 import be.tcuvelier.qdoctools.core.handlers.DocBookSanityCheckHandler;
-import be.tcuvelier.qdoctools.core.handlers.XsltHandler;
 import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
+import be.tcuvelier.qdoctools.core.helpers.TransformHelpers;
+import be.tcuvelier.qdoctools.core.helpers.ValidationHelper;
 import net.sf.saxon.s9api.SaxonApiException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.xml.sax.SAXException;
@@ -73,24 +71,24 @@ public class TransformCore {
                 }
 
                 if (outputFormat == Format.DOCX) {
-                    fromDocBookToDOCX(input, output);
+                    TransformHelpers.fromDocBookToDOCX(input, output);
                 } else if (outputFormat == Format.ODT) {
-                    fromDocBookToODT(input, output);
+                    TransformHelpers.fromDocBookToODT(input, output);
                 } else if (outputFormat == Format.DvpML) {
-                    fromDocBookToDvpML(input, output);
+                    TransformHelpers.fromDocBookToDvpML(input, output);
                 }
                 break;
             case DOCX:
                 assert outputFormat == Format.DocBook;
-                fromDOCXToDocBook(input, output);
+                TransformHelpers.fromDOCXToDocBook(input, output);
                 break;
             case ODT:
                 assert outputFormat == Format.DocBook;
-                fromODTToDocBook(input, output);
+                TransformHelpers.fromODTToDocBook(input, output);
                 break;
             case DvpML:
                 assert outputFormat == Format.DocBook;
-                fromDvpMLToDocBook(input, output);
+                TransformHelpers.fromDvpMLToDocBook(input, output);
                 break;
         }
 
@@ -113,32 +111,5 @@ public class TransformCore {
 
     public static boolean checkSanity(String input) throws SaxonApiException, FileNotFoundException {
         return new DocBookSanityCheckHandler(input).performSanityCheck();
-    }
-
-    public static void fromDvpMLToDocBook(String input, String output) throws SaxonApiException {
-        // TODO: What about the configuration file for this document? Generate one in all cases, I guess?
-        new XsltHandler(MainCommand.xsltDvpMLToDocBookPath).transform(input, output);
-    }
-
-    public static void fromDocBookToDvpML(String input, String output) throws SaxonApiException {
-        // TODO: What about the configuration file for this document?
-        new XsltHandler(MainCommand.xsltDocBookToDvpMLPath).transform(input, output);
-    }
-
-    public static void fromDOCXToDocBook(String input, String output) throws IOException, XMLStreamException {
-        new DocxInput(input).toDocBook(output);
-    }
-
-    public static void fromDocBookToDOCX(String input, String output) throws IOException, ParserConfigurationException,
-            SAXException, InvalidFormatException {
-        new DocxOutput(input).toDocx(output);
-    }
-
-    public static void fromODTToDocBook(String input, String output) {
-        throw new RuntimeException("NOT YET IMPLEMENTED");
-    }
-
-    public static void fromDocBookToODT(String input, String output) {
-        throw new RuntimeException("NOT YET IMPLEMENTED");
     }
 }

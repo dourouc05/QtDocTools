@@ -1,6 +1,6 @@
 package be.tcuvelier.qdoctools.consistency;
 
-import be.tcuvelier.qdoctools.core.SetHelpers;
+import be.tcuvelier.qdoctools.core.helpers.SetHelpers;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,6 +1,6 @@
 package be.tcuvelier.qdoctools.consistency;
 
-import be.tcuvelier.qdoctools.core.SetHelpers;
+import be.tcuvelier.qdoctools.core.helpers.SetHelpers;
 import net.sf.saxon.s9api.SaxonApiException;
 
 public class Items {

@@ -1,4 +1,4 @@
-package be.tcuvelier.qdoctools.core;
+package be.tcuvelier.qdoctools.core.helpers;
 
 import java.util.HashSet;
 import java.util.Set;
