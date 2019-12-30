@@ -985,8 +985,15 @@ public class DocxOutputImpl extends DefaultHandler {
             createNewParagraph();
             paragraph.getLast().setStyle("Caption");
 
+            // Make the image and its caption stick together (i.e. on the same page).
             if (currentLevel.peekFigure()) {
                 paragraph.getLast().setKeepNext(true);
+            } else {
+                int pos = doc.getPosOfParagraph(paragraph.getLast());
+                if (pos > 0) {
+                    XWPFParagraph imageP = doc.getParagraphArray(pos - 1);
+                    imageP.setKeepNext(true);
+                }
             }
 
             warnUnknownAttributes(attributes);
