@@ -906,7 +906,7 @@ public class DocxInputImpl {
 
     private void visitHyperlinkRun(@NotNull XWPFHyperlinkRun r, @Nullable XWPFRun prevRun, boolean isLastRun)
             throws XMLStreamException {
-        // Code symmetric to link generation: the hyperlink is maybe stored in another package part (main text, 
+        // Code symmetric to link generation: the hyperlink is maybe stored in another package part (main text,
         // footer, and footnotes are in three different packages).
         String url = r.getParent().getPart().getPackagePart().getRelationship(r.getHyperlinkId()).getTargetURI().toString();
         dbStream.openInlineTag("link", Map.of("xlink:href", url));

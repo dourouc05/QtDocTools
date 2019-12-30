@@ -842,9 +842,6 @@ public class DocxOutputImpl extends DefaultHandler {
             run.setStyle("FootnoteReference");
             run.getCTR().addNewFootnoteRef(); // Not addNewFootnoteReference, this is not recognised by Word.
 
-            run = paragraph.getLast().createRun();
-            run.setText(" ");
-
             // Create a new run, so that the new text is not within the same run.
             run = paragraph.getLast().createRun();
             runNumber += 1;
@@ -987,6 +984,11 @@ public class DocxOutputImpl extends DefaultHandler {
             // TODO: <db:caption> may also appear in tables and other items; use currentLevel or is this implementation good enough?
             createNewParagraph();
             paragraph.getLast().setStyle("Caption");
+
+            if (currentLevel.peekFigure()) {
+                paragraph.getLast().setKeepNext(true);
+            }
+
             warnUnknownAttributes(attributes);
         }
 
