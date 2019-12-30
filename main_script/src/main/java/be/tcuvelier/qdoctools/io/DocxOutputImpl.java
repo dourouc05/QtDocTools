@@ -246,6 +246,11 @@ public class DocxOutputImpl extends DefaultHandler {
             }
 
             // Actually add the image.
+            if (run.text().length() > 0) {
+                paragraph.getLast().removeRun(0);
+                run = paragraph.getLast().createRun();
+            }
+
             try {
                 run.addPicture(new FileInputStream(filePath.toFile()), format,
                         filePath.getFileName().toString(), width, height);
@@ -520,8 +525,14 @@ public class DocxOutputImpl extends DefaultHandler {
 
     private boolean isParagraphEmpty(XWPFParagraph p) {
         assert p != null;
-        // Either no runs or just whitespace.
-        return p.getRuns().size() == 0 || p.getText().isBlank();
+        // Either no runs or just whitespace, without images.
+        if (p.getRuns().size() == 0) {
+            return true;
+        }
+
+        boolean hasText = ! p.getText().isBlank();
+        boolean hasImage = p.getRuns().stream().anyMatch(r -> r.getCTR().sizeOfDrawingArray() > 0);
+        return ! hasText && ! hasImage;
     }
 
     private void createNewParagraph() {
@@ -943,22 +954,23 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // Media tags: for now, only images are implemented.
         else if (SAXHelpers.isFigureTag(qName)) {
-            // TODO: What if the title is BEFORE the image? Should it be output AFTER?
-            // TODO: Or is a caption BEFORE always considered a title, and a caption if AFTER?
-            // TODO: What about the attributes left on the <mediaobject>?
             currentLevel.push(Level.FIGURE);
 
             createNewParagraph();
             warnUnknownAttributes(attributes);
+
+            // Attributes are read with <db:mediaobject>.
         } else if (SAXHelpers.isMediaObjectTag(qName) && currentLevel.peekFigure()) {
             // Not many things to do here, everything is handled at the level of the figure.
             createNewParagraph();
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isInlineMediaObjectTag(qName)) {
             warnUnknownAttributes(attributes);
-        } else if (SAXHelpers.isMediaObjectTag(qName) && ! currentLevel.peekFigure()) {
-            // TODO: Warn if using this case, because it is hard to distinguish from <figure>?
-            createNewParagraph();
+        } else if (SAXHelpers.isMediaObjectTag(qName)) {
+            // If there has already been a <db:figure>, no need to create a new paragraph.
+            if (! currentLevel.peekFigure()) {
+                createNewParagraph();
+            }
 
             Map<String, String> attr = SAXHelpers.attributes(attributes);
             if (attr.containsKey("align")) {
