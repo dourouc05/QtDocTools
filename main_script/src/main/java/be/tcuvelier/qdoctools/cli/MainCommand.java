@@ -7,10 +7,10 @@ import java.util.concurrent.Callable;
 
 @SuppressWarnings("WeakerAccess")
 @Command(description = "QDocTools", subcommands = {
-        GenerateCommand.class,
-        ProofreadCommand.class,
-        QdocCommand.class,
-        MergeCommand.class
+        TransformCommand.class,
+        MergeCommand.class,
+        UploadCommand.class,
+        QdocCommand.class
 }, mixinStandardHelpOptions = true, version = "QDocTools 0.1.0")
 public class MainCommand implements Callable<Void> {
     // TODO: move all of this into another class, it does not belong to the CLI.
