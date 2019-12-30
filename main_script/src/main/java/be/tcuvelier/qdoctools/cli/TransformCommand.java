@@ -5,6 +5,9 @@ package be.tcuvelier.qdoctools.cli;
  * TODO: How to encode/retrieve inline <filename>? filename/replaceable?
  */
 
+import be.tcuvelier.qdoctools.io.DocxInput;
+import be.tcuvelier.qdoctools.io.DocxOutput;
+import be.tcuvelier.qdoctools.utils.handlers.SanityCheckHandler;
 import be.tcuvelier.qdoctools.utils.helpers.FileHelpers;
 import be.tcuvelier.qdoctools.utils.helpers.ValidationHelper;
 import be.tcuvelier.qdoctools.utils.handlers.XsltHandler;
@@ -14,6 +17,8 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Command;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Callable;
@@ -52,10 +57,12 @@ public class TransformCommand implements Callable<Void> {
 
     @Option(names = { "--disable-sanity-checks" },
             description = "Perform the sanity checks, but continue with generation even in case of failure")
-    private boolean disableSanityChecks = false; // TODO: take from ex-ProofreadCommand.
+    private boolean disableSanityChecks = false;
 
     @Override
     public Void call() throws SaxonApiException, IOException, SAXException {
+        // TODO: old.
+
         // Just one conversion to perform.
 
         // Create a Saxon object based on the sheet to use.
@@ -97,5 +104,52 @@ public class TransformCommand implements Callable<Void> {
         }
 
         return null;
+
+        // TODO: ex-Proofread.
+        if (! new File(input).exists()) {
+            throw new RuntimeException("Input file " + input + " does not exist!");
+        }
+
+        if (FileHelpers.isDOCX(input)) {
+            String output = FileHelpers.changeExtension(input, ".xml");
+            fromDOCXToDocBook(input, output);
+        } else if (FileHelpers.isODT(input)) {
+            System.out.println("NOT YET IMPLEMENTED");
+        } else if (FileHelpers.isDocBook(input)) {
+            if (! checkSanity(input)) {
+                System.out.println("SANITY CHECK: one or more sanity checks did not pass. It is better if you " +
+                        "correct these problems now; otherwise, you may use the option --disable-sanity-checks to " +
+                        "ignore them. In the latter case, you may face errors while producing the DOCX file or, " +
+                        "more likely, you will not get a comparable DocBook file when round-tripping.");
+                throw new RuntimeException("Input DocBook file does not pass the sanity checks! ");
+            }
+
+            if (outputFormat == UploadCommand.OutputFormat.DOCX) {
+                String output = FileHelpers.changeExtension(input, ".docx");
+                fromDocBookToDOCX(input, output);
+            } else if (outputFormat == UploadCommand.OutputFormat.ODT) {
+                System.out.println("ODT NOT YET IMPLEMENTED");
+            }
+        } else {
+            throw new RuntimeException("File format not recognised for input file!");
+        }
+
+        return null;
+    }
+
+    private boolean checkSanity(String input) throws SaxonApiException, FileNotFoundException {
+        if (! disableSanityChecks) {
+            return new SanityCheckHandler(input).performSanityCheck();
+        } else {
+            return true;
+        }
+    }
+
+    private static void fromDOCXToDocBook(String input, String output) throws Exception {
+        new DocxInput(input).toDocBook(output);
+    }
+
+    private static void fromDocBookToDOCX(String input, String output) throws Exception {
+        new DocxOutput(input).toDocx(output);
     }
 }
