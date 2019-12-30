@@ -1,5 +1,6 @@
 package be.tcuvelier.qdoctools.cli;
 
+import be.tcuvelier.qdoctools.core.UploadCore;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -22,17 +23,7 @@ public class UploadCommand implements Callable<Void> {
 
     @Override
     public Void call() throws Exception {
-        // Find the configuration file for the operation to perform (contains info about uploading).
-
-        // Perform generation with Dvp toolchain.
-
-        // Upload if required
-        if (upload) {
-            // Get FTP configuration from keyring.
-
-            // Perform the upload.
-        }
-
+        UploadCore.call(input, folder, upload);
         return null;
     }
 }
