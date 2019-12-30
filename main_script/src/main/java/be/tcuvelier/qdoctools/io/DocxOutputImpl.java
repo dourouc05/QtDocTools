@@ -45,7 +45,7 @@ public class DocxOutputImpl extends DefaultHandler {
 
     // Current state.
     private int paragraphNumber = -1;
-    private int runNumber = -1; // TODO: How to get rid of this?
+    private int runNumber = -1;
     private int runCharactersNumber = -1;
 
     private boolean footnotesInitialised = false;
@@ -69,13 +69,13 @@ public class DocxOutputImpl extends DefaultHandler {
     private List<DocBookFormatting> currentFormatting = new ArrayList<>(); // Order: FIFO, i.e. first tag met in
     // the document is the first one in the vector. TODO: migrate to Deque?
 
-    DocxOutputImpl(Path folder) throws IOException, InvalidFormatException {
+    DocxOutputImpl(Path folder) throws IOException {
         this.folder = folder;
 
         // Start a document with the template that defines all needed styles.
         doc = new XWPFDocument(new FileInputStream(MainCommand.toDocxTemplate));
 
-        // The template always contains empty paragraphs, remove them (just to have a clean output).
+        // A Word document always contains empty paragraphs, remove them (just to have a clean output).
         // Either it is just an empty document, or these paragraphs are used so that Word has no latent style.
         int nParagraphs = doc.getBodyElements().size();
         while (nParagraphs > 0) {
@@ -113,11 +113,12 @@ public class DocxOutputImpl extends DefaultHandler {
         extendedProps.unsetLines();
         extendedProps.unsetWords();
         extendedProps.unsetTotalTime();
-        extendedProps.setTemplate("QtDocTools.docm");
+        props.getExtendedProperties().setTemplate("QtDocTools.docm");
     }
 
     /** POI-level helpers. These functions are not really specific to this project and could be upstreamed. **/
-    // Cannot be a static class, as some methods require access to the current document.
+    // Cannot be a static class, as some methods require access to the current document. (A static class would be
+    // less clean to use.)
 
     private class POIHelpers {
         private int filenameToWordFormat(@NotNull String filename) {
@@ -1159,6 +1160,19 @@ public class DocxOutputImpl extends DefaultHandler {
             ensureNoTextAllowed();
         } else if (SAXHelpers.isAuthorTag(qName) || SAXHelpers.isEditorTag(qName)) {
             // TODO: don't enter this if in an authorgroup. Should rather end the list item.
+            // Set the author to the core properties.
+            if (SAXHelpers.isAuthorTag(qName)) {
+                POIXMLProperties props = doc.getProperties();
+                POIXMLProperties.CoreProperties coreProps = props.getCoreProperties();
+
+                // Append this as a new author or replace the empty string.
+                String currentAuthor = paragraph.getLast().getText();
+                if (! coreProps.getCreator().isBlank()) {
+                    currentAuthor = coreProps.getCreator() + currentAuthor;
+                }
+                coreProps.setCreator(currentAuthor);
+            }
+
             ensureNoTextAllowed();
             restoreParagraphStyle();
         } else if (SAXHelpers.isBelowAuthor(qName)) {
@@ -1177,6 +1191,11 @@ public class DocxOutputImpl extends DefaultHandler {
             currentSectionDepth -= 1;
             ensureNoTextAllowed();
         } else if (SAXHelpers.isTitleTag(qName) && ! currentLevel.peekFigure()) {
+            // Set the title to the core properties.
+            POIXMLProperties props = doc.getProperties();
+            POIXMLProperties.CoreProperties coreProps = props.getCoreProperties();
+            coreProps.setTitle(paragraph.getLast().getText());
+
             ensureNoTextAllowed();
             restoreParagraphStyle();
         }
@@ -1433,6 +1452,8 @@ public class DocxOutputImpl extends DefaultHandler {
             while (content.contains("  ")) {
                 content = content.replace("  ", " ");
             }
+
+            // TODO: Can't the conditions on runNumber be replaced by looking at paragraph.getLast().getRuns()?
 
             // If this is the first run of the paragraph, white space at the beginning is not important.
             if (runNumber == 0 && runCharactersNumber == 0) {
