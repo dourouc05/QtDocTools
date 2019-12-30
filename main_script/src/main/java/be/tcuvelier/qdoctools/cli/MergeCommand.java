@@ -1,17 +1,14 @@
 package be.tcuvelier.qdoctools.cli;
 
-import be.tcuvelier.qdoctools.core.handlers.XsltHandler;
-import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
-import net.sf.saxon.s9api.QName;
+import be.tcuvelier.qdoctools.core.MergeCore;
 import net.sf.saxon.s9api.SaxonApiException;
-import net.sf.saxon.s9api.XdmAtomicValue;
-import net.sf.saxon.s9api.XsltTransformer;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
-import java.io.File;
 import java.net.MalformedURLException;
 import java.util.concurrent.Callable;
+
+import static be.tcuvelier.qdoctools.core.MergeCore.MergeType;
 
 @Command(name = "merge", description = "Perform merges between files, especially after proofreading")
 public class MergeCommand implements Callable<Void> {
@@ -25,10 +22,8 @@ public class MergeCommand implements Callable<Void> {
 
     @Option(names = { "-m", "--merged-file" },
             description = "Result of merging the original and the altered file (by default, the original file is " +
-                    "overwritten)", required = false)
+                    "overwritten)")
     private String merged = null;
-
-    public enum MergeType { AFTER_PROOFREADING, UPDATE_QT, UPDATE_QT_TRANSLATION }
 
     @Option(names = { "-t", "--type" },
             description = "Type of merge to perform. Allowed values: ${COMPLETION-CANDIDATES}. " +
@@ -50,58 +45,7 @@ public class MergeCommand implements Callable<Void> {
 
     @Override
     public Void call() throws SaxonApiException, MalformedURLException {
-        // Check whether the required files exist.
-        if (! new File(original).exists()) {
-            throw new RuntimeException("Original file " + original + " does not exist!");
-        }
-        if (! new File(altered).exists()) {
-            throw new RuntimeException("Altered file " + altered + " does not exist!");
-        }
-        // No need to check whether the merged file exists: it will be overwritten.
-
-        // Check that all files have the required file format.
-        if (FileHelpers.isDocBook(original)) {
-            throw new RuntimeException("File format of the original file " + original + " not recognised for input file!");
-        }
-        if (FileHelpers.isDocBook(altered)) {
-            throw new RuntimeException("File format of the altered file " + altered + " not recognised for input file!");
-        }
-        if (merged != null && FileHelpers.isDocBook(merged)) {
-            throw new RuntimeException("File format of the merged file " + merged + " not recognised for input file!");
-        }
-
-        // Start processing.
-        if (merged == null) {
-            merged = original;
-        }
-
-        switch (type) {
-            case AFTER_PROOFREADING:
-                mergeAfterProofreading();
-                return null;
-            case UPDATE_QT:
-                mergeUpdateQt();
-                return null;
-            case UPDATE_QT_TRANSLATION:
-                mergeUpdateQtTranslation();
-                return null;
-            default:
-                System.out.println("MERGE MODE NOT RECOGNISED");
-                return null;
-        }
-    }
-
-    private void mergeAfterProofreading() throws SaxonApiException, MalformedURLException {
-        XsltTransformer trans = new XsltHandler(MainCommand.xsltMergeAfterProofreading)
-                .createTransformer(altered, merged, null);
-        trans.setParameter(new QName("originalDocument"),
-                new XdmAtomicValue(new File(original).toURI().toURL().toString()));
-        trans.transform();
-    }
-
-    private void mergeUpdateQt() {
-    }
-
-    private void mergeUpdateQtTranslation() {
+        MergeCore.call(original, altered, merged, type);
+        return null;
     }
 }
