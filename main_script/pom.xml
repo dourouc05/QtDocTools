@@ -49,6 +49,12 @@
             <artifactId>Saxon-HE</artifactId>
             <version>9.9.1-6</version>
         </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
         <!-- Import-export for proofreading -->
         <dependency>
             <groupId>org.apache.poi</groupId>
@@ -70,11 +76,16 @@
             <artifactId>ooxml-schemas</artifactId>
             <version>1.4</version>
         </dependency>
+        <!-- Online -->
         <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-modules-keyring</artifactId>
+            <version>RELEASE112</version>
+        </dependency>
+        <dependency><!-- https://www.codejava.net/java-se/ftp/java-ftp-file-upload-tutorial-and-example -->
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.6</version>
         </dependency>
     </dependencies>
 </project>

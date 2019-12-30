@@ -14,7 +14,7 @@ public class FileHelpers {
 
     public static boolean isDocBook(String path) {
         // Check the extension: it sometimes is sufficient to conclude.
-        boolean extensionOK = path.endsWith(".db") || path.endsWith(".dbk") || path.endsWith(".qdt");
+        boolean extensionOK = path.endsWith(".db") || path.endsWith(".dbk") || path.endsWith(".xml");
         if (extensionOK) {
             return true;
         }
@@ -48,10 +48,6 @@ public class FileHelpers {
             System.err.println("Unable to read file: " + path);
             return false;
         }
-    }
-
-    public static boolean isWebXML(String path) {
-        return path.endsWith(".webxml");
     }
 
     public static boolean isDOCX(String path) {

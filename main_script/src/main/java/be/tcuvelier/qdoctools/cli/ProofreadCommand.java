@@ -41,10 +41,10 @@ public class ProofreadCommand implements Callable<Void> {
         }
 
         if (FileHelpers.isDOCX(input)) {
-            String output = FileHelpers.changeExtension(input, ".qdt");
+            String output = FileHelpers.changeExtension(input, ".xml");
             fromDOCXToDocBook(input, output);
         } else if (FileHelpers.isODT(input)) {
-            System.out.println("NOT YET IMPLEMENYED");
+            System.out.println("NOT YET IMPLEMENTED");
         } else if (FileHelpers.isDocBook(input)) {
             if (! checkSanity(input)) {
                 System.out.println("SANITY CHECK: one or more sanity checks did not pass. It is better if you " +

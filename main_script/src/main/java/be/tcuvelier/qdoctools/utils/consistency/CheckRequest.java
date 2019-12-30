@@ -27,7 +27,7 @@ public class CheckRequest {
         compiler.declareNamespace("db", "http://docbook.org/ns/docbook");
         compiler.declareNamespace("xlink", "http://www.w3.org/1999/xlink");
 
-        String otherFile = fileName.getFileName().toString().replace(".qdt", "") + ".html";
+        String otherFile = fileName.getFileName().toString().replace(".xml", ".html");
         html = Jsoup.connect("https://doc.qt.io/qt-" + qtVersion.QT_VER() + "/" + otherFile).get();
     }
 

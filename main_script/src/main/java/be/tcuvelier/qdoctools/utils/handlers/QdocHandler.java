@@ -28,8 +28,8 @@ import java.util.stream.Collectors;
 public class QdocHandler {
     private final Path sourceFolder; // Containing Qt's sources.
     private final Path installedFolder; // Containing a compiled and installed version of Qt.
-    private Path outputFolder; // Where all the generated files should be put. Not final, can be updated when looking
-    // for WebXML files (qdoc may also output in a subfolder).
+    private Path outputFolder; // Where all the generated files should be put (qdoc may also output in a subfolder,
+    // in which case the files are automatically moved to a flatter hierarchy).
     private final Path mainQdocconfPath; // The qdocconf that lists all the other ones.
     private final String qdocPath;
     private final QtVersion qtVersion;
@@ -293,7 +293,7 @@ public class QdocHandler {
                 "--outputdir", outputFolder.toString(),
                 "--installdir", outputFolder.toString(),
                 mainQdocconfPath.toString(),
-                "--outputformat", "WebXML",
+                "--outputformat", "DocBook",
                 "--single-exec",
                 "--log-progress",
                 "--timestamps"));
@@ -375,60 +375,61 @@ public class QdocHandler {
     }
 
     public void checkUngeneratedFiles() throws ParserConfigurationException, IOException, SAXException {
-        // Not always working, just catching some errors, that's already a good improvement on top of not using this function.
-        File[] fs = outputFolder.toFile().listFiles();
-        if (fs == null || fs.length == 0) {
-            return;
-        }
-        List<File> subfolders = Arrays.stream(fs).filter(File::isDirectory).collect(Collectors.toList());
-        for (File subfolder: subfolders) { // For each module...
-            // Find the index file.
-            File[] potentialIndices = subfolder.listFiles((dir, name) -> name.endsWith(".index"));
-            if (potentialIndices == null || potentialIndices.length != 1) {
-                continue;
-            }
-
-            File index = potentialIndices[0];
-            if (! index.exists()) {
-                continue;
-            }
-
-            // Find all WebXML files in this folder.
-            File[] webxmlFiles = subfolder.listFiles((dir, name) -> name.endsWith(".webxml"));
-            if (webxmlFiles == null) {
-                continue;
-            }
-            Set<String> webxml = Arrays.stream(webxmlFiles).map(File::getName).collect(Collectors.toSet());
-
-            // Iterate through the folder and find missing files.
-            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(index);
-            Node root = doc.getDocumentElement().getElementsByTagName("namespace").item(0);
-            NodeList children = root.getChildNodes();
-            for (int i = 0; i < children.getLength(); ++i) {
-                Node page = children.item(i);
-                if (! page.getNodeName().equals("page")) {
-                    continue;
-                }
-
-                String pageName = page.getAttributes().getNamedItem("href").getNodeValue().replace(".html", ".webxml");
-                if (! webxml.contains(pageName) && ! pageName.equals("nolink") && !
-                        (pageName.startsWith("http://") || pageName.startsWith("https://") || pageName.startsWith("ftp://"))
-                ) {
-                    System.out.println("Missing file: " + pageName + "; module: " + subfolder);
-                }
-            }
-        }
+        // TODO: update to DocBook, based on the same files.
+//        // Not always working, just catching some errors, that's already a good improvement on top of not using this function.
+//        File[] fs = outputFolder.toFile().listFiles();
+//        if (fs == null || fs.length == 0) {
+//            return;
+//        }
+//        List<File> subfolders = Arrays.stream(fs).filter(File::isDirectory).collect(Collectors.toList());
+//        for (File subfolder: subfolders) { // For each module...
+//            // Find the index file.
+//            File[] potentialIndices = subfolder.listFiles((dir, name) -> name.endsWith(".index"));
+//            if (potentialIndices == null || potentialIndices.length != 1) {
+//                continue;
+//            }
+//
+//            File index = potentialIndices[0];
+//            if (! index.exists()) {
+//                continue;
+//            }
+//
+//            // Find all WebXML files in this folder.
+//            File[] webxmlFiles = subfolder.listFiles((dir, name) -> name.endsWith(".webxml"));
+//            if (webxmlFiles == null) {
+//                continue;
+//            }
+//            Set<String> webxml = Arrays.stream(webxmlFiles).map(File::getName).collect(Collectors.toSet());
+//
+//            // Iterate through the folder and find missing files.
+//            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(index);
+//            Node root = doc.getDocumentElement().getElementsByTagName("namespace").item(0);
+//            NodeList children = root.getChildNodes();
+//            for (int i = 0; i < children.getLength(); ++i) {
+//                Node page = children.item(i);
+//                if (! page.getNodeName().equals("page")) {
+//                    continue;
+//                }
+//
+//                String pageName = page.getAttributes().getNamedItem("href").getNodeValue().replace(".html", ".webxml");
+//                if (! webxml.contains(pageName) && ! pageName.equals("nolink") && !
+//                        (pageName.startsWith("http://") || pageName.startsWith("https://") || pageName.startsWith("ftp://"))
+//                ) {
+//                    System.out.println("Missing file: " + pageName + "; module: " + subfolder);
+//                }
+//            }
+//        }
     }
 
     public void moveGeneratedFiles() throws IOException {
         // Maybe everything under the html folder.
         Path abnormalPath = outputFolder.resolve("html");
         if (Files.exists(abnormalPath)) {
-            String[] webxmlFiles = abnormalPath.toFile().list((dir, name) -> name.endsWith(".webxml"));
-            if (webxmlFiles != null && webxmlFiles.length > 0) {
+            String[] files = abnormalPath.toFile().list((dir, name) -> name.endsWith(".xml"));
+            if (files != null && files.length > 0) {
                 System.out.println("++> Moving qdoc's result to the expected folder");
 
-                if (Arrays.stream(webxmlFiles)
+                if (Arrays.stream(files)
                         .map(abnormalPath::resolve)
                         .map(Path::toFile)
                         .map(file -> file.renameTo(outputFolder.resolve(file.getName()).toFile()))
@@ -450,21 +451,14 @@ public class QdocHandler {
         }
         List<File> subfolders = Arrays.stream(fs).filter(File::isDirectory).collect(Collectors.toList());
         for (File subfolder: subfolders) { // For each module...
-            File[] files = subfolder.listFiles((dir, name) -> name.endsWith(".webxml"));
-            if (files == null || files.length == 0) { // If there are no WebXML files: maybe everything already at the right place.
+            File[] files = subfolder.listFiles((dir, name) -> name.endsWith(".xml"));
+            if (files == null || files.length == 0) { // If there are no DocBook files: maybe everything already at the right place.
                 continue;
             }
 
             System.out.println("++> Moving qdoc's result from " + subfolder + " to the expected folder");
-            for (File f: files) { // For each WebXML file...
+            for (File f: files) { // For each DocBook file...
                 String name = f.getName();
-                if (name.equals("search-results.webxml")) {
-                    continue;
-                }
-                if (name.equals("qtypeinfo.webxml") || name.equals("qmetatypeid.webxml") || name.equals("qmetatypeid2.webxml")) {
-                    continue;
-                }
-
                 try {
                     Files.copy(f.toPath(), outputFolder.resolve(name));
                 } catch (FileAlreadyExistsException e) {
@@ -506,11 +500,7 @@ public class QdocHandler {
         }
     }
 
-    public List<Path> findWebXML() {
-        return findWithExtension(".webxml");
-    }
-
     public List<Path> findDocBook() {
-        return findWithExtension(".qdt");
+        return findWithExtension(".xml");
     }
 }

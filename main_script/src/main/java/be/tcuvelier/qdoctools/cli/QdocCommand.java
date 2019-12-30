@@ -56,12 +56,8 @@ public class QdocCommand implements Callable<Void> {
             description = "Disables the validation of the output against a known XSD or RNG")
     private boolean validate = true;
 
-    @Option(names = "--no-convert-webxml", description = "Disables the generation of the WebXML files. " +
-            "This operation is time-consuming, as it relies on qdoc, and requires the prior generation of the qdocconf files")
-    private boolean convertToWebXML = true;
-
-    @Option(names = "--no-convert-docbook", description = "Disables the generation of the DocBook files. " +
-            "This operation requires the prior generation of the WebXML files")
+    @Option(names = "--no-convert-docbook", description = "Disables the generation of the DocBook files " +
+            "(i.e. do not run qdoc)")
     private boolean convertToDocBook = true;
 
     @Option(names = "--no-convert-dvpml", description = "Disables the generation of the DvpML files. " +
@@ -94,8 +90,8 @@ public class QdocCommand implements Callable<Void> {
         List<Pair<String, Path>> modules = q.findModules();
         System.out.println("++> " + modules.size() + " modules found");
 
-        // Run qdoc to get the WebXML output.
-        if (convertToWebXML) {
+        // Run qdoc to get the DocBook output.
+        if (convertToDocBook) {
             // Rewrite the list of qdocconf files (one per module, may be multiple times per folder).
             Path mainQdocconfPath = q.makeMainQdocconf(modules);
             System.out.println("++> Main qdocconf rewritten: " + mainQdocconfPath);
@@ -111,92 +107,94 @@ public class QdocCommand implements Callable<Void> {
             System.out.println("++> Checking whether all indexed files are present.");
             q.checkUngeneratedFiles();
             System.out.println("++> Checked!");
+
+            // TODO: validate the files.
         }
 
         // Run Saxon to get the DocBook output.
-        if (convertToDocBook) {
-            Path root = q.getOutputFolder();
-
-            // First, generate the list of classes (may take a bit of time).
-            System.out.println("++> Generating utilities for WebXML-to-DocBook transformation.");
-            XsltTransformer utilities = new XsltHandler(MainCommand.xsltWebXMLToDocBookUtilPath)
-                    .createTransformer(root.resolve("qdt_classes.xml"), "main");
-            utilities.setParameter(new QName("local-folder"), new XdmAtomicValue(q.getOutputFolder().toUri()));
-            utilities.transform();
-
-            // Second, iterate through the files.
-            System.out.println("++> Starting WebXML-to-DocBook transformation.");
-            List<Path> webxml = q.findWebXML();
-            XsltHandler h = new XsltHandler(MainCommand.xsltWebXMLToDocBookPath);
-
-            if (webxml.size() == 0) {
-                System.out.println("??> Has qdoc been launched before in " + q.getOutputFolder() + "? There are " +
-                        "no WebXML files there.");
-            }
-
-            int i = 0;
-            for (Path file : webxml) {
-//                if (file.getFileName().toString().charAt(0) < 'r')
-//                    continue;
-//                if (! file.getFileName().toString().startsWith("q"))
-//                    continue;
-//                if (! file.getFileName().toString().endsWith("qxmlnodemodelindex.webxml"))
-//                    continue;
-
-                // Output the result in the same folder as before, with the same file name, just replace
-                // the extension (.webxml becomes .qdt).
-                Path destination = root.resolve(FileHelpers.changeExtension(file, ".qdt"));
-
-                // Print the name of the file to process to ease debugging.
-                System.out.println(Helpers.prefix(i, webxml) + " " + file.toString());
-
-                // Actually convert the WebXML into DocBook. This may print errors directly to stderr.
-                ByteArrayOutputStream os = new ByteArrayOutputStream();
-                XsltTransformer trans = h.createTransformer(file, destination, os);
-                trans.setParameter(new QName("qt-version"), new XdmAtomicValue(qtVersion.QT_VER()));
-                trans.setParameter(new QName("local-folder"), new XdmAtomicValue(q.getOutputFolder().toUri()));
-                trans.transform();
-
-                String errors = new String(os.toByteArray(), StandardCharsets.UTF_8);
-                if (errors.length() > 0) {
-                    System.out.println(errors);
-                }
-
-                // Handle validation.
-                if (validate) {
-                    try {
-                        boolean isValid = ValidationHelper.validateDocBook(destination);
-                        if (! isValid) {
-                            System.err.println(Helpers.prefix(i, webxml) + " There were validation errors. See the above exception for details.");
-                        }
-                    } catch (SAXException e) {
-                        System.out.println(Helpers.prefix(i, webxml) + " Validation error!");
-                        e.printStackTrace();
-                    }
-                }
-
-                // Perform advanced consistency checks (requires Internet connectivity).
-                if (consistencyChecks) {
-                    boolean result;
-
-                    try {
-                        QdocConsistencyChecks qc = new QdocConsistencyChecks(destination, Helpers.prefix(i, webxml), qtVersion);
-                        result = qc.checkInheritedBy();
-                        result &= qc.checkItems();
-                    } catch (Exception e) {
-                        result = false;
-                    }
-
-                    if (! result) {
-                        System.out.println(Helpers.prefix(i, webxml) + " Check error!");
-                    }
-                }
-
-                // Go to the next file.
-                ++i;
-            }
-            System.out.println("++> WebXML-to-DocBook transformation done.");
-        }
+//        if (convertToDocBook) {
+//            Path root = q.getOutputFolder();
+//
+//            // First, generate the list of classes (may take a bit of time).
+//            System.out.println("++> Generating utilities for WebXML-to-DocBook transformation.");
+//            XsltTransformer utilities = new XsltHandler(MainCommand.xsltWebXMLToDocBookUtilPath)
+//                    .createTransformer(root.resolve("qdt_classes.xml"), "main");
+//            utilities.setParameter(new QName("local-folder"), new XdmAtomicValue(q.getOutputFolder().toUri()));
+//            utilities.transform();
+//
+//            // Second, iterate through the files.
+//            System.out.println("++> Starting WebXML-to-DocBook transformation.");
+//            List<Path> webxml = q.findWebXML();
+//            XsltHandler h = new XsltHandler(MainCommand.xsltWebXMLToDocBookPath);
+//
+//            if (webxml.size() == 0) {
+//                System.out.println("??> Has qdoc been launched before in " + q.getOutputFolder() + "? There are " +
+//                        "no WebXML files there.");
+//            }
+//
+//            int i = 0;
+//            for (Path file : webxml) {
+////                if (file.getFileName().toString().charAt(0) < 'r')
+////                    continue;
+////                if (! file.getFileName().toString().startsWith("q"))
+////                    continue;
+////                if (! file.getFileName().toString().endsWith("qxmlnodemodelindex.webxml"))
+////                    continue;
+//
+//                // Output the result in the same folder as before, with the same file name, just replace
+//                // the extension (.webxml becomes .qdt).
+//                Path destination = root.resolve(FileHelpers.changeExtension(file, ".qdt"));
+//
+//                // Print the name of the file to process to ease debugging.
+//                System.out.println(Helpers.prefix(i, webxml) + " " + file.toString());
+//
+//                // Actually convert the WebXML into DocBook. This may print errors directly to stderr.
+//                ByteArrayOutputStream os = new ByteArrayOutputStream();
+//                XsltTransformer trans = h.createTransformer(file, destination, os);
+//                trans.setParameter(new QName("qt-version"), new XdmAtomicValue(qtVersion.QT_VER()));
+//                trans.setParameter(new QName("local-folder"), new XdmAtomicValue(q.getOutputFolder().toUri()));
+//                trans.transform();
+//
+//                String errors = new String(os.toByteArray(), StandardCharsets.UTF_8);
+//                if (errors.length() > 0) {
+//                    System.out.println(errors);
+//                }
+//
+//                // Handle validation.
+//                if (validate) {
+//                    try {
+//                        boolean isValid = ValidationHelper.validateDocBook(destination);
+//                        if (! isValid) {
+//                            System.err.println(Helpers.prefix(i, webxml) + " There were validation errors. See the above exception for details.");
+//                        }
+//                    } catch (SAXException e) {
+//                        System.out.println(Helpers.prefix(i, webxml) + " Validation error!");
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//                // Perform advanced consistency checks (requires Internet connectivity).
+//                if (consistencyChecks) {
+//                    boolean result;
+//
+//                    try {
+//                        QdocConsistencyChecks qc = new QdocConsistencyChecks(destination, Helpers.prefix(i, webxml), qtVersion);
+//                        result = qc.checkInheritedBy();
+//                        result &= qc.checkItems();
+//                    } catch (Exception e) {
+//                        result = false;
+//                    }
+//
+//                    if (! result) {
+//                        System.out.println(Helpers.prefix(i, webxml) + " Check error!");
+//                    }
+//                }
+//
+//                // Go to the next file.
+//                ++i;
+//            }
+//            System.out.println("++> WebXML-to-DocBook transformation done.");
+//        }
 
         // Run Saxon to get the DvpML output.
         if (convertToDvpML) {
@@ -204,22 +202,23 @@ public class QdocCommand implements Callable<Void> {
 
             // Iterate through all the files.
             System.out.println("++> Starting DocBook-to-DvpML transformation.");
-            List<Path> qdt = q.findDocBook();
+            List<Path> xml = q.findDocBook();
             XsltHandler h = new XsltHandler(MainCommand.xsltDocBookToDvpMLPath);
 
-            if (qdt.size() == 0) {
-                System.out.println("??> Have WebXML files been converted into DocBook before in " +
+            if (xml.size() == 0) {
+                System.out.println("??> Have DocBook files been generated in " +
                         q.getOutputFolder() + "? There are no DocBook files there.");
             }
 
             int i = 0;
-            for (Path file : qdt) {
+            for (Path file : xml) {
                 // Output the result in the same folder as before, with the same file name, just replace
-                // the extension (.qdt becomes .xml).
+                // the extension (.xml becomes .xml).
+                // TODO: problem, qdoc generates XML files, same extension as DvpML docs...
                 Path destination = root.resolve(FileHelpers.changeExtension(file, ".xml"));
 
                 // Print the name of the file to process to ease debugging.
-                System.out.println(Helpers.prefix(i, qdt) + " " + file.toString());
+                System.out.println(Helpers.prefix(i, xml) + " " + file.toString());
 
                 // Actually convert the DocBook into DvpML. This may print errors directly to stderr.
                 ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -235,10 +234,10 @@ public class QdocCommand implements Callable<Void> {
                     try {
                         boolean isValid = ValidationHelper.validateDvpML(destination);
                         if (! isValid) {
-                            System.err.println(Helpers.prefix(i, qdt) + "There were validation errors. See the above exception for details.");
+                            System.err.println(Helpers.prefix(i, xml) + "There were validation errors. See the above exception for details.");
                         }
                     } catch (SAXException e) {
-                        System.out.println(Helpers.prefix(i, qdt) + " Validation error!");
+                        System.out.println(Helpers.prefix(i, xml) + " Validation error!");
                         e.printStackTrace();
                     }
                 }
