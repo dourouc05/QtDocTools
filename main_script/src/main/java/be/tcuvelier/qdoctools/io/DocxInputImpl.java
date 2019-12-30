@@ -48,7 +48,7 @@ public class DocxInputImpl {
     // as captions: find those that have not been, so the user can be warned when one of them is visited.
     private Set<Integer> backwardCaptionPositions = new HashSet<>(); // Store positions of captions that have been seen
     // *before* an actual image. They are interpreted as figures.
-    private Set<Integer> abstractPositions = new HashSet<>();
+    private Set<Integer> abstractPositions = new HashSet<>(); // Store the position of the abstract.
 
     @SuppressWarnings("WeakerAccess")
     public DocxInputImpl(@NotNull String filename) throws IOException, XMLStreamException {
@@ -68,8 +68,8 @@ public class DocxInputImpl {
             case "Titlebook":
                 return "book";
             default:
-                // TODO: Should this rather default to article? But how would the title field be filled (it is necessary per the RNG)?
-                throw new XMLStreamException("Unrecognised document type. Is the first paragraph a Title or a Title (book)?");
+                throw new XMLStreamException("Unrecognised document type. The first paragraph must be a Title or " +
+                        "a Title (book). Other document types are not implemented for now.");
         }
     }
 
@@ -133,110 +133,117 @@ public class DocxInputImpl {
             return;
         }
 
-        if (p.getRuns().stream().anyMatch(r -> r.text().length() > 0 || r.getEmbeddedPictures().size() > 0)) {
-            // Once a paragraph has found its visitor, return from this function. This way, if a paragraph only
-            // partially matches the conditions for a visitor, it can be handled by the generic ones.
-            // (Just for robustness and ability to import external Word documents into the system.)
+        // Ignore empty paragraphs, i.e. no text and no pictures.
+        if (p.getRuns().stream().allMatch(r -> r.text().length() == 0 && r.getEmbeddedPictures().size() == 0)) {
+            return;
+        }
 
-            // First, handle numbered paragraphs. They mostly indicate lists (or this is an external document, and no
-            // assumption should be made -- it could very well be a heading).
-            if (p.getNumID() != null &&
-                    (p.getStyleID() == null || p.getStyleID().equals("Normal") || p.getStyleID().equals("ListParagraph"))) {
-                visitListItem(p);
+        // Once a paragraph has found its visitor, return from this function. This way, if a paragraph only
+        // partially matches the conditions for a visitor, it can be handled by the generic ones.
+        // (Just for robustness and ability to import external Word documents into the system.)
+
+        // First, handle numbered paragraphs. They mostly indicate lists (or this is an external document, and no
+        // assumption should be made -- it could very well be a heading).
+        if (p.getNumID() != null &&
+                (p.getStyleID() == null || p.getStyleID().equals("Normal") || p.getStyleID().equals("ListParagraph"))) {
+            visitListItem(p);
+            return;
+        }
+
+        if (isWithinList) {
+            throw new XMLStreamException("Assertion error: paragraph detected as within list while it has no numbering.");
+        }
+
+        // Then, dispatch along the style. Captions and abstracts have special treatment (eaten by the relevant tags,
+        // which then registers the ones that have already been output).
+        if (p.getStyleID() == null || p.getStyleID().equals("")) {
+            visitNormalParagraph(p);
+            return;
+        }
+
+        if (p.getStyleID().equals("Caption")) {
+            int pos = doc.getPosOfParagraph(p);
+            if (! captionPositions.contains(pos)) {
+                backwardCaptionPositions.add(pos);
+            }
+            // Captions are generated along with images. If the image is found first, captionPositions is filled in
+            // the corresponding visitor.
+            // Otherwise, this visitor marks the paragraph in backwardCaptionPositions so that the next paragraph knows
+            // there is a caption before the image.
+            return;
+        }
+
+        if (p.getStyleID().equals("Abstract")) {
+            if (! abstractPositions.contains(doc.getPosOfParagraph(p))) {
+                throw new XMLStreamException("Abstract not expected.");
+            }
+            // Abstracts are generated in the header, which fills abstractPositions.
+            return;
+        }
+
+        switch (p.getStyleID()) {
+            case "Title":
+            case "Titlebook":
+                visitDocumentTitle(p);
                 return;
-            }
-
-            if (isWithinList) {
-                throw new XMLStreamException("Assertion error: paragraph detected as within list while it has no numbering.");
-            }
-
-            // Then, dispatch along the style. Captions and abstracts have special treatment (eaten by the relevant tags,
-            // which then registers the ones that have already been output).
-            if (p.getStyleID() == null || p.getStyleID().equals("")) {
+            case "Heading1":
+            case "Heading2":
+            case "Heading3":
+            case "Heading4":
+            case "Heading5":
+            case "Heading6":
+            case "Heading7":
+            case "Heading8":
+            case "Heading9":
+                visitSectionTitle(p);
+                return;
+            case "Titlepart":
+                visitPartTitle(p);
+                return;
+            case "Titlechapter":
+                visitChapterTitle(p);
+                return;
+            case "Author":
+            case "Editor":
+                visitAuthor(p);
+                return;
+            case "ProgramListing":
+            case "Screen":
+            case "Synopsis":
+                visitPreformatted(p);
+                return;
+            case "DefinitionListTitle":
+                visitDefinitionListTitle(p);
+                return;
+            case "DefinitionListItem":
+                visitDefinitionListItem(p);
+                return;
+            case "VariableListTitle":
+                visitVariableListTitle(p);
+                return;
+            case "VariableListItem":
+                visitVariableListItem(p);
+                return;
+            case "Normal": // The case with no style ID is already handled.
+            case "FootnoteText":
                 visitNormalParagraph(p);
                 return;
-            }
-
-            if (p.getStyleID().equals("Caption")) {
-                int pos = doc.getPosOfParagraph(p);
-                if (! captionPositions.contains(pos)) {
-                    backwardCaptionPositions.add(pos);
-//                    throw new XMLStreamException("Caption not expected.");
-                }
+            case "ListParagraph":
+                throw new XMLStreamException("Found a list paragraph that has not been recognised as a list.");
+            case "Caution":
+            case "Important":
+            case "Note":
+            case "Tip":
+            case "Warning":
+                visitAdmonition(p);
                 return;
-            }
-
-            if (p.getStyleID().equals("Abstract")) {
-                if (! abstractPositions.contains(doc.getPosOfParagraph(p))) {
-                    throw new XMLStreamException("Abstract not expected.");
-                }
-                return;
-            }
-
-            switch (p.getStyleID()) {
-                case "Title":
-                case "Titlebook":
-                    visitDocumentTitle(p);
-                    return;
-                case "Heading1":
-                case "Heading2":
-                case "Heading3":
-                case "Heading4":
-                case "Heading5":
-                case "Heading6":
-                case "Heading7":
-                case "Heading8":
-                case "Heading9":
-                    visitSectionTitle(p);
-                    return;
-                case "Titlepart":
-                    visitPartTitle(p);
-                    return;
-                case "Titlechapter":
-                    visitChapterTitle(p);
-                    return;
-                case "Author":
-                case "Editor":
-                    visitAuthor(p);
-                    return;
-                case "ProgramListing":
-                case "Screen":
-                case "Synopsis":
-                    visitPreformatted(p);
-                    return;
-                case "DefinitionListTitle":
-                    visitDefinitionListTitle(p);
-                    return;
-                case "DefinitionListItem":
-                    visitDefinitionListItem(p);
-                    return;
-                case "VariableListTitle":
-                    visitVariableListTitle(p);
-                    return;
-                case "VariableListItem":
-                    visitVariableListItem(p);
-                    return;
-                case "Normal": // The case with no style ID is already handled.
-                case "FootnoteText":
-                    visitNormalParagraph(p);
-                    return;
-                case "ListParagraph":
-                    throw new XMLStreamException("Found a list paragraph that has not been recognised as a list.");
-                case "Caution":
-                case "Important":
-                case "Note":
-                case "Tip":
-                case "Warning":
-                    visitAdmonition(p);
-                    return;
-                default:
-                    // TODO: Don't panic when seeing something new, unless a command-line parameter says to (much more convenient for development!). For users, better to have a para than a crash.
-                    System.err.println("Found a paragraph with an unsupported style: " + p.getStyleID());
-                    throw new XMLStreamException("Found a paragraph with an unsupported style: " + p.getStyleID());
-            }
-
-            // The last switch returned from the function.
+            default:
+                // TODO: Don't panic when seeing something new, unless a command-line parameter says to (much more convenient for development!). For users, better to have a para than a crash.
+                System.err.println("Found a paragraph with an unsupported style: " + p.getStyleID());
+                throw new XMLStreamException("Found a paragraph with an unsupported style: " + p.getStyleID());
         }
+
+        // The last switch returned from the function.
     }
 
     /** Structure elements. **/
@@ -380,11 +387,13 @@ public class DocxInputImpl {
             // a <db:figure>.
             // TODO: to be adapted if there are multiple pictures per run!
             isDisplayedFigure = p.getRuns().size() == 1;
-            boolean hasCaptionBefore = backwardCaptionPositions.contains(doc.getPosOfParagraph(p) - 1);
+
+            int pos = doc.getPosOfParagraph(p);
+            boolean hasCaptionBefore = backwardCaptionPositions.contains(pos - 1);
 
             if (hasCaptionBefore) {
                 dbStream.openBlockTag("figure");
-                XWPFParagraph captionP = doc.getParagraphArray(doc.getPosOfParagraph(p) - 1);
+                XWPFParagraph captionP = doc.getParagraphArray(pos - 1);
 
                 dbStream.openParagraphTag("title");
                 visitRuns(captionP.getRuns());
@@ -395,9 +404,7 @@ public class DocxInputImpl {
             visitRuns(p.getRuns());
 
             // Write the caption (if it corresponds to the next paragraph).
-            if (! isLastParagraph(p) && hasFollowingParagraphWithStyle(p, "Caption")) {
-                int pos = doc.getPosOfParagraph(p);
-
+            if (! hasCaptionBefore && ! isLastParagraph(p) && hasFollowingParagraphWithStyle(p, "Caption")) {
                 dbStream.openParagraphTag("caption");
                 visitRuns(doc.getParagraphs().get(pos + 1).getRuns());
                 dbStream.closeParagraphTag(); // </db:caption>
@@ -788,6 +795,15 @@ public class DocxInputImpl {
         return pos == doc.getParagraphs().size() - 1;
     }
 
+    private boolean hasParagraphWithStyle(@NotNull XWPFParagraph p, @NotNull String styleID) {
+        return p.getStyleID() != null && p.getStyleID().equals(styleID);
+    }
+
+    private boolean hasPreviousParagraphWithStyle(@NotNull XWPFParagraph p, @NotNull String styleID) {
+        int pos = doc.getPosOfParagraph(p);
+        return hasParagraphWithStyle(doc.getParagraphs().get(pos - 1), styleID);
+    }
+
     private boolean hasFollowingParagraphWithStyle(@NotNull XWPFParagraph p, @NotNull String styleID) {
         int pos = doc.getPosOfParagraph(p);
 
@@ -795,8 +811,7 @@ public class DocxInputImpl {
             throw new AssertionError("Called hasFollowingParagraphWithStyle when this is the last paragraph; always call isLastParagraph first");
         }
 
-        return doc.getParagraphs().get(pos + 1).getStyleID() != null
-                && doc.getParagraphs().get(pos + 1).getStyleID().equals(styleID);
+        return hasParagraphWithStyle(doc.getParagraphs().get(pos + 1), styleID);
     }
 
     /** Tables. **/
