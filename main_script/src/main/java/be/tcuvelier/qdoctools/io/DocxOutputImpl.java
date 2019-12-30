@@ -189,7 +189,7 @@ public class DocxOutputImpl extends DefaultHandler {
             assert paragraph.size() > 0;
 
             // Create a relationship ID for this link.
-            String rId = paragraph.getLast().getDocument().getPackagePart().addExternalRelationship(
+            String rId = paragraph.getLast().getPart().getPackagePart().addExternalRelationship(
                     uri, XWPFRelation.HYPERLINK.getRelation()
             ).getId();
 
