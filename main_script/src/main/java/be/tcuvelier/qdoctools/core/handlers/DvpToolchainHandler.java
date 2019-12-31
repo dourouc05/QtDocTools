@@ -88,9 +88,14 @@ public class DvpToolchainHandler {
         // TODO: what about multipage articles?
 
         // Clean the toolchain's folders.
-        Files.walk(folder).map(Path::toFile).forEach(File::delete);
-        folder.toFile().delete();
+        if (!Files.walk(folder).map(Path::toFile).allMatch(File::delete))
+            System.out.println("There was a problem cleaning the contents of the folder " + folder);
+        if (!folder.toFile().delete())
+            System.out.println("There was a problem cleaning the folder " + folder);
 
-        Files.walk(cache).map(Path::toFile).forEach(File::delete);
+        if (!Files.walk(cache).map(Path::toFile).allMatch(File::delete))
+            System.out.println("There was a problem cleaning the contents of the folder " + cache);
+        if (!cache.toFile().delete())
+            System.out.println("There was a problem cleaning the folder " + cache);
     }
 }
