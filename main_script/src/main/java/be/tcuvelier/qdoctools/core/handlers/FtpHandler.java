@@ -1,0 +1,71 @@
+package be.tcuvelier.qdoctools.core.handlers;
+
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPClientConfig;
+import org.apache.commons.net.ftp.FTPReply;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Path;
+
+public class FtpHandler {
+    private final String user;
+    private final String password;
+    private final String server;
+    private final int port;
+
+    private FTPClient ftp;
+
+    public FtpHandler(String user, String password, String server, int port) {
+        this.user = user;
+        this.password = password;
+        this.server = server;
+        this.port = port;
+    }
+
+    public FtpHandler(String user, String password, String server) {
+        this(user, password, server, 21);
+    }
+
+    public void connect() throws IOException {
+        ftp = new FTPClient();
+        FTPClientConfig ftpConfig = new FTPClientConfig();
+        ftp.configure(ftpConfig);
+
+        ftp.connect(server);
+        int reply = ftp.getReplyCode();
+        if(!FTPReply.isPositiveCompletion(reply)) {
+            disconnect();
+            throw new IOException("Unable to connect to the server: server refused connection. " + ftp.getReplyString());
+        }
+
+        if (user.length() > 0) {
+            if (!ftp.login(user, password)) {
+                disconnect();
+                throw new IOException("Unable to connect to the server: credentials not recognised. " + ftp.getReplyString());
+            }
+        }
+    }
+
+    public void disconnect() throws IOException {
+        ftp.logout();
+        ftp.disconnect();
+        ftp = null;
+    }
+
+    public void changeDirectory(Path path) throws IOException {
+        for (Path name : path) {
+            ftp.changeWorkingDirectory(name.toString());
+        }
+    }
+
+    public void sendBinaryFile(String remote, InputStream local) throws IOException {
+        ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
+        ftp.storeFile(remote, local);
+    }
+
+    public void sendTextFile(String remote, InputStream local) throws IOException {
+        ftp.setFileType(FTPClient.ASCII_FILE_TYPE);
+        ftp.storeFile(remote, local);
+    }
+}
