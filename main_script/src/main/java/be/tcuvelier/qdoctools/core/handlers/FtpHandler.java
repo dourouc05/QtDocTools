@@ -78,12 +78,19 @@ public class FtpHandler {
     }
 
     public void sendBinaryFile(String remote, InputStream local) throws IOException {
-        ftp.setFileType(FTPClient.BINARY_FILE_TYPE);
-        ftp.storeFile(remote, local);
+        sendFile(remote, local, FTPClient.BINARY_FILE_TYPE);
     }
 
     public void sendTextFile(String remote, InputStream local) throws IOException {
-        ftp.setFileType(FTPClient.ASCII_FILE_TYPE);
+        sendFile(remote, local, FTPClient.ASCII_FILE_TYPE);
+    }
+
+    private void sendFile(String remote, InputStream local, int type) throws IOException {
+        ftp.setFileType(type);
         ftp.storeFile(remote, local);
+
+        if (!ftp.completePendingCommand()) {
+            throw new IOException("Unable to complete the upload. " + ftp.getReplyString());
+        }
     }
 }
