@@ -4,6 +4,8 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPReply;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
@@ -77,12 +79,16 @@ public class FtpHandler {
         }
     }
 
-    public void sendBinaryFile(String remote, InputStream local) throws IOException {
+    public void sendBinaryFile(String remote, Path local) throws IOException {
         sendFile(remote, local, FTPClient.BINARY_FILE_TYPE);
     }
 
-    public void sendTextFile(String remote, InputStream local) throws IOException {
+    public void sendTextFile(String remote, Path local) throws IOException {
         sendFile(remote, local, FTPClient.ASCII_FILE_TYPE);
+    }
+
+    private void sendFile(String remote, Path local, int type) throws IOException {
+        sendFile(remote, new FileInputStream(local.toFile()), type);
     }
 
     private void sendFile(String remote, InputStream local, int type) throws IOException {
