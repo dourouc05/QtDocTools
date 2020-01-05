@@ -55,7 +55,25 @@ public class FtpHandler {
 
     public void changeDirectory(Path path) throws IOException {
         for (Path name : path) {
-            ftp.changeWorkingDirectory(name.toString());
+            if (!ftp.changeWorkingDirectory(name.toString())) {
+                throw new IOException("Unable to change folder. " + ftp.getReplyString());
+            }
+        }
+    }
+
+    public void createDirectory(String name) throws IOException {
+        if (!ftp.makeDirectory(name)) {
+            throw new IOException("Unable to create a folder. " + ftp.getReplyString());
+        }
+    }
+
+    public void changeAndCreateDirectory(Path path) throws IOException {
+        for (Path name : path) {
+            if (!ftp.changeWorkingDirectory(name.toString())) {
+                // This will throw an exception if it's not possible to create the directory.
+                createDirectory(name.toString());
+                changeDirectory(name);
+            }
         }
     }
 

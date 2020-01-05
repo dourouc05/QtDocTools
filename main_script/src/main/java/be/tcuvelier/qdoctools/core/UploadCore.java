@@ -61,7 +61,7 @@ public class UploadCore {
             // Perform the upload.
             FtpHandler ftp = new FtpHandler(user, password, server, port);
             ftp.connect();
-            ftp.changeDirectory(articleConfig.(...));
+            ftp.changeAndCreateDirectory(articleConfig.(...));
             // TODO
         }
     }
