@@ -139,7 +139,7 @@ public class DocxInputImpl {
         }
 
         // Once a paragraph has found its visitor, return from this function. This way, if a paragraph only
-        // partially matches the conditions for a visitor, it can be handled by the generic ones.
+        // partially matches the conditions for a visitor, it can be handled by the more generic ones.
         // (Just for robustness and ability to import external Word documents into the system.)
 
         // First, handle numbered paragraphs. They mostly indicate lists (or this is an external document, and no
@@ -150,7 +150,7 @@ public class DocxInputImpl {
             return;
         }
 
-        if (isWithinList) {
+        if (isWithinList) { // Should not really happen, though.
             throw new XMLStreamException("Assertion error: paragraph detected as within list while it has no numbering.");
         }
 
@@ -173,11 +173,17 @@ public class DocxInputImpl {
             return;
         }
 
+        // Ignore paragraphs that are already dealt with within the headers.
         if (p.getStyleID().equals("Abstract")) {
+            // Abstracts are generated in the header, which fills abstractPositions.
             if (! abstractPositions.contains(doc.getPosOfParagraph(p))) {
                 throw new XMLStreamException("Abstract not expected.");
             }
-            // Abstracts are generated in the header, which fills abstractPositions.
+            return;
+        }
+
+        if (p.getStyleID().equals("Author")) {
+            // TODO: check this paragraph has been output, like abstracts?
             return;
         }
 
@@ -203,7 +209,6 @@ public class DocxInputImpl {
             case "Titlechapter":
                 visitChapterTitle(p);
                 return;
-            case "Author":
             case "Editor":
                 visitAuthor(p);
                 return;
@@ -248,14 +253,34 @@ public class DocxInputImpl {
 
     /** Structure elements. **/
 
-    private List<XWPFParagraph> gatherAbstractFollowing(@NotNull XWPFParagraph p) {
+    private static class MetaDataParagraphs {
+        // Store metadata about a document (except its title) as a list of raw paragraphs.
+
+        XWPFParagraph author;
+        List<XWPFParagraph> abstracts;
+
+        MetaDataParagraphs() {
+            abstracts = new ArrayList<>();
+        }
+
+        boolean hasMetaData() {
+            return hasMetaDataExceptAbstract() || abstracts.size() > 0;
+        }
+
+        boolean hasMetaDataExceptAbstract() {
+            return author != null;
+        }
+    }
+
+    private MetaDataParagraphs gatherAbstractFollowing(@NotNull XWPFParagraph p) {
         int pos = p.getDocument().getPosOfParagraph(p);
         List<XWPFParagraph> paragraphs = p.getDocument().getParagraphs();
-        List<XWPFParagraph> abstractParagraphs = new ArrayList<>();
+
+        MetaDataParagraphs metadata = new MetaDataParagraphs();
 
         // No next paragraph? No possible abstract.
         if (pos + 1 >= paragraphs.size()) {
-            return abstractParagraphs;
+            return metadata;
         }
 
         // Not all styles are allowed between a title and an abstract.
@@ -273,19 +298,24 @@ public class DocxInputImpl {
                 // Exception: the first few paragraphs after the main title, before any other content, may be authors.
                 // The original styles may be overridden when the document is saved on other computers.
                 if (! foundNonNullStyle) { // && ! foundRealAbstract, but this condition is (for now) always met.
-                    abstractParagraphs.add(paragraphs.get(i));
-                    continue;
+                    System.out.println("Found a default style before the paragraph. Changing it to Author.");
+                    paragraphs.get(i).setStyle("Author");
+                    style = "Author";
+                    // Let the rest of the loop iteration execute,
+                } else {
+                    break;
                 }
-
-                break;
             }
             foundNonNullStyle = true;
 
-            // Found an abstract: record this paragraph, go to the next one.
+            // Found an abstract or another interesting paragraph: record this paragraph, go to the next one.
             if (style.equals("Abstract")) {
 //                foundRealAbstract = true;
-                abstractParagraphs.add(paragraphs.get(i));
+                metadata.abstracts.add(paragraphs.get(i));
                 continue;
+            } else if (style.equals("Author")) {
+                assert metadata.author == null; // Only one Author paragraph allowed.
+                metadata.author = paragraphs.get(i);
             }
 
             // Style not allowed between abstract paragraph styles: don't go on.
@@ -294,12 +324,13 @@ public class DocxInputImpl {
             }
         }
 
-        return abstractParagraphs;
+        return metadata;
     }
 
     private void visitTitleAndAbstract(@NotNull XWPFParagraph p) throws XMLStreamException {
-        List<XWPFParagraph> abstractParagraphs = gatherAbstractFollowing(p);
-        if (abstractParagraphs.size() == 0) {
+        MetaDataParagraphs metadata = gatherAbstractFollowing(p);
+
+        if (! metadata.hasMetaData()) {
             dbStream.openParagraphTag("title");
             visitRuns(p.getRuns());
             dbStream.closeParagraphTag();
@@ -310,12 +341,18 @@ public class DocxInputImpl {
             visitRuns(p.getRuns());
             dbStream.closeParagraphTag();
 
-            dbStream.openBlockTag("abstract");
-            for (XWPFParagraph ap : abstractParagraphs) {
-                visitNormalParagraph(ap);
-                abstractPositions.add(doc.getPosOfParagraph(ap));
+            if (metadata.author != null) {
+                visitAuthor(metadata.author);
             }
-            dbStream.closeBlockTag();
+
+            if (metadata.abstracts.size() > 0) {
+                dbStream.openBlockTag("abstract");
+                for (XWPFParagraph ap : metadata.abstracts) {
+                    visitNormalParagraph(ap);
+                    abstractPositions.add(doc.getPosOfParagraph(ap));
+                }
+                dbStream.closeBlockTag();
+            }
 
             dbStream.closeBlockTag(); // </db:info>
         }
@@ -352,14 +389,21 @@ public class DocxInputImpl {
 
         dbStream.openBlockTag("part");
 
-        dbStream.openParagraphTag("title");
-        visitRuns(p.getRuns());
-        dbStream.closeParagraphTag(); // </db:title>
+        MetaDataParagraphs metadata = gatherAbstractFollowing(p);
 
-        List<XWPFParagraph> abstractParagraphs = gatherAbstractFollowing(p);
-        if (abstractParagraphs.size() > 0) {
+        if (metadata.hasMetaDataExceptAbstract()) {
+            dbStream.openParagraphTag("title");
+            visitRuns(p.getRuns());
+            dbStream.closeParagraphTag(); // </db:title>
+
+            if (metadata.author != null) {
+                visitAuthor(metadata.author);
+            }
+        }
+
+        if (metadata.abstracts.size() > 0) {
             dbStream.openBlockTag("partintro");
-            for (XWPFParagraph ap: abstractParagraphs) {
+            for (XWPFParagraph ap: metadata.abstracts) {
                 visitNormalParagraph(ap);
                 abstractPositions.add(doc.getPosOfParagraph(ap));
             }
