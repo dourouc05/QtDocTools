@@ -1,26 +1,14 @@
 package be.tcuvelier.qdoctools.cli;
 
 import be.tcuvelier.qdoctools.core.QdocCore;
-import be.tcuvelier.qdoctools.core.helpers.FormattingHelpers;
-import be.tcuvelier.qdoctools.core.utils.Configuration;
-import be.tcuvelier.qdoctools.core.utils.Pair;
 import be.tcuvelier.qdoctools.core.utils.QtVersion;
-import be.tcuvelier.qdoctools.core.handlers.QdocHandler;
-import be.tcuvelier.qdoctools.core.handlers.XsltHandler;
-import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
-import be.tcuvelier.qdoctools.core.helpers.ValidationHelper;
 import net.sf.saxon.s9api.SaxonApiException;
 import org.xml.sax.SAXException;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.util.List;
 import java.util.concurrent.Callable;
 
 @Command(name = "qdoc", description = "Run qdoc and the associated transformations")

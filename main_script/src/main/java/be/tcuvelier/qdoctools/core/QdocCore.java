@@ -6,7 +6,7 @@ import be.tcuvelier.qdoctools.core.handlers.XsltHandler;
 import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
 import be.tcuvelier.qdoctools.core.helpers.FormattingHelpers;
 import be.tcuvelier.qdoctools.core.helpers.ValidationHelper;
-import be.tcuvelier.qdoctools.core.utils.Configuration;
+import be.tcuvelier.qdoctools.core.config.Configuration;
 import be.tcuvelier.qdoctools.core.utils.Pair;
 import be.tcuvelier.qdoctools.core.utils.QtVersion;
 import net.sf.saxon.s9api.SaxonApiException;

@@ -1,7 +1,6 @@
 package be.tcuvelier.qdoctools.core.handlers;
 
-import be.tcuvelier.qdoctools.core.exceptions.BadConfigurationFile;
-import be.tcuvelier.qdoctools.core.utils.Configuration;
+import be.tcuvelier.qdoctools.core.config.Configuration;
 import net.sf.saxon.s9api.*;
 
 import javax.xml.transform.stream.StreamSource;
@@ -14,7 +13,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class DvpToolchainHandler {
     public static void updateToolchain(Configuration config) throws IOException, InterruptedException {
