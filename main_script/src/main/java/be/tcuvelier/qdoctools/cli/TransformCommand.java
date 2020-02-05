@@ -30,7 +30,7 @@ public class TransformCommand implements Callable<Void> {
     private Format inputFormat = Format.Default;
 
     @Option(names = { "-o", "--output-file", "--output-folder" },
-            description = "Output file or folder", required = true)
+            description = "Output file or folder")
     private String output;
 
     @Option(names = { "-of", "--output-format" },

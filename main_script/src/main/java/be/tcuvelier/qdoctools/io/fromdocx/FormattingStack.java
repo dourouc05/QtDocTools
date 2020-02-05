@@ -69,7 +69,9 @@ public class FormattingStack {
 
     private void unrecognisedStyle(@NotNull XWPFRun run) throws XMLStreamException {
         String styleID = POIHelpers.getStyle(run);
-        if (! isStyleIDIgnored(styleID)) {
+        if (styleID.equals("CommentReference")) {
+            System.out.println("There is still a comment in the document. Have proofs been checked?");
+        } else if (! isStyleIDIgnored(styleID)) {
             throw new XMLStreamException("Unrecognised run style: " + styleID);
         } else {
             // No style, but maybe the user wants to tell the software something.

@@ -36,20 +36,21 @@ public class Main {
 //        String doc = "16-qdoc-commands-status";
 //        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-rapide-1.1\\julia.docx";
 //        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-jump-0.20\\julia-jump.docx";
+        String doc = "C:\\Users\\Thibaut\\Desktop\\julia.docx";
 
 //        String[] argv = {"merge",
 //                "-l", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\merge_after_proofread\\tests\\" + doc + "_before.xml",
 //                "-r", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\merge_after_proofread\\tests\\" + doc + "_after.xml",
 //                "-m", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\merge_after_proofread\\tests\\" + doc + "_merged.xml"};
-//        String[] argv = {"proofread", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".xml"};
-//        String[] argv = {"proofread", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".db"};
-//        String[] argv = {"proofread", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".db", "--disable-sanity-checks"};
-//        String[] argv = {"proofread", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\" + doc + ".docx"};
+//        String[] argv = {"transform", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".xml"};
+//        String[] argv = {"transform", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".db"};
+//        String[] argv = {"transform", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".db", "--disable-sanity-checks"};
+//        String[] argv = {"transform", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\" + doc + ".docx"};
 
-//        String[] argv = {"proofread", "-i", doc};
+        String[] argv = {"transform", "-i", doc, "--no-validation"};
 
-//        submain(argv);
-        submain(args);
+        submain(argv);
+//        submain(args);
     }
 
     private static void submain(String[] argv) {

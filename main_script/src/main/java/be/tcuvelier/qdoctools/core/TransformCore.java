@@ -71,23 +71,50 @@ public class TransformCore {
                 }
 
                 if (outputFormat == Format.DOCX) {
+                    if (output == null || output.isBlank()) {
+                        output = FileHelpers.changeExtension(input, ".docx");
+                    }
+
                     TransformHelpers.fromDocBookToDOCX(input, output);
                 } else if (outputFormat == Format.ODT) {
+                    if (output == null || output.isBlank()) {
+                        output = FileHelpers.changeExtension(input, ".odt");
+                    }
+
                     TransformHelpers.fromDocBookToODT(input, output);
                 } else if (outputFormat == Format.DvpML) {
+                    if (output == null || output.isBlank()) {
+                        output = FileHelpers.changeExtension(input, ".xml");
+                    }
+
                     TransformHelpers.fromDocBookToDvpML(input, output);
                 }
                 break;
             case DOCX:
                 assert outputFormat == Format.DocBook;
+
+                if (output == null || output.isBlank()) {
+                    output = FileHelpers.changeExtension(input, ".xml");
+                }
+
                 TransformHelpers.fromDOCXToDocBook(input, output);
                 break;
             case ODT:
                 assert outputFormat == Format.DocBook;
+
+                if (output == null || output.isBlank()) {
+                    output = FileHelpers.changeExtension(input, ".xml");
+                }
+
                 TransformHelpers.fromODTToDocBook(input, output);
                 break;
             case DvpML:
                 assert outputFormat == Format.DocBook;
+
+                if (output == null || output.isBlank()) {
+                    output = FileHelpers.changeExtension(input, ".xml");
+                }
+
                 TransformHelpers.fromDvpMLToDocBook(input, output);
                 break;
         }

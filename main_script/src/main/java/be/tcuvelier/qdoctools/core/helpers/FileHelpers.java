@@ -1,6 +1,7 @@
 package be.tcuvelier.qdoctools.core.helpers;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,7 +27,15 @@ public class FileHelpers {
             // https://docbook.org/docs/howto/howto.xml.
             boolean foundXMLNS = false;
             boolean foundDB = false;
-            String[] content = Files.lines(Paths.get(path)).toArray(String[]::new);
+
+            String[] content;
+            try {
+                content = Files.lines(Paths.get(path)).toArray(String[]::new);
+            } catch (UncheckedIOException e) {
+                // Mostly happens when the input is far from ASCII, like a DOCX/ODT file (ZIP header).
+                return false;
+            }
+
             for (String s: content) {
                 if (! foundXMLNS && s.contains("xmlns")) {
                     foundXMLNS = true;

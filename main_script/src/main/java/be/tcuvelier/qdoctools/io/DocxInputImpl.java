@@ -263,12 +263,32 @@ public class DocxInputImpl {
 
         // Abstract is made of a sequence of paragraphs with the Abstract style, which implies that there is
         // no paragraph of another style in between.
+        boolean foundNonNullStyle = false;
+//        boolean foundRealAbstract = false;
         for (int i = pos + 1; i < paragraphs.size(); ++i) {
             String style = paragraphs.get(i).getStyleID();
-            if (style != null && style.equals("Abstract")) {
+
+            // No style found? This is a default paragraph, i.e. normal text: definitely not an abstract, don't go on.
+            if (style == null) {
+                // Exception: the first few paragraphs after the main title, before any other content, may be authors.
+                // The original styles may be overridden when the document is saved on other computers.
+                if (! foundNonNullStyle) { // && ! foundRealAbstract, but this condition is (for now) always met.
+                    abstractParagraphs.add(paragraphs.get(i));
+                    continue;
+                }
+
+                break;
+            }
+            foundNonNullStyle = true;
+
+            // Found an abstract: record this paragraph, go to the next one.
+            if (style.equals("Abstract")) {
+//                foundRealAbstract = true;
                 abstractParagraphs.add(paragraphs.get(i));
                 continue;
             }
+
+            // Style not allowed between abstract paragraph styles: don't go on.
             if (! allowedBetween.contains(style)) {
                 break;
             }
