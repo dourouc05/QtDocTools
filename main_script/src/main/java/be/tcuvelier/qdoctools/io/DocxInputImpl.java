@@ -1,9 +1,6 @@
 package be.tcuvelier.qdoctools.io;
 
-import be.tcuvelier.qdoctools.io.fromdocx.DocBookStreamWriter;
-import be.tcuvelier.qdoctools.io.fromdocx.FormattingStack;
-import be.tcuvelier.qdoctools.io.fromdocx.MetaDataParagraphs;
-import be.tcuvelier.qdoctools.io.fromdocx.PreformattedMetadata;
+import be.tcuvelier.qdoctools.io.fromdocx.*;
 import be.tcuvelier.qdoctools.io.helpers.DocBookAlignment;
 import be.tcuvelier.qdoctools.io.helpers.DocBookBlock;
 import be.tcuvelier.qdoctools.io.helpers.DocBookFormatting;
@@ -54,7 +51,7 @@ public class DocxInputImpl {
     @SuppressWarnings("WeakerAccess")
     public DocxInputImpl(@NotNull String filename) throws IOException, XMLStreamException {
         doc = new XWPFDocument(new FileInputStream(filename));
-        dbStream = new DocBookStreamWriter();
+        dbStream = new DelayedSimplifyingDocBookStreamWriter(new DirectDocBookStreamWriter());
     }
 
     @SuppressWarnings("WeakerAccess")
