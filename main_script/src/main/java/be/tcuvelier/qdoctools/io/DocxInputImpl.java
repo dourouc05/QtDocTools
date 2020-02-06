@@ -2,6 +2,7 @@ package be.tcuvelier.qdoctools.io;
 
 import be.tcuvelier.qdoctools.io.fromdocx.DocBookStreamWriter;
 import be.tcuvelier.qdoctools.io.fromdocx.FormattingStack;
+import be.tcuvelier.qdoctools.io.fromdocx.MetaDataParagraphs;
 import be.tcuvelier.qdoctools.io.fromdocx.PreformattedMetadata;
 import be.tcuvelier.qdoctools.io.helpers.DocBookAlignment;
 import be.tcuvelier.qdoctools.io.helpers.DocBookBlock;
@@ -252,25 +253,6 @@ public class DocxInputImpl {
     }
 
     /** Structure elements. **/
-
-    private static class MetaDataParagraphs {
-        // Store metadata about a document (except its title) as a list of raw paragraphs.
-
-        XWPFParagraph author;
-        List<XWPFParagraph> abstracts;
-
-        MetaDataParagraphs() {
-            abstracts = new ArrayList<>();
-        }
-
-        boolean hasMetaData() {
-            return hasMetaDataExceptAbstract() || abstracts.size() > 0;
-        }
-
-        boolean hasMetaDataExceptAbstract() {
-            return author != null;
-        }
-    }
 
     private MetaDataParagraphs gatherAbstractFollowing(@NotNull XWPFParagraph p) {
         int pos = p.getDocument().getPosOfParagraph(p);
