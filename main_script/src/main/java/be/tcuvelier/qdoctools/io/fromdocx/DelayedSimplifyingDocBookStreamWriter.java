@@ -6,27 +6,25 @@ import org.jetbrains.annotations.Nullable;
 import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Stack;
 
 public class DelayedSimplifyingDocBookStreamWriter implements DocBookStreamWriter {
+    // Simplification implemented here: </tag><tag>, merge them if it's just formatting and if all attributes match.
+
     private final DocBookStreamWriter db;
-    private DelayedTag delayed;
+    private final Stack<Tag> tags;
+    private boolean justClosedInlineTag = false;
 
-    private enum DelayedTagType {
-        PARAGRAPH, INLINE, BLOCKINLINE, BLOCK;
-    }
-
-    private static class DelayedTag {
-        @NotNull final DelayedTagType type;
+    private static class Tag {
         @NotNull final String tag;
         @Nullable Map<String, String> attributes;
 
-        DelayedTag(@NotNull DelayedTagType type, @NotNull String tag) {
-            this.type = type;
+        Tag(@NotNull String tag) {
             this.tag = tag;
         }
 
-        DelayedTag(@NotNull DelayedTagType type, @NotNull String tag, @NotNull Map<String, String> attributes) {
-            this.type = type;
+        Tag(@NotNull String tag, @NotNull Map<String, String> attributes) {
             this.tag = tag;
             this.attributes = attributes;
         }
@@ -34,30 +32,30 @@ public class DelayedSimplifyingDocBookStreamWriter implements DocBookStreamWrite
 
     public DelayedSimplifyingDocBookStreamWriter(DocBookStreamWriter db) {
         this.db = db;
-        delayed = null;
+        tags = new Stack<>();
     }
 
+    private void delayTag() {}
+
     private void writeDelayedTag() throws XMLStreamException {
-        if (delayed == null) {
+        if (tags.empty()) {
             return;
         }
 
-        switch (delayed.type) {
-            case PARAGRAPH:
-                db.closeParagraphTag();
-                break;
-            case INLINE:
-                db.closeInlineTag();
-                break;
-            case BLOCKINLINE:
-                db.closeBlockInlineTag();
-                break;
-            case BLOCK:
-                db.closeBlockTag();
-                break;
-        }
+        tags.pop();
+        db.closeInlineTag();
+    }
 
-        delayed = null;
+    private boolean doesDelayedTagMatch(@NotNull String tag) {
+        return ! tags.empty() && tags.peek().tag.equals(tag) && tags.peek().attributes == null;
+    }
+
+    private boolean doesDelayedTagMatch(@NotNull String tag, @NotNull Map<String, String> attributes) {
+        return ! tags.empty() && tags.peek().tag.equals(tag) && Objects.equals(tags.peek().attributes, attributes);
+    }
+
+    private void addTag(Tag tag) {
+        tags.push(tag);
     }
 
     @Override
@@ -97,17 +95,33 @@ public class DelayedSimplifyingDocBookStreamWriter implements DocBookStreamWrite
 
     @Override
     public void openInlineTag(@NotNull String tag) throws XMLStreamException {
+        if (doesDelayedTagMatch(tag)) {
+            return;
+        }
+
+        writeDelayedTag();
         db.openInlineTag(tag);
+        addTag(new Tag(tag));
     }
 
     @Override
     public void openInlineTag(@NotNull String tag, @NotNull Map<String, String> attributes) throws XMLStreamException {
+        // This line must be before the return: otherwise, the tag may be closed too soon.
+        justClosedInlineTag = false;
+
+        if (doesDelayedTagMatch(tag, attributes)) {
+            return;
+        }
+
+        writeDelayedTag();
         db.openInlineTag(tag, attributes);
+        addTag(new Tag(tag, attributes));
     }
 
     @Override
-    public void closeInlineTag() throws XMLStreamException {
-        db.closeInlineTag();
+    public void closeInlineTag() {
+        justClosedInlineTag = true;
+        delayTag();
     }
 
     @Override
@@ -147,6 +161,11 @@ public class DelayedSimplifyingDocBookStreamWriter implements DocBookStreamWrite
 
     @Override
     public void writeCharacters(@NotNull String text) throws XMLStreamException {
+        if (justClosedInlineTag) {
+            writeDelayedTag();
+            justClosedInlineTag = false;
+        }
+
         db.writeCharacters(text);
     }
 }
