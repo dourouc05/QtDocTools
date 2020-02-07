@@ -51,6 +51,7 @@ public class DocxInputImpl {
     @SuppressWarnings("WeakerAccess")
     public DocxInputImpl(@NotNull String filename) throws IOException, XMLStreamException {
         doc = new XWPFDocument(new FileInputStream(filename));
+//        dbStream = new DirectDocBookStreamWriter();
         dbStream = new DelayedSimplifyingDocBookStreamWriter(new DirectDocBookStreamWriter());
     }
 

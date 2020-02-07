@@ -35,8 +35,6 @@ public class DelayedSimplifyingDocBookStreamWriter implements DocBookStreamWrite
         tags = new Stack<>();
     }
 
-    private void delayTag() {}
-
     private void writeDelayedTag() throws XMLStreamException {
         if (tags.empty()) {
             return;
@@ -95,6 +93,9 @@ public class DelayedSimplifyingDocBookStreamWriter implements DocBookStreamWrite
 
     @Override
     public void openInlineTag(@NotNull String tag) throws XMLStreamException {
+        // This line must be before the return: otherwise, the tag may be closed too soon.
+        justClosedInlineTag = false;
+
         if (doesDelayedTagMatch(tag)) {
             return;
         }
@@ -121,7 +122,6 @@ public class DelayedSimplifyingDocBookStreamWriter implements DocBookStreamWrite
     @Override
     public void closeInlineTag() {
         justClosedInlineTag = true;
-        delayTag();
     }
 
     @Override
@@ -136,7 +136,7 @@ public class DelayedSimplifyingDocBookStreamWriter implements DocBookStreamWrite
 
     @Override
     public void openBlockTag(@NotNull String tag) throws XMLStreamException {
-        db.openBlockInlineTag(tag);
+        db.openBlockTag(tag);
     }
 
     @Override
