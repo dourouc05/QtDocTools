@@ -49,6 +49,7 @@ public class DocxOutputImpl extends DefaultHandler {
     private int paragraphNumber = -1;
     private int runNumber = -1;
     private int runCharactersNumber = -1;
+    private String currentLink = null; // When != null: all new runs must point to that link.
 
     private boolean footnotesInitialised = false;
     private XWPFFootnote footnote;
@@ -207,16 +208,17 @@ public class DocxOutputImpl extends DefaultHandler {
             return font;
         }
 
-        private XWPFHyperlinkRun createHyperlinkRun(@NotNull String uri) {
+        private String createHyperlinkReference(@NotNull String uri) {
+            return paragraph.getLast().getPart().getPackagePart().addExternalRelationship(
+                    uri, XWPFRelation.HYPERLINK.getRelation()
+            ).getId();
+        }
+
+        private XWPFHyperlinkRun createHyperlinkRun(@NotNull String rId) {
             // https://stackoverflow.com/questions/55275241/how-to-add-a-hyperlink-to-the-footer-of-a-xwpfdocument-using-apache-poi
             // https://github.com/apache/poi/pull/153
             // https://bz.apache.org/bugzilla/show_bug.cgi?id=64038
             assert paragraph.size() > 0;
-
-            // Create a relationship ID for this link.
-            String rId = paragraph.getLast().getPart().getPackagePart().addExternalRelationship(
-                    uri, XWPFRelation.HYPERLINK.getRelation()
-            ).getId();
 
             // Create the run.
             CTHyperlink ctHyperLink = paragraph.getLast().getCTP().addNewHyperlink();
@@ -275,7 +277,8 @@ public class DocxOutputImpl extends DefaultHandler {
             // Prepare the current paragraph to only receive this image.
             if (run.text().length() > 0) {
                 paragraph.getLast().removeRun(0);
-                run = paragraph.getLast().createRun();
+                createNewRun();
+                runNumber -= 1;
             }
 
             // To allow images in admonitions, apply the admonition style to the image.
@@ -628,9 +631,9 @@ public class DocxOutputImpl extends DefaultHandler {
             // Otherwise, create a new paragraph at the end of the document.
             paragraph.addLast(doc.createParagraph());
         }
-        run = paragraph.getLast().createRun();
+
+        createNewRun();
         runNumber = 0;
-        runCharactersNumber = 0;
     }
 
     /** Actual SAX handler. **/
@@ -703,9 +706,33 @@ public class DocxOutputImpl extends DefaultHandler {
             paragraph.getLast().removeRun(0);
         }
 
-        run = paragraph.getLast().createRun();
+        createNewRun();
+    }
+
+    private void setCurrentLink(String uri) {
+        currentLink = h.createHyperlinkReference(uri);
+    }
+
+    private void setCurrentLink() {
+        currentLink = null;
+    }
+
+    private void createNewRun() {
+        if (currentLink == null) {
+            run = paragraph.getLast().createRun();
+        } else {
+            run = h.createHyperlinkRun(currentLink);
+        }
+
         runNumber += 1;
         runCharactersNumber = 0;
+
+        // Set formatting for the link.
+        // TODO: Rather use the Hyperlink style? Only if not in a not-Normal style...
+        if (currentLink != null) {
+            run.setUnderline(UnderlinePatterns.SINGLE);
+            run.setColor("0563c1");
+        }
     }
 
     @Override
@@ -713,9 +740,10 @@ public class DocxOutputImpl extends DefaultHandler {
         // Note: XInclude not supported right now. Could easily be done to export to DOCX, but the reverse would be
         // much harder. TODO at a later point.
 
+
         if (DocBookBlock.blockToPredicate.get(DocBookBlock.ARTICLE).test(qName)) {
             if (currentLevel.peekRootBook()) {
-                throw new DocxException("unexpected article within a book (use articles).");
+                throw new DocxException("unexpected article within a book (use stand-alone articles).");
                 // TODO: Maybe this is too conservative? Articles in books are allowed by the standard (equivalent to chapters).
             }
 
@@ -776,7 +804,6 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         else if (SAXHelpers.isAuthorTag(qName) || SAXHelpers.isEditorTag(qName)) {
-            // TODO: don't enter this if in an authorgroup.
             if (! currentLevel.peekInfo()) {
                 throw new DocxException("unexpected author outside an info container.");
             }
@@ -786,13 +813,15 @@ public class DocxOutputImpl extends DefaultHandler {
 
             paragraph.getLast().setStyle(DocBookBlock.tagToStyleID(SAXHelpers.isAuthorTag(qName) ? "author" : "editor", attributes));
 
-            run = paragraph.getLast().createRun();
-            runCharactersNumber = 0;
+            createNewRun();
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isBelowAuthor(qName)) {
             // Hard to implement: you may have a <personname><firstname>, both must be represented as character
             // styles in DOCX, but a run may only have one such style... Hence, don't represent any, to be consistent.
             // Still, the text within the tag must still appear in the output!
+            // TODO: output authors as list, with a rigid structure? When reimporting the document, do what you can:
+            // TODO: if it's not possible to retrieve all authors (because of modifications), too bad.
+            // TODO: no different styles, but rather "First name: XXX. Last name: XXX.", like programlistings.
             System.err.println(getLocationString() + "ignoring tag: " + qName + ". The content will not be lost, however.");
         } else if (SAXHelpers.isAuthorGroupTag(qName)) {
             if (! currentLevel.peekInfo()) {
@@ -804,13 +833,7 @@ public class DocxOutputImpl extends DefaultHandler {
             // TODO: First, encode "Authors:", then a list of authors or editors.
             // TODO: What about other credits? Implement some kind of fuzzy matching in case of a typo (with a warning)! http://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/StringUtils.html#getLevenshteinDistance%28java.lang.CharSequence,%20java.lang.CharSequence%29?
 //            paragraph = Stream.of(doc.createParagraph()).collect(Collectors.toCollection(ArrayDeque::new));
-//            runNumber = 0;
-//
 //            paragraph.getLast().setStyle(DocBookBlock.tagToStyleID("authorgroup", attributes));
-//
-//            run = paragraph.getLast().createRun();
-//            runCharactersNumber = 0;
-//            warnUnknownAttributes(attributes);
         }
 
         else if (SAXHelpers.isSectionTag(qName)) {
@@ -847,8 +870,7 @@ public class DocxOutputImpl extends DefaultHandler {
                 throw new DocxException("title not expected");
             }
 
-            run = paragraph.getLast().createRun();
-            runCharactersNumber = 0;
+            createNewRun();
             warnUnknownAttributes(attributes);
         }
 
@@ -912,8 +934,7 @@ public class DocxOutputImpl extends DefaultHandler {
             paragraph.getLast().setStyle(paragraphStyle);
 
             // Prepare a first run to receive text.
-            run = paragraph.getLast().createRun();
-            runCharactersNumber += 1;
+            createNewRun();
             warnUnknownAttributes(attributes);
         }
 
@@ -945,9 +966,7 @@ public class DocxOutputImpl extends DefaultHandler {
 
             // Create a new run if this one is already started.
             if (run.text().length() > 0) {
-                run = paragraph.getLast().createRun();
-                runNumber += 1;
-                runCharactersNumber = 0;
+                createNewRun();
             }
 
             setRunFormatting();
@@ -956,15 +975,10 @@ public class DocxOutputImpl extends DefaultHandler {
             Map<String, String> attr = SAXHelpers.attributes(attributes);
             warnUnknownAttributes(attr, Stream.of("href"));
 
-            // Always create a new run, as it is much easier than to replace a run within the paragraph.
-            run = h.createHyperlinkRun(attr.get("href"));
-            runNumber += 1;
-            runCharactersNumber = 0;
 
-            // Set formatting for the link.
-            // TODO: Rather use the Hyperlink style?
-            run.setUnderline(UnderlinePatterns.SINGLE);
-            run.setColor("0563c1");
+            // Always create a new run, as it is much easier than to replace a run within the paragraph.
+            setCurrentLink(attr.get("href"));
+            createNewRun();
         } else if (SAXHelpers.isFootnoteTag(qName)) {
             if (paragraph.size() < 1) {
                 throw new DocxException("unexpected end of footnote");
@@ -980,14 +994,12 @@ public class DocxOutputImpl extends DefaultHandler {
             paragraph.getLast().setStyle("FootnoteText");
             paragraphStyle = "FootnoteText";
 
-            run = paragraph.getLast().createRun();
+            createNewRun();
             run.setStyle("FootnoteReference");
             run.getCTR().addNewFootnoteRef(); // Not addNewFootnoteReference, this is not recognised by Word.
 
             // Create a new run, so that the new text is not within the same run.
-            run = paragraph.getLast().createRun();
-            runNumber += 1;
-            runCharactersNumber = 0;
+            createNewRun();
         }
 
         // Tables: only HTML implemented.
@@ -1029,8 +1041,7 @@ public class DocxOutputImpl extends DefaultHandler {
             }
             paragraph.addLast(tableCell.getParagraphs().get(0));
             runNumber = 0;
-            run = paragraph.getLast().createRun();
-            runCharactersNumber = 0;
+            createNewRun();
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isTableHeaderTag(qName) || SAXHelpers.isTableFooterTag(qName)) {
             throw new DocxException("table headers/footers are not handled.");
@@ -1086,9 +1097,8 @@ public class DocxOutputImpl extends DefaultHandler {
                 warnUnknownAttributes(attr);
             }
 
-            run = paragraph.getLast().createRun();
+            createNewRun();
             runNumber = 0;
-            runCharactersNumber = 0;
         }
 
         // Media tags: for now, only images are implemented.
@@ -1263,8 +1273,7 @@ public class DocxOutputImpl extends DefaultHandler {
 
             createNewParagraph();
             paragraph.getLast().setStyle("VariableListTitle");
-            run = paragraph.getLast().createRun();
-            runCharactersNumber = 0;
+            createNewRun();
             // Then directly inline content.
 
             warnUnknownAttributes(attributes);
@@ -1325,13 +1334,11 @@ public class DocxOutputImpl extends DefaultHandler {
         } else if (SAXHelpers.isBelowAuthor(qName)) {
             // Create a run with just a space in it, as the tag before probably does not end with a space.
             // First name and family name should be separated with one space, for instance.
-            run = paragraph.getLast().createRun();
+            createNewRun();
             run.setText(" ");
 
             // A new run for the rest of the text.
-            run = paragraph.getLast().createRun();
-            runNumber += 2;
-            runCharactersNumber = 0;
+            createNewRun();
             setRunFormatting();
         } else if (SAXHelpers.isSectionTag(qName)) {
             currentLevel.pop(Level.SECTION, new DocxException("unexpected end of section"));
@@ -1380,20 +1387,15 @@ public class DocxOutputImpl extends DefaultHandler {
             }
 
             currentFormatting.remove(currentFormatting.size() - 1);
-            run = paragraph.getLast().createRun();
-            runNumber += 1;
-            runCharactersNumber = 0;
+            createNewRun();
             setRunFormatting();
         } else if (SAXHelpers.isLinkTag(qName)) {
             // Create a new run, so that the new text is not within the same run.
-            run = paragraph.getLast().createRun();
-            runNumber += 1;
-            runCharactersNumber = 0;
+            setCurrentLink();
+            createNewRun();
         } else if (SAXHelpers.isFootnoteTag(qName)) {
             footnote = null;
-            run = paragraph.getLast().createRun();
-            runNumber = paragraph.getLast().getRuns().size();
-            runCharactersNumber = 0;
+            createNewRun();
         }
 
         // Tables: update counters.
