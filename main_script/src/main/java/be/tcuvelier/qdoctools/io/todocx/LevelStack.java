@@ -72,6 +72,17 @@ public class LevelStack {
         return levels.peek();
     }
 
+    public Level peekSecond() {
+        if (levels.size() <= 1) {
+            return null;
+        }
+
+        Level first = levels.pop();
+        Level second = levels.peek();
+        levels.push(first);
+        return second;
+    }
+
     public boolean peekRootArticle() {
         return peek() == Level.ROOT_ARTICLE;
     }
@@ -148,5 +159,10 @@ public class LevelStack {
 
     public boolean peekVariableList() {
         return peek() == Level.VARIABLE_LIST;
+    }
+
+    public boolean peekSecondAdmonition() {
+        Level second = peekSecond();
+        return second == Level.CAUTION || second == Level.IMPORTANT || second == Level.NOTE || second == Level.TIP || second == Level.WARNING;
     }
 }

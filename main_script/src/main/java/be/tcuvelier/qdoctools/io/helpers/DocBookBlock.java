@@ -13,7 +13,7 @@ public enum DocBookBlock {
     ARTICLE, BOOK, PART, CHAPTER,
     AUTHOR, EDITOR, AUTHORGROUP,
     // https://github.com/docbook/xslt10-stylesheets/blob/master/xsl/html/admon.xsl#L133
-    CAUTION, IMPORTANT, NOTE, TIP, WARNING;
+    CAUTION, IMPORTANT, NOTE, TIP, WARNING; // Admonitions (see todocx.Level);
 
     private static final List<Triple<DocBookBlock, String, String>> preformatted = List.of(
             new Triple<>(PROGRAM_LISTING, "programlisting", "ProgramListing"),

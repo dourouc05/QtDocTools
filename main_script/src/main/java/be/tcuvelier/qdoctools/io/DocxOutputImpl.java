@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -241,17 +243,28 @@ public class DocxOutputImpl extends DefaultHandler {
 
             warnUnknownAttributes(attr, Stream.of("fileref", "width", "height"));
 
+            // Detect the format of the image.
             int format = filenameToWordFormat(filename);
             if (format < 0) {
                 throw new DocxException("unknown image extension " + filename + ".");
             }
 
-            // Actually add the image.
+            // Prepare the current paragraph to only receive this image.
             if (run.text().length() > 0) {
                 paragraph.getLast().removeRun(0);
                 run = paragraph.getLast().createRun();
             }
 
+            // To allow images in admonitions, apply the admonition style to the image.
+            if (currentLevel.peekSecondAdmonition()) {
+                String style = DocBookBlock.docbookTagToStyleID.get(Level.qnameFromAdmonition(currentLevel.peekSecond()));
+                if (style != null) {
+                    paragraphStyle = style;
+                    paragraph.getLast().setStyle(style);
+                }
+            }
+
+            // Actually add the image.
             try {
                 run.addPicture(new FileInputStream(filePath.toFile()), format,
                         filePath.getFileName().toString(), width, height);
@@ -362,6 +375,99 @@ public class DocxOutputImpl extends DefaultHandler {
             numbering.addAbstractNum(abstractNum);
 
             return numId;
+        }
+
+        private void iterateOverStyleHierarchy(XWPFStyle s, Consumer<XWPFStyle> f) {
+            XWPFStyle style = s;
+            XWPFStyles styles = s.getStyles();
+            while (style != null) {
+                f.accept(style);
+                style = styles.getStyle(style.getBasisStyleID());
+            }
+        }
+
+        private void copyStyleToParagraph(XWPFStyle parentStyle, XWPFParagraph p) {
+            // Copy groups of properties from the given style (or any parent style).
+            // Properties may come from any parent! However, the child styles always override a parent: once a property
+            // has been set, it should not get overwritten.
+            // Should be called once the paragraph is empty, so that the properties can be properly updated for all
+            // its runs.
+
+            iterateOverStyleHierarchy(parentStyle, (XWPFStyle s) -> {
+                /* Paragraph style */
+                CTPPr ppr = s.getCTStyle().getPPr();
+                if (ppr != null) {
+                    // Borders.
+                    if (ppr.getPBdr() != null) {
+                        CTPBdr pbdr = ppr.getPBdr();
+
+                        if (pbdr.getBetween() != null && p.getBorderBetween().equals(Borders.NONE)) {
+                            p.setBorderBetween(Borders.valueOf(pbdr.getBetween().getVal().intValue()));
+                        }
+                        if (pbdr.getBottom() != null && p.getBorderBottom().equals(Borders.NONE)) {
+                            p.setBorderBottom(Borders.valueOf(pbdr.getBottom().getVal().intValue()));
+                        }
+                        if (pbdr.getLeft() != null && p.getBorderLeft().equals(Borders.NONE)) {
+                            p.setBorderLeft(Borders.valueOf(pbdr.getLeft().getVal().intValue()));
+                        }
+                        if (pbdr.getRight() != null && p.getBorderRight().equals(Borders.NONE)) {
+                            p.setBorderRight(Borders.valueOf(pbdr.getRight().getVal().intValue()));
+                        }
+                        if (pbdr.getTop() != null && p.getBorderTop().equals(Borders.NONE)) {
+                            p.setBorderTop(Borders.valueOf(pbdr.getTop().getVal().intValue()));
+                        }
+                    }
+
+                    // Indentation.
+                    if (ppr.getInd() != null) {
+                        CTInd ind = ppr.getInd();
+
+                        if (ind.getFirstLine() != null && p.getIndentationFirstLine() == -1) {
+                            p.setIndentationFirstLine(ind.getFirstLine().intValue());
+                        }
+                        if (ind.getHanging() != null && p.getIndentationHanging() == -1) {
+                            p.setIndentationHanging(ind.getHanging().intValue());
+                        }
+                        if (ind.getLeft() != null && p.getIndentationLeft() == -1) {
+                            p.setIndentationLeft(ind.getLeft().intValue());
+                        }
+                        if (ind.getRight() != null && p.getIndentationRight() == -1) {
+                            p.setIndentationRight(ind.getRight().intValue());
+                        }
+                    }
+
+                    // Shades.
+                    if (ppr.getShd() != null) {
+                        CTPPr p_ppr = p.getCTP().getPPr();
+                        if (p_ppr == null) {
+                            p_ppr = p.getCTP().addNewPPr();
+                        }
+
+                        p_ppr.setShd(ppr.getShd());
+                    }
+                }
+
+                /* Run style */
+                CTRPr rpr = s.getCTStyle().getRPr();
+                if (rpr != null) {
+                    // Iterate over the runs.
+                    for (CTR r : p.getCTP().getRList()) {
+                        // Text outline. Apparently not yet supported by POI. (Albeit it's from Word 2010: CT_TextOutlineEffect,
+                        // https://docs.microsoft.com/en-us/openspecs/office_standards/ms-docx/9704b59f-bc49-4618-ac66-41beb82a0d7f)
+                        // rpr.getTextOutline();
+
+                        // Shades.
+                        if (rpr.getShd() != null) {
+                            CTRPr p_rpr = r.getRPr();
+                            if (p_rpr == null) {
+                                p_rpr = r.addNewRPr();
+                            }
+
+                            p_rpr.setShd(rpr.getShd());
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -725,6 +831,8 @@ public class DocxOutputImpl extends DefaultHandler {
                 throw new DocxException("admonition " + qName + " not found in docbookTagToStyleID.");
             }
 
+            currentLevel.push(Level.fromAdmonitionQname(qName));
+
             warnUnknownAttributes(attributes);
         }
 
@@ -986,6 +1094,12 @@ public class DocxOutputImpl extends DefaultHandler {
             createNewParagraph();
             paragraph.getLast().setStyle("Caption");
 
+            // If in an admonition, update its style to match the admonition.
+            if (currentLevel.peekSecondAdmonition()) {
+                XWPFStyle s = doc.getStyles().getStyle(DocBookBlock.docbookTagToStyleID.get(Level.qnameFromAdmonition(currentLevel.peekSecond())));
+                h.copyStyleToParagraph(s, paragraph.getLast());
+            }
+
             // Make the image and its caption stick together (i.e. on the same page).
             if (currentLevel.peekFigure()) {
                 paragraph.getLast().setKeepNext(true);
@@ -1207,6 +1321,7 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // Admonitions.
         else if (DocBookBlock.isAdmonition(qName)) {
+            currentLevel.pop(Level.fromAdmonitionQname(qName));
             ensureNoTextAllowed();
             restoreParagraphStyle();
         }
