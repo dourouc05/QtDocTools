@@ -14,14 +14,19 @@ public enum Level {
         // See helpers.DocBookBlock.admonitions.
         switch (qname) {
             case "caution":
+            case "db:caution":
                 return CAUTION;
             case "important":
+            case "db:important":
                 return IMPORTANT;
             case "note":
+            case "db:note":
                 return NOTE;
             case "tip":
+            case "db:tip":
                 return TIP;
             case "warning":
+            case "db:warning":
                 return WARNING;
         }
         throw new IllegalArgumentException("Qname not recognised as an admonition: " + qname);

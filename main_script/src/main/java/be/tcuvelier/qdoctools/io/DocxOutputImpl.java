@@ -123,6 +123,28 @@ public class DocxOutputImpl extends DefaultHandler {
     // less clean to use.)
 
     private class POIHelpers {
+        private ParagraphAlignment alignmentToWordAligment(@NotNull String align) {
+            switch (align) {
+                case "center":
+                    return ParagraphAlignment.CENTER;
+                case "char":
+                    // No easy translation to Word.
+                    // DocBook definition (https://tdg.docbook.org/tdg/5.2/imagedata.html):
+                    //      Aligned horizontally on the specified character
+                    // Available to Word:
+                    //      http://officeopenxml.com/WPalignment.php
+                    //      https://docs.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.alignment?view=openxml-2.8.1
+                    throw new IllegalArgumentException("DocBook char alignment is not supported");
+                case "justify":
+                    return ParagraphAlignment.DISTRIBUTE;
+                case "left":
+                    return ParagraphAlignment.LEFT;
+                case "right":
+                    return ParagraphAlignment.RIGHT;
+            }
+            return null;
+        }
+
         private int filenameToWordFormat(@NotNull String filename) {
             // See org.apache.poi.xwpf.usermodel.Document.
             String[] parts = filename.split("\\.");
@@ -221,13 +243,14 @@ public class DocxOutputImpl extends DefaultHandler {
             Path filePath = folder.resolve(filename);
             int width;
             int height;
+            String align = attr.getOrDefault("width", null);
 
             // Get the image width and height: either from the XML or from the image itself.
             // Avoid loading the image if both dimensions are known from the XML.
             {
                 String imageWidth = null;
                 String imageHeight = null;
-                if (! attr.containsKey("width") && ! attr.containsKey("height")) {
+                if (! attr.containsKey("width") && ! attr.containsKey("depth")) {
                     try {
                         BufferedImage img = ImageIO.read(filePath.toFile());
                         imageWidth = img.getWidth() + "px";
@@ -238,10 +261,10 @@ public class DocxOutputImpl extends DefaultHandler {
                 }
 
                 width = parseMeasurementAsEMU(attr.getOrDefault("width", imageWidth));
-                height = parseMeasurementAsEMU(attr.getOrDefault("height", imageHeight));
+                height = parseMeasurementAsEMU(attr.getOrDefault("depth", imageHeight));
             }
 
-            warnUnknownAttributes(attr, Stream.of("fileref", "width", "height"));
+            warnUnknownAttributes(attr, Stream.of("fileref", "width", "depth", "align"));
 
             // Detect the format of the image.
             int format = filenameToWordFormat(filename);
@@ -261,6 +284,14 @@ public class DocxOutputImpl extends DefaultHandler {
                 if (style != null) {
                     paragraphStyle = style;
                     paragraph.getLast().setStyle(style);
+                }
+            }
+
+            // Use the last attributes.
+            if (align != null && ! align.isBlank()) {
+                ParagraphAlignment a = h.alignmentToWordAligment(align);
+                if (a != null) {
+                    paragraph.getLast().setAlignment(a);
                 }
             }
 
@@ -515,10 +546,12 @@ public class DocxOutputImpl extends DefaultHandler {
 
     private void warnUnknownAttributes(Map<String, String> attr, Stream<String> recognised) {
         Map<String, String> unknown = new HashMap<>(attr);
-        for (String s: recognised.collect(Collectors.toCollection(Vector::new))) {
+        for (String s : recognised.collect(Collectors.toCollection(Vector::new))) {
             unknown.remove(s);
         }
-        warnUnknownAttributes(unknown);
+        if (unknown.size() > 0) {
+            warnUnknownAttributes(unknown);
+        }
     }
 
     /** Remaining POI helpers, really specific to this class. **/

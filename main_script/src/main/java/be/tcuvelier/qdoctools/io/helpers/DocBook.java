@@ -1,8 +1,13 @@
 package be.tcuvelier.qdoctools.io.helpers;
 
+import java.util.Arrays;
 import java.util.function.Predicate;
 
 class DocBook {
+    static Predicate<String> tagRecogniser(String... tag) {
+        return qName -> Arrays.stream(tag).anyMatch(t -> recogniseTag(t, qName));
+    }
+
     static Predicate<String> tagRecogniser(String tag) {
         return qName -> recogniseTag(tag, qName);
     }
