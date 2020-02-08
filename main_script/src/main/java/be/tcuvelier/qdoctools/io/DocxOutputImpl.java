@@ -1167,7 +1167,7 @@ public class DocxOutputImpl extends DefaultHandler {
 
                 // Append this as a new author or replace the empty string.
                 String currentAuthor = paragraph.getLast().getText();
-                if (! coreProps.getCreator().isBlank()) {
+                if (coreProps.getCreator() != null && ! coreProps.getCreator().isBlank()) {
                     currentAuthor = coreProps.getCreator() + currentAuthor;
                 }
                 coreProps.setCreator(currentAuthor);
