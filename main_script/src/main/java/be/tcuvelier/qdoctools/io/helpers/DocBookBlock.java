@@ -80,6 +80,10 @@ public enum DocBookBlock {
     }
 
     public static String tagToStyleID(String localName, Attributes attributes) {
+        return tagToStyleID(localName);
+    }
+
+    public static String tagToStyleID(String localName) {
         // Attributes are ignored.
 
         // Many cases are really simple: just a function to call to decide which formatting it is.

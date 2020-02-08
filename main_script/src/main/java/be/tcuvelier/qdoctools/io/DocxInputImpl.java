@@ -5,6 +5,7 @@ import be.tcuvelier.qdoctools.io.helpers.DocBookAlignment;
 import be.tcuvelier.qdoctools.io.helpers.DocBookBlock;
 import be.tcuvelier.qdoctools.io.helpers.DocBookFormatting;
 import be.tcuvelier.qdoctools.io.helpers.Tuple;
+import be.tcuvelier.qdoctools.io.todocx.Level;
 import org.apache.poi.xwpf.usermodel.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -31,7 +32,7 @@ public class DocxInputImpl {
 
     private PreformattedMetadata preformattedMetadata;
     private boolean isDisplayedFigure = false;
-    private boolean isWithinAdmonition = false;
+    private Level isWithinAdmonition = null;
     private boolean isWithinList = false;
 
     private int currentDefinitionListItemNumber = -1;
@@ -557,9 +558,10 @@ public class DocxInputImpl {
 
     private void visitAdmonition(@NotNull XWPFParagraph p) throws XMLStreamException {
         // Open the admonition if this is the first paragraph with this kind of style.
-        if (! isWithinAdmonition) {
-            isWithinAdmonition = true;
-            dbStream.openBlockTag(DocBookBlock.styleIDToDocBookTag.get(p.getStyleID()));
+        if (isWithinAdmonition == null) {
+            String qname = DocBookBlock.styleIDToDocBookTag.get(p.getStyleID());
+            dbStream.openBlockTag(qname);
+            isWithinAdmonition = Level.fromAdmonitionQname(qname);
         }
 
         visitNormalParagraph(p);
@@ -570,16 +572,27 @@ public class DocxInputImpl {
             List<XWPFParagraph> paragraphs = p.getDocument().getParagraphs();
 
             boolean close;
-            if (pos >= paragraphs.size() - 1) {
+            if (pos >= paragraphs.size() - 1) { // If last paragraph.
                 close = true;
-            } else {
+            } else { // Check on the next paragraph.
                 XWPFParagraph nextP = paragraphs.get(pos + 1);
-                close = ! p.getStyleID().equals(nextP.getStyleID());
+                String targetStyle = DocBookBlock.tagToStyleID(Level.qnameFromAdmonition(isWithinAdmonition));
+
+                if (nextP.getStyleID().equals(targetStyle)) { // Same style.
+                    close = false;
+                } else if (pos <= paragraphs.size() - 2) {
+                    // Has at least two paragraphs after: if it's a title and a figure (with the admonition style),
+                    // the admonition does not stop here.
+                    XWPFParagraph nextNextP = paragraphs.get(pos + 2);
+                    close = ! nextNextP.getStyleID().equals(targetStyle);
+                } else { // Not a single case matches, close the admonition.
+                    close = true;
+                }
             }
 
             if (close) {
                 dbStream.closeBlockTag(); // </db:admonition tag>
-                isWithinAdmonition = false;
+                isWithinAdmonition = null;
             }
         }
     }
