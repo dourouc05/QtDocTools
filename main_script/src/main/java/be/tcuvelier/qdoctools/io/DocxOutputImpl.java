@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -35,14 +34,15 @@ import java.util.stream.Stream;
 public class DocxOutputImpl extends DefaultHandler {
     /** Internal variables. **/
 
-    private Locator locator;
-    private Path folder;
-    XWPFDocument doc;
+    private Locator locator; // Tracks the state within the XML document, useful to display useful error messages.
+    private Path folder; // Folder of the document. Used to determine where to store images.
+    XWPFDocument doc; // DOCX document being written.
     private POIHelpers h = new POIHelpers();
 
     // Paragraph being filled.
     private Deque<XWPFParagraph> paragraph; // Paragraph being written while another paragraph is not finished yet,
-    // e.g. within footnotes.
+    // e.g. within footnotes. In normal cases, this deque only stores one paragraph. At any rate, most operations
+    // are performed only on the last element of the deque.
     private XWPFRun run; // Belongs to the last paragraph in the queue.
 
     // Current state.
@@ -51,23 +51,26 @@ public class DocxOutputImpl extends DefaultHandler {
     private int runCharactersNumber = -1;
     private String currentLink = null; // When != null: all new runs must point to that link.
 
-    private boolean footnotesInitialised = false;
-    private XWPFFootnote footnote;
-    private String paragraphStyle = "Normal";
+    private boolean footnotesInitialised = false; // Whether initialiseFootnotes() should be called.
+    private XWPFFootnote footnote; // Footnote being filled.
+    private String paragraphStyle = "Normal"; // Current style for the current paragraph. Paragraphs created when
+    // opening a <para> tag will have the same style.
 
-    private BigInteger numbering;
-    private BigInteger lastFilledNumbering = BigInteger.ZERO;
-    private int numberingItemParagraphNumber = -1;
-    private List<String> segmentedListHeaders; // TODO: Limitation for ease of implementation: no styling stored in this list, just raw headers.
+    private BigInteger numbering; // != null when filling a list. Used when opening a <para> tag.
+    private BigInteger lastFilledNumbering = BigInteger.ZERO; // Ease the look-up for a new numbering to fill.
+    private int numberingItemParagraphNumber = -1; // Check whether multiple paragraphs are used for a single item.
+    private List<String> segmentedListHeaders; // Stores the header of a segmented list (Word requires that they are
+    // repeated). TODO: Limitation for ease of implementation: no styling stored in this list, just raw headers.
     private int segmentNumber = -1;
 
-    private XWPFTable table; // TODO: What about nested tables? Really care about this case? Would need to stack them...
-    private XWPFTableRow tableRow;
-    private int tableRowNumber = -1;
-    private XWPFTableCell tableCell;
-    private int tableColumnNumber = -1;
+    private XWPFTable table; // Table being currently filled TODO: What about nested tables? Really care about this case? Would need to stack them...
+    private XWPFTableRow tableRow; // Table row being currently filled. null outside a table row.
+    private int tableRowNumber = -1; // Number of the current row (starts at 0).
+    private XWPFTableCell tableCell; // Table cell being currently filled (i.e. the intersection of a row and a column).
+    // null when outside a table cell.
+    private int tableColumnNumber = -1; // Number of the current column within the row (starts at 0).
 
-    private LevelStack currentLevel = new LevelStack();
+    private LevelStack currentLevel = new LevelStack(); // Records some tags are are currently open.
     private int currentSectionDepth = 0; // 0: root; >0: sections.
     private List<DocBookFormatting> currentFormatting = new ArrayList<>(); // Order: FIFO, i.e. first tag met in
     // the document is the first one in the vector. TODO: migrate to Deque?
@@ -325,8 +328,7 @@ public class DocxOutputImpl extends DefaultHandler {
             }
             lastFilledNumbering = abstractNumId;
 
-            // Create the abstract numbering from scratch.
-            // Inspired by
+            // Create the abstract numbering from scratch. Inspired by:
             // https://stackoverflow.com/questions/1940911/openxml-2-sdk-word-document-create-bulleted-list-programmatically
             // http://officeopenxml.com/WPnumbering.php
             CTAbstractNum ctAbstractNum = CTAbstractNum.Factory.newInstance();
@@ -534,8 +536,9 @@ public class DocxOutputImpl extends DefaultHandler {
             }
 
             // Special message for ubiquitous linking attributes.
-            if (key.equals("href")) {
-                System.err.println(getLocationString() + "ubiquitous linking attributes like " + key + " are not supported.");
+            if (key.equals("href") && currentLink == null) {
+                System.err.println(getLocationString() + "ubiquitous linking attributes like " + key + " are not implemented in this context.");
+                // Otherwise, the currentLink variable would be filled with an ID.
                 continue;
             }
 
@@ -740,6 +743,12 @@ public class DocxOutputImpl extends DefaultHandler {
         // Note: XInclude not supported right now. Could easily be done to export to DOCX, but the reverse would be
         // much harder. TODO at a later point.
 
+        if (currentLink != null) {
+            throw new IllegalStateException("Not yet implemented: tag within a ubiquitous link.");
+            // This would require to register all opening/closing tags since the opening of the ubiquitous link.
+            // Indeed, when closing a tag, the attributes are not passed anymore! So there is no other way to find which
+            // tag opened the link. A lot of effort that will probably not be required.
+        }
 
         if (DocBookBlock.blockToPredicate.get(DocBookBlock.ARTICLE).test(qName)) {
             if (currentLevel.peekRootBook()) {
@@ -940,12 +949,19 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // Inline tags.
         else if (SAXHelpers.isFormatting(qName)) {
-            if (currentLevel.peekBlockPreformatted()) {
+            if (currentLevel.peekBlockPreformatted() && currentFormatting.size() > 1) {
+                // Adding one more tag is possible (like <screen><prompt>…</prompt>…</screen>).
+                // More complex things are not.
                 System.err.println(getLocationString() + "formatting (" + qName + ") within a preformatted block: " +
                         "the document is probably too complex for this kind of tool to ever success at round-tripping; " +
                         "it will do its best, but don't complain if some content is lost during round-tripping.");
             }
+
             if (currentFormatting.size() > 0) {
+                // Word cannot store infinitely many tags: one for paragraphs (blocks) and one for runs (inlines).
+                // More than one formatting at a time is thus impossible to render.
+                // Exceptions: italics within <filename>.
+                // TODO: add an exception for bold, italics, underline + something else.
                 DocBookFormatting topFormatting = currentFormatting.get(currentFormatting.size() - 1);
                 if (! DocBookFormatting.isRunFormatting(topFormatting)
                         && ! (topFormatting.equals(DocBookFormatting.FILE_NAME) // Exception: filename + replaceable.
@@ -958,14 +974,25 @@ public class DocxOutputImpl extends DefaultHandler {
                 }
             }
 
+            // Add this inline formatting to the list, so that it is taken into account when creating a new run.
             try {
                 currentFormatting.add(DocBookFormatting.tagToFormatting(qName, attributes));
             } catch (IllegalArgumentException e) {
                 throw new DocxException("formatting not recognised", e);
             }
 
-            // Create a new run if this one is already started.
-            if (run.text().length() > 0) {
+            // Handle ubiquitous links.
+            boolean hasUbiquitous = false;
+            for (int i = 0; i < attributes.getLength(); ++i) {
+                if (attributes.getLocalName(i).equalsIgnoreCase("xlink:href")) {
+                    hasUbiquitous = true;
+                    setCurrentLink(attributes.getValue(i));
+                    break;
+                }
+            }
+
+            // Create a new run if this one is already started. Ubiquitous links already create a new run.
+            if (run.text().length() > 0 && ! hasUbiquitous) {
                 createNewRun();
             }
 
@@ -1386,6 +1413,9 @@ public class DocxOutputImpl extends DefaultHandler {
                 throw new DocxException("Assertion failed: end of formatting [" + qName + "], but no current formatting");
             }
 
+            // In case of ubiquitous link.
+            setCurrentLink();
+
             currentFormatting.remove(currentFormatting.size() - 1);
             createNewRun();
             setRunFormatting();
@@ -1633,6 +1663,9 @@ public class DocxOutputImpl extends DefaultHandler {
 
     @SuppressWarnings("RedundantIfStatement")
     private boolean isIgnorablePI(String target, String data) {
+        // Ignore things like:
+        // <? xml-model href="http://docbook.org/xml/5.0/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0" ?>
+        // <? xml-model href="http://docbook.org/xml/5.0/sch/docbook.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron" ?>
         if (! target.equals("xml-model")) {
             return false;
         }
