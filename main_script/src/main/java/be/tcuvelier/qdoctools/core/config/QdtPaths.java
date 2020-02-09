@@ -23,7 +23,7 @@ public class QdtPaths {
     }
 
     public String getXsltToDvpMLPath() throws BadConfigurationFile {
-        return config.getQtDocToolsRoot() + "/import/to_dvpml/xslt/docbook_to_dvpml.xslt";
+        return config.getQtDocToolsRoot() + "/export/to_dvpml/xslt/docbook_to_dvpml.xslt";
     }
 
     public String getToDocxTemplate() throws BadConfigurationFile {

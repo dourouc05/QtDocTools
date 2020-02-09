@@ -28,6 +28,41 @@ public class TransformCore {
 
     public static String validationFailedMessage = "There were validation errors. See the above exception for details.";
 
+    private static String generateOutputFilename(String input, Format outputFormat) {
+        // Specific handling for collisions between DocBook and DvpML: add a suffix (just before the extension).
+        if (input.endsWith("_dvp.xml")) {
+            input = input.replace("_dvp.xml", ".xml");
+        } else if (input.endsWith("_db.xml")) {
+            input = input.replace("_db.xml", ".xml");
+        }
+
+        // Change the extension based on the target format.
+        if (outputFormat == Format.DOCX) {
+            return FileHelpers.changeExtension(input, ".docx");
+        } else if (outputFormat == Format.ODT) {
+            return FileHelpers.changeExtension(input, ".odt");
+        } else if (outputFormat == Format.DvpML) {
+            String output = FileHelpers.changeExtension(input, ".xml");
+
+            if (input.equals(output)) {
+                output = output.substring(0, output.length() - 4) + "_dvp.xml";
+            }
+
+            return output;
+        } else if (outputFormat == Format.DocBook) {
+            String output = FileHelpers.changeExtension(input, ".xml");
+
+            if (input.equals(output)) {
+                output = output.substring(0, output.length() - 4) + "_db.xml";
+            }
+
+            return output;
+        }
+
+        // Format not found. This is mostly a Java requirement...
+        throw new IllegalArgumentException("Format not recognised when generating a new file name.");
+    }
+
     public static void call(String input, Format inputFormat,
                             String output, Format outputFormat,
                             Configuration config, boolean validate, boolean disableSanityChecks)
@@ -62,6 +97,11 @@ public class TransformCore {
 
         assert inputFormat != outputFormat;
 
+        // Generate an output file name if necessary.
+        if (output == null || output.isBlank()) {
+            output = generateOutputFilename(input, outputFormat);
+        }
+
         // Dispatch to the helper methods.
         switch (inputFormat) {
             case DocBook:
@@ -72,49 +112,25 @@ public class TransformCore {
                 }
 
                 if (outputFormat == Format.DOCX) {
-                    if (output == null || output.isBlank()) {
-                        output = FileHelpers.changeExtension(input, ".docx");
-                    }
-
                     TransformHelpers.fromDocBookToDOCX(input, output, config);
                 } else if (outputFormat == Format.ODT) {
-                    if (output == null || output.isBlank()) {
-                        output = FileHelpers.changeExtension(input, ".odt");
-                    }
-
                     TransformHelpers.fromDocBookToODT(input, output);
                 } else if (outputFormat == Format.DvpML) {
-                    if (output == null || output.isBlank()) {
-                        output = FileHelpers.changeExtension(input, ".xml");
-                    }
-
                     TransformHelpers.fromDocBookToDvpML(input, output, config);
                 }
                 break;
             case DOCX:
                 assert outputFormat == Format.DocBook;
 
-                if (output == null || output.isBlank()) {
-                    output = FileHelpers.changeExtension(input, ".xml");
-                }
-
                 TransformHelpers.fromDOCXToDocBook(input, output);
                 break;
             case ODT:
                 assert outputFormat == Format.DocBook;
 
-                if (output == null || output.isBlank()) {
-                    output = FileHelpers.changeExtension(input, ".xml");
-                }
-
                 TransformHelpers.fromODTToDocBook(input, output);
                 break;
             case DvpML:
                 assert outputFormat == Format.DocBook;
-
-                if (output == null || output.isBlank()) {
-                    output = FileHelpers.changeExtension(input, ".xml");
-                }
 
                 TransformHelpers.fromDvpMLToDocBook(input, output, config);
                 break;
