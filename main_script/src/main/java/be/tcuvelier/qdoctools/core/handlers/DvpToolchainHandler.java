@@ -1,6 +1,7 @@
 package be.tcuvelier.qdoctools.core.handlers;
 
 import be.tcuvelier.qdoctools.core.config.Configuration;
+import be.tcuvelier.qdoctools.core.config.PerlPath;
 import net.sf.saxon.s9api.*;
 
 import javax.xml.transform.stream.StreamSource;
@@ -16,8 +17,8 @@ import java.util.stream.Collectors;
 
 public class DvpToolchainHandler {
     public static void updateToolchain(Configuration config) throws IOException, InterruptedException {
-        String script = config.getPerlScriptsPath().resolve("mise-a-jour-kit-generation.pl").toString();
-        List<String> params = new ArrayList<>(Arrays.asList(config.getPerlPath(), script));
+        String script = config.getDvpPerlScriptsPath().resolve("mise-a-jour-kit-generation.pl").toString();
+        List<String> params = new ArrayList<>(Arrays.asList(new PerlPath(config).getPerlPath(), script));
         new ProcessBuilder(params).start().waitFor();
     }
 
@@ -44,7 +45,7 @@ public class DvpToolchainHandler {
 
     public static void generateHTML(String file, String outputFolder, Configuration config) throws IOException, InterruptedException, SaxonApiException {
         // Find a good folder name (i.e. one that does not exist yet).
-        Path root = config.getToolchainPath().resolve("documents");
+        Path root = config.getDvpToolchainPath().resolve("documents");
         String folderName = "qdt";
         if (root.resolve(folderName).toFile().exists()) {
             int i = 0;
@@ -70,12 +71,12 @@ public class DvpToolchainHandler {
         }
 
         // Start generation.
-        String script = config.getToolchainPath().resolve("script").resolve("buildart").toString();
-        List<String> params = new ArrayList<>(Arrays.asList(config.getPerlPath(), script, folderName));
+        String script = config.getDvpToolchainPath().resolve("script").resolve("buildart").toString();
+        List<String> params = new ArrayList<>(Arrays.asList(new PerlPath(config).getPerlPath(), script, folderName));
         new ProcessBuilder(params).start().waitFor();
 
         // Copy the result in the right place.
-        Path cache = config.getToolchainPath().resolve("cache").resolve(folderName); // cache: PHP files; html: HTML files.
+        Path cache = config.getDvpToolchainPath().resolve("cache").resolve(folderName); // cache: PHP files; html: HTML files.
         Path output = Paths.get(outputFolder);
 
         Files.copy(cache.resolve("index.php"), output.resolve("index.php"));

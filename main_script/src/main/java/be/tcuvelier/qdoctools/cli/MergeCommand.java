@@ -1,10 +1,13 @@
 package be.tcuvelier.qdoctools.cli;
 
 import be.tcuvelier.qdoctools.core.MergeCore;
+import be.tcuvelier.qdoctools.core.config.Configuration;
+import be.tcuvelier.qdoctools.core.exceptions.BadConfigurationFile;
 import net.sf.saxon.s9api.SaxonApiException;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
+import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.util.concurrent.Callable;
 
@@ -25,6 +28,10 @@ public class MergeCommand implements Callable<Void> {
                     "overwritten)")
     private String merged = null;
 
+    @Option(names = { "-c", "--configuration-file" },
+            description = "Configuration file (default: ${DEFAULT-VALUE})")
+    private String configurationFile = "config.json";
+
     @Option(names = { "-t", "--type" },
             description = "Type of merge to perform. Allowed values: ${COMPLETION-CANDIDATES}. " +
                     "Default value: ${DEFAULT-VALUE}. \n" +
@@ -44,8 +51,9 @@ public class MergeCommand implements Callable<Void> {
     private MergeType type = MergeType.AFTER_PROOFREADING;
 
     @Override
-    public Void call() throws SaxonApiException, MalformedURLException {
-        MergeCore.call(original, altered, merged, type);
+    public Void call() throws SaxonApiException, MalformedURLException, FileNotFoundException, BadConfigurationFile {
+        Configuration config = new Configuration(configurationFile);
+        MergeCore.call(original, altered, merged, type, config);
         return null;
     }
 }

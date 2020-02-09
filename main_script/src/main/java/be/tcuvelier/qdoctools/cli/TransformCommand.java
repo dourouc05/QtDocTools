@@ -7,6 +7,7 @@ package be.tcuvelier.qdoctools.cli;
 
 import be.tcuvelier.qdoctools.core.TransformCore;
 import be.tcuvelier.qdoctools.core.TransformCore.Format;
+import be.tcuvelier.qdoctools.core.config.Configuration;
 import net.sf.saxon.s9api.SaxonApiException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.xml.sax.SAXException;
@@ -53,7 +54,8 @@ public class TransformCommand implements Callable<Void> {
     @Override
     public Void call() throws SaxonApiException, IOException, SAXException, InvalidFormatException,
             XMLStreamException, ParserConfigurationException {
-        TransformCore.call(input, inputFormat, output, outputFormat, validate, disableSanityChecks);
+        Configuration config = new Configuration(configurationFile);
+        TransformCore.call(input, inputFormat, output, outputFormat, config, validate, disableSanityChecks);
         return null;
     }
 }

@@ -1,6 +1,6 @@
 package be.tcuvelier.qdoctools.io;
 
-import be.tcuvelier.qdoctools.cli.MainCommand;
+import be.tcuvelier.qdoctools.core.config.Configuration;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.xml.sax.SAXException;
@@ -25,7 +25,7 @@ public class DocxOutput {
     *     round-tripping is possible)
     */
 
-    public static void main(String[] args) throws Exception {
+//    public static void main(String[] args) throws Exception {
 //        String test = "synthetic/basic";
 //        String test = "synthetic/sections";
 //        String test = "synthetic/images";
@@ -46,17 +46,19 @@ public class DocxOutput {
 //        String test = "synthetic/footnote";
 //        String test = "synthetic/author";
 //        String test = "synthetic/editor";
+//
+//        String test = "CPLEX";
+//
+//        new DocxOutput(MainCommand.toDocxTests + test + ".xml")
+//                .toDocx(MainCommand.toDocxTests + test + ".docx");
+//    }
 
-        String test = "CPLEX";
+    private final String input;
+    private final Configuration config;
 
-        new DocxOutput(MainCommand.toDocxTests + test + ".xml")
-                .toDocx(MainCommand.toDocxTests + test + ".docx");
-    }
-
-    private String input;
-
-    public DocxOutput(String input) {
+    public DocxOutput(String input, Configuration config) {
         this.input = input;
+        this.config = config;
     }
 
     public void toDocx(String output) throws IOException, ParserConfigurationException, SAXException, InvalidFormatException {
@@ -75,7 +77,7 @@ public class DocxOutput {
 //        spf.setSchema(ValidationHandler.loadRNGSchema(MainCommand.docBookRNGPath));
         SAXParser saxParser = spf.newSAXParser();
 
-        DocxOutputImpl handler = new DocxOutputImpl(Paths.get(input).getParent());
+        DocxOutputImpl handler = new DocxOutputImpl(Paths.get(input).getParent(), config);
         saxParser.parse(new File(input), handler);
         return handler.doc;
     }

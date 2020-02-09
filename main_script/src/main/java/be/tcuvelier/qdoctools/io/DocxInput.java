@@ -20,7 +20,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class DocxInput {
-    public static void main(String[] args) throws IOException, XMLStreamException {
+//    public static void main(String[] args) throws IOException, XMLStreamException {
 //        String test = "synthetic/basic";
 //        String test = "synthetic/sections";
 //        String test = "synthetic/sections_bogus";
@@ -43,16 +43,16 @@ public class DocxInput {
 //        String test = "synthetic/admonitions_many";
 //        String test = "synthetic/book";
 //        String test = "synthetic/book_abstract";
-        String test = "synthetic/footnote";
-
+//        String test = "synthetic/footnote";
+//
 //        String test = "CPLEX";
-
+//
 //        String docBook = new DocxInput(MainCommand.fromDocxTests + "synthetic/" + test + ".docx").toDocBook();
 //        System.out.println(docBook);
 ////        Files.write(Paths.get(MainCommand.fromDocxTests + "synthetic/" + test + ".xml"), docBook.getBytes());
-
-        new DocxInput(MainCommand.fromDocxTests + test + ".docx").toDocBook(MainCommand.fromDocxTests + test + ".xml");
-    }
+//
+//        new DocxInput(MainCommand.fromDocxTests + test + ".docx").toDocBook(MainCommand.fromDocxTests + test + ".xml");
+//    }
 
     private final DocxInputImpl impl;
 

@@ -1,6 +1,7 @@
 package be.tcuvelier.qdoctools.core;
 
 import be.tcuvelier.qdoctools.cli.MainCommand;
+import be.tcuvelier.qdoctools.core.config.QdtPaths;
 import be.tcuvelier.qdoctools.core.handlers.QdocHandler;
 import be.tcuvelier.qdoctools.core.handlers.XsltHandler;
 import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
@@ -158,7 +159,7 @@ public class QdocCore {
             // Iterate through all the files.
             System.out.println("++> Starting DocBook-to-DvpML transformation.");
             List<Path> xml = q.findDocBook();
-            XsltHandler h = new XsltHandler(MainCommand.xsltDocBookToDvpMLPath);
+            XsltHandler h = new XsltHandler(new QdtPaths(config).getXsltToDvpMLPath());
 
             if (xml.size() == 0) {
                 System.out.println("??> Have DocBook files been generated in " +
@@ -187,7 +188,7 @@ public class QdocCore {
                 // Handle validation.
                 if (validate) {
                     try {
-                        boolean isValid = ValidationHelper.validateDvpML(destination);
+                        boolean isValid = ValidationHelper.validateDvpML(destination, config);
                         if (! isValid) {
                             System.err.println(FormattingHelpers.prefix(i, xml) + "There were validation errors. See the above exception for details.");
                         }

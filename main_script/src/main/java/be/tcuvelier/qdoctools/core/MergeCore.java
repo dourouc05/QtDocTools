@@ -1,5 +1,7 @@
 package be.tcuvelier.qdoctools.core;
 
+import be.tcuvelier.qdoctools.core.config.Configuration;
+import be.tcuvelier.qdoctools.core.exceptions.BadConfigurationFile;
 import be.tcuvelier.qdoctools.core.handlers.MergeHandler;
 import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
 import net.sf.saxon.s9api.SaxonApiException;
@@ -10,7 +12,7 @@ import java.net.MalformedURLException;
 public class MergeCore {
     public enum MergeType { AFTER_PROOFREADING, UPDATE_QT, UPDATE_QT_TRANSLATION }
 
-    public static void call(String original, String altered, String merged, MergeType type) throws SaxonApiException, MalformedURLException {
+    public static void call(String original, String altered, String merged, MergeType type, Configuration config) throws SaxonApiException, MalformedURLException, BadConfigurationFile {
         // Check whether the required files exist.
         if (! new File(original).exists()) {
             throw new RuntimeException("Original file " + original + " does not exist!");
@@ -38,7 +40,7 @@ public class MergeCore {
 
         switch (type) {
             case AFTER_PROOFREADING:
-                MergeHandler.mergeAfterProofreading(original, altered, merged);
+                MergeHandler.mergeAfterProofreading(original, altered, merged, config);
                 break;
             case UPDATE_QT:
                 MergeHandler.mergeUpdateQt();

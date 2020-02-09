@@ -1,5 +1,6 @@
 package be.tcuvelier.qdoctools.core;
 
+import be.tcuvelier.qdoctools.core.config.Configuration;
 import be.tcuvelier.qdoctools.core.handlers.DocBookSanityCheckHandler;
 import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
 import be.tcuvelier.qdoctools.core.helpers.TransformHelpers;
@@ -29,10 +30,10 @@ public class TransformCore {
 
     public static void call(String input, Format inputFormat,
                             String output, Format outputFormat,
-                            /*String configurationFile, */boolean validate, boolean disableSanityChecks)
+                            Configuration config, boolean validate, boolean disableSanityChecks)
             throws SaxonApiException, IOException, SAXException, ParserConfigurationException, InvalidFormatException,
             XMLStreamException {
-        if (!new File(input).exists()) {
+        if (! new File(input).exists()) {
             throw new IOException("Input file " + input + " does not exist!");
         }
 
@@ -75,7 +76,7 @@ public class TransformCore {
                         output = FileHelpers.changeExtension(input, ".docx");
                     }
 
-                    TransformHelpers.fromDocBookToDOCX(input, output);
+                    TransformHelpers.fromDocBookToDOCX(input, output, config);
                 } else if (outputFormat == Format.ODT) {
                     if (output == null || output.isBlank()) {
                         output = FileHelpers.changeExtension(input, ".odt");
@@ -87,7 +88,7 @@ public class TransformCore {
                         output = FileHelpers.changeExtension(input, ".xml");
                     }
 
-                    TransformHelpers.fromDocBookToDvpML(input, output);
+                    TransformHelpers.fromDocBookToDvpML(input, output, config);
                 }
                 break;
             case DOCX:
@@ -115,7 +116,7 @@ public class TransformCore {
                     output = FileHelpers.changeExtension(input, ".xml");
                 }
 
-                TransformHelpers.fromDvpMLToDocBook(input, output);
+                TransformHelpers.fromDvpMLToDocBook(input, output, config);
                 break;
         }
 
@@ -123,9 +124,9 @@ public class TransformCore {
         if (validate) {
             boolean isValid;
             if (FileHelpers.isDocBook(output)) {
-                isValid = ValidationHelper.validateDocBook(output);
+                isValid = ValidationHelper.validateDocBook(output, config);
             } else if (FileHelpers.isDvpML(output)) {
-                isValid = ValidationHelper.validateDvpML(output);
+                isValid = ValidationHelper.validateDvpML(output, config);
             } else {
                 isValid = true;
             }

@@ -1,6 +1,8 @@
 package be.tcuvelier.qdoctools.io;
 
 import be.tcuvelier.qdoctools.cli.MainCommand;
+import be.tcuvelier.qdoctools.core.config.Configuration;
+import be.tcuvelier.qdoctools.core.config.QdtPaths;
 import be.tcuvelier.qdoctools.io.helpers.DocBookAlignment;
 import be.tcuvelier.qdoctools.io.helpers.DocBookBlock;
 import be.tcuvelier.qdoctools.io.helpers.DocBookFormatting;
@@ -75,11 +77,11 @@ public class DocxOutputImpl extends DefaultHandler {
     private List<DocBookFormatting> currentFormatting = new ArrayList<>(); // Order: FIFO, i.e. first tag met in
     // the document is the first one in the vector. TODO: migrate to Deque?
 
-    DocxOutputImpl(Path folder) throws IOException {
+    DocxOutputImpl(Path folder, Configuration config) throws IOException {
         this.folder = folder;
 
         // Start a document with the template that defines all needed styles.
-        doc = new XWPFDocument(new FileInputStream(MainCommand.toDocxTemplate));
+        doc = new XWPFDocument(new FileInputStream(new QdtPaths(config).getToDocxTemplate()));
 
         // A Word document always contains empty paragraphs, remove them (just to have a clean output).
         // Either it is just an empty document, or these paragraphs are used so that Word has no latent style.

@@ -13,26 +13,6 @@ import java.util.concurrent.Callable;
         QdocCommand.class
 }, mixinStandardHelpOptions = true, version = "QDocTools 0.1.0")
 public class MainCommand implements Callable<Void> {
-    // TODO: move all of this into another class, it does not belong to the CLI.
-    // TODO: move these files into the JAR, when building one. https://stackoverflow.com/questions/20389255/reading-a-resource-file-from-within-jar
-    // TODO: or just use a configuration? Would be easier for development (and much easier to code).
-
-    // Schemas.
-    public final static String docBookRNGPath = "../import/from_qdoc_v2/schema/docbook52qdt/custom.rnc";
-    public final static String dvpMLXSDPath = "../export/to_dvpml/schema/article.xsd";
-
-    // Between DocBook and DvpML.
-    public final static String xsltDvpMLToDocBookPath = "../import/from_dvpml/xslt/dvpml_to_docbook.xslt"; // Path to the XSLT sheet DvpML to DocBook.
-    public final static String xsltDocBookToDvpMLPath = "../export/to_dvpml/xslt/docbook_to_dvpml.xslt"; // Path to the XSLT sheet DocBook to DvpML.
-
-    // Between DocBook and DOCX.
-    public final static String toDocxTemplate = "../proofread/proofread_todocx/template/template.docx";
-    public final static String fromDocxTests = "../proofread/proofread_fromdocx/tests/";
-    public final static String toDocxTests = "../proofread/proofread_todocx/tests/";
-
-    // Merge operations.
-    public final static String xsltMergeAfterProofreading = "../proofread/merge_after_proofread/xslt/after_proofreading.xsl";
-
     @CommandLine.Spec
     CommandLine.Model.CommandSpec spec;
 
