@@ -9,7 +9,7 @@
   <!-- TODO: <db:programlisting role="raw-html">, like qtquickcontrols2-universal.qdt -->
   
   <xsl:output method="xml" indent="yes" suppress-indentation="inline link i b paragraph code"/>
-  <xsl:import-schema schema-location="article.xsd" use-when="system-property('xsl:is-schema-aware')='yes'"/>
+  <xsl:import-schema schema-location="../../../schemas/dvpml/article.xsd" use-when="system-property('xsl:is-schema-aware')='yes'"/>
   
   <xsl:template match="db:article">
     <xsl:result-document validation="lax">

@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="texte.xsd"/>
+	<xs:complexType name="document">
+		<xs:annotation>
+			<xs:documentation>Tronc commun à tous les formats XML (sauf Livres, pour lequel ce type est redéfini)</xs:documentation>
+		</xs:annotation>
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="xiti" type="xiti" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Pour Xiti</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="editeur" type="editeur">
+				<xs:annotation>
+					<xs:documentation>Utile pour l'éditeur XML</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="entete" type="entete">
+				<xs:annotation>
+					<xs:documentation>Balise d'entête</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="authorDescriptions" type="auteurs" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Configuration des auteurs</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lecteur" type="lecteur" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Pour définir le public visé et la durée de lecture</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="voiraussi" type="voiraussi" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Permet de lister des liens d'articles developpez.com supplémentaires pour les lecteurs</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="auteurs">
+		<xs:annotation>
+			<xs:documentation>Descriptions des auteurs</xs:documentation>
+		</xs:annotation>
+		<xs:sequence maxOccurs="unbounded">
+			<xs:element name="authorDescription">
+				<xs:annotation>
+					<xs:documentation>Configuration d'un auteur</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:all>
+						<xs:element name="fullname" type="xs:string" minOccurs="1" maxOccurs="1">
+							<xs:annotation>
+								<xs:documentation>Nom Prénom ou identifiant DVP de l'auteur</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="url" type="xs:anyURI" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>URL du profil de l'auteur</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="badge" type="xs:anyURI" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>URL du badge de l'auteur</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="homepage" minOccurs="0">
+							<xs:complexType>
+								<xs:all>
+									<xs:element name="title" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>Nom du site de l'auteur</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="url" type="xs:anyURI">
+										<xs:annotation>
+											<xs:documentation>URL du site de l'auteur</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:all>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="liens" minOccurs="0">                                                           
+							<xs:complexType>                                                                
+								<xs:sequence>                                                               
+									<xs:element name="lien" minOccurs="0" maxOccurs="unbounded">            
+										<xs:complexType>                                                    
+											<xs:all>                                                        
+												<xs:element name="title" type="xs:string">                  
+													<xs:annotation>                                         
+														<xs:documentation>Titre du lien</xs:documentation>  
+													</xs:annotation>                                        
+												</xs:element>                                               
+												<xs:element name="url" type="xs:anyURI">                    
+													<xs:annotation>                                         
+														<xs:documentation>URL du lien</xs:documentation>    
+													</xs:annotation>                                        
+												</xs:element>                                               
+											</xs:all>                                                       
+											<xs:attribute name="type" type="xs:string" use="required">      
+												<xs:annotation>                                             
+													<xs:documentation>Type : perso</xs:documentation>       
+												</xs:annotation>                                            
+											</xs:attribute>                                                 
+											<xs:attribute name="icone" type="xs:string" use="required">     
+												<xs:annotation>                                             
+													<xs:documentation>URL de l'icône</xs:documentation>     
+												</xs:annotation>                                            
+											</xs:attribute>                                                 
+										</xs:complexType>                                                   
+									</xs:element>                                                           
+								</xs:sequence>                                                              
+							</xs:complexType>                                                               
+						</xs:element>
+						<xs:element name="blog" type="xs:anyURI" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>URL de son blog</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="google-plus" type="xs:anyURI" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>URL de son google+</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<!--<xs:element name="linkedin" type="xs:anyURI" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>URL de son profil linkedin</xs:documentation>
+							</xs:annotation>
+						</xs:element>-->
+					</xs:all>
+					<xs:attribute name="name" type="xs:string" use="required"/>
+					<xs:attribute name="role" use="required">
+						<xs:annotation>
+							<xs:documentation>Type d'auteur</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="auteur"/>
+								<xs:enumeration value="correcteur"/>
+								<xs:enumeration value="gabarisateur"/>
+								<xs:enumeration value="relecteur-technique"/>
+								<xs:enumeration value="traducteur"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="entete">
+		<xs:annotation>
+			<xs:documentation>Entête des fichiers Article</xs:documentation>
+			<xs:documentation>Les fichiers Livres.xsd et References.xsd utilisent une version légèrement modifiée de cet entête</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="rubrique" type="numeroRubrique">
+				<xs:annotation>
+					<xs:documentation>Numéro de rubrique de votre article, FAQ...</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="meta" type="meta">
+				<xs:annotation>
+					<xs:documentation>Métadonnées</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="titre" type="titre">
+				<xs:annotation>
+					<xs:documentation>Titre de votre page</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="date" type="date_as_string_not_null" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Date de publication</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="miseajour" type="date_as_string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Date de mise à jour</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="cssperso" type="xs:anyURI" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ajouter une feuille de style personnelle</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="extratag" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>[Dangereux] ajouter des définitions de variables PHP</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="google-analytics" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Code de suivi Google Analytics</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="includehaut" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>[Dangereux] Mettre sa propre entête de page (appel PHP)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="includebas" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>[Dangereux] Mettre son propre pied de page (appel PHP)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="colonne-droite" type="xs:anyURI" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>[Recommandé pour les FAQ, livre et cours] Colonne de droite pour le portail de la rubrique</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:group ref="licence" minOccurs="0"/>
+			<xs:element name="serveur" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Alias de votre domaine</xs:documentation> 
+					<xs:documentation> 
+						Permet à l'éditeur de déterminer les login/password à utiliser lors de la connexion 
+						au serveur de developpez.com pour publier votre document 
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="chemin" type="xs:anyURI" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Chemin de l'URL de votre page (ex : tutoriel/perl/article-xmled)</xs:documentation>
+					<xs:documentation>Si votre document doit être placé à la racine du domaine, mettez simplement laissez vide</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="urlhttp" type="xs:anyURI" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>URL de votre article, FAQ... avec un / à la fin et sans espaces et accents</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="nochmod" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>[Déconseillé] Ne pas effectuer le chmod 600</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="nosummary" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Interdire la génération du sommaire des articles monopages (version HTML en local ou en ligne)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="nosummarypage" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>N'afficher le sommaire que sur la première page d'un article multipages</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="nopdf" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ne pas générer la version PDF de l'article</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="nozip" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ne pas générer la version hors-ligne de l'article (HTML dans ZIP)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="nodownload" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ne pas mettre de lien « télécharger » sur les articles multipages, FAQ, sources, ne pas uploader le ZIP</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="nobookmarks" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ne pas mettre les icônes des réseaux sociaux</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="noebook" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Empêcher la génération des ebook (epub, azw et mobi)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="developper" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Développer le sommaire des FAQ par défaut</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TopicType" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ajouter un méta spécial Microsoft</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pdffilename" type="xs:anyURI" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Mettre un autre fichier PDF</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="largeur-max-image" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Fixer la largeur de redimensionnement en pixels (entre 1 et 1920)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="hauteur-max-image" type="xs:integer" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Fixer la hauteur de redimensionnement en pixels (entre 1 et 1200)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="pdf" type="genepdf" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Configuration des PDF</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="nomfaq" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Identifiant qui sert à gérer les statistiques pour les pages</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="recherche" type="recherche" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Permettre des recherches sur d'autres FAQ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="microsofttraduction" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Permettre d'ajouter sur la page un traducteur automatique de microsoft.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="numeroRubrique">
+		<xs:restriction base="xs:integer">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="999"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="meta">
+		<xs:all>
+			<xs:element name="description" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Description de la page</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="keywords" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Mots-clés de la page</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="titre">
+		<xs:all>
+			<xs:element name="page">
+				<xs:annotation>
+					<xs:documentation>Titre de la page affiché dans la barre de titre de la fenêtre du navigateur</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:minLength value="1" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+
+			<xs:element name="article" minOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Titre apparaissant en haut de votre article juste sous la barre d'onglet du gabarit</xs:documentation>
+				</xs:annotation>
+				<!-- Dans le titre des articles, nous acceptons une certaines mise en forme du texte -->
+				<xs:complexType mixed="true">
+					<xs:choice minOccurs="0" maxOccurs="unbounded">
+						<xs:element name="i" type="texte">
+							<xs:annotation>
+								<xs:documentation>Texte en italique</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="b" type="texte">
+							<xs:annotation>
+								<xs:documentation>Texte en gras</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="u" type="texte">
+							<xs:annotation>
+								<xs:documentation>Texte souligné</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="sub" type="texte">
+							<xs:annotation>
+								<xs:documentation>Texte en indice</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="sup" type="texte">
+							<xs:annotation>
+								<xs:documentation>Texte en exposant</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="br" type="vide">
+							<xs:annotation>
+								<xs:documentation>Saut de ligne</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="font" type="font">
+							<xs:annotation>
+								<xs:documentation>font du texte</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="image" type="image">
+							<xs:annotation>
+								<xs:documentation>Une image</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="acronyme" type="acronyme">
+							<xs:annotation>
+								<xs:documentation>Insérer un acronyme</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="latex" type="latex">
+							<xs:annotation>
+								<xs:documentation>Code LateX</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="recherche">
+		<xs:all>
+			<xs:element name="recnom" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Libellé du lien</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="recadr" type="xs:anyURI">
+				<xs:annotation>
+					<xs:documentation>Lien pour le moteur de recherche</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:simpleType name="typeDateVide">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="((0?[1-9])|([12][0-9])|(3[01]))/((0[1-9])|(1[0-2]))/20[0-9]{2}"/>
+			<xs:pattern value=""/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="typeDate">
+		<xs:restriction base="typeDateVide">
+			<xs:pattern value="((0?[1-9])|([12][0-9])|(3[01]))/((0[1-9])|(1[0-2]))/20[0-9]{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="xiti">
+		<xs:annotation>
+			<xs:documentation>Type XITI commun à tous les formats XML</xs:documentation>
+		</xs:annotation>
+		<xs:all>
+			<xs:element name="logger" type="xs:NMTOKEN">
+				<xs:annotation>
+					<xs:documentation>logger</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="id" type="xs:integer">
+				<xs:annotation>
+					<xs:documentation>ID</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="nom" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>nom</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="alias" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>alias</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:all>
+	</xs:complexType>
+	<xs:group name="licence">
+		<xs:sequence>
+			<xs:element name="licauteur" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Nom, prénom ou identifiant de l'auteur</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="lictype">
+				<xs:annotation>
+					<xs:documentation>Type de licence à choisir</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:enumeration value="1">
+							<xs:annotation>
+								<xs:documentation>developpez.com : article perso</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="2">
+							<xs:annotation>
+								<xs:documentation>developpez.com : article perso avec source</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="3">
+							<xs:annotation>
+								<xs:documentation>developpez.com : article collectif</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="4">
+							<xs:annotation>
+								<xs:documentation>developpez.com : page source/FAQ</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="5">
+							<xs:annotation>
+								<xs:documentation>developpez.com : page MS</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="6">
+							<xs:annotation>
+								<xs:documentation>developpez.com : page MS avec sources</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="7">
+							<xs:annotation>
+								<xs:documentation>cc-by : Licence Creative Commons Attribution 3.0 non transposé.</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="8">
+							<xs:annotation>
+								<xs:documentation>cc-by-nd : Licence Creative Commons Attribution - Pas de Modification 3.0 non transposé.</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="9">
+							<xs:annotation>
+								<xs:documentation>cc-by-nc-nd : Licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Pas de Modification 3.0 non transposé.</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="10">
+							<xs:annotation>
+								<xs:documentation>cc-by-nc : Licence Creative Commons Attribution - Pas d’Utilisation Commerciale 3.0 non transposé.</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="11">
+							<xs:annotation>
+								<xs:documentation>cc-by-nc-sa : Licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 3.0 non transposé.</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+						<xs:enumeration value="12">
+							<xs:annotation>
+								<xs:documentation>cc-by-sa : Licence Creative Commons Attribution - Partage dans les Mêmes Conditions 3.0 non transposé.</xs:documentation>
+							</xs:annotation>
+						</xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="licannee" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Année de licence ex : 2013</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="editeur">
+		<xs:sequence>
+			<xs:element name="edversion" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Version éditeur XML</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="edtypexml">
+				<xs:annotation>
+					<xs:documentation>Utile pour distinguer les XML pour l'éditeur XML (0 = FAQ, 1 = SOURCE)</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:enumeration value="0"/>
+						<xs:enumeration value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="lecteur">
+		<xs:sequence>
+			<xs:element name="niveau" type="NiveauXML" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Public visé :</xs:documentation>
+					<xs:documentation>1 : Tout le monde</xs:documentation>
+					<xs:documentation>2 : Débutant</xs:documentation>
+					<xs:documentation>3 : Confirmé</xs:documentation>
+					<xs:documentation>4 : Expert</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="duree" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Durée de lecture</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NiveauXML">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="type">
+					<xs:simpleType>
+						<xs:restriction base="xs:integer">
+							<xs:enumeration value="1"/>
+							<xs:enumeration value="2"/>
+							<xs:enumeration value="3"/>
+							<xs:enumeration value="4"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="genepdf">
+		<xs:sequence>
+			<xs:element name="sautDePageAvantSection" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Permettre de mettre un saut de page avant chacune de vos sections</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:enumeration value="0"/>
+						<xs:enumeration value="1"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="notesBasPage" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Lieu de positionnement des notes de bas de page</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="PageCourante"/>
+						<xs:enumeration value="FinDocument"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="pdfnosummary" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Ne pas générer de sommaire dans le PDF</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="voiraussi">
+		<xs:annotation>
+			<xs:documentation>Permet de lister des liens supplémentaires pour les lecteurs</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="lien"  maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Lien</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:all>
+						<xs:element name="url" type="xs:anyURI">
+							<xs:annotation>
+								<xs:documentation>URL du lien</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="texte" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>Libellé du lien</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:all>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="contenu-article">
+		<xs:sequence>
+			<xs:group ref="zoneRedigee" maxOccurs="unbounded" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="date_as_string">
+		<xs:annotation>
+			<xs:documentation>Format de la date attendu : AAAA-MM-JJ</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:pattern value="(\d{4}-\d{2}-\d{2})?" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="date_as_string_not_null">
+		<xs:annotation>
+			<xs:documentation>Format de la date attendu : AAAA-MM-JJ obligatoire</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:pattern value="\d{4}-\d{2}-\d{2}" />
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

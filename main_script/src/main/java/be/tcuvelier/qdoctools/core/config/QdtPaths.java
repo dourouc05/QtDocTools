@@ -11,11 +11,11 @@ public class QdtPaths {
     }
 
     public String getDocBookRNGPath() throws BadConfigurationFile {
-        return config.getQtDocToolsRoot() + "/import/from_qdoc_v2/schema/docbook52qdt/custom.rnc";
+        return config.getQtDocToolsRoot() + "/schemas/docbook52/custom.rnc";
     }
 
     public String getDvpMLXSDPath() throws BadConfigurationFile {
-        return config.getQtDocToolsRoot() + "/export/to_dvpml/schema/article.xsd";
+        return config.getQtDocToolsRoot() + "/schemas/dvpml/article.xsd";
     }
 
     public String getXsltFromDvpMLPath() throws BadConfigurationFile {
