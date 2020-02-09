@@ -121,17 +121,14 @@ public class TransformCore {
                 break;
             case DOCX:
                 assert outputFormat == Format.DocBook;
-
                 TransformHelpers.fromDOCXToDocBook(input, output);
                 break;
             case ODT:
                 assert outputFormat == Format.DocBook;
-
                 TransformHelpers.fromODTToDocBook(input, output);
                 break;
             case DvpML:
                 assert outputFormat == Format.DocBook;
-
                 TransformHelpers.fromDvpMLToDocBook(input, output, config);
                 break;
         }

@@ -15,11 +15,11 @@ public class ArticleConfiguration extends AbstractConfiguration {
     private final Path articleName;
     private final Path configName;
 
-    private static Path getConfigurationFileName(String file) {
+    public static Path getConfigurationFileName(String file) {
         Path articleName = Paths.get(file);
         Path parent = articleName.getParent();
         String filename = articleName.getFileName().toString();
-        String fileRoot = file.substring(0, filename.lastIndexOf('.'));
+        String fileRoot = filename.substring(0, filename.lastIndexOf('.'));
         return parent.resolve(fileRoot + ".json");
     }
 

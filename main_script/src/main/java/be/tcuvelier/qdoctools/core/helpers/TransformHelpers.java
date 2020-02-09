@@ -1,5 +1,6 @@
 package be.tcuvelier.qdoctools.core.helpers;
 
+import be.tcuvelier.qdoctools.core.config.ArticleConfiguration;
 import be.tcuvelier.qdoctools.core.config.Configuration;
 import be.tcuvelier.qdoctools.core.config.QdtPaths;
 import be.tcuvelier.qdoctools.core.exceptions.BadConfigurationFile;
@@ -12,6 +13,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class TransformHelpers {
@@ -20,8 +22,8 @@ public class TransformHelpers {
         new XsltHandler(new QdtPaths(config).getXsltFromDvpMLPath()).transform(input, output);
     }
 
-    public static void fromDocBookToDvpML(String input, String output, Configuration config) throws SaxonApiException, BadConfigurationFile {
-        // TODO: What about the configuration file for this document?
+    public static void fromDocBookToDvpML(String input, String output, Configuration config) throws SaxonApiException, BadConfigurationFile, FileNotFoundException {
+        ArticleConfiguration conf = new ArticleConfiguration(input);
         new XsltHandler(new QdtPaths(config).getXsltToDvpMLPath()).transform(input, output);
     }
 

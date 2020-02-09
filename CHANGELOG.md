@@ -17,7 +17,6 @@ Exporting to DvpML:
 
 * More precise warning messages for unsupported tags.
 * Implement figures.
-* Bug fixed when the abstract contains more than one paragraph.
 
 Many code-quality improvements.
 
