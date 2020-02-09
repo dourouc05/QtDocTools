@@ -15,6 +15,8 @@
   <xsl:param name="license-year" as="xs:integer" select="-1"/>
   <xsl:param name="license-author" as="xs:string" select="''"/>
   <xsl:param name="license-text" as="xs:string" select="''"/>
+  <xsl:param name="forum-topic" as="xs:integer" select="-1"/>
+  <xsl:param name="forum-post" as="xs:integer" select="-1"/>
   
   <xsl:template match="db:article">
     <xsl:result-document validation="lax">
@@ -188,6 +190,21 @@
           <xsl:for-each select="$abstractParagraphs">
             <xsl:apply-templates mode="content" select="."/>
           </xsl:for-each>
+          
+          <xsl:choose>
+            <xsl:when test="$forum-topic > 0">
+              <paragraph>
+                <lien-forum avecnote="1" id="{$forum-topic}">
+                  <xsl:if test="$forum-post > 0">
+                    <xsl:attribute name="idpost" select="$forum-post"/>
+                  </xsl:if>
+                </lien-forum>
+              </paragraph>
+            </xsl:when>
+            <xsl:when test="$forum-post > 0">
+              <xsl:message>WARNING: a forum post is present, but not a forum topic.</xsl:message>
+            </xsl:when>
+          </xsl:choose>
         </synopsis>
         
         <summary>
