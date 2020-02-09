@@ -139,11 +139,12 @@ public class TransformCore {
         // If required, validate the document.
         if (validate) {
             boolean isValid;
-            if (FileHelpers.isDocBook(output)) {
+            if (outputFormat == Format.DocBook) {
                 isValid = ValidationHelper.validateDocBook(output, config);
-            } else if (FileHelpers.isDvpML(output)) {
+            } else if (outputFormat == Format.DvpML) {
                 isValid = ValidationHelper.validateDvpML(output, config);
             } else {
+                // No easy check to perform. Could use OpenXML SDK for DOCX, but that's C#.
                 isValid = true;
             }
 
