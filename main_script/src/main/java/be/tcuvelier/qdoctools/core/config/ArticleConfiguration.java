@@ -5,6 +5,7 @@ import be.tcuvelier.qdoctools.core.exceptions.ConfigurationMissingField;
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Calendar;
 import java.util.Optional;
 
 public class ArticleConfiguration extends AbstractConfiguration {
@@ -22,9 +23,11 @@ public class ArticleConfiguration extends AbstractConfiguration {
     public static String proposeConfigurationFile() {
         return "{\n" +
                 "\t\"license-author\": \"\",\n" +
-                "\t\"license-year\": \"\",\n" +
-                "\t\"license-number\": \"\",\n" +
+                "\t\"license-year\": " + Calendar.getInstance().get(Calendar.YEAR) + ",\n" +
+                "\t\"license-number\": 1,\n" +
                 "\t\"license-text\": \"\",\n" +
+                "\t\"forum-topic\": -1,\n" +
+                "\t\"forum-post\": -1,\n" +
                 "\t\"ftp-server\": \"\",\n" +
                 "\t\"ftp-user\": \"\",\n" +
                 "\t\"ftp-port\": \"\",\n" +
