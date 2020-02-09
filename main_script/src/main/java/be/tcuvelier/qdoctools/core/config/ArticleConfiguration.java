@@ -50,6 +50,10 @@ public class ArticleConfiguration extends AbstractConfiguration {
         }
     }
 
+    public Optional<String> getGoogleAnalytics() {
+        return getOptionalStringAttribute("google-analytics");
+    }
+
     public int getSection() {
         try {
             return Integer.parseInt(getStringAttribute("section"));

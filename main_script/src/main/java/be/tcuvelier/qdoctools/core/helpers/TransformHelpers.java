@@ -35,6 +35,10 @@ public class TransformHelpers {
             params.put("doc-qt", true);
         }
 
+        if (conf.getGoogleAnalytics().isPresent()) {
+            params.put("google-analytics", conf.getGoogleAnalytics().get());
+        }
+
         if (conf.getLicenseNumber().isPresent()) {
             if (conf.getLicenseAuthor().isEmpty()) {
                 throw new InconsistentConfiguration("Field license-author absent when license-number is present");

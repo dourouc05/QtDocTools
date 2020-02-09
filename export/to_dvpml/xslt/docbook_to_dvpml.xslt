@@ -21,6 +21,7 @@
   <xsl:param name="forum-post" as="xs:integer" select="-1"/>
   <xsl:param name="ftp-user" as="xs:string" select="''"/>
   <xsl:param name="ftp-folder" as="xs:string" select="''"/>
+  <xsl:param name="google-analytics" as="xs:string" select="''"/>
   
   <xsl:template match="db:article">
     <xsl:result-document validation="lax">
@@ -87,6 +88,10 @@
           
           <xsl:if test="$doc-qt">
             <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php'); include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
+          </xsl:if>
+          
+          <xsl:if test="string-length($google-analytics) > 0">
+            <google-analytics><xsl:value-of select="$google-analytics"/></google-analytics>
           </xsl:if>
           
           <xsl:choose>
