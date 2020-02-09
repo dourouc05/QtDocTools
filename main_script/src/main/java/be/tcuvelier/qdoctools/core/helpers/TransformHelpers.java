@@ -18,28 +18,34 @@ import java.io.IOException;
 public class TransformHelpers {
     public static void fromDvpMLToDocBook(String input, String output, Configuration config) throws SaxonApiException, BadConfigurationFile {
         // TODO: What about the configuration file for this document? Generate one in all cases, I guess?
+        assert ! input.equals(output);
         new XsltHandler(new QdtPaths(config).getXsltFromDvpMLPath()).transform(input, output);
     }
 
     public static void fromDocBookToDvpML(String input, String output, Configuration config) throws SaxonApiException, BadConfigurationFile {
         // TODO: What about the configuration file for this document?
+        assert ! input.equals(output);
         new XsltHandler(new QdtPaths(config).getXsltToDvpMLPath()).transform(input, output);
     }
 
     public static void fromDOCXToDocBook(String input, String output) throws IOException, XMLStreamException {
+        assert ! input.equals(output);
         new DocxInput(input).toDocBook(output);
     }
 
     public static void fromDocBookToDOCX(String input, String output, Configuration config) throws IOException, ParserConfigurationException,
             SAXException, InvalidFormatException {
+        assert ! input.equals(output);
         new DocxOutput(input, config).toDocx(output);
     }
 
     public static void fromODTToDocBook(String input, String output) {
+        assert ! input.equals(output);
         throw new RuntimeException("NOT YET IMPLEMENTED");
     }
 
     public static void fromDocBookToODT(String input, String output) {
+        assert ! input.equals(output);
         throw new RuntimeException("NOT YET IMPLEMENTED");
     }
 }
