@@ -23,8 +23,15 @@ public class TransformHelpers {
     }
 
     public static void fromDocBookToDvpML(String input, String output, Configuration config) throws SaxonApiException, BadConfigurationFile, FileNotFoundException {
-        ArticleConfiguration conf = new ArticleConfiguration(input);
-        new XsltHandler(new QdtPaths(config).getXsltToDvpMLPath()).transform(input, output);
+        try {
+            ArticleConfiguration conf = new ArticleConfiguration(input);
+            new XsltHandler(new QdtPaths(config).getXsltToDvpMLPath()).transform(input, output);
+        } catch (FileNotFoundException e) {
+            System.err.println("There is no configuration file for the article " + input);
+            System.err.println("Here is an example of such a file: ");
+            System.err.println(ArticleConfiguration.proposeConfigurationFile());
+            throw e;
+        }
     }
 
     public static void fromDOCXToDocBook(String input, String output) throws IOException, XMLStreamException {

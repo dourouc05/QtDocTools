@@ -23,6 +23,15 @@ public class ArticleConfiguration extends AbstractConfiguration {
         return parent.resolve(fileRoot + ".json");
     }
 
+    public static String proposeConfigurationFile() {
+        return "{\n" +
+                "\t\"ftp-server\": \"\",\n" +
+                "\t\"ftp-user\": \"\",\n" +
+                "\t\"ftp-port\": \"\",\n" +
+                "\t\"ftp-folder\": \"\"\n" +
+                "}";
+    }
+
     public ArticleConfiguration(String file) throws FileNotFoundException {
         super(getConfigurationFileName(file));
         articleName = Paths.get(file);
