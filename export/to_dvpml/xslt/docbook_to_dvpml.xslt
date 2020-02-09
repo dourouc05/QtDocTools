@@ -50,7 +50,7 @@
                   </xsl:for-each>
                 </xsl:when>
                 <xsl:otherwise>
-                  <xsl:value-of select="translate(db:info/db:title, ' ', ',')"/>
+                  <xsl:value-of select="translate(translate(db:info/db:title, ',', ''), ' ', ',')"/>
                 </xsl:otherwise>
               </xsl:choose>
             </keywords>
