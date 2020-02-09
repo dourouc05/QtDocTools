@@ -169,7 +169,7 @@
         <summary>
           <xsl:choose>
             <xsl:when test="not(child::*[2][self::db:section])">
-              <!-- A document must have a section. -->
+              <!-- A document must have a section in DvpML, not necessarily in DocBook. -->
               <section id="I" noNumber="1">
                 <title><xsl:value-of select="db:info/db:title"/></title>
                 
@@ -229,12 +229,6 @@
     </tableau>
   </xsl:template>
   
-  <xsl:template mode="content" match="db:informaltable">
-    <tableau width="80%" border="1">
-      <xsl:apply-templates mode="content"/>
-    </tableau>
-  </xsl:template>
-  
   <xsl:template mode="content" match="db:thead | db:tbody">
     <xsl:apply-templates mode="content"/>
   </xsl:template>
@@ -258,6 +252,25 @@
         </xsl:otherwise>
       </xsl:choose>
     </colonne>
+  </xsl:template>
+  
+  <xsl:template mode="content" match="db:figure | db:informalfigure">
+    <xsl:if test="@xml:id">
+      <signet id="{@xml:id}"/>
+    </xsl:if>
+    
+    <image>
+      <xsl:attribute name="src">
+        <xsl:value-of select="./db:mediaobject/db:imageobject/db:imagedata/@fileref"/>
+      </xsl:attribute>
+      
+      <!-- A figure must have a title, unlike an informalfigure. -->
+      <xsl:if test="./db:title">
+        <xsl:attribute name="legende">
+          <xsl:value-of select="./db:title"/>
+        </xsl:attribute>
+      </xsl:if>
+    </image>
   </xsl:template>
   
   <xsl:template mode="content" match="db:constructorsynopsis | db:destructorsynopsis | db:enumsynopsis | db:typedefsynopsis | db:fieldsynopsis | db:methodsynopsis | db:classsynopsis | db:fieldsynopsis | db:namespacesynopsis"/>
@@ -569,7 +582,7 @@
   <xsl:template match="*" mode="#all">
     <xsl:choose>
       <xsl:when test="self::db:guilabel | self::db:accel | self::db:prompt">
-        <!--<xsl:message>WARNING: Tag <xsl:value-of select="name(.)" /> has no matching construct in the target format</xsl:message>-->
+        <xsl:message>WARNING: Tag <xsl:value-of select="name(.)" /> has no matching construct in the target format</xsl:message>
       </xsl:when>
       <xsl:otherwise>
         <xsl:message>WARNING: Unhandled content with tag <xsl:value-of select="name(.)" /></xsl:message>
