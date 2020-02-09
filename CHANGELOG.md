@@ -1,8 +1,23 @@
 QtDocTools release notes
 ========================
 
-Version 0.1.1
--------------
+Version 0.2
+-----------
+
+Round-tripping between DocBook and DOCX: 
+
+* Implement ubiquitous linking.
+* Implement figures in admonitions.
+
+Importing Qt documentation: 
+
+* Switch to qdoc 5.15 and its DocBook support.
+
+Many code-quality improvements.
+
+
+Version 0.1.1 (27 June 2019)
+----------------------------
 
 Round-tripping between DocBook and DOCX: 
 
