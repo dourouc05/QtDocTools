@@ -6,7 +6,7 @@
   exclude-result-prefixes="xsl xs html saxon tc db xlink"
   version="3.0">
   
-  <!-- TODO: <db:codelisting role="raw-html">, like qtquickcontrols2-universal.qdt -->
+  <!-- TODO: <db:programlisting role="raw-html">, like qtquickcontrols2-universal.qdt -->
   
   <xsl:output method="xml" indent="yes" suppress-indentation="inline link i b paragraph code"/>
   <xsl:import-schema schema-location="article.xsd" use-when="system-property('xsl:is-schema-aware')='yes'"/>
@@ -137,7 +137,7 @@
         <synopsis>
           <xsl:variable name="abstractParagraphs" as="node()*">
             <xsl:choose>
-              <xsl:when test="db:info/db:abstract/db:para[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and string-length(text()) > 0]">
+              <xsl:when test="db:info/db:abstract/db:para[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and string-length(text()[1]) > 0]">
                 <!-- The abstract has paragraphs with something else than links to linked documents, great! -->
                 <!-- Most normal case. -->
                 
@@ -248,7 +248,7 @@
   <xsl:template mode="content" match="db:th | db:td">
     <colonne useText="0">
       <xsl:choose>
-        <xsl:when test="db:para | db:note | db:itemizedlist | db:orderedlist | db:mediaobject | db:programlisting">
+        <xsl:when test="db:para | db:note | db:itemizedlist | db:orderedlist | db:mediaobject | db:programlisting | db:screen">
           <xsl:apply-templates mode="content"/>
         </xsl:when>
         <xsl:otherwise>
@@ -266,11 +266,11 @@
     <!-- The synopsis is done in <db:article>. -->
     <xsl:if test="..[self::db:section] or ..[self::db:listitem] or ..[self::db:blockquote] or ..[self::db:th] or ..[self::db:td] or ..[self::db:footnote] or ..[self::db:note] or ..[self::db:article] or string-length(name(preceding-sibling::*[1])) = 0">
       <xsl:choose>
-        <xsl:when test="db:informaltable | db:note | db:programlisting">
+        <xsl:when test="db:informaltable | db:note | db:programlisting | db:screen">
           <!-- Some content must be moved outside the paragraph (DocBook's model is really flexible). -->
           <xsl:variable name="children" select="child::node()" as="node()*"/>
           <xsl:variable name="firstTagOutsideParagraph" as="xs:integer">
-            <xsl:variable name="isNotPara" select="for $i in 1 to count($children) return boolean($children[$i][self::db:informaltable | self::db:note | self::db:programlisting]) or name($children[$i]) = 'db:informaltable' or name($children[$i]) = 'db:note' or name($children[$i]) = 'db:programlisting'"/>
+            <xsl:variable name="isNotPara" select="for $i in 1 to count($children) return boolean($children[$i][self::db:informaltable | self::db:note | self::db:programlisting | self::db:screen]) or name($children[$i]) = 'db:informaltable' or name($children[$i]) = 'db:note' or name($children[$i]) = 'db:programlisting' or name($children[$i]) = 'db:screen'"/>
             <xsl:value-of select="index-of($isNotPara, true())"/>
           </xsl:variable>
           
@@ -300,7 +300,7 @@
     </tableau>
   </xsl:template>
   
-  <xsl:template mode="content" match="db:programlisting">
+  <xsl:template mode="content" match="db:programlisting | db:screen">
     <code langage="{if (@language) then @language else 'other'}">
       <xsl:apply-templates mode="content_para"/>
     </code>
@@ -567,6 +567,13 @@
   
   <!-- Catch-all block for the remaining content that has not been handled with. -->
   <xsl:template match="*" mode="#all">
-    <xsl:message>WARNING: Unhandled content with tag <xsl:value-of select="name(.)" /></xsl:message>
+    <xsl:choose>
+      <xsl:when test="self::db:guilabel | self::db:accel | self::db:prompt">
+        <!--<xsl:message>WARNING: Tag <xsl:value-of select="name(.)" /> has no matching construct in the target format</xsl:message>-->
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:message>WARNING: Unhandled content with tag <xsl:value-of select="name(.)" /></xsl:message>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 </xsl:stylesheet>
