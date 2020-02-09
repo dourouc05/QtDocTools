@@ -593,7 +593,13 @@
   
   <xsl:template mode="content_para" match="db:footnote">
     <noteBasPage>
-      <xsl:apply-templates mode="content"/>
+      <xsl:for-each select="db:para">
+        <xsl:apply-templates mode="content_para"/>
+        
+        <xsl:if test="position() &lt; last()">
+          <br/>
+        </xsl:if>
+      </xsl:for-each>
     </noteBasPage>
   </xsl:template>
   
