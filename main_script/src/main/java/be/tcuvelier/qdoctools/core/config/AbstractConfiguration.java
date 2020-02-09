@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class AbstractConfiguration {
     protected final JsonObject config;
@@ -35,6 +36,26 @@ public abstract class AbstractConfiguration {
             throw new ConfigurationMissingField(field);
         }
         return node.getAsString();
+    }
+
+    protected Optional<String> getOptionalStringAttribute(String field) {
+        try {
+            return Optional.of(getStringAttribute(field));
+        } catch (ConfigurationMissingField e) {
+            return Optional.empty();
+        }
+    }
+
+    protected Optional<Integer> getOptionalIntegerAttribute(String field) {
+        String numberUnparsed = "";
+        try {
+            numberUnparsed = getStringAttribute(field);
+            return Optional.of(Integer.parseInt(numberUnparsed));
+        } catch (NumberFormatException e) {
+            throw new IllegalStateException("The provided field " + field + " is not an integer: " + numberUnparsed);
+        } catch (ConfigurationMissingField e) {
+            return Optional.empty();
+        }
     }
 
     protected List<String> getListStringAttribute(String field) throws ConfigurationMissingField {

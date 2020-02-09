@@ -25,30 +25,48 @@ public class TransformHelpers {
         new XsltHandler(new QdtPaths(config).getXsltFromDvpMLPath()).transform(input, output);
     }
 
-    public static void fromDocBookToDvpML(String input, String output, Configuration config) throws SaxonApiException, ConfigurationMissingField, FileNotFoundException, InconsistentConfiguration {
-        try {
-            ArticleConfiguration conf = new ArticleConfiguration(input);
-            Map<String, Object> params = new HashMap<String, Object>();
-            if (conf.getLicenseNumber().isPresent()) {
-                if (conf.getLicenseAuthor().isEmpty()) {
-                    throw new InconsistentConfiguration("Field license-author absent when license-number is present");
-                }
-                if (conf.getLicenseYear().isEmpty()) {
-                    throw new InconsistentConfiguration("Field license-year absent when license-number is present");
-                }
+    private static Map<String, Object> getTemplateParameters(ArticleConfiguration conf)
+            throws InconsistentConfiguration, ConfigurationMissingField {
+        HashMap<String, Object> params = new HashMap();
 
-                params.put("license-number", conf.getLicenseNumber().get());
-                params.put("license-author", conf.getLicenseAuthor().get());
-                params.put("license-year", conf.getLicenseYear().get());
-            } else {
-                if (conf.getLicenseText().isEmpty()) {
-                    throw new InconsistentConfiguration("Field license-text absent when license-number is absent also: the document must have a license");
-                }
+        params.put("section", conf.getSection());
 
-                params.put("license-text", conf.getLicenseText().get());
+        if (conf.getDocQt()) {
+            params.put("doc-qt", true);
+        }
+
+        if (conf.getLicenseNumber().isPresent()) {
+            if (conf.getLicenseAuthor().isEmpty()) {
+                throw new InconsistentConfiguration("Field license-author absent when license-number is present");
+            }
+            if (conf.getLicenseYear().isEmpty()) {
+                throw new InconsistentConfiguration("Field license-year absent when license-number is present");
             }
 
-            new XsltHandler(new QdtPaths(config).getXsltToDvpMLPath()).transform(input, output, params);
+            params.put("license-number", conf.getLicenseNumber().get());
+            params.put("license-author", conf.getLicenseAuthor().get());
+            params.put("license-year", conf.getLicenseYear().get());
+        } else {
+            if (conf.getLicenseText().isEmpty()) {
+                throw new InconsistentConfiguration("Field license-text absent when license-number is absent also: the document must have a license");
+            }
+
+            params.put("license-text", conf.getLicenseText().get());
+        }
+
+        if (conf.getFtpUser().isPresent()) {
+            params.put("ftp-user", conf.getFtpUser().get());
+        }
+        params.put("ftp-folder", conf.getFtpFolder());
+
+        return params;
+    }
+
+    public static void fromDocBookToDvpML(String input, String output, Configuration config)
+            throws SaxonApiException, ConfigurationMissingField, FileNotFoundException, InconsistentConfiguration {
+        try {
+            ArticleConfiguration conf = new ArticleConfiguration(input);
+            new XsltHandler(new QdtPaths(config).getXsltToDvpMLPath()).transform(input, output, getTemplateParameters(conf));
         } catch (FileNotFoundException e) {
             System.err.println("There is no configuration file for the article " + input);
             System.err.println("Here is an example of such a file: ");
@@ -61,8 +79,8 @@ public class TransformHelpers {
         new DocxInput(input).toDocBook(output);
     }
 
-    public static void fromDocBookToDOCX(String input, String output, Configuration config) throws IOException, ParserConfigurationException,
-            SAXException, InvalidFormatException {
+    public static void fromDocBookToDOCX(String input, String output, Configuration config)
+            throws IOException, ParserConfigurationException, SAXException, InvalidFormatException {
         new DocxOutput(input, config).toDocx(output);
     }
 

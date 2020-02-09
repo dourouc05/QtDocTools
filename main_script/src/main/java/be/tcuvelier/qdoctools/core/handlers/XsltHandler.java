@@ -84,8 +84,10 @@ public class XsltHandler {
                 trans.setParameter(new QName(entry.getKey()), new XdmAtomicValue((Integer) entry.getValue()));
             } else if (entry.getValue() instanceof String) {
                 trans.setParameter(new QName(entry.getKey()), new XdmAtomicValue((String) entry.getValue()));
+            } else if (entry.getValue() instanceof Boolean) {
+                trans.setParameter(new QName(entry.getKey()), new XdmAtomicValue((Boolean) entry.getValue()));
             } else {
-                throw new IllegalArgumentException("Only objects of type Integer or String are allowed as parameters");
+                throw new IllegalArgumentException("Only objects of type Integer, Boolean, or String are allowed as parameters");
             }
         }
         trans.transform();

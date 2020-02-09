@@ -22,6 +22,7 @@ public class ArticleConfiguration extends AbstractConfiguration {
 
     public static String proposeConfigurationFile() {
         return "{\n" +
+                "\t\"section\": 1,\n" +
                 "\t\"license-author\": \"\",\n" +
                 "\t\"license-year\": " + Calendar.getInstance().get(Calendar.YEAR) + ",\n" +
                 "\t\"license-number\": 1,\n" +
@@ -41,16 +42,44 @@ public class ArticleConfiguration extends AbstractConfiguration {
         configName = getConfigurationFileName(file);
     }
 
+    public boolean getDocQt() {
+        try {
+            return Boolean.parseBoolean(getStringAttribute("doc-qt"));
+        } catch (ConfigurationMissingField e) {
+            return false;
+        }
+    }
+
+    public int getSection() {
+        try {
+            return Integer.parseInt(getStringAttribute("section"));
+        } catch (ConfigurationMissingField e) {
+            return 1;
+        }
+    }
+
+    public Optional<String> getLicenseAuthor() {
+        return getOptionalStringAttribute("license-author");
+    }
+
+    public Optional<Integer> getLicenseYear() {
+        return getOptionalIntegerAttribute("license-year");
+    }
+
+    public Optional<Integer> getLicenseNumber() {
+        return getOptionalIntegerAttribute("license-number");
+    }
+
+    public Optional<String> getLicenseText() {
+        return getOptionalStringAttribute("license-text");
+    }
+
     public String getFtpServer() throws ConfigurationMissingField {
         return getStringAttribute("ftp-server");
     }
 
     public Optional<String> getFtpUser() {
-        try {
-            return Optional.of(getStringAttribute("ftp-user"));
-        } catch (ConfigurationMissingField e) {
-            return Optional.empty();
-        }
+        return getOptionalStringAttribute("ftp-user");
     }
 
     public int getFtpPort() {
@@ -58,50 +87,10 @@ public class ArticleConfiguration extends AbstractConfiguration {
             return Integer.parseInt(getStringAttribute("ftp-port"));
         } catch (ConfigurationMissingField e) {
             return 21;
-    }
+        }
     }
 
     public String getFtpFolder() throws ConfigurationMissingField {
         return getStringAttribute("ftp-folder");
-    }
-
-    public Optional<String> getLicenseAuthor() {
-        try {
-            return Optional.of(getStringAttribute("license-author"));
-        } catch (ConfigurationMissingField e) {
-            return Optional.empty();
-        }
-    }
-
-    public Optional<Integer> getLicenseYear() {
-        String yearUnparsed = "";
-        try {
-            yearUnparsed = getStringAttribute("license-year");
-            return Optional.of(Integer.parseInt(yearUnparsed));
-        } catch (NumberFormatException e) {
-            throw new IllegalStateException("The provided year is not an integer: " + yearUnparsed);
-        } catch (ConfigurationMissingField e) {
-            return Optional.empty();
-        }
-    }
-
-    public Optional<Integer> getLicenseNumber() {
-        String numberUnparsed = "";
-        try {
-            numberUnparsed = getStringAttribute("license-number");
-            return Optional.of(Integer.parseInt(numberUnparsed));
-        } catch (NumberFormatException e) {
-            throw new IllegalStateException("The provided year is not an integer: " + numberUnparsed);
-        } catch (ConfigurationMissingField e) {
-            return Optional.empty();
-        }
-    }
-
-    public Optional<String> getLicenseText() {
-        try {
-            return Optional.of(getStringAttribute("license-text"));
-        } catch (ConfigurationMissingField e) {
-            return Optional.empty();
-        }
     }
 }

@@ -11,18 +11,22 @@
   <xsl:output method="xml" indent="yes" suppress-indentation="inline link i b paragraph code"/>
   <xsl:import-schema schema-location="../../../schemas/dvpml/article.xsd" use-when="system-property('xsl:is-schema-aware')='yes'"/>
   
+  <xsl:param name="doc-qt" as="xs:boolean" select="false()"/>
+  <xsl:param name="section" as="xs:integer" select="1"/>
   <xsl:param name="license-number" as="xs:integer" select="-1"/>
   <xsl:param name="license-year" as="xs:integer" select="-1"/>
   <xsl:param name="license-author" as="xs:string" select="''"/>
   <xsl:param name="license-text" as="xs:string" select="''"/>
   <xsl:param name="forum-topic" as="xs:integer" select="-1"/>
   <xsl:param name="forum-post" as="xs:integer" select="-1"/>
+  <xsl:param name="ftp-user" as="xs:string" select="''"/>
+  <xsl:param name="ftp-folder" as="xs:string" select="''"/>
   
   <xsl:template match="db:article">
     <xsl:result-document validation="lax">
       <document>
         <entete>
-          <rubrique>65</rubrique>
+          <rubrique><xsl:value-of select="$section"/></rubrique>
           <meta>
             <description>
               <xsl:choose>
@@ -81,7 +85,9 @@
             </xsl:choose>
           </miseajour>
           
-          <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php'); include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
+          <xsl:if test="$doc-qt">
+            <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php'); include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
+          </xsl:if>
           
           <xsl:choose>
             <xsl:when test="string-length($license-author) > 0 and $license-number > 0 and $license-year > 0">
@@ -94,14 +100,26 @@
             </xsl:when>
           </xsl:choose>
           
-          <serveur>Qt</serveur>
-          <xsl:variable name="url">
-            <xsl:variable name="documentQdt" select="tokenize(base-uri(), '/')[last()]"/>
-            <xsl:variable name="document" select="tokenize($documentQdt, '\.')[1]"/>
-            <xsl:value-of select="concat(lower-case(db:info/db:productname), '/', db:info/db:productnumber, '/', $document)"/>
-          </xsl:variable>
-          <chemin>/doc/<xsl:value-of select="$url"/></chemin>
-          <urlhttp>http://qt.developpez.com/doc/<xsl:value-of select="$url"/></urlhttp>
+          <xsl:choose>
+            <xsl:when test="$doc-qt">
+              <serveur>Qt</serveur>
+              <xsl:variable name="url">
+                <xsl:variable name="documentQdt" select="tokenize(base-uri(), '/')[last()]"/>
+                <xsl:variable name="document" select="tokenize($documentQdt, '\.')[1]"/>
+                <xsl:value-of select="concat(lower-case(db:info/db:productname), '/', db:info/db:productnumber, '/', $document)"/>
+              </xsl:variable>
+              <chemin>/doc/<xsl:value-of select="$url"/></chemin>
+              <urlhttp>http://qt.developpez.com/doc/<xsl:value-of select="$url"/></urlhttp>
+            </xsl:when>
+            <xsl:when test="string-length($ftp-user) > 0 and string-length($ftp-folder) > 0">
+              <serveur><xsl:value-of select="$ftp-user"/></serveur>
+              <chemin><xsl:value-of select="$ftp-folder"/></chemin>
+              <urlhttp>http://<xsl:value-of select="$ftp-user"/>.developpez.com/<xsl:value-of select="$ftp-folder"/></urlhttp>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:message>WARNING: FTP information missing.</xsl:message>
+            </xsl:otherwise>
+          </xsl:choose>
         </entete>
         
         <xsl:if test="string-length($license-author) = 0 and $license-number &lt; 0 and $license-year &lt; 0">
