@@ -113,47 +113,12 @@
         <authorDescriptions>
           <xsl:choose>
             <xsl:when test="db:info/db:authorgroup">
-              <xsl:for-each select="db:info/db:authorgroup/(db:othercredit union db:author union db:editor)">
-                <authorDescription name="{db:personname/db:othername[@role='pseudonym']}" role="traducteur">
-                  <fullname>
-                    <xsl:choose>
-                      <xsl:when test="db:personname/db:firstname and not(db:personname/db:surname)">
-                        <xsl:value-of select="db:personname/db:firstname"/>
-                      </xsl:when>
-                      <xsl:when test="not(db:personname/db:firstname) and db:personname/db:surname">
-                        <xsl:value-of select="db:personname/db:surname"/>
-                      </xsl:when>
-                      <xsl:when test="db:personname/db:firstname and db:personname/db:surname">
-                        <xsl:value-of select="concat(db:personname/db:firstname, ' ', db:personname/db:surname)"/>
-                      </xsl:when>
-                      <xsl:otherwise>
-                        <xsl:value-of select="db:personname/db:othername[@role='pseudonym']"/>
-                      </xsl:otherwise>
-                    </xsl:choose>
-                  </fullname>
-                  <xsl:if test="db:uri[not(@type='main-uri' or @type='blog-uri' or @type='google-plus' or @type='linkedin')]">
-                    <xsl:variable name="uri" select="db:uri[not(@type='main-uri' or @type='blog-uri' or @type='google-plus' or @type='linkedin')]"/>
-                    <homepage>
-                      <title><xsl:value-of select="$uri/@type"/></title>
-                      <url><xsl:value-of select="$uri/text()"/></url>
-                    </homepage>
-                  </xsl:if>
-                  <xsl:if test="db:uri[@type='main-uri']">
-                    <url><xsl:value-of select="db:uri[@type='main-uri']"/></url>
-                    <xsl:variable name="profileId" select="translate(tokenize(db:uri[@type='main-uri'], '/')[5], 'u', '')"/>
-                    <badge>https://www.developpez.com/ws/badgeimg?user=<xsl:value-of select="$profileId"/>&amp;v=1</badge>
-                  </xsl:if>
-                  <xsl:if test="db:uri[@type='blog-uri']">
-                    <blog><xsl:value-of select="db:uri[@type='blog-uri']"/></blog>
-                  </xsl:if>
-                  <xsl:if test="db:uri[@type='google-plus']">
-                    <google-plus><xsl:value-of select="db:uri[@type='google-plus']"/></google-plus>
-                  </xsl:if>
-                  <xsl:if test="db:uri[@type='linkedin']">
-                    <linkedin><xsl:value-of select="db:uri[@type='linkedin']"/></linkedin>
-                  </xsl:if>
-                </authorDescription>
+              <xsl:for-each select="db:info/db:authorgroup/(db:author | db:editor | db:othercredit)">
+                <xsl:apply-templates mode="header_author"/>
               </xsl:for-each>
+            </xsl:when>
+            <xsl:when test="db:info/db:author">
+              <xsl:apply-templates mode="header_author" select="db:info/db:author"/>
             </xsl:when>
             <xsl:otherwise>
               <authorDescription name="Dummy" role="auteur">
@@ -213,6 +178,82 @@
         </summary>
       </document>
     </xsl:result-document>
+  </xsl:template>
+  
+  <xsl:template mode="header_author" match="db:author | db:editor | db:othercredit">
+    <xsl:variable name="role" as="xs:string">
+      <xsl:choose>
+        <xsl:when test="self::db:author">auteur</xsl:when>
+        <xsl:when test="self::db:othercredit and @class='technicaleditor'">relecteur-technique</xsl:when>
+        <xsl:when test="self::db:othercredit and @class='translator'">traducteur</xsl:when>
+        <xsl:when test="self::db:othercredit and @class='conversion'">gabarisateur</xsl:when>
+        <xsl:when test="self::db:othercredit and @class='proofreader'">correcteur</xsl:when>
+        <xsl:otherwise>
+          <xsl:message>WARNING: Unrecognised contribution with tag <xsl:value-of select="name(.)" /></xsl:message>
+          <xsl:value-of select="'relecteur-technique'"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    
+    <xsl:variable name="key">
+      <xsl:choose>
+        <xsl:when test="db:personname/db:othername[@role='pseudonym']">
+          <xsl:value-of select="db:personname/db:othername[@role='pseudonym']"/>
+        </xsl:when>
+        <xsl:when test="db:personname/db:firstname and not(db:personname/db:surname)">
+          <xsl:value-of select="db:personname/db:firstname"/>
+        </xsl:when>
+        <xsl:when test="not(db:personname/db:firstname) and db:personname/db:surname">
+          <xsl:value-of select="db:personname/db:surname"/>
+        </xsl:when>
+        <xsl:when test="db:personname/db:firstname and db:personname/db:surname">
+          <xsl:value-of select="concat(db:personname/db:firstname, ' ', db:personname/db:surname)"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="generate-id()"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    
+    <authorDescription name="{$key}" role="{$role}">
+      <fullname>
+        <xsl:choose>
+          <xsl:when test="db:personname/db:firstname and not(db:personname/db:surname)">
+            <xsl:value-of select="db:personname/db:firstname"/>
+          </xsl:when>
+          <xsl:when test="not(db:personname/db:firstname) and db:personname/db:surname">
+            <xsl:value-of select="db:personname/db:surname"/>
+          </xsl:when>
+          <xsl:when test="db:personname/db:firstname and db:personname/db:surname">
+            <xsl:value-of select="concat(db:personname/db:firstname, ' ', db:personname/db:surname)"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="db:personname/db:othername[@role='pseudonym']"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </fullname>
+      <xsl:if test="db:uri[not(@type='main-uri' or @type='blog-uri' or @type='google-plus' or @type='linkedin')]">
+        <xsl:variable name="uri" select="db:uri[not(@type='main-uri' or @type='blog-uri' or @type='google-plus' or @type='linkedin')]"/>
+        <homepage>
+          <title><xsl:value-of select="$uri/@type"/></title>
+          <url><xsl:value-of select="$uri/text()"/></url>
+        </homepage>
+      </xsl:if>
+      <xsl:if test="db:uri[@type='main-uri']">
+        <url><xsl:value-of select="db:uri[@type='main-uri']"/></url>
+        <xsl:variable name="profileId" select="translate(tokenize(db:uri[@type='main-uri'], '/')[5], 'u', '')"/>
+        <badge>https://www.developpez.com/ws/badgeimg?user=<xsl:value-of select="$profileId"/>&amp;v=1</badge>
+      </xsl:if>
+      <xsl:if test="db:uri[@type='blog-uri']">
+        <blog><xsl:value-of select="db:uri[@type='blog-uri']"/></blog>
+      </xsl:if>
+      <xsl:if test="db:uri[@type='google-plus']">
+        <google-plus><xsl:value-of select="db:uri[@type='google-plus']"/></google-plus>
+      </xsl:if>
+      <xsl:if test="db:uri[@type='linkedin']">
+        <linkedin><xsl:value-of select="db:uri[@type='linkedin']"/></linkedin>
+      </xsl:if>
+    </authorDescription>
   </xsl:template>
   
   <!-- Block elements. -->
