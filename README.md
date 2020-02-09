@@ -1,43 +1,42 @@
-## A journey from QDoc 5 to DocBook ##
+## A journey from QDoc 5 to DocBook
 
-The goal of this step is to take Qt's sources and to turn them into DocBook documents. 
-Qt's internal documentation system is QDoc, whose output formats are HTML and WebXML
-([it used to have DITA](http://lists.qt-project.org/pipermail/development/2013-June/011311.html)). 
-Overall, the process is to run QDoc to get HTML files, then to turn them into DocBook
-with some XML-to-XML transformation. 
+This tool works around the DocBook 5.2 format. It was first built to allow a 
+more modern toolkit to work with Qt qdoc's generated output, and grew to offer
+many DocBook-related functionalities. Its capabilities: 
 
-The end goal is to produce the best DocBook output as possible, to encode a lot of information, 
-so that the transformation does not need to be repeated often to add new tags to 
-have a better representation of the content. 
+- Convert DocBook documents into DOCX and back. 
+- Convert DocBook documents into ODT and back {WIP}. 
+- Convert DocBook documents into DvpML (proprietary XML vocabulary used only
+  by Developpez.com) and back (although the possibilities are more limited
+  than with DOCX). 
+- Run Developpez.com's proprietary tools to convert a document into HTML and 
+  upload it {WIP}.
+- Merge two versions of a document (either because it was proofread, and some
+  metadata was lost, or because a new version of Qt was released and the 
+  existing documentation translation should be updated) {WIP}.
+- Run qdoc to generate Qt's documentation (requires qdoc 5.15, as it is the 
+  first version able to generate DocBook) {WIP}. 
+  
+### Repository organisation
 
-In more details, the following steps are required: 
+Filters for most formats reside in the `import` and `export` folders, each 
+within its own folder. These contain the XSLT stylesheets and possibly a few
+test cases. For transformations that do not rely on XSLT (like DOCX, using 
+Apache POI), there are only tests. 
 
-- Apply QDoc on Qt's sources (`main_script/qt5.py`): 
-    - Each module has its own QDocConf file, that gives sufficient information to QDoc 
-      for its operations; a directory may contain multiple QDocConf files
-    - For each module, QDoc must first build an index so that links between modules are 
-      possible
-    - Finally, QDoc can build the HTML documentation with all these files
-- Transform the HTML5 files into XML content (`main_script/qt5.py`)
-- Perform an XSL transformation from this XML into DocBook (`import/from_qdoc/xslt/qdoc2db_5.4.xsl`)
-- Use a C++ parser to deal with the function prototypes and make the DocBook content
-  fully exploitable (`import/from_qdoc/postprocessor/main.cpp`). Before the script, 
-  only the C++ prototype is available in DocBook (with things like `int main()`); 
-  it parses the prototypes to generate the corresponding DocBook tags and separate the 
-  return type from the function name and from its arguments. 
-   
-The first two steps are performed within the main Python script `main_script/qt5.py`, 
-which also automates all the other steps. 
-The QDoc automation is also available as a stand-alone script in 
-`import/from_qdoc/qdoc2html`. The HMLT5-to-XML transformation is also available as a 
-stand-alone script in `import/from_qdoc/html2xml`. The XSL transformations is performed 
-with the stylesheets in `import/from_qdoc/xslt`, whilst the C++ parsing is done with 
-the executable in `import/from_qdoc/postprocessor`.
+The main code is in `main_script`. 
 
-Notes
-=====
+The folder `merge` contains stuff about merging two documents. Its contents 
+is in bad shape, right now. 
+
+
+### Notes
 
 Very useful tool to debug OOXML documents: the tools from 
 [the official SDK, v2.5](https://www.microsoft.com/en-us/download/details.aspx?id=30425)
 or [the up-to-date SDK](https://github.com/OfficeDev/Open-XML-SDK) 
 (validation only in C#, no desktop application)
+
+CLI to get HTML from the wiki itself: https://www.dokuwiki.org/tips:dokuwiki_parser_cli. 
+XML-RPC from a working wiki: https://www.dokuwiki.org/devel:xmlrpc. 
+Pandoc supports DokuWiki dialect: https://pandoc.org/ (since 2.6)
