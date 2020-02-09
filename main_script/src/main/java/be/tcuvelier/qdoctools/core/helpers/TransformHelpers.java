@@ -16,12 +16,23 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
 public class TransformHelpers {
-    public static void fromDvpMLToDocBook(String input, String output, Configuration config) throws SaxonApiException, ConfigurationMissingField {
-        // TODO: What about the configuration file for this document? Generate one in all cases, I guess?
+    public static void fromDvpMLToDocBook(String input, String output, Configuration config) throws SaxonApiException, IOException {
+        Path confPath = ArticleConfiguration.getConfigurationFileName(output);
+        if (! confPath.toFile().exists()) { // No configuration file: try to do something about it!
+            if (Paths.get(output).toFile().exists()) { // There is already a DvpML file: read what you can from it.
+                Files.write(confPath, ArticleConfiguration.parseConfigurationFileFromXml(output).getBytes());
+            } else { // Nothing to get inspiration from: create the most basic file.
+                Files.write(confPath, ArticleConfiguration.proposeConfigurationFile().getBytes());
+            }
+        }
+
         new XsltHandler(new QdtPaths(config).getXsltFromDvpMLPath()).transform(input, output);
     }
 

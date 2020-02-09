@@ -20,6 +20,11 @@ public class ArticleConfiguration extends AbstractConfiguration {
         return parent.resolve(fileRoot + ".json");
     }
 
+    public static String parseConfigurationFileFromXml(String file) {
+        // TODO:
+        return "{}";
+    }
+
     public static String proposeConfigurationFile() {
         return "{\n" +
                 "\t\"section\": 1,\n" +
@@ -32,7 +37,8 @@ public class ArticleConfiguration extends AbstractConfiguration {
                 "\t\"ftp-server\": \"\",\n" +
                 "\t\"ftp-user\": \"\",\n" +
                 "\t\"ftp-port\": \"\",\n" +
-                "\t\"ftp-folder\": \"\"\n" +
+                "\t\"ftp-folder\": \"\",\n" +
+                "\t\"google-analytics\": \"\"\n" +
                 "}";
     }
 
