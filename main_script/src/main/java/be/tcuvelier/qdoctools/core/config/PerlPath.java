@@ -1,6 +1,6 @@
 package be.tcuvelier.qdoctools.core.config;
 
-import be.tcuvelier.qdoctools.core.exceptions.BadConfigurationFile;
+import be.tcuvelier.qdoctools.core.exceptions.ConfigurationMissingField;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -25,7 +25,7 @@ public class PerlPath {
         }
     }
 
-    public Path getToolchainPerlPath() throws BadConfigurationFile {
+    public Path getToolchainPerlPath() throws ConfigurationMissingField {
         return config.getDvpToolchainPath().resolve("langdvp").resolve("perl").resolve("perl").resolve("bin").resolve("perl.exe");
     }
 
@@ -36,7 +36,7 @@ public class PerlPath {
             if (toolchain.toFile().exists()) {
                 return toolchain.toString();
             }
-        } catch (BadConfigurationFile ignored) {}
+        } catch (ConfigurationMissingField ignored) {}
 
         // Either the configuration is missing or Perl is missing: try to use system Perl.
         if (isPerlInPath()) {

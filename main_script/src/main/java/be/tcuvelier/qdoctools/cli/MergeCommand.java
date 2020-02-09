@@ -2,7 +2,7 @@ package be.tcuvelier.qdoctools.cli;
 
 import be.tcuvelier.qdoctools.core.MergeCore;
 import be.tcuvelier.qdoctools.core.config.Configuration;
-import be.tcuvelier.qdoctools.core.exceptions.BadConfigurationFile;
+import be.tcuvelier.qdoctools.core.exceptions.ConfigurationMissingField;
 import net.sf.saxon.s9api.SaxonApiException;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -51,7 +51,7 @@ public class MergeCommand implements Callable<Void> {
     private MergeType type = MergeType.AFTER_PROOFREADING;
 
     @Override
-    public Void call() throws SaxonApiException, MalformedURLException, FileNotFoundException, BadConfigurationFile {
+    public Void call() throws SaxonApiException, MalformedURLException, FileNotFoundException, ConfigurationMissingField {
         Configuration config = new Configuration(configurationFile);
         MergeCore.call(original, altered, merged, type, config);
         return null;

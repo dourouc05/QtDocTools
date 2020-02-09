@@ -1,6 +1,6 @@
 package be.tcuvelier.qdoctools.core.config;
 
-import be.tcuvelier.qdoctools.core.exceptions.BadConfigurationFile;
+import be.tcuvelier.qdoctools.core.exceptions.ConfigurationMissingField;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -29,18 +29,18 @@ public abstract class AbstractConfiguration {
         config = JsonParser.parseReader(new FileReader(file)).getAsJsonObject();
     }
 
-    protected String getStringAttribute(String field) throws BadConfigurationFile {
+    protected String getStringAttribute(String field) throws ConfigurationMissingField {
         JsonElement node = config.get(field);
         if (node == null) {
-            throw new BadConfigurationFile(field);
+            throw new ConfigurationMissingField(field);
         }
         return node.getAsString();
     }
 
-    protected List<String> getListStringAttribute(String field) throws BadConfigurationFile {
+    protected List<String> getListStringAttribute(String field) throws ConfigurationMissingField {
         JsonElement node = config.get(field);
         if (node == null) {
-            throw new BadConfigurationFile(field);
+            throw new ConfigurationMissingField(field);
         }
         JsonArray array = node.getAsJsonArray();
         List<String> list = new ArrayList<>(array.size());

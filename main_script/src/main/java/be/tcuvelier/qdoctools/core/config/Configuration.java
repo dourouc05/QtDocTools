@@ -1,6 +1,6 @@
 package be.tcuvelier.qdoctools.core.config;
 
-import be.tcuvelier.qdoctools.core.exceptions.BadConfigurationFile;
+import be.tcuvelier.qdoctools.core.exceptions.ConfigurationMissingField;
 
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
@@ -19,37 +19,37 @@ public class Configuration extends AbstractConfiguration {
         return configName;
     }
 
-    public String getQdocLocation() throws BadConfigurationFile {
+    public String getQdocLocation() throws ConfigurationMissingField {
         return getStringAttribute("qdoc");
     }
 
-    public String getDvpKitUnix() throws BadConfigurationFile {
+    public String getDvpKitUnix() throws ConfigurationMissingField {
         return getStringAttribute("dvp_toolchain");
     }
 
-    public Path getDvpKitUnixPath() throws BadConfigurationFile {
+    public Path getDvpKitUnixPath() throws ConfigurationMissingField {
         return Paths.get(getDvpKitUnix());
     }
 
-    public Path getDvpToolchainPath() throws BadConfigurationFile {
+    public Path getDvpToolchainPath() throws ConfigurationMissingField {
         return getDvpKitUnixPath().getParent();
     }
 
-    public Path getDvpPerlScriptsPath() throws BadConfigurationFile {
+    public Path getDvpPerlScriptsPath() throws ConfigurationMissingField {
         return getDvpToolchainPath().resolve("script").resolve("Perl");
     }
 
-    public List<String> getCppCompilerIncludes() throws BadConfigurationFile {
+    public List<String> getCppCompilerIncludes() throws ConfigurationMissingField {
         // g++ -E -x c++ - -v
         // clang++ -E -x c++ - -v
         return getListStringAttribute("cpp_compiler_includes");
     }
 
-    public List<String> getNdkIncludes() throws BadConfigurationFile {
+    public List<String> getNdkIncludes() throws ConfigurationMissingField {
         return getListStringAttribute("ndk_includes");
     }
 
-    public String getQtDocToolsRoot() throws BadConfigurationFile {
+    public String getQtDocToolsRoot() throws ConfigurationMissingField {
         return getStringAttribute("qdoctools_root");
     }
 }

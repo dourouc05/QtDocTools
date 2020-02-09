@@ -1,12 +1,8 @@
 package be.tcuvelier.qdoctools.core.config;
 
-import be.tcuvelier.qdoctools.core.exceptions.BadConfigurationFile;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import be.tcuvelier.qdoctools.core.exceptions.ConfigurationMissingField;
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -25,6 +21,10 @@ public class ArticleConfiguration extends AbstractConfiguration {
 
     public static String proposeConfigurationFile() {
         return "{\n" +
+                "\t\"license-author\": \"\",\n" +
+                "\t\"license-year\": \"\",\n" +
+                "\t\"license-number\": \"\",\n" +
+                "\t\"license-text\": \"\",\n" +
                 "\t\"ftp-server\": \"\",\n" +
                 "\t\"ftp-user\": \"\",\n" +
                 "\t\"ftp-port\": \"\",\n" +
@@ -38,14 +38,14 @@ public class ArticleConfiguration extends AbstractConfiguration {
         configName = getConfigurationFileName(file);
     }
 
-    public String getFtpServer() throws BadConfigurationFile {
+    public String getFtpServer() throws ConfigurationMissingField {
         return getStringAttribute("ftp-server");
     }
 
     public Optional<String> getFtpUser() {
         try {
             return Optional.of(getStringAttribute("ftp-user"));
-        } catch (BadConfigurationFile e) {
+        } catch (ConfigurationMissingField e) {
             return Optional.empty();
         }
     }
@@ -53,12 +53,52 @@ public class ArticleConfiguration extends AbstractConfiguration {
     public int getFtpPort() {
         try {
             return Integer.parseInt(getStringAttribute("ftp-port"));
-        } catch (BadConfigurationFile e) {
+        } catch (ConfigurationMissingField e) {
             return 21;
+    }
+    }
+
+    public String getFtpFolder() throws ConfigurationMissingField {
+        return getStringAttribute("ftp-folder");
+    }
+
+    public Optional<String> getLicenseAuthor() {
+        try {
+            return Optional.of(getStringAttribute("license-author"));
+        } catch (ConfigurationMissingField e) {
+            return Optional.empty();
         }
     }
 
-    public String getFtpFolder() throws BadConfigurationFile {
-        return getStringAttribute("ftp-folder");
+    public Optional<Integer> getLicenseYear() {
+        String yearUnparsed = "";
+        try {
+            yearUnparsed = getStringAttribute("license-year");
+            return Optional.of(Integer.parseInt(yearUnparsed));
+        } catch (NumberFormatException e) {
+            throw new IllegalStateException("The provided year is not an integer: " + yearUnparsed);
+        } catch (ConfigurationMissingField e) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Integer> getLicenseNumber() {
+        String numberUnparsed = "";
+        try {
+            numberUnparsed = getStringAttribute("license-number");
+            return Optional.of(Integer.parseInt(numberUnparsed));
+        } catch (NumberFormatException e) {
+            throw new IllegalStateException("The provided year is not an integer: " + numberUnparsed);
+        } catch (ConfigurationMissingField e) {
+            return Optional.empty();
+        }
+    }
+
+    public Optional<String> getLicenseText() {
+        try {
+            return Optional.of(getStringAttribute("license-text"));
+        } catch (ConfigurationMissingField e) {
+            return Optional.empty();
+        }
     }
 }

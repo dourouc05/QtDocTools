@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
+import java.util.Collections;
+import java.util.Map;
 
 public class XsltHandler {
     private final Processor saxonProcessor;
@@ -65,9 +67,28 @@ public class XsltHandler {
     }
 
     public void transform(String input, String output) throws SaxonApiException {
+        transform(input, output, Map.of());
+    }
+
+    public void transform(String input, String output, Map<String, Object> parameters) throws SaxonApiException {
+        // Using an Object in the parameters allow passing more information to Saxon without many risks:
+        // if it was forced to be a String, no Integer could be passed to Saxon; parsing the String to find out if it is
+        // an Integer could create false positives (e.g.: the stylesheets expects a String, but a special case is an
+        // Integer).
+
         // Run the transformation.
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        createTransformer(input, output, os).transform();
+        XsltTransformer trans = createTransformer(input, output, os);
+        for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+            if (entry.getValue() instanceof Integer) {
+                trans.setParameter(new QName(entry.getKey()), new XdmAtomicValue((Integer) entry.getValue()));
+            } else if (entry.getValue() instanceof String) {
+                trans.setParameter(new QName(entry.getKey()), new XdmAtomicValue((String) entry.getValue()));
+            } else {
+                throw new IllegalArgumentException("Only objects of type Integer or String are allowed as parameters");
+            }
+        }
+        trans.transform();
 
         // If there were errors, print them out.
         String errors = new String(os.toByteArray(), StandardCharsets.UTF_8);

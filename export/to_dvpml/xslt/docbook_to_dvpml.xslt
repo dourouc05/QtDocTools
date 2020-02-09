@@ -11,6 +11,11 @@
   <xsl:output method="xml" indent="yes" suppress-indentation="inline link i b paragraph code"/>
   <xsl:import-schema schema-location="../../../schemas/dvpml/article.xsd" use-when="system-property('xsl:is-schema-aware')='yes'"/>
   
+  <xsl:param name="license-number" as="xs:integer" select="-1"/>
+  <xsl:param name="license-year" as="xs:integer" select="-1"/>
+  <xsl:param name="license-author" as="xs:string" select="''"/>
+  <xsl:param name="license-text" as="xs:string" select="''"/>
+  
   <xsl:template match="db:article">
     <xsl:result-document validation="lax">
       <document>
@@ -57,7 +62,7 @@
                 <xsl:value-of select="format-date(db:info/db:pubdate, '[Y0001]-[M01]-[D01]')"/>
               </xsl:when>
               <xsl:otherwise>
-                <xsl:message>WARNING: no pubdate found in info, the field miseajour will be set to today.</xsl:message>
+                <xsl:message>WARNING: no pubdate found in info, the field date will be set to today.</xsl:message>
                 <xsl:value-of select="format-date(current-date(), '[Y0001]-[M01]-[D01]')"/>
               </xsl:otherwise>
             </xsl:choose>
@@ -76,6 +81,17 @@
           
           <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php'); include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
           
+          <xsl:choose>
+            <xsl:when test="string-length($license-author) > 0 and $license-number > 0 and $license-year > 0">
+              <licauteur><xsl:value-of select="$license-author"/></licauteur>
+              <lictype><xsl:value-of select="$license-number"/></lictype>
+              <licannee><xsl:value-of select="$license-year"/></licannee>
+            </xsl:when>
+            <xsl:when test="string-length($license-author) > 0 or $license-number > 0 or $license-year > 0">
+              <xsl:message>WARNING: Global license parameters not consistent: either the three parameters license-author, license-number, and license-year must be set, or only license-text.</xsl:message>
+            </xsl:when>
+          </xsl:choose>
+          
           <serveur>Qt</serveur>
           <xsl:variable name="url">
             <xsl:variable name="documentQdt" select="tokenize(base-uri(), '/')[last()]"/>
@@ -85,6 +101,19 @@
           <chemin>/doc/<xsl:value-of select="$url"/></chemin>
           <urlhttp>http://qt.developpez.com/doc/<xsl:value-of select="$url"/></urlhttp>
         </entete>
+        
+        <xsl:if test="string-length($license-author) = 0 and $license-number &lt; 0 and $license-year &lt; 0">
+          <xsl:choose>
+            <xsl:when test="string-length($license-text) > 0">
+              <licence>
+                <xsl:value-of select="$license-text"/>
+              </licence>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:message>WARNING: Global license parameters not consistent: either the three parameters license-author, license-number, and license-year must be set, or only license-text.</xsl:message>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:if>
         
         <!-- If the synopsis has a specific form (last paragraph has only one children, a simple list), -->
         <!-- consider this list has links to linked documents. -->
