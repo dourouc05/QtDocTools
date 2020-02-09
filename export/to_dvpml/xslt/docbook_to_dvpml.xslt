@@ -6,8 +6,6 @@
   exclude-result-prefixes="xsl xs html saxon tc db xlink"
   version="3.0">
   
-  <!-- TODO: <db:programlisting role="raw-html">, like qtquickcontrols2-universal.qdt -->
-  
   <xsl:output method="xml" indent="yes" suppress-indentation="inline link i b paragraph code"/>
   <xsl:import-schema schema-location="../../../schemas/dvpml/article.xsd" use-when="system-property('xsl:is-schema-aware')='yes'"/>
   
@@ -453,7 +451,13 @@
     </tableau>
   </xsl:template>
   
-  <xsl:template mode="content" match="db:programlisting | db:screen">
+  <xsl:template mode="content" match="db:programlisting[@role='raw-html']">
+    <html-brut>
+      <xsl:apply-templates mode="content_para"/>
+    </html-brut>
+  </xsl:template>
+  
+  <xsl:template mode="content" match="db:programlisting[not(@role='raw-html')] | db:screen">
     <code langage="{if (@language) then @language else 'other'}">
       <xsl:apply-templates mode="content_para"/>
     </code>
