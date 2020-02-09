@@ -27,7 +27,21 @@
                 </xsl:otherwise>
               </xsl:choose>
             </description>
-            <keywords>documentation, qt, français</keywords>
+            <keywords>
+              <xsl:choose>
+                <xsl:when test="db:info/db:keywordset">
+                  <xsl:for-each select="db:info/db:keywordset/db:keyword">
+                    <xsl:value-of select="."/>
+                    <xsl:if test="position() &lt; last()">
+                      <xsl:value-of select="','"/>
+                    </xsl:if>
+                  </xsl:for-each>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="translate(db:info/db:title, ' ', ',')"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </keywords>
           </meta>
           <titre>
             <page>
@@ -38,10 +52,26 @@
             </article>
           </titre>
           <date>
-            <xsl:value-of select="format-date(db:info/db:pubdate, '[Y0001]-[M01]-[D01]')"/>
+            <xsl:choose>
+              <xsl:when test="db:info/db:pubdate">
+                <xsl:value-of select="format-date(db:info/db:pubdate, '[Y0001]-[M01]-[D01]')"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:message>WARNING: no pubdate found in info, the field miseajour will be set to today.</xsl:message>
+                <xsl:value-of select="format-date(current-date(), '[Y0001]-[M01]-[D01]')"/>
+              </xsl:otherwise>
+            </xsl:choose>
           </date>
           <miseajour>
-            <xsl:value-of select="format-date(db:info/db:date, '[Y0001]-[M01]-[D01]')"/>
+            <xsl:choose>
+              <xsl:when test="db:info/db:date">
+                <xsl:value-of select="format-date(db:info/db:date, '[Y0001]-[M01]-[D01]')"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:message>WARNING: no date found in info, the field miseajour will be set to today.</xsl:message>
+                <xsl:value-of select="format-date(current-date(), '[Y0001]-[M01]-[D01]')"/>
+              </xsl:otherwise>
+            </xsl:choose>
           </miseajour>
           
           <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php'); include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>

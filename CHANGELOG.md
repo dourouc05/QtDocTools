@@ -17,6 +17,7 @@ Exporting to DvpML:
 
 * More precise warning messages for unsupported tags.
 * Implement figures.
+* Keywords are taken from the keywordset of the document.
 
 Many code-quality improvements.
 
