@@ -7,7 +7,9 @@ package be.tcuvelier.qdoctools.cli;
 
 import be.tcuvelier.qdoctools.core.TransformCore;
 import be.tcuvelier.qdoctools.core.TransformCore.Format;
+import be.tcuvelier.qdoctools.core.UploadCore;
 import be.tcuvelier.qdoctools.core.config.Configuration;
+import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
 import net.sf.saxon.s9api.SaxonApiException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.xml.sax.SAXException;
@@ -51,11 +53,29 @@ public class TransformCommand implements Callable<Void> {
             description = "Perform the sanity checks, but continue with generation even in case of failure")
     private boolean disableSanityChecks = false;
 
+    @Option(names = { "--generate" },
+            description = "Starts the standard DvpML tools to generate PHP/HTML files.")
+    private boolean generate = false;
+
+    @Option(names = { "--upload" },
+            description = "Uploads the generated (--generate) files.")
+    private boolean upload = false;
+
     @Override
     public Void call() throws SaxonApiException, IOException, SAXException, InvalidFormatException,
-            XMLStreamException, ParserConfigurationException {
+            XMLStreamException, ParserConfigurationException, InterruptedException {
         Configuration config = new Configuration(configurationFile);
         TransformCore.call(input, inputFormat, output, outputFormat, config, validate, disableSanityChecks);
+
+        boolean isOutputDvpML = outputFormat == Format.DvpML;
+        if (outputFormat == Format.Default) {
+            isOutputDvpML = FileHelpers.isDvpML(output);
+        }
+
+        if (isOutputDvpML && generate) {
+            UploadCore.call(output, "", upload);
+        }
+
         return null;
     }
 }

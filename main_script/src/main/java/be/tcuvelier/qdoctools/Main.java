@@ -48,7 +48,8 @@ public class Main {
 //        String[] argv = {"transform", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\proofread_todocx\\tests\\" + doc + ".db", "--disable-sanity-checks"};
 //        String[] argv = {"transform", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\" + doc + ".docx"};
 
-        String[] argv = {"transform", "-i", doc, "--no-validation"};
+//        String[] argv = {"transform", "-i", doc, "--no-validation"};
+        String[] argv = {"transform", "-i", doc, "-of", "DvpML", "--generate", "--upload"};
 
         submain(argv);
 //        submain(args);
