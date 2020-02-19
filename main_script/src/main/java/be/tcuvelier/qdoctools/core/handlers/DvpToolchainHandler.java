@@ -5,10 +5,7 @@ import be.tcuvelier.qdoctools.core.config.PerlPath;
 import net.sf.saxon.s9api.*;
 
 import javax.xml.transform.stream.StreamSource;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -65,15 +62,26 @@ public class DvpToolchainHandler {
         Path xml = Paths.get(file);
         List<Path> neededFiles = neededFiles(file).stream().map(f -> f.relativize(xml)).collect(Collectors.toList());
 
-        Files.copy(xml, folder.resolve(xml.getFileName()));
+        Files.copy(xml, folder.resolve(folderName + ".xml"));
         for (Path f: neededFiles) {
             Files.copy(fileFolder.resolve(f), folder.resolve(f));
         }
 
         // Start generation.
-        String script = config.getDvpToolchainPath().resolve("script").resolve("buildart").toString();
-        List<String> params = new ArrayList<>(Arrays.asList(new PerlPath(config).getPerlPath(), script, folderName));
-        new ProcessBuilder(params).start().waitFor();
+        String script = config.getDvpToolchainPath().resolve("script").resolve("buildart.pl").toString();
+        String executable = new PerlPath(config).getPerlPath();
+        Process process = new ProcessBuilder(executable, script, folderName).start();
+        int errorCode = process.waitFor();
+
+
+        if (errorCode != 0) {
+            String error = new BufferedReader(new InputStreamReader(process.getErrorStream())).lines().collect(Collectors.joining("\n"));;
+            if (error.length() > 0) {
+                System.err.println(error);
+            }
+
+            throw new RuntimeException("Running the DvpML tools failed.", new RuntimeException(error));
+        }
 
         // Copy the result in the right place.
         Path cache = config.getDvpToolchainPath().resolve("cache").resolve(folderName); // cache: PHP files; html: HTML files.
