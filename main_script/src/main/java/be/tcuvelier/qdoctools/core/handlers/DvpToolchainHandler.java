@@ -1,6 +1,6 @@
 package be.tcuvelier.qdoctools.core.handlers;
 
-import be.tcuvelier.qdoctools.core.config.Configuration;
+import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.config.PerlPath;
 import net.sf.saxon.s9api.*;
 
@@ -16,7 +16,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class DvpToolchainHandler {
-    public static void updateToolchain(Configuration config) throws IOException, InterruptedException {
+    public static void updateToolchain(GlobalConfiguration config) throws IOException, InterruptedException {
         String script = config.getDvpPerlScriptsPath().resolve("mise-a-jour-kit-generation.pl").toString();
         List<String> params = new ArrayList<>(Arrays.asList(new PerlPath(config).getPerlPath(), script));
         new ProcessBuilder(params).start().waitFor();
@@ -43,7 +43,7 @@ public class DvpToolchainHandler {
         return list;
     }
 
-    public static void generateHTML(String file, String outputFolder, Configuration config) throws IOException, InterruptedException, SaxonApiException {
+    public static void generateHTML(String file, String outputFolder, GlobalConfiguration config) throws IOException, InterruptedException, SaxonApiException {
         // Find a good folder name (i.e. one that does not exist yet).
         Path root = config.getDvpToolchainPath().resolve("documents");
         String folderName = "qdt";

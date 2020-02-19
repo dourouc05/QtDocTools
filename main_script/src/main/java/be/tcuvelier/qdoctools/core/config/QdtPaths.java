@@ -4,9 +4,9 @@ import be.tcuvelier.qdoctools.core.exceptions.ConfigurationMissingField;
 
 public class QdtPaths {
     // TODO: move these files into the JAR, when building one? Far from trivial: https://stackoverflow.com/questions/20389255/reading-a-resource-file-from-within-jar
-    private final Configuration config;
+    private final GlobalConfiguration config;
 
-    public QdtPaths(Configuration config) {
+    public QdtPaths(GlobalConfiguration config) {
         this.config = config;
     }
 

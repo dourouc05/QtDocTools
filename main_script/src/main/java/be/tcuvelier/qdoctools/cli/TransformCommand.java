@@ -8,7 +8,7 @@ package be.tcuvelier.qdoctools.cli;
 import be.tcuvelier.qdoctools.core.TransformCore;
 import be.tcuvelier.qdoctools.core.TransformCore.Format;
 import be.tcuvelier.qdoctools.core.UploadCore;
-import be.tcuvelier.qdoctools.core.config.Configuration;
+import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
 import net.sf.saxon.s9api.SaxonApiException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -72,7 +72,7 @@ public class TransformCommand implements Callable<Void> {
         }
 
         // Start the transformation.
-        Configuration config = new Configuration(configurationFile);
+        GlobalConfiguration config = new GlobalConfiguration(configurationFile);
         TransformCore.call(input, inputFormat, output, outputFormat, config, validate, disableSanityChecks);
 
         boolean isOutputDvpML = outputFormat == Format.DvpML;

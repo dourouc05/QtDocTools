@@ -1,6 +1,6 @@
 package be.tcuvelier.qdoctools.io;
 
-import be.tcuvelier.qdoctools.core.config.Configuration;
+import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.xml.sax.SAXException;
@@ -54,9 +54,9 @@ public class DocxOutput {
 //    }
 
     private final String input;
-    private final Configuration config;
+    private final GlobalConfiguration config;
 
-    public DocxOutput(String input, Configuration config) {
+    public DocxOutput(String input, GlobalConfiguration config) {
         this.input = input;
         this.config = config;
     }

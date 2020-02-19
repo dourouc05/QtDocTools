@@ -1,7 +1,7 @@
 package be.tcuvelier.qdoctools.core.helpers;
 
 import be.tcuvelier.qdoctools.core.config.ArticleConfiguration;
-import be.tcuvelier.qdoctools.core.config.Configuration;
+import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.config.QdtPaths;
 import be.tcuvelier.qdoctools.core.exceptions.ConfigurationMissingField;
 import be.tcuvelier.qdoctools.core.exceptions.InconsistentConfiguration;
@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TransformHelpers {
-    public static void fromDvpMLToDocBook(String input, String output, Configuration config) throws SaxonApiException, IOException {
+    public static void fromDvpMLToDocBook(String input, String output, GlobalConfiguration config) throws SaxonApiException, IOException {
         Path confPath = ArticleConfiguration.getConfigurationFileName(output);
         if (! confPath.toFile().exists()) { // No configuration file: try to do something about it!
             if (Paths.get(output).toFile().exists()) { // There is already a DvpML file: read what you can from it.
@@ -77,7 +77,7 @@ public class TransformHelpers {
         return params;
     }
 
-    public static void fromDocBookToDvpML(String input, String output, Configuration config)
+    public static void fromDocBookToDvpML(String input, String output, GlobalConfiguration config)
             throws SaxonApiException, ConfigurationMissingField, FileNotFoundException, InconsistentConfiguration {
         try {
             ArticleConfiguration conf = new ArticleConfiguration(input);
@@ -94,7 +94,7 @@ public class TransformHelpers {
         new DocxInput(input).toDocBook(output);
     }
 
-    public static void fromDocBookToDOCX(String input, String output, Configuration config)
+    public static void fromDocBookToDOCX(String input, String output, GlobalConfiguration config)
             throws IOException, ParserConfigurationException, SAXException, InvalidFormatException {
         new DocxOutput(input, config).toDocx(output);
     }

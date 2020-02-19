@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public class PerlPath {
-    private final Configuration config;
+    private final GlobalConfiguration config;
 
-    public PerlPath(Configuration config) {
+    public PerlPath(GlobalConfiguration config) {
         this.config = config;
     }
 

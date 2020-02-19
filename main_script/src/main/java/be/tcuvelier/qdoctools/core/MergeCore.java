@@ -1,6 +1,6 @@
 package be.tcuvelier.qdoctools.core;
 
-import be.tcuvelier.qdoctools.core.config.Configuration;
+import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.exceptions.ConfigurationMissingField;
 import be.tcuvelier.qdoctools.core.handlers.MergeHandler;
 import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
@@ -12,7 +12,7 @@ import java.net.MalformedURLException;
 public class MergeCore {
     public enum MergeType { AFTER_PROOFREADING, UPDATE_QT, UPDATE_QT_TRANSLATION }
 
-    public static void call(String original, String altered, String merged, MergeType type, Configuration config) throws SaxonApiException, MalformedURLException, ConfigurationMissingField {
+    public static void call(String original, String altered, String merged, MergeType type, GlobalConfiguration config) throws SaxonApiException, MalformedURLException, ConfigurationMissingField {
         // Check whether the required files exist.
         if (! new File(original).exists()) {
             throw new RuntimeException("Original file " + original + " does not exist!");

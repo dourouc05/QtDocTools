@@ -1,6 +1,7 @@
 package be.tcuvelier.qdoctools.core.config;
 
 import be.tcuvelier.qdoctools.core.exceptions.ConfigurationMissingField;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
@@ -61,6 +62,11 @@ public class ArticleConfiguration extends AbstractConfiguration {
         super(getConfigurationFileName(file));
         articleName = Paths.get(file);
         configName = getConfigurationFileName(file);
+
+        // Check if this is really an article configuration, not a global configuration.
+        if (config.get("qdoc") != null || config.get("dvp_toolchain") != null || config.get("qdoctools_root") != null) {
+            throw new IllegalArgumentException("An ArticleConfiguration object was built with a global configuration file.");
+        }
     }
 
     public boolean getDocQt() {

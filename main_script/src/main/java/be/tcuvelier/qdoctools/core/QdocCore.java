@@ -1,13 +1,12 @@
 package be.tcuvelier.qdoctools.core;
 
-import be.tcuvelier.qdoctools.cli.MainCommand;
 import be.tcuvelier.qdoctools.core.config.QdtPaths;
 import be.tcuvelier.qdoctools.core.handlers.QdocHandler;
 import be.tcuvelier.qdoctools.core.handlers.XsltHandler;
 import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
 import be.tcuvelier.qdoctools.core.helpers.FormattingHelpers;
 import be.tcuvelier.qdoctools.core.helpers.ValidationHelper;
-import be.tcuvelier.qdoctools.core.config.Configuration;
+import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.utils.Pair;
 import be.tcuvelier.qdoctools.core.utils.QtVersion;
 import net.sf.saxon.s9api.SaxonApiException;
@@ -29,9 +28,9 @@ public class QdocCore {
         // Perform the conversion cycle, as complete as required.
 
         // First, initialise global objects.
-        Configuration config;
+        GlobalConfiguration config;
         try {
-            config = new Configuration(configurationFile);
+            config = new GlobalConfiguration(configurationFile);
         } catch (FileNotFoundException e) {
             System.out.println("!!> Configuration file not found! " + configurationFile);
             return;

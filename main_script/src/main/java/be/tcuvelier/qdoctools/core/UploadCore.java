@@ -3,7 +3,7 @@ package be.tcuvelier.qdoctools.core;
 import be.tcuvelier.qdoctools.core.handlers.DvpToolchainHandler;
 import be.tcuvelier.qdoctools.core.handlers.FtpHandler;
 import be.tcuvelier.qdoctools.core.config.ArticleConfiguration;
-import be.tcuvelier.qdoctools.core.config.Configuration;
+import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import net.sf.saxon.s9api.SaxonApiException;
 import org.netbeans.api.keyring.Keyring;
 
@@ -24,7 +24,7 @@ public class UploadCore {
 
     public static void call(String input, String folder, boolean upload, String configurationFile)
             throws IOException, SaxonApiException, InterruptedException {
-        Configuration config = new Configuration(configurationFile);
+        GlobalConfiguration config = new GlobalConfiguration(configurationFile);
 
         // Find the configuration file for the operation to perform (contains info about uploading).
         ArticleConfiguration articleConfig = new ArticleConfiguration(input);

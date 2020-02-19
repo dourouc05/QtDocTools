@@ -1,8 +1,7 @@
 package be.tcuvelier.qdoctools.core;
 
-import be.tcuvelier.qdoctools.core.config.Configuration;
+import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.handlers.DocBookSanityCheckHandler;
-import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
 import be.tcuvelier.qdoctools.core.helpers.TransformHelpers;
 import be.tcuvelier.qdoctools.core.helpers.ValidationHelper;
 import net.sf.saxon.s9api.SaxonApiException;
@@ -30,7 +29,7 @@ public class TransformCore {
 
     public static void call(String input, Format inputFormat,
                             String output, Format outputFormat,
-                            Configuration config, boolean validate, boolean disableSanityChecks)
+                            GlobalConfiguration config, boolean validate, boolean disableSanityChecks)
             throws SaxonApiException, IOException, SAXException, ParserConfigurationException, InvalidFormatException,
             XMLStreamException {
         if (! new File(input).exists()) {

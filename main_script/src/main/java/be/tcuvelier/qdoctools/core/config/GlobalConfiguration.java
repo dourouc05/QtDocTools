@@ -7,12 +7,17 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class Configuration extends AbstractConfiguration {
+public class GlobalConfiguration extends AbstractConfiguration {
     private final String configName;
 
-    public Configuration(String file) throws FileNotFoundException {
+    public GlobalConfiguration(String file) throws FileNotFoundException {
         super(file);
         configName = file;
+
+        // Check if this is really a global configuration, not an article configuration.
+        if (config.get("qdoc") == null && config.get("dvp_toolchain") == null && config.get("qdoctools_root") == null) {
+            throw new IllegalArgumentException("A GlobalConfiguration object was built with an article configuration file.");
+        }
     }
 
     public String getConfigName() {
