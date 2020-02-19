@@ -1,5 +1,7 @@
 package be.tcuvelier.qdoctools.core.helpers;
 
+import be.tcuvelier.qdoctools.core.TransformCore;
+
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
@@ -65,6 +67,36 @@ public class FileHelpers {
         return path.endsWith(".odt");
     }
 
+    public static TransformCore.Format parseFileFormat(TransformCore.Format format, String filename) {
+        if (format != TransformCore.Format.Default) {
+            return format;
+        }
+
+        if (FileHelpers.isDocBook(filename)) {
+            return TransformCore.Format.DocBook;
+        } else if (FileHelpers.isDOCX(filename)) {
+            return TransformCore.Format.DOCX;
+        } else if (FileHelpers.isDvpML(filename)) {
+            return TransformCore.Format.DvpML;
+        } else if (FileHelpers.isODT(filename)) {
+            return TransformCore.Format.ODT;
+        } else {
+            throw new RuntimeException("File format not recognised for input file!");
+        }
+    }
+
+    public static TransformCore.Format parseOutputFileFormat(TransformCore.Format input, TransformCore.Format output) {
+        if (output != TransformCore.Format.Default) {
+            return output;
+        }
+
+        if (input == TransformCore.Format.DocBook) {
+            return TransformCore.Format.DOCX;
+        } else {
+            return TransformCore.Format.DocBook;
+        }
+    }
+
     public static String changeExtension(Path file, String extension) {
         return changeExtension(file.getFileName().toString(), extension);
     }
@@ -72,5 +104,40 @@ public class FileHelpers {
     public static String changeExtension(String file, String extension) {
         assert extension.startsWith(".");
         return file.replaceFirst("[.][^.]+$", "") + extension;
+    }
+
+    public static String generateOutputFilename(String input, TransformCore.Format outputFormat) {
+        // Specific handling for collisions between DocBook and DvpML: add a suffix (just before the extension).
+        if (input.endsWith("_dvp.xml")) {
+            input = input.replace("_dvp.xml", ".xml");
+        } else if (input.endsWith("_db.xml")) {
+            input = input.replace("_db.xml", ".xml");
+        }
+
+        // Change the extension based on the target format.
+        if (outputFormat == TransformCore.Format.DOCX) {
+            return changeExtension(input, ".docx");
+        } else if (outputFormat == TransformCore.Format.ODT) {
+            return changeExtension(input, ".odt");
+        } else if (outputFormat == TransformCore.Format.DvpML) {
+            String output = changeExtension(input, ".xml");
+
+            if (input.equals(output)) {
+                output = output.substring(0, output.length() - 4) + "_dvp.xml";
+            }
+
+            return output;
+        } else if (outputFormat == TransformCore.Format.DocBook) {
+            String output = changeExtension(input, ".xml");
+
+            if (input.equals(output)) {
+                output = output.substring(0, output.length() - 4) + "_db.xml";
+            }
+
+            return output;
+        }
+
+        // Format not found. This is mostly a Java requirement...
+        throw new IllegalArgumentException("Format not recognised when generating a new file name.");
     }
 }

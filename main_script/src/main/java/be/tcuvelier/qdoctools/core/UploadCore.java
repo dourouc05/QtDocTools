@@ -15,7 +15,8 @@ public class UploadCore {
     public static void call(String input, String folder, boolean upload)
             throws IOException, SaxonApiException, InterruptedException {
         // Find the configuration file.
-        String configurationFile = null;
+        String configurationFile = ArticleConfiguration.getConfigurationFileName(input).toString();
+        assert Paths.get(configurationFile).toFile().exists();
 
         // Hand over to the general case.
         call(input, folder, upload, configurationFile);

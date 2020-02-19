@@ -28,41 +28,6 @@ public class TransformCore {
 
     public static String validationFailedMessage = "There were validation errors. See the above exception for details.";
 
-    private static String generateOutputFilename(String input, Format outputFormat) {
-        // Specific handling for collisions between DocBook and DvpML: add a suffix (just before the extension).
-        if (input.endsWith("_dvp.xml")) {
-            input = input.replace("_dvp.xml", ".xml");
-        } else if (input.endsWith("_db.xml")) {
-            input = input.replace("_db.xml", ".xml");
-        }
-
-        // Change the extension based on the target format.
-        if (outputFormat == Format.DOCX) {
-            return FileHelpers.changeExtension(input, ".docx");
-        } else if (outputFormat == Format.ODT) {
-            return FileHelpers.changeExtension(input, ".odt");
-        } else if (outputFormat == Format.DvpML) {
-            String output = FileHelpers.changeExtension(input, ".xml");
-
-            if (input.equals(output)) {
-                output = output.substring(0, output.length() - 4) + "_dvp.xml";
-            }
-
-            return output;
-        } else if (outputFormat == Format.DocBook) {
-            String output = FileHelpers.changeExtension(input, ".xml");
-
-            if (input.equals(output)) {
-                output = output.substring(0, output.length() - 4) + "_db.xml";
-            }
-
-            return output;
-        }
-
-        // Format not found. This is mostly a Java requirement...
-        throw new IllegalArgumentException("Format not recognised when generating a new file name.");
-    }
-
     public static void call(String input, Format inputFormat,
                             String output, Format outputFormat,
                             Configuration config, boolean validate, boolean disableSanityChecks)
@@ -72,35 +37,12 @@ public class TransformCore {
             throw new IOException("Input file " + input + " does not exist!");
         }
 
-        // Detect the formats.
-        if (inputFormat == Format.Default) {
-            if (FileHelpers.isDocBook(input)) {
-                inputFormat = Format.DocBook;
-            } else if (FileHelpers.isDOCX(input)) {
-                inputFormat = Format.DOCX;
-            } else if (FileHelpers.isDvpML(input)) {
-                inputFormat = Format.DvpML;
-            } else if (FileHelpers.isODT(input)) {
-                inputFormat = Format.ODT;
-            } else {
-                throw new RuntimeException("File format not recognised for input file!");
-            }
-        }
-
-        if (outputFormat == Format.Default) {
-            if (inputFormat == Format.DocBook) {
-                outputFormat = Format.DOCX;
-            } else {
-                outputFormat = Format.DocBook;
-            }
-        }
-
+        // Assert the default values have been replaced.
+        assert inputFormat != Format.Default;
+        assert outputFormat != Format.Default;
         assert inputFormat != outputFormat;
-
-        // Generate an output file name if necessary.
-        if (output == null || output.isBlank()) {
-            output = generateOutputFilename(input, outputFormat);
-        }
+        assert output != null;
+        assert !output.isBlank();
 
         // Dispatch to the helper methods.
         switch (inputFormat) {

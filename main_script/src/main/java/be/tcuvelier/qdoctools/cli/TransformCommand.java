@@ -64,6 +64,14 @@ public class TransformCommand implements Callable<Void> {
     @Override
     public Void call() throws SaxonApiException, IOException, SAXException, InvalidFormatException,
             XMLStreamException, ParserConfigurationException, InterruptedException {
+        // Replace default values.
+        inputFormat = FileHelpers.parseFileFormat(inputFormat, input);
+        outputFormat = FileHelpers.parseOutputFileFormat(inputFormat, outputFormat);
+        if (output == null || output.isBlank()) {
+            output = FileHelpers.generateOutputFilename(input, outputFormat);
+        }
+
+        // Start the transformation.
         Configuration config = new Configuration(configurationFile);
         TransformCore.call(input, inputFormat, output, outputFormat, config, validate, disableSanityChecks);
 

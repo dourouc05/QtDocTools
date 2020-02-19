@@ -17,7 +17,22 @@ public class ArticleConfiguration extends AbstractConfiguration {
         Path parent = articleName.getParent();
         String filename = articleName.getFileName().toString();
         String fileRoot = filename.substring(0, filename.lastIndexOf('.'));
-        return parent.resolve(fileRoot + ".json");
+
+        // Try just appending the extension.
+        Path potentialPath = parent.resolve(fileRoot + ".json");
+        if (potentialPath.toFile().exists()) {
+            return potentialPath;
+        }
+
+        // Maybe there is a suffix to remove?
+        String fileRootSuffixless = fileRoot.replace("_dvp", "");
+        potentialPath = parent.resolve(fileRootSuffixless + ".json");
+        if (potentialPath.toFile().exists()) {
+            return potentialPath;
+        }
+
+        // Give up.
+        return null;
     }
 
     public static String parseConfigurationFileFromXml(String file) {
