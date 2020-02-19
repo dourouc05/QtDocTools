@@ -68,11 +68,10 @@ public class DvpToolchainHandler {
         }
 
         // Start generation.
-        String script = config.getDvpToolchainPath().resolve("script").resolve("buildart.pl").toString();
-        String executable = new PerlPath(config).getPerlPath();
-        Process process = new ProcessBuilder(executable, script, folderName).start();
+        boolean isWindows = System.getProperty("os.name").toLowerCase().contains("win");
+        String script = config.getDvpToolchainPath().resolve("script").resolve("buildart" + (isWindows ? ".bat" : ".sh")).toString();
+        Process process = new ProcessBuilder(script, folderName).start();
         int errorCode = process.waitFor();
-
 
         if (errorCode != 0) {
             String error = new BufferedReader(new InputStreamReader(process.getErrorStream())).lines().collect(Collectors.joining("\n"));;
