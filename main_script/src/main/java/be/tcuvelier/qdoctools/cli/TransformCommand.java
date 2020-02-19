@@ -81,7 +81,7 @@ public class TransformCommand implements Callable<Void> {
         }
 
         if (isOutputDvpML && generate) {
-            UploadCore.call(output, "", upload);
+            UploadCore.call(output, "", upload, configurationFile);
         }
 
         return null;

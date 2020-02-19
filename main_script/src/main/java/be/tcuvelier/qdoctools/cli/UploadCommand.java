@@ -21,9 +21,13 @@ public class UploadCommand implements Callable<Void> {
             description = "Uploads the generated files (default: ${DEFAULT-VALUE})")
     private boolean upload = true;
 
+    @Option(names = { "-c", "--configuration-file" },
+            description = "Configuration file (default: ${DEFAULT-VALUE})")
+    private String configurationFile = "config.json";
+
     @Override
     public Void call() throws Exception {
-        UploadCore.call(input, folder, upload);
+        UploadCore.call(input, folder, upload, configurationFile);
         return null;
     }
 }

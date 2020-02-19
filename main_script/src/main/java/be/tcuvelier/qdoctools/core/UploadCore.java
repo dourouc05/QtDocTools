@@ -12,16 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class UploadCore {
-    public static void call(String input, String folder, boolean upload)
-            throws IOException, SaxonApiException, InterruptedException {
-        // Find the configuration file.
-        String configurationFile = ArticleConfiguration.getConfigurationFileName(input).toString();
-        assert Paths.get(configurationFile).toFile().exists();
-
-        // Hand over to the general case.
-        call(input, folder, upload, configurationFile);
-    }
-
     public static void call(String input, String folder, boolean upload, String configurationFile)
             throws IOException, SaxonApiException, InterruptedException {
         GlobalConfiguration config = new GlobalConfiguration(configurationFile);
