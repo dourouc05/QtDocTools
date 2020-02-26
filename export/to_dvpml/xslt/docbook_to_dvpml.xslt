@@ -728,6 +728,11 @@
     </xsl:choose>
   </xsl:template>
   
+  <!-- Paragraph-level unsupported tags, i.e. they must be output as is. -->
+  <xsl:template mode="content_para" match="db:prompt">
+    <xsl:apply-templates mode="content_para"/>
+  </xsl:template>
+  
   <!-- Catch-all block for the remaining content that has not been handled with. -->
   <xsl:template match="*" mode="#all">
     <xsl:choose>
