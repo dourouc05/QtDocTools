@@ -1,5 +1,7 @@
 package be.tcuvelier.qdoctools.core.handlers;
 
+import be.tcuvelier.qdoctools.core.config.ArticleConfiguration;
+import be.tcuvelier.qdoctools.core.exceptions.ConfigurationMissingField;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPReply;
@@ -29,12 +31,29 @@ public class FtpHandler {
         this(user, password, server, 21);
     }
 
+    public FtpHandler(ArticleConfiguration config) throws ConfigurationMissingField {
+        // Some calls in the first branch of the if could, in theory, throw ConfigurationMissingField
+        // because there is no user and no password. In practice, needsFtpPassword() checks for their presence,
+        // so that it is only possible with the server.
+        if (config.needsFtpPassword() && config.getFtpUser().isPresent() && config.getFtpPassword().isPresent()) {
+            this.user = config.getFtpUser().get();
+            this.password = config.getFtpPassword().get();
+            this.server = config.getFtpServer();
+            this.port = config.getFtpPort();
+        } else {
+            this.user = "";
+            this.password = "";
+            this.server = config.getFtpServer();
+            this.port = config.getFtpPort();
+        }
+    }
+
     public void connect() throws IOException {
         ftp = new FTPClient();
         FTPClientConfig ftpConfig = new FTPClientConfig();
         ftp.configure(ftpConfig);
 
-        ftp.connect(server);
+        ftp.connect(server, port);
         int reply = ftp.getReplyCode();
         if(!FTPReply.isPositiveCompletion(reply)) {
             disconnect();
