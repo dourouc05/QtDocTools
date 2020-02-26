@@ -6,9 +6,7 @@ import net.sf.saxon.s9api.*;
 
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -29,12 +27,12 @@ public class DvpToolchainHandler {
         compiler.declareNamespace("xlink", "http://www.w3.org/1999/xlink");
 
         // Look for all media objects.
-        XdmValue images = compiler.evaluate("//imagedata/@fileref", xdm);
+        XdmValue images = compiler.evaluate("//image/@src", xdm);
 
         // Make a list of it.
         List<Path> list = new ArrayList<>(images.size());
         for (int i = 0; i < images.size(); ++i) {
-            list.add(file.resolve(images.itemAt(i).getStringValue()));
+            list.add(file.getParent().resolve(images.itemAt(i).getStringValue()));
         }
 
         return list;
@@ -60,11 +58,11 @@ public class DvpToolchainHandler {
         // Copy the XML at the right place.
         Path fileFolder = Paths.get(file).getParent();
         Path xml = Paths.get(file);
-        List<Path> neededFiles = neededFiles(file).stream().map(f -> f.relativize(xml)).collect(Collectors.toList());
+        List<Path> neededFiles = neededFiles(file).stream().map(f -> xml.getParent().relativize(f)).collect(Collectors.toList());
 
         Files.copy(xml, folder.resolve(folderName + ".xml"));
         for (Path f: neededFiles) {
-            Files.copy(fileFolder.resolve(f), folder.resolve(f));
+            Files.copy(fileFolder.resolve(f), folder.resolve(f), StandardCopyOption.REPLACE_EXISTING);
         }
 
         // Start generation.
@@ -89,7 +87,12 @@ public class DvpToolchainHandler {
         Files.copy(cache.resolve("index.php"), output.resolve("index.php"));
         Files.copy(cache.resolve(folderName + ".xml"), output.resolve(folderName + ".xml"));
         for (Path f: neededFiles) {
-            Files.copy(cache.resolve(f), output.resolve(f));
+            // The Developpez tools do not copy files outside the "images" and "fichiers" folders...
+            if (cache.resolve(f).toFile().exists()) {
+                Files.copy(cache.resolve(f), output.resolve(f), StandardCopyOption.REPLACE_EXISTING);
+            } else {
+                Files.copy(xml.getParent().resolve(f), output.resolve(f), StandardCopyOption.REPLACE_EXISTING);
+            }
         }
 
         // TODO: what about multipage articles?
