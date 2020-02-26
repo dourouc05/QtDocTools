@@ -87,6 +87,7 @@ public class DvpToolchainHandler {
         Path output = Paths.get(outputFolder);
 
         Files.copy(cache.resolve("index.php"), output.resolve("index.php"));
+        Files.copy(cache.resolve(folderName + ".xml"), output.resolve(folderName + ".xml"));
         for (Path f: neededFiles) {
             Files.copy(cache.resolve(f), output.resolve(f));
         }
@@ -94,14 +95,18 @@ public class DvpToolchainHandler {
         // TODO: what about multipage articles?
 
         // Clean the toolchain's folders.
-        if (!Files.walk(folder).map(Path::toFile).allMatch(File::delete))
+        if (!Files.walk(folder).map(Path::toFile).allMatch(File::delete)) {
             System.out.println("There was a problem cleaning the contents of the folder " + folder);
-        if (!folder.toFile().delete())
+        }
+        if (!folder.toFile().delete()) {
             System.out.println("There was a problem cleaning the folder " + folder);
+        }
 
-        if (!Files.walk(cache).map(Path::toFile).allMatch(File::delete))
+        if (!Files.walk(cache).map(Path::toFile).allMatch(File::delete)) {
             System.out.println("There was a problem cleaning the contents of the folder " + cache);
-        if (!cache.toFile().delete())
+        }
+        if (!cache.toFile().delete()) {
             System.out.println("There was a problem cleaning the folder " + cache);
+        }
     }
 }

@@ -10,7 +10,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class UploadCore {
     private static String readPassword() throws IOException {
@@ -52,9 +51,7 @@ public class UploadCore {
 
             // Perform the upload.
             FtpHandler ftp = new FtpHandler(articleConfig);
-            ftp.connect();
-            ftp.changeAndCreateDirectory(Paths.get(articleConfig.getFtpFolder()));
-            // TODO
+            ftp.uploadDvpArticle(articleConfig, output);
         }
     }
 }

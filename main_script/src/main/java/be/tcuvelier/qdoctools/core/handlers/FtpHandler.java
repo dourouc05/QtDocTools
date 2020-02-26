@@ -6,11 +6,15 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPReply;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FtpHandler {
     private final String user;
@@ -18,7 +22,7 @@ public class FtpHandler {
     private final String server;
     private final int port;
 
-    private FTPClient ftp;
+    private FTPClient ftp; // Renewed at each connect().
 
     public FtpHandler(String user, String password, String server, int port) {
         this.user = user;
@@ -50,11 +54,11 @@ public class FtpHandler {
 
     public void connect() throws IOException {
         ftp = new FTPClient();
-        FTPClientConfig ftpConfig = new FTPClientConfig();
+        final FTPClientConfig ftpConfig = new FTPClientConfig();
         ftp.configure(ftpConfig);
 
         ftp.connect(server, port);
-        int reply = ftp.getReplyCode();
+        final int reply = ftp.getReplyCode();
         if(!FTPReply.isPositiveCompletion(reply)) {
             disconnect();
             throw new IOException("Unable to connect to the server: server refused connection. " + ftp.getReplyString());
@@ -66,6 +70,8 @@ public class FtpHandler {
                 throw new IOException("Unable to connect to the server: credentials not recognised. " + ftp.getReplyString());
             }
         }
+
+        ftp.enterLocalPassiveMode();
     }
 
     public void disconnect() throws IOException {
@@ -112,10 +118,52 @@ public class FtpHandler {
 
     private void sendFile(String remote, InputStream local, int type) throws IOException {
         ftp.setFileType(type);
-        ftp.storeFile(remote, local);
+        boolean succeeded = ftp.storeFile(remote, local);
 
-        if (!ftp.completePendingCommand()) {
+        if (!succeeded) {
             throw new IOException("Unable to complete the upload. " + ftp.getReplyString());
+        }
+    }
+
+    private List<Path> recursiveExploration(Path folder) throws IOException {
+        final List<Path> files = new ArrayList<>();
+        final DirectoryStream<Path> stream = Files.newDirectoryStream(folder);
+        for (Path path : stream) {
+            files.add(path);
+
+            if (path.toFile().isDirectory()) {
+                files.addAll(recursiveExploration(path));
+            }
+        }
+        return files;
+    }
+
+    public void uploadDvpArticle(ArticleConfiguration articleConfiguration, String output) throws IOException {
+        // Set the set of the FTP connection.
+        connect();
+        changeAndCreateDirectory(Paths.get(articleConfiguration.getFtpFolder()));
+
+        // List the local files.
+        final Path root = Paths.get(output);
+        final List<Path> files = recursiveExploration(root);
+
+        // Copy all these files.
+        Path currentFolder = root;
+        for (Path file : files) {
+            // Get to the right folder if need be.
+            if (!file.getParent().equals(currentFolder)) {
+                Path relative = currentFolder.relativize(root);
+                changeDirectory(relative);
+                currentFolder = file.getParent();
+            }
+
+            // Upload.
+            final String fn = file.getFileName().toString();
+            if (fn.endsWith(".xml") || fn.endsWith(".php") || fn.endsWith(".htm") || fn.endsWith(".html")) {
+                sendTextFile(fn, file);
+            } else {
+                sendBinaryFile(fn, file);
+            }
         }
     }
 }
