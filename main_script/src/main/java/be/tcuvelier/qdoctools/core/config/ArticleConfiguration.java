@@ -2,6 +2,7 @@ package be.tcuvelier.qdoctools.core.config;
 
 import be.tcuvelier.qdoctools.core.exceptions.ConfigurationMissingField;
 import org.jetbrains.annotations.NotNull;
+import org.netbeans.api.keyring.Keyring;
 
 import java.io.FileNotFoundException;
 import java.nio.file.Path;
@@ -119,6 +120,41 @@ public class ArticleConfiguration extends AbstractConfiguration {
         } catch (ConfigurationMissingField e) {
             return 21;
         }
+    }
+
+    private static String getFtpPasswordKey(String server, String user) {
+        return "qtdoctools-upload-ftp-password:server:" + server + ":user:" + user;
+    }
+
+    private static String getFtpPasswordDescription(String server, String user) {
+        return "Password used by QtDocTools to upload files to the FTP server " + server + " with the user " + user + ".";
+    }
+
+    public boolean needsFtpPassword() {
+        return getFtpUser().isPresent();
+    }
+
+    public Optional<String> getFtpPassword() throws ConfigurationMissingField {
+        if (!needsFtpPassword()) {
+            throw new ConfigurationMissingField("Missing field FTP user when retrieving the password.");
+        }
+        assert getFtpUser().isPresent(); // To help static analysis. Ensured by the previous condition.
+
+        char[] password = Keyring.read(getFtpPasswordKey(getFtpServer(), getFtpUser().get()));
+        if (password != null) {
+            return Optional.of(new String(password));
+        }
+        return Optional.empty();
+    }
+
+    public void setFtpPassword(String password) throws ConfigurationMissingField {
+        if (getFtpUser().isEmpty()) {
+            throw new ConfigurationMissingField("Missing field FTP user when setting the password.");
+        }
+
+        Keyring.save(getFtpPasswordKey(getFtpServer(), getFtpUser().get()),
+                password.toCharArray(),
+                getFtpPasswordDescription(getFtpServer(), getFtpUser().get()));
     }
 
     public String getFtpFolder() throws ConfigurationMissingField {
