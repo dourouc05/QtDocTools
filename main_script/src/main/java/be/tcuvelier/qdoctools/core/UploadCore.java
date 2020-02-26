@@ -6,11 +6,25 @@ import be.tcuvelier.qdoctools.core.config.ArticleConfiguration;
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import net.sf.saxon.s9api.SaxonApiException;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class UploadCore {
+    private static String readPassword() throws IOException {
+        // Bypass limitation of IDEs.
+        // https://stackoverflow.com/questions/4203646/system-console-returns-null
+
+        if (System.console() != null) {
+            return new String(System.console().readPassword());
+        }
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        return reader.readLine();
+    }
+
     public static void call(String input, String folder, boolean upload, String configurationFile)
             throws IOException, SaxonApiException, InterruptedException {
         GlobalConfiguration config = new GlobalConfiguration(configurationFile);
@@ -33,7 +47,7 @@ public class UploadCore {
                 System.out.println("It will be safely stored in your operating system's keyring.");
                 System.out.println("When entering your password, it won't display, as a safety measure.");
 
-                articleConfig.setFtpPassword(new String(System.console().readPassword()));
+                articleConfig.setFtpPassword(readPassword());
             }
 
             // Perform the upload.
