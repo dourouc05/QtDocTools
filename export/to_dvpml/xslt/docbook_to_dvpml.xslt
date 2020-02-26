@@ -728,16 +728,12 @@
     </xsl:choose>
   </xsl:template>
   
-  <!-- Paragraph-level unsupported tags, i.e. they must be output as is. -->
-  <xsl:template mode="content_para" match="db:prompt">
-    <xsl:apply-templates mode="content_para"/>
-  </xsl:template>
-  
   <!-- Catch-all block for the remaining content that has not been handled with. -->
   <xsl:template match="*" mode="#all">
     <xsl:choose>
       <xsl:when test="self::db:guilabel | self::db:accel | self::db:prompt">
-        <xsl:message>WARNING: Tag <xsl:value-of select="name(.)" /> has no matching construct in the target format</xsl:message>
+        <xsl:message>WARNING: Tag <xsl:value-of select="name(.)" /> has no matching construct in the target format. Content is not lost, but is not marked either.</xsl:message>
+        <xsl:apply-templates/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:message>WARNING: Unhandled content with tag <xsl:value-of select="name(.)" /></xsl:message>
