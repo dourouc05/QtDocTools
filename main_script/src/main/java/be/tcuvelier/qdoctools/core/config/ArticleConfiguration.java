@@ -160,4 +160,12 @@ public class ArticleConfiguration extends AbstractConfiguration {
     public String getFtpFolder() throws ConfigurationMissingField {
         return getStringAttribute("ftp-folder");
     }
+
+    public Optional<Integer> getForumTopic() throws ConfigurationMissingField {
+        return getOptionalIntegerAttribute("forum-topic");
+    }
+
+    public Optional<Integer> getForumPost() throws ConfigurationMissingField {
+        return getOptionalIntegerAttribute("forum-post");
+    }
 }

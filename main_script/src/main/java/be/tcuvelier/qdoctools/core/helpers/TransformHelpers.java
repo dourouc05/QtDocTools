@@ -40,6 +40,7 @@ public class TransformHelpers {
             throws InconsistentConfiguration, ConfigurationMissingField {
         HashMap<String, Object> params = new HashMap();
 
+        // Generalities.
         params.put("section", conf.getSection());
 
         if (conf.getDocQt()) {
@@ -50,6 +51,7 @@ public class TransformHelpers {
             params.put("google-analytics", conf.getGoogleAnalytics().get());
         }
 
+        // License.
         if (conf.getLicenseNumber().isPresent()) {
             if (conf.getLicenseAuthor().isEmpty()) {
                 throw new InconsistentConfiguration("Field license-author absent when license-number is present");
@@ -69,10 +71,23 @@ public class TransformHelpers {
             params.put("license-text", conf.getLicenseText().get());
         }
 
+        // FTP.
         if (conf.getFtpUser().isPresent()) {
             params.put("ftp-user", conf.getFtpUser().get());
         }
         params.put("ftp-folder", conf.getFtpFolder());
+
+        // Comments.
+        if (conf.getForumTopic().isPresent()) {
+            params.put("forum-topic", conf.getForumTopic().get());
+        }
+        if (conf.getForumPost().isPresent()) {
+            params.put("forum-post", conf.getForumPost().get());
+        }
+
+        if (conf.getForumPost().isPresent() && conf.getForumTopic().isEmpty()) {
+            System.err.println("WARNING: The article has a post for comments, but no topic: the post is being ignored. Did you mix up both?");
+        }
 
         return params;
     }
