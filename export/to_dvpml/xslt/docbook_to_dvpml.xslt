@@ -731,7 +731,7 @@
   <!-- Catch-all block for the remaining content that has not been handled with. -->
   <xsl:template match="*" mode="#all">
     <xsl:choose>
-      <xsl:when test="self::db:guilabel | self::db:accel | self::db:prompt">
+      <xsl:when test="self::db:guilabel | self::db:accel | self::db:prompt | self::db:keysym">
         <xsl:message>WARNING: Tag <xsl:value-of select="name(.)" /> has no matching construct in the target format. Content is not lost, but is not marked either.</xsl:message>
         <xsl:apply-templates/>
       </xsl:when>
