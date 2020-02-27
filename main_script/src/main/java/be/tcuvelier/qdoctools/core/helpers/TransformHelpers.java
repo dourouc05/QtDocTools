@@ -24,12 +24,12 @@ import java.util.Map;
 
 public class TransformHelpers {
     public static void fromDvpMLToDocBook(String input, String output, GlobalConfiguration config) throws SaxonApiException, IOException {
-        Path confPath = ArticleConfiguration.getConfigurationFileName(output);
+        Path confPath = ArticleConfiguration.Helpers.getConfigurationFileName(output);
         if (! confPath.toFile().exists()) { // No configuration file: try to do something about it!
             if (Paths.get(output).toFile().exists()) { // There is already a DvpML file: read what you can from it.
-                Files.write(confPath, ArticleConfiguration.parseConfigurationFileFromXml(output).getBytes());
+                Files.write(confPath, ArticleConfiguration.Helpers.parseConfigurationFileFromXml(output).getBytes());
             } else { // Nothing to get inspiration from: create the most basic file.
-                Files.write(confPath, ArticleConfiguration.proposeConfigurationFile().getBytes());
+                Files.write(confPath, ArticleConfiguration.Helpers.proposeConfigurationFile().getBytes());
             }
         }
 
@@ -100,7 +100,7 @@ public class TransformHelpers {
         } catch (FileNotFoundException e) {
             System.err.println("There is no configuration file for the article " + input);
             System.err.println("Here is an example of such a file: ");
-            System.err.println(ArticleConfiguration.proposeConfigurationFile());
+            System.err.println(ArticleConfiguration.Helpers.proposeConfigurationFile());
             throw e;
         }
     }
