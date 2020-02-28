@@ -2,7 +2,6 @@ package be.tcuvelier.qdoctools.core.handlers;
 
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.config.PerlPath;
-import be.tcuvelier.qdoctools.core.exceptions.ConfigurationMissingField;
 import net.sf.saxon.s9api.*;
 
 import javax.xml.transform.stream.StreamSource;
@@ -88,7 +87,7 @@ public class DvpToolchainHandler {
         }
     }
 
-    private static void cleanFolder(Path folder) throws IOException {
+    private static void cleanFolder(Path folder) {
         cleanFolder(folder.toFile());
     }
 
@@ -146,7 +145,7 @@ public class DvpToolchainHandler {
         cleanFolder(cache);
     }
 
-    public static void generateRelated(String file, String outputFolder, GlobalConfiguration config) throws IOException, InterruptedException, SaxonApiException {
+    public static void generateRelated(String file, String outputFolder, GlobalConfiguration config) throws IOException, InterruptedException {
         // Find a good folder name (i.e. one that does not exist yet).
         Path folder = findFreeFolderName(config);
         String folderName = folder.getFileName().toString();
