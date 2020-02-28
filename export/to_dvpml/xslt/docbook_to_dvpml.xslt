@@ -20,6 +20,7 @@
   <xsl:param name="ftp-user" as="xs:string" select="''"/>
   <xsl:param name="ftp-folder" as="xs:string" select="''"/>
   <xsl:param name="google-analytics" as="xs:string" select="''"/>
+  <xsl:param name="related" as="xs:string" select="''"/>
   
   <xsl:template match="db:article">
     <xsl:result-document validation="lax">
@@ -177,6 +178,10 @@
             </xsl:otherwise>
           </xsl:choose>
         </authorDescriptions>
+        
+        <xsl:if test="string-length($related) > 0">
+          <reference><xsl:value-of select="$related"/></reference>
+        </xsl:if>
         
         <synopsis>
           <xsl:variable name="abstractParagraphs" as="node()*">

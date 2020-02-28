@@ -60,7 +60,8 @@ public class RelatedJSON {
             for (Map.Entry<String, JsonElement> ref: section.getValue().getAsJsonObject().entrySet()) {
                 Path article = Paths.get(file).getParent().resolve(ref.getValue().getAsString());
                 ArticleConfiguration conf = new ArticleConfiguration(article.toString());
-                String url = "http://" + conf.getFtpUser() + ".developpez.com/" + conf.getFtpFolder();
+                assert conf.getFtpUser().isPresent();
+                String url = "http://" + conf.getFtpUser().get() + ".developpez.com/" + conf.getFtpFolder();
 
                 xml.append("        <element>")
                         .append("<link href=\"")

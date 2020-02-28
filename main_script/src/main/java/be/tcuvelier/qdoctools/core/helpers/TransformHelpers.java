@@ -90,6 +90,11 @@ public class TransformHelpers {
             System.err.println("WARNING: The article has a post for comments, but no topic: the post is being ignored. Did you mix up both?");
         }
 
+        // Miscellaneous.
+        if (conf.getRelatedInclude().isPresent()) {
+            params.put("related", conf.getRelatedInclude().get());
+        }
+
         return params;
     }
 

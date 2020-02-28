@@ -233,4 +233,21 @@ public class ArticleConfiguration extends AbstractConfiguration {
     public Optional<Integer> getForumPost() {
         return getOptionalIntegerAttribute("forum-post");
     }
+
+    public Optional<String> getRelatedInclude() throws ConfigurationMissingField {
+        if (related.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Optional<String> relatedFolderString = related.get().getOptionalStringAttribute("ftp-folder");
+        if (relatedFolderString.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Path relatedFolder = Paths.get(relatedFolderString.get());
+        Path articleFolder = Paths.get(getFtpFolder());
+
+        Path relative = articleFolder.relativize(relatedFolder);
+        return Optional.of(relative.toString() + "/related.inc");
+    }
 }
