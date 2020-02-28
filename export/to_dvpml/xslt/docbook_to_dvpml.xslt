@@ -212,6 +212,18 @@
             <xsl:apply-templates mode="content" select="."/>
           </xsl:for-each>
           
+          <!-- Deprecated/obsolete articles with replacement -->
+          <xsl:if test="db:info/db:bibliorelation[@class='uri' and @type='isreplacedby']">
+            <rich-imgtext type="error">
+              <paragraph>
+                Cet article est obsolète et n'est gardé que pour des raisons historiques, 
+                <link href="{db:info/db:bibliorelation/@type='isreplacedby'}">car une version 
+                  plus à jour est disponible</link>. 
+              </paragraph>
+            </rich-imgtext>
+          </xsl:if>
+          
+          <!-- Link to the forum. -->
           <xsl:choose>
             <xsl:when test="$forum-topic > 0">
               <paragraph>

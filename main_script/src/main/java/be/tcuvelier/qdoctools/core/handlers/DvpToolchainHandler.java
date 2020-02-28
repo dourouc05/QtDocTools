@@ -72,7 +72,7 @@ public class DvpToolchainHandler {
         int errorCode = process.waitFor();
 
         if (errorCode != 0) {
-            String error = new BufferedReader(new InputStreamReader(process.getErrorStream())).lines().collect(Collectors.joining("\n"));;
+            String error = new BufferedReader(new InputStreamReader(process.getErrorStream())).lines().collect(Collectors.joining("\n"));
             if (error.length() > 0) {
                 System.err.println(error);
             }
