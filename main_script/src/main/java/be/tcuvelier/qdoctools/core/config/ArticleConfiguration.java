@@ -65,17 +65,13 @@ public class ArticleConfiguration extends AbstractConfiguration {
             super(root);
         }
 
-        private static Optional<Path> findRootConfig(Path configName) {
-            Path folder = configName.getParent();
-            while (folder.getNameCount() > 0) {
-                folder = folder.getParent();
-
-                if (folder.resolve("root.json").toFile().exists()) {
-                    return Optional.of(folder.resolve("root.json"));
-                }
+        private static Optional<RootArticleConfiguration> getRootConfig(Path configName) throws FileNotFoundException {
+            final Optional<Path> rootConfig = recursiveFindFile(configName, "root.json");
+            if (rootConfig.isPresent()) {
+                return Optional.of(new RootArticleConfiguration(rootConfig.get()));
+            } else {
+                return Optional.empty();
             }
-
-            return Optional.empty();
         }
     }
 
@@ -84,17 +80,13 @@ public class ArticleConfiguration extends AbstractConfiguration {
             super(related);
         }
 
-        private static Optional<Path> findRelatedConfig(Path configName) {
-            Path folder = configName.getParent();
-            while (folder.getNameCount() > 0) {
-                folder = folder.getParent();
-
-                if (folder.resolve("related.json").toFile().exists()) {
-                    return Optional.of(folder.resolve("related.json"));
-                }
+        private static Optional<RelatedArticleConfiguration> getRelatedConfig(Path configName) throws FileNotFoundException {
+            final Optional<Path> relatedConfig = recursiveFindFile(configName, "related.json");
+            if (relatedConfig.isPresent()) {
+                return Optional.of(new RelatedArticleConfiguration(relatedConfig.get()));
+            } else {
+                return Optional.empty();
             }
-
-            return Optional.empty();
         }
     }
 
@@ -108,19 +100,8 @@ public class ArticleConfiguration extends AbstractConfiguration {
         articleName = Paths.get(file);
         configName = Helpers.getConfigurationFileName(file);
 
-        final Optional<Path> rootConfig = RootArticleConfiguration.findRootConfig(configName);
-        if (rootConfig.isPresent()) {
-            root = Optional.of(new RootArticleConfiguration(rootConfig.get()));
-        } else {
-            root = Optional.empty();
-        }
-
-        final Optional<Path> relatedConfig = RelatedArticleConfiguration.findRelatedConfig(configName);
-        if (relatedConfig.isPresent()) {
-            related = Optional.of(new RelatedArticleConfiguration(relatedConfig.get()));
-        } else {
-            related = Optional.empty();
-        }
+        root = RootArticleConfiguration.getRootConfig(configName);
+        related = RelatedArticleConfiguration.getRelatedConfig(configName);
 
         // Check if this is really an article configuration, not a global configuration.
         if (config.get("qdoc") != null || config.get("dvp_toolchain") != null || config.get("qdoctools_root") != null) {

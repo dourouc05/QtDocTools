@@ -18,6 +18,20 @@ import java.util.Optional;
 public abstract class AbstractConfiguration {
     protected final JsonObject config;
 
+    protected static Optional<Path> recursiveFindFile(Path configName, String soughtName) {
+        Path folder = configName.getParent();
+        while (folder.getNameCount() > 0) {
+            folder = folder.getParent();
+
+            if (folder.resolve(soughtName).toFile().exists()) {
+                return Optional.of(folder.resolve(soughtName));
+            }
+        }
+
+        return Optional.empty();
+
+    }
+
     protected AbstractConfiguration(String path) throws FileNotFoundException {
         this(Paths.get(path).toFile());
     }
