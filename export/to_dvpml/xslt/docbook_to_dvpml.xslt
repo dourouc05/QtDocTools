@@ -536,7 +536,14 @@
     </rich-imgtext>
   </xsl:template>
   
+  <xsl:template mode="content" match="db:caution">
+    <rich-imgtext type="error">
+      <xsl:apply-templates mode="content"/>
+    </rich-imgtext>
+  </xsl:template>
+  
   <xsl:template mode="content" match="db:important">
+    <xsl:message>WARNING: Tag <xsl:value-of select="name(.)" /> has no matching construct in the target format. Content is output as a caution.</xsl:message>
     <rich-imgtext type="error">
       <xsl:apply-templates mode="content"/>
     </rich-imgtext>

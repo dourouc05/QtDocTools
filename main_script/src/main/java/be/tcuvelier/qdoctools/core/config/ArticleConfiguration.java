@@ -160,8 +160,12 @@ public class ArticleConfiguration extends AbstractConfiguration {
         return getStringAttributeOrRoot("ftp-server");
     }
 
+    public String getFtpFolder() throws ConfigurationMissingField {
+        return getStringAttributeOrRoot("ftp-folder");
+    }
+
     public Optional<String> getFtpUser() {
-        return getOptionalStringAttribute("ftp-user");
+        return getOptionalStringAttributeOrRoot("ftp-user");
     }
 
     public int getFtpPort() {
@@ -205,10 +209,6 @@ public class ArticleConfiguration extends AbstractConfiguration {
         Keyring.save(getFtpPasswordKey(getFtpServer(), getFtpUser().get()),
                 password.toCharArray(),
                 getFtpPasswordDescription(getFtpServer(), getFtpUser().get()));
-    }
-
-    public String getFtpFolder() throws ConfigurationMissingField {
-        return getStringAttribute("ftp-folder");
     }
 
     public Optional<Integer> getForumTopic() {
