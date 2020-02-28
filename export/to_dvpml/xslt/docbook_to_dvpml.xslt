@@ -164,13 +164,10 @@
         
         <authorDescriptions>
           <xsl:choose>
-            <xsl:when test="db:info/db:authorgroup">
-              <xsl:for-each select="db:info/db:authorgroup/(db:author | db:editor | db:othercredit)">
-                <xsl:apply-templates mode="header_author"/>
+            <xsl:when test="db:info/(db:authorgroup | db:author | db:editor | db:othercredit)">
+              <xsl:for-each select="db:info//(db:author | db:editor | db:othercredit)">
+                <xsl:apply-templates mode="header_author" select="."/>
               </xsl:for-each>
-            </xsl:when>
-            <xsl:when test="db:info/db:author">
-              <xsl:apply-templates mode="header_author" select="db:info/db:author"/>
             </xsl:when>
             <xsl:otherwise>
               <authorDescription name="Dummy" role="auteur">
@@ -217,7 +214,7 @@
             <rich-imgtext type="error">
               <paragraph>
                 Cet article est obsolète et n'est gardé que pour des raisons historiques, 
-                <link href="{db:info/db:bibliorelation/@type='isreplacedby'}">car une version 
+                <link href="{db:info/db:bibliorelation[@class='uri' and @type='isreplacedby']}">car une version 
                   plus à jour est disponible</link>. 
               </paragraph>
             </rich-imgtext>
