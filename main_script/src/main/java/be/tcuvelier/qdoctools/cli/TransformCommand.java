@@ -78,7 +78,7 @@ public class TransformCommand implements Callable<Void> {
 
             // Perform the upload if needed.
             if (generate) {
-                UploadCore.callRelated(output, "", upload, config);
+                UploadCore.callRelated(input, "", upload, config);
             }
 
             return null;

@@ -2,6 +2,7 @@ package be.tcuvelier.qdoctools.core.handlers;
 
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.config.PerlPath;
+import be.tcuvelier.qdoctools.core.exceptions.ConfigurationMissingField;
 import net.sf.saxon.s9api.*;
 
 import javax.xml.transform.stream.StreamSource;
@@ -17,7 +18,29 @@ public class DvpToolchainHandler {
         new ProcessBuilder(params).start().waitFor();
     }
 
-    public static List<Path> neededFiles(String fileName) throws FileNotFoundException, SaxonApiException {
+    private static void ensureFolderExists(Path folder) throws IOException {
+        if (!folder.toFile().mkdir()) {
+            throw new IOException("Impossible to create a folder " + folder.getFileName() + " within " + folder.getParent());
+        }
+    }
+
+    private static Path findFreeFolderName(GlobalConfiguration config) throws IOException {
+        Path root = config.getDvpToolchainPath().resolve("documents");
+        String folderName = "qdt";
+        if (root.resolve(folderName).toFile().exists()) {
+            int i = 0;
+            while (root.resolve(folderName + i).toFile().exists()) {
+                ++i;
+            }
+            folderName += i;
+        }
+
+        Path folder = root.resolve(folderName);
+        ensureFolderExists(folder);
+        return folder;
+    }
+
+    private static List<Path> neededFiles(String fileName) throws FileNotFoundException, SaxonApiException {
         // First, parse the file.
         Path file = Paths.get(fileName);
         Processor processor = new Processor(false);
@@ -38,37 +61,21 @@ public class DvpToolchainHandler {
         return list;
     }
 
-    public static void generateHTML(String file, String outputFolder, GlobalConfiguration config) throws IOException, InterruptedException, SaxonApiException {
-        // Find a good folder name (i.e. one that does not exist yet).
-        Path root = config.getDvpToolchainPath().resolve("documents");
-        String folderName = "qdt";
-        if (root.resolve(folderName).toFile().exists()) {
-            int i = 0;
-            while (root.resolve(folderName + i).toFile().exists()) {
-                ++i;
-            }
-            folderName += i;
-        }
+    private static List<Path> relativisedNeededFiles(String fileName, Path folder) throws FileNotFoundException, SaxonApiException {
+        return neededFiles(fileName).stream().map(folder::relativize).collect(Collectors.toList());
+    }
 
-        Path folder = root.resolve(folderName);
-        if (!folder.toFile().mkdir()) {
-            throw new IOException("Impossible to create a folder within " + root.toString());
-        }
+    private static boolean isWindows() {
+        return System.getProperty("os.name").toLowerCase().contains("win");
+    }
 
-        // Copy the XML at the right place.
-        Path fileFolder = Paths.get(file).getParent();
-        Path xml = Paths.get(file);
-        List<Path> neededFiles = neededFiles(file).stream().map(f -> xml.getParent().relativize(f)).collect(Collectors.toList());
+    private static void startDvpMLTool(String tool, String argument, GlobalConfiguration config) throws IOException, InterruptedException {
+        String extension = isWindows() ? ".bat" : ".sh";
+        Path script = config.getDvpToolchainPath().resolve("script").resolve(tool + extension);
+        ensureDvpMLToolsWorked(new ProcessBuilder(script.toString(), argument).start());
+    }
 
-        Files.copy(xml, folder.resolve(folderName + ".xml"));
-        for (Path f: neededFiles) {
-            Files.copy(fileFolder.resolve(f), folder.resolve(f), StandardCopyOption.REPLACE_EXISTING);
-        }
-
-        // Start generation.
-        boolean isWindows = System.getProperty("os.name").toLowerCase().contains("win");
-        String script = config.getDvpToolchainPath().resolve("script").resolve("buildart" + (isWindows ? ".bat" : ".sh")).toString();
-        Process process = new ProcessBuilder(script, folderName).start();
+    private static void ensureDvpMLToolsWorked(Process process) throws InterruptedException {
         int errorCode = process.waitFor();
 
         if (errorCode != 0) {
@@ -79,6 +86,34 @@ public class DvpToolchainHandler {
 
             throw new RuntimeException("Running the DvpML tools failed.", new RuntimeException(error));
         }
+    }
+
+    private static void cleanFolder(Path folder) throws IOException {
+        if (!Files.walk(folder).map(Path::toFile).allMatch(File::delete)) {
+            System.out.println("There was a problem cleaning the contents of the folder " + folder);
+        }
+        if (!folder.toFile().delete()) {
+            System.out.println("There was a problem cleaning the folder " + folder);
+        }
+    }
+
+    public static void generateHTML(String file, String outputFolder, GlobalConfiguration config) throws IOException, InterruptedException, SaxonApiException {
+        // Find a good folder name (i.e. one that does not exist yet).
+        Path folder = findFreeFolderName(config);
+        String folderName = folder.getFileName().toString();
+
+        // Copy the XML at the right place.
+        Path xml = Paths.get(file);
+        Path fileFolder = xml.getParent();
+        List<Path> neededFiles = relativisedNeededFiles(file, fileFolder);
+
+        Files.copy(xml, folder.resolve(folderName + ".xml"));
+        for (Path f: neededFiles) {
+            Files.copy(fileFolder.resolve(f), folder.resolve(f), StandardCopyOption.REPLACE_EXISTING);
+        }
+
+        // Start generation.
+        startDvpMLTool("buildart", folderName, config);
 
         // Copy the result in the right place.
         Path cache = config.getDvpToolchainPath().resolve("cache").resolve(folderName); // cache: PHP files; html: HTML files.
@@ -91,25 +126,41 @@ public class DvpToolchainHandler {
             if (cache.resolve(f).toFile().exists()) {
                 Files.copy(cache.resolve(f), output.resolve(f), StandardCopyOption.REPLACE_EXISTING);
             } else {
-                Files.copy(xml.getParent().resolve(f), output.resolve(f), StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(fileFolder.resolve(f), output.resolve(f), StandardCopyOption.REPLACE_EXISTING);
             }
         }
 
         // TODO: what about multipage articles?
 
         // Clean the toolchain's folders.
-        if (!Files.walk(folder).map(Path::toFile).allMatch(File::delete)) {
-            System.out.println("There was a problem cleaning the contents of the folder " + folder);
-        }
-        if (!folder.toFile().delete()) {
-            System.out.println("There was a problem cleaning the folder " + folder);
-        }
+        cleanFolder(folder);
+        cleanFolder(cache);
+    }
 
-        if (!Files.walk(cache).map(Path::toFile).allMatch(File::delete)) {
-            System.out.println("There was a problem cleaning the contents of the folder " + cache);
+    public static void generateRelated(String file, String outputFolder, GlobalConfiguration config) throws IOException, InterruptedException, SaxonApiException {
+        // Find a good folder name (i.e. one that does not exist yet).
+        Path folder = findFreeFolderName(config);
+        String folderName = folder.getFileName().toString();
+
+        // Copy the XML at the right place.
+        Path xml = Paths.get(file);
+        if (xml.toFile().isDirectory()) {
+            xml = xml.resolve("related.xml");
         }
-        if (!cache.toFile().delete()) {
-            System.out.println("There was a problem cleaning the folder " + cache);
-        }
+        Files.copy(xml, folder.resolve(folderName + ".xml"));
+
+        // Start generation.
+        startDvpMLTool("buildref", folderName, config);
+
+        // Copy the result in the right place.
+        Path cache = config.getDvpToolchainPath().resolve("cache").resolve(folderName);
+        Path output = Paths.get(outputFolder);
+
+        Files.copy(cache.resolve(folderName + ".inc"), output.resolve("related.inc"));
+        Files.copy(xml, output.resolve("related.xml")); // The XML file is not copied to the cache folder.
+
+        // Clean the toolchain's folders.
+        cleanFolder(folder);
+        cleanFolder(cache);
     }
 }

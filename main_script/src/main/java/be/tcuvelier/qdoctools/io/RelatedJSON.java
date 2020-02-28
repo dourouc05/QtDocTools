@@ -58,11 +58,15 @@ public class RelatedJSON {
                     .append("</title>\n");
 
             for (Map.Entry<String, JsonElement> ref: section.getValue().getAsJsonObject().entrySet()) {
+                Path article = Paths.get(file).getParent().resolve(ref.getValue().getAsString());
+                ArticleConfiguration conf = new ArticleConfiguration(article.toString());
+                String url = "http://" + conf.getFtpUser() + ".developpez.com/" + conf.getFtpFolder();
+
                 xml.append("        <element>")
                         .append("<link href=\"")
-                        .append(ref.getKey())
+                        .append(url)
                         .append("\">")
-                        .append(ref.getValue().getAsString())
+                        .append(ref.getKey())
                         .append("</link>")
                         .append("</element>\n");
             }

@@ -35,27 +35,26 @@ public class UploadCore {
         articleConfig.setFtpPassword(readPassword());
     }
 
+    private static void askForFtpPasswordIfNeeded(ArticleConfiguration articleConfig) throws IOException {
+        if (articleConfig.needsFtpPassword() && articleConfig.getFtpPassword().isEmpty()) {
+            askForFtpPassword(articleConfig);
+        }
+    }
+
     private static String outputFolderOrCreate(String folder) throws IOException {
         return folder.isEmpty() ? Files.createTempDirectory("qdt").toString() : folder;
     }
 
     public static void callRelated(String input, String folder, boolean upload, GlobalConfiguration config) throws IOException, SaxonApiException, InterruptedException {
-        // Perform generation with Dvp toolchain.
+        // Perform generation with Dvp toolchain (not the same tool as HTML).
         String output = outputFolderOrCreate(folder);
-        DvpToolchainHandler.generateHTML(input, output, config);
+        DvpToolchainHandler.generateRelated(input, output, config);
 
         // Upload if required
         if (upload) {
-            ArticleConfiguration articleConfig = new ArticleConfiguration(input + "/related.json"); // TODO: merge with call(), this line is the only difference. 
-
-            // Get FTP configuration from this article's configuration file and the keyring.
-            if (articleConfig.needsFtpPassword() && articleConfig.getFtpPassword().isEmpty()) {
-                askForFtpPassword(articleConfig);
-            }
-
-            // Perform the upload.
-            FtpHandler ftp = new FtpHandler(articleConfig);
-            ftp.uploadDvpArticle(articleConfig, output);
+            ArticleConfiguration articleConfig = new ArticleConfiguration(input + "/related.json");
+            askForFtpPasswordIfNeeded(articleConfig);
+            new FtpHandler(articleConfig).uploadDvpArticle(articleConfig, output);
         }
     }
 
@@ -68,15 +67,8 @@ public class UploadCore {
         // Upload if required
         if (upload) {
             ArticleConfiguration articleConfig = new ArticleConfiguration(input);
-
-            // Get FTP configuration from this article's configuration file and the keyring.
-            if (articleConfig.needsFtpPassword() && articleConfig.getFtpPassword().isEmpty()) {
-                askForFtpPassword(articleConfig);
-            }
-
-            // Perform the upload.
-            FtpHandler ftp = new FtpHandler(articleConfig);
-            ftp.uploadDvpArticle(articleConfig, output);
+            askForFtpPasswordIfNeeded(articleConfig);
+            new FtpHandler(articleConfig).uploadDvpArticle(articleConfig, output);
         }
     }
 }
