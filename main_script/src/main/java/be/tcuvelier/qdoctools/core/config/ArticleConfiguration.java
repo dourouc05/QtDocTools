@@ -61,11 +61,8 @@ public class ArticleConfiguration extends AbstractConfiguration {
     }
 
     private static class RootArticleConfiguration extends AbstractConfiguration {
-        private final Path rootConfigName;
-
         RootArticleConfiguration(Path root) throws FileNotFoundException {
             super(root);
-            rootConfigName = root;
         }
 
         private static Optional<Path> findRootConfig(Path configName) {
@@ -82,9 +79,29 @@ public class ArticleConfiguration extends AbstractConfiguration {
         }
     }
 
+    private static class RelatedArticleConfiguration extends AbstractConfiguration {
+        RelatedArticleConfiguration(Path related) throws FileNotFoundException {
+            super(related);
+        }
+
+        private static Optional<Path> findRelatedConfig(Path configName) {
+            Path folder = configName.getParent();
+            while (folder.getNameCount() > 0) {
+                folder = folder.getParent();
+
+                if (folder.resolve("related.json").toFile().exists()) {
+                    return Optional.of(folder.resolve("related.json"));
+                }
+            }
+
+            return Optional.empty();
+        }
+    }
+
     private final Path articleName;
     private final Path configName;
     private final Optional<RootArticleConfiguration> root;
+    private final Optional<RelatedArticleConfiguration> related;
 
     public ArticleConfiguration(String file) throws FileNotFoundException {
         super(Helpers.getConfigurationFileName(file));
@@ -96,6 +113,13 @@ public class ArticleConfiguration extends AbstractConfiguration {
             root = Optional.of(new RootArticleConfiguration(rootConfig.get()));
         } else {
             root = Optional.empty();
+        }
+
+        final Optional<Path> relatedConfig = RelatedArticleConfiguration.findRelatedConfig(configName);
+        if (relatedConfig.isPresent()) {
+            related = Optional.of(new RelatedArticleConfiguration(relatedConfig.get()));
+        } else {
+            related = Optional.empty();
         }
 
         // Check if this is really an article configuration, not a global configuration.
