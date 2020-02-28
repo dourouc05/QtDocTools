@@ -89,11 +89,20 @@ public class DvpToolchainHandler {
     }
 
     private static void cleanFolder(Path folder) throws IOException {
-        if (!Files.walk(folder).map(Path::toFile).allMatch(File::delete)) {
-            System.out.println("There was a problem cleaning the contents of the folder " + folder);
+        cleanFolder(folder.toFile());
+    }
+
+    private static void cleanFolder(File folder) {
+        // Inspired from https://www.baeldung.com/java-delete-directory.
+        File[] allContents = folder.listFiles();
+        if (allContents != null) {
+            for (File file : allContents) {
+                cleanFolder(file);
+            }
         }
-        if (!folder.toFile().delete()) {
-            System.out.println("There was a problem cleaning the folder " + folder);
+        if (!folder.delete()) {
+            String what = (folder.isDirectory()) ? "folder" : "file";
+            System.out.println("There was a problem cleaning the " + what + " " + folder);
         }
     }
 
