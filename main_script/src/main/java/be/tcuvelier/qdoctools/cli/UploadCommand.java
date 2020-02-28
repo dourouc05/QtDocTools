@@ -1,6 +1,7 @@
 package be.tcuvelier.qdoctools.cli;
 
 import be.tcuvelier.qdoctools.core.UploadCore;
+import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -27,7 +28,7 @@ public class UploadCommand implements Callable<Void> {
 
     @Override
     public Void call() throws Exception {
-        UploadCore.call(input, folder, upload, configurationFile);
+        UploadCore.callRelated(input, folder, upload, new GlobalConfiguration(configurationFile));
         return null;
     }
 }

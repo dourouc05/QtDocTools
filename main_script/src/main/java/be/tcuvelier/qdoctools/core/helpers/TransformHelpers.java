@@ -6,8 +6,9 @@ import be.tcuvelier.qdoctools.core.config.QdtPaths;
 import be.tcuvelier.qdoctools.core.exceptions.ConfigurationMissingField;
 import be.tcuvelier.qdoctools.core.exceptions.InconsistentConfiguration;
 import be.tcuvelier.qdoctools.core.handlers.XsltHandler;
-import be.tcuvelier.qdoctools.io.DocxInput;
-import be.tcuvelier.qdoctools.io.DocxOutput;
+import be.tcuvelier.qdoctools.io.RelatedJSON;
+import be.tcuvelier.qdoctools.io.docx.DocxInput;
+import be.tcuvelier.qdoctools.io.docx.DocxOutput;
 import net.sf.saxon.s9api.SaxonApiException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.xml.sax.SAXException;
@@ -112,6 +113,11 @@ public class TransformHelpers {
     public static void fromDocBookToDOCX(String input, String output, GlobalConfiguration config)
             throws IOException, ParserConfigurationException, SAXException, InvalidFormatException {
         new DocxOutput(input, config).toDocx(output);
+    }
+
+    public static void fromRelatedJSONToDvpML(String input, String output, GlobalConfiguration config) throws IOException {
+        ArticleConfiguration conf = new ArticleConfiguration(input);
+        new RelatedJSON(input, config, conf).toDvpML(output);
     }
 
     public static void fromODTToDocBook(String input, String output) {

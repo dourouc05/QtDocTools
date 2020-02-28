@@ -27,6 +27,14 @@ public class TransformCore {
 
     public static String validationFailedMessage = "There were validation errors. See the above exception for details.";
 
+    public static void callRelated(String input, String output, GlobalConfiguration config) throws IOException, SaxonApiException {
+        if (! new File(input).exists()) {
+            throw new IOException("Related file " + input + "/related.json does not exist!");
+        }
+
+        TransformHelpers.fromRelatedJSONToDvpML(input, output, config);
+    }
+
     public static void call(String input, Format inputFormat,
                             String output, Format outputFormat,
                             GlobalConfiguration config, boolean validate, boolean disableSanityChecks)

@@ -34,7 +34,8 @@ public class Main {
 //        String doc = "CPLEX";
 //        String doc = "07-0-qdoc-commands-includingexternalcode";
 //        String doc = "16-qdoc-commands-status";
-        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-jump-0.20\\julia-jump.xml";
+        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\";
+//        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-jump-0.20\\julia-jump.xml";
 //        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-rapide-1.1\\julia.docx";
 //        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-jump-0.20\\julia-jump.docx";
 //        String doc = "C:\\Users\\Thibaut\\Desktop\\julia.docx";

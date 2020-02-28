@@ -12,9 +12,19 @@ import java.util.Optional;
 public class ArticleConfiguration extends AbstractConfiguration {
     public static class Helpers {
         public static Path getConfigurationFileName(String file) {
-            Path articleName = Paths.get(file);
-            Path parent = articleName.getParent();
-            String filename = articleName.getFileName().toString();
+            Path path = Paths.get(file);
+
+            // Related files are their own configuration files.
+            if (path.getFileName().endsWith("related.json")) {
+                return path;
+            }
+            if (path.toFile().isDirectory()) {
+                return path.resolve("related.json");
+            }
+
+            // Most usual cases.
+            Path parent = path.getParent();
+            String filename = path.getFileName().toString();
             String fileRoot = filename.substring(0, filename.lastIndexOf('.'));
 
             // If there is a file suffix, remove it.

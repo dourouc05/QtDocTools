@@ -64,26 +64,49 @@ public class TransformCommand implements Callable<Void> {
     @Override
     public Void call() throws SaxonApiException, IOException, SAXException, InvalidFormatException,
             XMLStreamException, ParserConfigurationException, InterruptedException {
-        // Replace default values.
-        inputFormat = FileHelpers.parseFileFormat(inputFormat, input);
-        outputFormat = FileHelpers.parseOutputFileFormat(inputFormat, outputFormat);
-        if (output == null || output.isBlank()) {
-            output = FileHelpers.generateOutputFilename(input, outputFormat);
-        }
-
-        // Start the transformation.
+        // Shared part.
         GlobalConfiguration config = new GlobalConfiguration(configurationFile);
-        TransformCore.call(input, inputFormat, output, outputFormat, config, validate, disableSanityChecks);
 
-        boolean isOutputDvpML = outputFormat == Format.DvpML;
-        if (outputFormat == Format.Default) {
-            isOutputDvpML = FileHelpers.isDvpML(output);
+        // Handle related files.
+        if (FileHelpers.isRelated(input)) {
+            if (output == null || output.isBlank()) {
+                output = FileHelpers.generateOutputFilename(input, Format.DvpML);
+            }
+
+            // Start the transformation into DvpML.
+            TransformCore.callRelated(input, output, config);
+
+            // Perform the upload if needed.
+            if (generate) {
+                UploadCore.callRelated(output, "", upload, config);
+            }
+
+            return null;
         }
 
-        if (isOutputDvpML && generate) {
-            UploadCore.call(output, "", upload, configurationFile);
-        }
+        // Handle articles.
+        {
+            // Replace default values.
+            inputFormat = FileHelpers.parseFileFormat(inputFormat, input);
+            outputFormat = FileHelpers.parseOutputFileFormat(inputFormat, outputFormat);
+            if (output == null || output.isBlank()) {
+                output = FileHelpers.generateOutputFilename(input, outputFormat);
+            }
 
-        return null;
+            boolean isOutputDvpML = outputFormat == Format.DvpML;
+            if (outputFormat == Format.Default) {
+                isOutputDvpML = FileHelpers.isDvpML(output);
+            }
+
+            // Start the transformation into DvpML.
+            TransformCore.call(input, inputFormat, output, outputFormat, config, validate, disableSanityChecks);
+
+            // Perform the upload if needed.
+            if (isOutputDvpML && generate) {
+                UploadCore.call(output, "", upload, config);
+            }
+
+            return null;
+        }
     }
 }

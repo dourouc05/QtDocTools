@@ -67,6 +67,11 @@ public class FileHelpers {
         return path.endsWith(".odt");
     }
 
+    public static boolean isRelated(String path) {
+        Path file = Paths.get(path);
+        return file.toFile().isDirectory() && file.resolve("related.json").toFile().exists();
+    }
+
     public static TransformCore.Format parseFileFormat(TransformCore.Format format, String filename) {
         if (format != TransformCore.Format.Default) {
             return format;
@@ -112,6 +117,12 @@ public class FileHelpers {
             input = input.replace("_dvp.xml", ".xml");
         } else if (input.endsWith("_db.xml")) {
             input = input.replace("_db.xml", ".xml");
+        }
+
+        // Specific handling of related: the input can be just a directory.
+        Path file = Paths.get(input);
+        if (file.toFile().isDirectory()) {
+            return file.resolve("related.xml").toString();
         }
 
         // Change the extension based on the target format.

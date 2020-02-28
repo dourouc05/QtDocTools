@@ -1,4 +1,4 @@
-package be.tcuvelier.qdoctools.io.fromdocx;
+package be.tcuvelier.qdoctools.io.docx.fromdocx;
 
 import org.jetbrains.annotations.NotNull;
 
