@@ -53,12 +53,6 @@
                     <db:date><xsl:value-of select="tc:parse-date(entete/miseajour/text())"/></db:date>
                 </xsl:if>
                 
-                <xsl:if test="reference">
-                    <db:bibliomisc role="reference">
-                        <xsl:value-of select="reference/text()"/>
-                    </db:bibliomisc>
-                </xsl:if>
-                
                 <db:authorgroup>
                     <xsl:for-each select="authorDescriptions/authorDescription">
                         <xsl:element name="{if (@role='auteur') then 'db:author' else 'db:othercredit'}">
@@ -292,11 +286,11 @@
                 </db:warning>
             </xsl:when>
             <xsl:when test="@type='error'">
-                <db:important>
+                <db:caution>
                     <db:para>
                         <xsl:apply-templates mode="content"/>
                     </db:para>
-                </db:important>
+                </db:caution>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:message>WARNING: custom imgtexts are not handled. How would you encode them into DocBook?</xsl:message>
@@ -321,9 +315,9 @@
                 </db:warning>
             </xsl:when>
             <xsl:when test="@type='error'">
-                <db:important>
+                <db:caution>
                     <xsl:apply-templates mode="content"/>
-                </db:important>
+                </db:caution>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:message>WARNING: custom imgtexts are not handled. How would you encode them into DocBook?</xsl:message>

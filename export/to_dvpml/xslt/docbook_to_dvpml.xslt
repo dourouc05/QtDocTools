@@ -157,12 +157,6 @@
           </voiraussi>
         </xsl:if>
         
-        <xsl:if test="db:info/db:bibliomisc[@role='reference']">
-          <reference>
-            <xsl:value-of select="db:info/db:bibliomisc[@role='reference']/text()"/>
-          </reference>
-        </xsl:if>
-        
         <authorDescriptions>
           <xsl:choose>
             <xsl:when test="db:info/(db:authorgroup | db:author | db:editor | db:othercredit)">
