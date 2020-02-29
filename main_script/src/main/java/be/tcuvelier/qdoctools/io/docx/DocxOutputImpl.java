@@ -759,6 +759,7 @@ public class DocxOutputImpl extends DefaultHandler {
             // tag opened the link. A lot of effort that will probably not be required.
         }
 
+        // Root tags and assimilate.
         if (DocBookBlock.blockToPredicate.get(DocBookBlock.ARTICLE).test(qName)) {
             if (currentLevel.peekRootBook()) {
                 throw new DocxException("unexpected article within a book (use stand-alone articles).");
@@ -825,6 +826,7 @@ public class DocxOutputImpl extends DefaultHandler {
             warnUnknownAttributes(attributes);
         }
 
+        // Authors and various credits.
         else if (SAXHelpers.isAuthorTag(qName) || SAXHelpers.isEditorTag(qName)) {
             if (! currentLevel.peekInfo()) {
                 throw new DocxException("unexpected author outside an info container.");
@@ -858,6 +860,7 @@ public class DocxOutputImpl extends DefaultHandler {
 //            paragraph.getLast().setStyle(DocBookBlock.tagToStyleID("authorgroup", attributes));
         }
 
+        // Sections.
         else if (SAXHelpers.isSectionTag(qName)) {
             currentLevel.push(Level.SECTION);
             currentSectionDepth += 1;
@@ -866,6 +869,7 @@ public class DocxOutputImpl extends DefaultHandler {
             warnUnknownAttributes(attributes);
         }
 
+        // Section titles (only delimiter for sections in DOCX).
         else if (SAXHelpers.isTitleTag(qName) && ! currentLevel.peekFigure()) {
             paragraph = Stream.of(doc.createParagraph()).collect(Collectors.toCollection(ArrayDeque::new));
             runNumber = 0;
