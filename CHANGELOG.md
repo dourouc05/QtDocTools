@@ -1,6 +1,9 @@
 QtDocTools release notes
 ========================
 
+There are currently no compatibility guarantees between versions, especially 
+for DOCX format. Incompatibilities should remaing minor, though.
+
 Version 0.2.1
 -------------
 
