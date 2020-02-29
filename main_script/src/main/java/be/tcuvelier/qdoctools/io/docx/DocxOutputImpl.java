@@ -2,6 +2,7 @@ package be.tcuvelier.qdoctools.io.docx;
 
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.config.QdtPaths;
+import be.tcuvelier.qdoctools.core.helpers.Language;
 import be.tcuvelier.qdoctools.io.docx.helpers.DocBookAlignment;
 import be.tcuvelier.qdoctools.io.docx.helpers.DocBookBlock;
 import be.tcuvelier.qdoctools.io.docx.helpers.DocBookFormatting;
@@ -40,7 +41,7 @@ public class DocxOutputImpl extends DefaultHandler {
     XWPFDocument doc; // DOCX document being written.
     private POIHelpers h = new POIHelpers();
 
-    private Translations.Language language;
+    private Language language;
 
     // Paragraph being filled.
     private Deque<XWPFParagraph> paragraph; // Paragraph being written while another paragraph is not finished yet,
@@ -730,6 +731,7 @@ public class DocxOutputImpl extends DefaultHandler {
             run = h.createHyperlinkRun(currentLink);
         }
 
+        run.setLang(Language.toWordLang(language));
         runNumber += 1;
         runCharactersNumber = 0;
 
@@ -744,7 +746,7 @@ public class DocxOutputImpl extends DefaultHandler {
     private void parseLanguage(Attributes attributes) {
         Map<String, String> attr = SAXHelpers.attributes(attributes);
         String xmllang = attr.getOrDefault("xml:lang", "en");
-        language = Translations.Language.fromXmlLang(xmllang);
+        language = Language.fromXmlLang(xmllang);
     }
 
     @Override
@@ -1429,6 +1431,7 @@ public class DocxOutputImpl extends DefaultHandler {
             setRunFormatting();
         } else if (SAXHelpers.isFirstNameTag(qName) || SAXHelpers.isSurNameTag(qName) || SAXHelpers.isOtherNameTag(qName)) {
             run.setText(". ");
+            run.setLang();
             createNewRun();
             setRunFormatting();
         } else if (SAXHelpers.isSectionTag(qName)) {

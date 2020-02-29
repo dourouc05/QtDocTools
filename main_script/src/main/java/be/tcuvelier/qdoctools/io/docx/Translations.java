@@ -1,21 +1,10 @@
 package be.tcuvelier.qdoctools.io.docx;
 
+import be.tcuvelier.qdoctools.core.helpers.Language;
+
 import java.util.Map;
 
 public class Translations {
-    public enum Language {
-        FRENCH, ENGLISH;
-
-        public static Language fromXmlLang(String xmlLang) {
-            switch (xmlLang) {
-                case "fr":
-                    return FRENCH;
-                case "en":
-                default:
-                    return ENGLISH;
-            }
-        }
-    }
 
     // <db:programlisting>.
     public static final Map<Language, String> programListing =
