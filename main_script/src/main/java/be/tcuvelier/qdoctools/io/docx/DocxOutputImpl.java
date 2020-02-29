@@ -859,7 +859,7 @@ public class DocxOutputImpl extends DefaultHandler {
             } else {
                 throw new DocxException("unexpected author/contributor tag.");
             }
-            run.setText(text + ". ");
+            run.setText(text + ".");
 
             createNewRun();
             warnUnknownAttributes(attr, Stream.of("role"));
@@ -1423,8 +1423,12 @@ public class DocxOutputImpl extends DefaultHandler {
 
             ensureNoTextAllowed();
             restoreParagraphStyle();
-        } else if (SAXHelpers.isPersonNameTag(qName) || SAXHelpers.isFirstNameTag(qName) ||
-                SAXHelpers.isSurNameTag(qName) || SAXHelpers.isOtherNameTag(qName)) {
+        } else if (SAXHelpers.isPersonNameTag(qName)) {
+            // No dot here, as a personname might be a container.
+            createNewRun();
+            setRunFormatting();
+        } else if (SAXHelpers.isFirstNameTag(qName) || SAXHelpers.isSurNameTag(qName) || SAXHelpers.isOtherNameTag(qName)) {
+            run.setText(". ");
             createNewRun();
             setRunFormatting();
         } else if (SAXHelpers.isSectionTag(qName)) {
