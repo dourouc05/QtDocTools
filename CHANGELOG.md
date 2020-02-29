@@ -1,8 +1,8 @@
 QtDocTools release notes
 ========================
 
-Version 0.2
------------
+Version 0.2 (29 February 2020)
+------------------------------
 
 Round-tripping between DocBook and DOCX: 
 
@@ -11,7 +11,7 @@ Round-tripping between DocBook and DOCX:
 
 Importing Qt documentation: 
 
-* Switch to qdoc 5.15 and its DocBook support.
+* Switch to qdoc 5.15 and its DocBook support. Far from completely done.
 
 Exporting to DvpML: 
 
@@ -19,6 +19,7 @@ Exporting to DvpML:
 * Implement figures.
 * Keywords are taken from the keywordset of the document.
 * License information is taken from the article configuration. 
+* Implement list of references. 
 
 Many code-quality improvements.
 
