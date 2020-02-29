@@ -827,37 +827,70 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         // Authors and various credits.
-        else if (SAXHelpers.isAuthorTag(qName) || SAXHelpers.isEditorTag(qName)) {
+        else if (SAXHelpers.isAuthorTag(qName) || SAXHelpers.isOtherCreditTag(qName)) {
             if (! currentLevel.peekInfo()) {
-                throw new DocxException("unexpected author outside an info container.");
+                throw new DocxException("unexpected author/contributor outside an info container.");
             }
 
-            paragraph = Stream.of(doc.createParagraph()).collect(Collectors.toCollection(ArrayDeque::new));
-            runNumber = 0;
+            Map<String, String> attr = SAXHelpers.attributes(attributes);
 
-            paragraph.getLast().setStyle(DocBookBlock.tagToStyleID(SAXHelpers.isAuthorTag(qName) ? "author" : "editor", attributes));
+            paragraph = null;
+            allocateNewParagraph();
+            run.setBold(true);
+
+            String text = "";
+            if (SAXHelpers.isAuthorTag(qName)) {
+                text = Translations.author.get(language);
+            } else if (SAXHelpers.isOtherCreditTag(qName)) {
+                switch (attr.getOrDefault("role", "reviewer")) {
+                    case "proofreader":
+                        text = Translations.proofreader.get(language);
+                        break;
+                    case "conversion":
+                        text = Translations.converter.get(language);
+                        break;
+                    case "reviewer":
+                        text = Translations.reviewer.get(language);
+                        break;
+                    case "translator":
+                        text = Translations.translator.get(language);
+                        break;
+                }
+            } else {
+                throw new DocxException("unexpected author/contributor tag.");
+            }
+            run.setText(text + ". ");
 
             createNewRun();
+            warnUnknownAttributes(attr, Stream.of("role"));
+        } else if (SAXHelpers.isPersonNameTag(qName)) {
+            // Do nothing: this is usually just a placeholder. It might also contain the full name without further
+            // structure, so still allow text here.
             warnUnknownAttributes(attributes);
-        } else if (SAXHelpers.isBelowAuthor(qName)) {
-            // Hard to implement: you may have a <personname><firstname>, both must be represented as character
-            // styles in DOCX, but a run may only have one such style... Hence, don't represent any, to be consistent.
-            // Still, the text within the tag must still appear in the output!
-            // TODO: output authors as list, with a rigid structure? When reimporting the document, do what you can:
-            // TODO: if it's not possible to retrieve all authors (because of modifications), too bad.
-            // TODO: no different styles, but rather "First name: XXX. Last name: XXX.", like programlistings.
-            System.err.println(getLocationString() + "ignoring tag: " + qName + ". The content will not be lost, however.");
+        } else if (SAXHelpers.isFirstNameTag(qName)) {
+            run.setText(Translations.firstName.get(language) + ": ");
+            warnUnknownAttributes(attributes);
+        } else if (SAXHelpers.isSurNameTag(qName)) {
+            run.setText(Translations.surname.get(language) + ": ");
+            warnUnknownAttributes(attributes);
+        } else if (SAXHelpers.isOtherNameTag(qName)) {
+            Map<String, String> attr = SAXHelpers.attributes(attributes);
+
+            if (attr.get("role") == null) {
+                throw new DocxException("unsupported othername: the role attribute must be specified");
+            }
+            if (! attr.get("role").equals("pseudonym")) {
+                throw new DocxException("unsupported othername role: " + attr.get("role"));
+            }
+
+            run.setText(Translations.pseudonym.get(language) + ": ");
+            warnUnknownAttributes(attr, Stream.of("role"));
         } else if (SAXHelpers.isAuthorGroupTag(qName)) {
             if (! currentLevel.peekInfo()) {
                 throw new DocxException("unexpected author group outside an info container.");
             }
 
             throw new DocxException("authorgroup not implemented.");
-
-            // TODO: First, encode "Authors:", then a list of authors or editors.
-            // TODO: What about other credits? Implement some kind of fuzzy matching in case of a typo (with a warning)! http://commons.apache.org/proper/commons-lang/apidocs/org/apache/commons/lang3/StringUtils.html#getLevenshteinDistance%28java.lang.CharSequence,%20java.lang.CharSequence%29?
-//            paragraph = Stream.of(doc.createParagraph()).collect(Collectors.toCollection(ArrayDeque::new));
-//            paragraph.getLast().setStyle(DocBookBlock.tagToStyleID("authorgroup", attributes));
         }
 
         // Sections.
@@ -871,8 +904,8 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // Section titles (only delimiter for sections in DOCX).
         else if (SAXHelpers.isTitleTag(qName) && ! currentLevel.peekFigure()) {
-            paragraph = Stream.of(doc.createParagraph()).collect(Collectors.toCollection(ArrayDeque::new));
-            runNumber = 0;
+            paragraph = null;
+            allocateNewParagraph();
 
             if (currentSectionDepth == 0) {
                 if (currentLevel.peekRootArticle() || currentLevel.peekRootArticleInfo()) {
@@ -1357,6 +1390,7 @@ public class DocxOutputImpl extends DefaultHandler {
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
+        // Roots or assimilate.
         if (DocBookBlock.blockToPredicate.get(DocBookBlock.ARTICLE).test(qName) || DocBookBlock.blockToPredicate.get(DocBookBlock.BOOK).test(qName)) {
             ensureNoTextAllowed();
         } else if (DocBookBlock.blockToPredicate.get(DocBookBlock.PART).test(qName)) {
@@ -1374,9 +1408,7 @@ public class DocxOutputImpl extends DefaultHandler {
                     new DocxException("unexpected end of info")
             );
             ensureNoTextAllowed();
-        } else if (SAXHelpers.isAuthorTag(qName) || SAXHelpers.isEditorTag(qName)) {
-            // TODO: don't enter this if in an authorgroup. Should rather end the list item.
-            // Set the author to the core properties.
+        } else if (SAXHelpers.isAuthorTag(qName) || SAXHelpers.isOtherCreditTag(qName)) {
             if (SAXHelpers.isAuthorTag(qName)) {
                 POIXMLProperties props = doc.getProperties();
                 POIXMLProperties.CoreProperties coreProps = props.getCoreProperties();
@@ -1391,20 +1423,18 @@ public class DocxOutputImpl extends DefaultHandler {
 
             ensureNoTextAllowed();
             restoreParagraphStyle();
-        } else if (SAXHelpers.isBelowAuthor(qName)) {
-            // Create a run with just a space in it, as the tag before probably does not end with a space.
-            // First name and family name should be separated with one space, for instance.
-            createNewRun();
-            run.setText(" ");
-
-            // A new run for the rest of the text.
+        } else if (SAXHelpers.isPersonNameTag(qName) || SAXHelpers.isFirstNameTag(qName) ||
+                SAXHelpers.isSurNameTag(qName) || SAXHelpers.isOtherNameTag(qName)) {
             createNewRun();
             setRunFormatting();
         } else if (SAXHelpers.isSectionTag(qName)) {
             currentLevel.pop(Level.SECTION, new DocxException("unexpected end of section"));
             currentSectionDepth -= 1;
             ensureNoTextAllowed();
-        } else if (SAXHelpers.isTitleTag(qName) && ! currentLevel.peekFigure()) {
+        }
+
+        // Section titles.
+        else if (SAXHelpers.isTitleTag(qName) && ! currentLevel.peekFigure()) {
             // Set the title to the core properties.
             POIXMLProperties props = doc.getProperties();
             POIXMLProperties.CoreProperties coreProps = props.getCoreProperties();
@@ -1414,6 +1444,7 @@ public class DocxOutputImpl extends DefaultHandler {
             restoreParagraphStyle();
         }
 
+        // Abstracts.
         else if (SAXHelpers.isAbstractTag(qName) || SAXHelpers.isPartIntroTag(qName)) {
             ensureNoTextAllowed();
             restoreParagraphStyle();

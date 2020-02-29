@@ -53,68 +53,66 @@
                     <db:date><xsl:value-of select="tc:parse-date(entete/miseajour/text())"/></db:date>
                 </xsl:if>
                 
-                <db:authorgroup>
-                    <xsl:for-each select="authorDescriptions/authorDescription">
-                        <xsl:element name="{if (@role='auteur') then 'db:author' else 'db:othercredit'}">
-                            <xsl:if test="@role='correcteur' or @role='gabarisateur' or @role='relecteur-technique' or @role='traducteur'">
-                                <xsl:attribute name="class">
-                                    <xsl:choose>
-                                        <xsl:when test="@role='correcteur'">proofreader</xsl:when>
-                                        <xsl:when test="@role='gabarisateur'">conversion</xsl:when>
-                                        <xsl:when test="@role='relecteur-technique'">reviewer</xsl:when>
-                                        <xsl:when test="@role='traducteur'">translator</xsl:when>
-                                    </xsl:choose>
-                                </xsl:attribute>
-                            </xsl:if>
-                            
-                            <db:personname>
-                                <db:othername role="pseudonym">
-                                    <xsl:value-of select="@name"/>
-                                </db:othername>
-                                <!-- Heuristic to decide first and last name: split on the FIRST space. -->
-                                <!-- Works for most cases. -->
-                                <db:firstname>
-                                    <xsl:value-of select="tokenize(fullname, ' ')[1]"/>
-                                </db:firstname>
-                                <db:surname>
-                                    <xsl:value-of select="string-join(for $i in 2 to last() + 1 return tokenize(fullname, ' ')[$i], ' ')"/>
-                                </db:surname>
-                            </db:personname>
-                            
-                            <xsl:if test="url">
-                                <db:uri type="main-uri">
-                                    <xsl:value-of select="url"/>
-                                </db:uri>
-                            </xsl:if>
-                            
-                            <xsl:if test="homepage">
-                                <db:uri type="{homepage/title}">
-                                    <xsl:value-of select="homepage/url"/>
-                                </db:uri>
-                            </xsl:if>
-                            
-                            <xsl:if test="blog">
-                                <db:uri type="blog-uri">
-                                    <xsl:value-of select="blog"/>
-                                </db:uri>
-                            </xsl:if>
-                            
-                            <xsl:if test="google-plus">
-                                <db:uri type="google-plus">
-                                    <xsl:value-of select="google-plus"/>
-                                </db:uri>
-                            </xsl:if>
-                            
-                            <xsl:if test="linkedin">
-                                <db:uri type="linkedin">
-                                    <xsl:value-of select="linkedin"/>
-                                </db:uri>
-                            </xsl:if>
-                            
-                            <!-- Element "liens" is voluntarily ignored (not really used). -->
-                        </xsl:element>
-                    </xsl:for-each>
-                </db:authorgroup>
+                <xsl:for-each select="authorDescriptions/authorDescription">
+                    <xsl:element name="{if (@role='auteur') then 'db:author' else 'db:othercredit'}">
+                        <xsl:if test="@role='correcteur' or @role='gabarisateur' or @role='relecteur-technique' or @role='traducteur'">
+                            <xsl:attribute name="class">
+                                <xsl:choose>
+                                    <xsl:when test="@role='correcteur'">proofreader</xsl:when>
+                                    <xsl:when test="@role='gabarisateur'">conversion</xsl:when>
+                                    <xsl:when test="@role='relecteur-technique'">reviewer</xsl:when>
+                                    <xsl:when test="@role='traducteur'">translator</xsl:when>
+                                </xsl:choose>
+                            </xsl:attribute>
+                        </xsl:if>
+                        
+                        <db:personname>
+                            <db:othername role="pseudonym">
+                                <xsl:value-of select="@name"/>
+                            </db:othername>
+                            <!-- Heuristic to decide first and last name: split on the FIRST space. -->
+                            <!-- Works for most cases. -->
+                            <db:firstname>
+                                <xsl:value-of select="tokenize(fullname, ' ')[1]"/>
+                            </db:firstname>
+                            <db:surname>
+                                <xsl:value-of select="string-join(for $i in 2 to last() + 1 return tokenize(fullname, ' ')[$i], ' ')"/>
+                            </db:surname>
+                        </db:personname>
+                        
+                        <xsl:if test="url">
+                            <db:uri type="main-uri">
+                                <xsl:value-of select="url"/>
+                            </db:uri>
+                        </xsl:if>
+                        
+                        <xsl:if test="homepage">
+                            <db:uri type="{homepage/title}">
+                                <xsl:value-of select="homepage/url"/>
+                            </db:uri>
+                        </xsl:if>
+                        
+                        <xsl:if test="blog">
+                            <db:uri type="blog-uri">
+                                <xsl:value-of select="blog"/>
+                            </db:uri>
+                        </xsl:if>
+                        
+                        <xsl:if test="google-plus">
+                            <db:uri type="google-plus">
+                                <xsl:value-of select="google-plus"/>
+                            </db:uri>
+                        </xsl:if>
+                        
+                        <xsl:if test="linkedin">
+                            <db:uri type="linkedin">
+                                <xsl:value-of select="linkedin"/>
+                            </db:uri>
+                        </xsl:if>
+                        
+                        <!-- Element "liens" is voluntarily ignored (not really used). -->
+                    </xsl:element>
+                </xsl:for-each>
             </db:info>
             
             <xsl:if test="lecteur">

@@ -17,7 +17,7 @@ public class Translations {
         }
     }
 
-    // <db:programlisting>
+    // <db:programlisting>.
     public static final Map<Language, String> programListing =
             Map.of(Language.FRENCH, "Code source", Language.ENGLISH, "Program listing");
     public static final Map<Language, String> programListingLanguage =
@@ -36,4 +36,22 @@ public class Translations {
             Map.of(Language.FRENCH, "non numéroté", Language.ENGLISH, "unnumbered");
     public static final Map<Language, String> programListingStartingLineNumber =
             Map.of(Language.FRENCH, "Numéro de la première ligne", Language.ENGLISH, "Starting line number");
+
+    // <db:author>, <db:authorgroup>, and family.
+    public static final Map<Language, String> author =
+            Map.of(Language.FRENCH, "Auteur", Language.ENGLISH, "Author");
+    public static final Map<Language, String> proofreader =
+            Map.of(Language.FRENCH, "Correcteur", Language.ENGLISH, "Proofreader");
+    public static final Map<Language, String> converter =
+            Map.of(Language.FRENCH, "Mise au gabarit", Language.ENGLISH, "Converter"); // TODO:
+    public static final Map<Language, String> reviewer =
+            Map.of(Language.FRENCH, "Relecteur technique", Language.ENGLISH, "Technical reviewer");
+    public static final Map<Language, String> translator =
+            Map.of(Language.FRENCH, "Traducteur", Language.ENGLISH, "Translator");
+    public static final Map<Language, String> firstName =
+            Map.of(Language.FRENCH, "Prénom", Language.ENGLISH, "First name");
+    public static final Map<Language, String> surname =
+            Map.of(Language.FRENCH, "Nom de famille", Language.ENGLISH, "Family name");
+    public static final Map<Language, String> pseudonym =
+            Map.of(Language.FRENCH, "Pseudonyme", Language.ENGLISH, "Pseudonym");
 }

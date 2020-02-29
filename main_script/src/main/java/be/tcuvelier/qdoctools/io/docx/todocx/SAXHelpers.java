@@ -42,6 +42,10 @@ public class SAXHelpers {
         return compare(qName, "editor");
     }
 
+    public static boolean isOtherCreditTag(String qName) {
+        return compare(qName, "othercredit");
+    }
+
     public static boolean isAuthorGroupTag(String qName) {
         return compare(qName, "authorgroup");
     }
