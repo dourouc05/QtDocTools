@@ -40,6 +40,8 @@ public class DocxOutputImpl extends DefaultHandler {
     XWPFDocument doc; // DOCX document being written.
     private POIHelpers h = new POIHelpers();
 
+    private Translations.Language language;
+
     // Paragraph being filled.
     private Deque<XWPFParagraph> paragraph; // Paragraph being written while another paragraph is not finished yet,
     // e.g. within footnotes. In normal cases, this deque only stores one paragraph. At any rate, most operations
@@ -739,6 +741,12 @@ public class DocxOutputImpl extends DefaultHandler {
         }
     }
 
+    private void parseLanguage(Attributes attributes) {
+        Map<String, String> attr = SAXHelpers.attributes(attributes);
+        String xmllang = attr.getOrDefault("xml:lang", "en");
+        language = Translations.Language.fromXmlLang(xmllang);
+    }
+
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         // Note: XInclude not supported right now. Could easily be done to export to DOCX, but the reverse would be
@@ -757,6 +765,8 @@ public class DocxOutputImpl extends DefaultHandler {
                 // TODO: Maybe this is too conservative? Articles in books are allowed by the standard (equivalent to chapters).
             }
 
+            parseLanguage(attributes);
+
             currentLevel.push(Level.ROOT_ARTICLE);
             ensureNoTextAllowed();
             // Don't warn about unknown attributes, as it will most likely just be version and name spaces.
@@ -764,6 +774,8 @@ public class DocxOutputImpl extends DefaultHandler {
             if (currentLevel.peekRootArticle()) {
                 throw new DocxException("unexpected book within an article (the other direction works).");
             }
+
+            parseLanguage(attributes);
 
             currentLevel.push(Level.ROOT_BOOK);
             ensureNoTextAllowed();
@@ -1092,25 +1104,41 @@ public class DocxOutputImpl extends DefaultHandler {
             createNewParagraph();
             paragraph.getLast().setStyle(DocBookBlock.tagToStyleID(qName, attributes));
 
-            // For program listings, add the language as a first paragraph.
+            // For program listings, add the language and other parameters as a first paragraph.
             if (SAXHelpers.isProgramListingTag(qName)) {
                 // https://github.com/apache/poi/pull/152
                 CTOnOff on = CTOnOff.Factory.newInstance();
                 on.setVal(STOnOff.ON);
                 paragraph.getLast().getCTP().getPPr().setKeepNext(on);
 
-                String text = "Program listing. ";
+                String text = Translations.programListing.get(language) + ". ";
                 if (attr.containsKey("language")) {
-                    text += "Language: " + attr.get("language") + ". ";
+                    text += Translations.programListingLanguage.get(language) + ": " + attr.get("language") + ". ";
                 }
                 if (attr.containsKey("continuation")) {
-                    text += "Continuation: " + attr.get("continuation") + ". ";
+                    text += Translations.programListingContinuation + ": ";
+                    if (attr.get("continuation").equals("continues")) {
+                        text += Translations.programListingContinuationValueContinues.get(language);
+                    } else if (attr.get("continuation").equals("restarts")) {
+                        text += Translations.programListingContinuationValueRestarts.get(language);
+                    } else {
+                        throw new IllegalStateException("Unknown value for continuation attribute: " + attr.get("continuation"));
+                    }
+                    text += ". ";
                 }
                 if (attr.containsKey("linenumbering")) {
-                    text += "Line numbering: " + attr.get("linenumbering") + ". ";
+                    text += Translations.programListingLineNumbering + ": ";
+                    if (attr.get("linenumbering").equals("numbered")) {
+                        text += Translations.programListingLineNumberingValueNumbered.get(language);
+                    } else if (attr.get("linenumbering").equals("unnumbered")) {
+                        text += Translations.programListingLineNumberingValueUnnumbered.get(language);
+                    } else {
+                        throw new IllegalStateException("Unknown value for linenumbering attribute: " + attr.get("linenumbering"));
+                    }
+                    text += ". ";
                 }
                 if (attr.containsKey("startinglinenumber")) {
-                    text += "Starting line number: " + attr.get("startinglinenumber") + ". ";
+                    text += Translations.programListingStartingLineNumber.get(language) + ": " + attr.get("language") + ". ";
                 }
 
                 run.setBold(true);
