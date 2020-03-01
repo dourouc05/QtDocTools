@@ -31,13 +31,13 @@ public class Main {
     public static void main(String[] args) {
 //        String[] argv = {"qdoc", "-i", "C:\\Qt\\5.13.0\\Src", "-s", "C:\\Qt\\5.13.0\\mingw73_64", "-o", "C:\\Qt\\Doc513", "--qt-version", "5.13"};
 
-        String doc = "author";
+//        String doc = "author";
 //        String doc = "CPLEX";
 //        String doc = "07-0-qdoc-commands-includingexternalcode";
 //        String doc = "16-qdoc-commands-status";
 //        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\";
 //        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-jump-0.21\\julia-jump.xml";
-//        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-rapide-1.1\\julia.xml";
+        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-rapide-1.1\\julia.xml";
 //        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-lightgraphs-1.2\\julia-graphes.xml";
 //        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-rapide-1.1\\julia.docx";
 //        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-jump-0.20\\julia-jump.docx";
@@ -48,12 +48,12 @@ public class Main {
 //                "-r", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\merge_after_proofread\\tests\\" + doc + "_after.xml",
 //                "-m", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\merge_after_proofread\\tests\\" + doc + "_merged.xml"};
 //        String[] argv = {"transform", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\export\\to_docx\\tests\\synthetic\\" + doc + ".xml"};
-        String[] argv = {"transform", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\import\\from_docx\\tests\\synthetic\\" + doc + ".docx"};
+//        String[] argv = {"transform", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\import\\from_docx\\tests\\synthetic\\" + doc + ".docx"};
 //        String[] argv = {"transform", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\export\\to_docx\\tests\\synthetic\\" + doc + ".db"};
 //        String[] argv = {"transform", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\export\\to_docx\\tests\\synthetic\\" + doc + ".db", "--disable-sanity-checks"};
 //        String[] argv = {"transform", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\" + doc + ".docx"};
 
-//        String[] argv = {"transform", "-i", doc, "--no-validation"};
+        String[] argv = {"transform", "-i", doc, "--no-validation"};
 //        String[] argv = {"transform", "-i", doc, "-of", "DvpML", "--generate", "--upload"};
 
         submain(argv);

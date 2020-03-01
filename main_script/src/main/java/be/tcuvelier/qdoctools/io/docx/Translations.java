@@ -5,6 +5,15 @@ import be.tcuvelier.qdoctools.core.helpers.Language;
 import java.util.Map;
 
 public class Translations {
+    // <db:date>, <db:pubdate>.
+    public static final Map<Language, String> colon =
+            Map.of(Language.FRENCH, " : ", Language.ENGLISH, ": ");
+
+    // <db:date>, <db:pubdate>.
+    public static final Map<Language, String> date =
+            Map.of(Language.FRENCH, "Date de mise à jour", Language.ENGLISH, "Update date");
+    public static final Map<Language, String> pubdate =
+            Map.of(Language.FRENCH, "Date de publication", Language.ENGLISH, "Publication date");
 
     // <db:programlisting>.
     public static final Map<Language, String> programListing =

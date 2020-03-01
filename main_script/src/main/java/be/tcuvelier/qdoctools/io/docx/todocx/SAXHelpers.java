@@ -74,9 +74,12 @@ public class SAXHelpers {
         return compare(qName, "surname");
     }
 
-    public static boolean isBelowAuthor(String qName) {
-        return isPersonNameTag(qName) || isFirstNameTag(qName) || isHonorificTag(qName) || isLineageTag(qName)
-                || isOtherNameTag(qName) || isSurNameTag(qName);
+    public static boolean isDate(String qName) {
+        return compare(qName, "date");
+    }
+
+    public static boolean isPubDate(String qName) {
+        return compare(qName, "pubdate");
     }
 
     public static boolean isAbstractTag(String qName) {

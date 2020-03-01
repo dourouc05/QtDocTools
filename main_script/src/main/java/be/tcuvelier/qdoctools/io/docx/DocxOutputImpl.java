@@ -745,7 +745,7 @@ public class DocxOutputImpl extends DefaultHandler {
 
     private void parseLanguage(Attributes attributes) {
         Map<String, String> attr = SAXHelpers.attributes(attributes);
-        String xmllang = attr.getOrDefault("xml:lang", "en");
+        String xmllang = attr.getOrDefault("xml:lang", attr.getOrDefault("lang", "en"));
         language = Language.fromXmlLang(xmllang);
     }
 
@@ -870,10 +870,10 @@ public class DocxOutputImpl extends DefaultHandler {
             // structure, so still allow text here.
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isFirstNameTag(qName)) {
-            run.setText(Translations.firstName.get(language) + ": ");
+            run.setText(Translations.firstName.get(language) + Translations.colon.get(language));
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isSurNameTag(qName)) {
-            run.setText(Translations.surname.get(language) + ": ");
+            run.setText(Translations.surname.get(language) + Translations.colon.get(language));
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isOtherNameTag(qName)) {
             Map<String, String> attr = SAXHelpers.attributes(attributes);
@@ -885,7 +885,7 @@ public class DocxOutputImpl extends DefaultHandler {
                 throw new DocxException("unsupported othername role: " + attr.get("role"));
             }
 
-            run.setText(Translations.pseudonym.get(language) + ": ");
+            run.setText(Translations.pseudonym.get(language) + Translations.colon.get(language));
             warnUnknownAttributes(attr, Stream.of("role"));
         } else if (SAXHelpers.isAuthorGroupTag(qName)) {
             if (! currentLevel.peekInfo()) {
@@ -893,6 +893,31 @@ public class DocxOutputImpl extends DefaultHandler {
             }
 
             throw new DocxException("authorgroup not implemented.");
+        }
+
+        // Other parts of the info container.
+        else if (SAXHelpers.isDate(qName)) {
+            if (! currentLevel.peekInfo()) {
+                throw new DocxException("unexpected date outside an info container.");
+            }
+
+            createNewParagraph();
+            run.setText(Translations.date.get(language) + Translations.colon.get(language));
+            run.setBold(true);
+
+            createNewRun();
+            warnUnknownAttributes(attributes);
+        } else if (SAXHelpers.isPubDate(qName)) {
+            if (! currentLevel.peekInfo()) {
+                throw new DocxException("unexpected pubdate outside an info container.");
+            }
+
+            createNewParagraph();
+            run.setText(Translations.pubdate.get(language) + Translations.colon.get(language));
+            run.setBold(true);
+
+            createNewRun();
+            warnUnknownAttributes(attributes);
         }
 
         // Sections.
@@ -1044,7 +1069,10 @@ public class DocxOutputImpl extends DefaultHandler {
             }
 
             // Create a new run if this one is already started. Ubiquitous links already create a new run.
-            if (run.text().length() > 0 && ! hasUbiquitous) {
+            if (run == null) {
+                assert run != null;
+            }
+            if (run.text() != null && run.text().length() > 0 && ! hasUbiquitous) {
                 createNewRun();
             }
 
@@ -1152,10 +1180,10 @@ public class DocxOutputImpl extends DefaultHandler {
 
                 String text = Translations.programListing.get(language) + ". ";
                 if (attr.containsKey("language")) {
-                    text += Translations.programListingLanguage.get(language) + ": " + attr.get("language") + ". ";
+                    text += Translations.programListingLanguage.get(language) + Translations.colon.get(language) + attr.get("language") + ". ";
                 }
                 if (attr.containsKey("continuation")) {
-                    text += Translations.programListingContinuation + ": ";
+                    text += Translations.programListingContinuation + Translations.colon.get(language);
                     if (attr.get("continuation").equals("continues")) {
                         text += Translations.programListingContinuationValueContinues.get(language);
                     } else if (attr.get("continuation").equals("restarts")) {
@@ -1166,7 +1194,7 @@ public class DocxOutputImpl extends DefaultHandler {
                     text += ". ";
                 }
                 if (attr.containsKey("linenumbering")) {
-                    text += Translations.programListingLineNumbering + ": ";
+                    text += Translations.programListingLineNumbering + Translations.colon.get(language);
                     if (attr.get("linenumbering").equals("numbered")) {
                         text += Translations.programListingLineNumberingValueNumbered.get(language);
                     } else if (attr.get("linenumbering").equals("unnumbered")) {
@@ -1177,7 +1205,7 @@ public class DocxOutputImpl extends DefaultHandler {
                     text += ". ";
                 }
                 if (attr.containsKey("startinglinenumber")) {
-                    text += Translations.programListingStartingLineNumber.get(language) + ": " + attr.get("language") + ". ";
+                    text += Translations.programListingStartingLineNumber.get(language) + Translations.colon.get(language) + attr.get("language") + ". ";
                 }
 
                 run.setBold(true);
@@ -1431,12 +1459,17 @@ public class DocxOutputImpl extends DefaultHandler {
             setRunFormatting();
         } else if (SAXHelpers.isFirstNameTag(qName) || SAXHelpers.isSurNameTag(qName) || SAXHelpers.isOtherNameTag(qName)) {
             run.setText(". ");
-            run.setLang();
-            createNewRun();
-            setRunFormatting();
+            run.setLang(Language.toWordLang(language));
         } else if (SAXHelpers.isSectionTag(qName)) {
             currentLevel.pop(Level.SECTION, new DocxException("unexpected end of section"));
             currentSectionDepth -= 1;
+            ensureNoTextAllowed();
+        }
+
+        // Other parts of the info container.
+        else if (SAXHelpers.isDate(qName) || SAXHelpers.isPubDate(qName)) {
+            run.setText(". ");
+            run.setLang(Language.toWordLang(language));
             ensureNoTextAllowed();
         }
 
