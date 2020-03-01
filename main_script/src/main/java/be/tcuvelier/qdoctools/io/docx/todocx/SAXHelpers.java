@@ -58,14 +58,6 @@ public class SAXHelpers {
         return compare(qName, "firstname");
     }
 
-    public static boolean isHonorificTag(String qName) {
-        return compare(qName, "honorific");
-    }
-
-    public static boolean isLineageTag(String qName) {
-        return compare(qName, "lineage");
-    }
-
     public static boolean isOtherNameTag(String qName) {
         return compare(qName, "othername");
     }
