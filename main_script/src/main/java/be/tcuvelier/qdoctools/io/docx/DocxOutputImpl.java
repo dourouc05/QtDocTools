@@ -2,7 +2,8 @@ package be.tcuvelier.qdoctools.io.docx;
 
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.config.QdtPaths;
-import be.tcuvelier.qdoctools.core.helpers.Language;
+import be.tcuvelier.qdoctools.core.constants.Language;
+import be.tcuvelier.qdoctools.core.constants.Translations;
 import be.tcuvelier.qdoctools.io.docx.helpers.DocBookAlignment;
 import be.tcuvelier.qdoctools.io.docx.helpers.DocBookBlock;
 import be.tcuvelier.qdoctools.io.docx.helpers.DocBookFormatting;

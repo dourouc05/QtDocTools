@@ -1,4 +1,4 @@
-package be.tcuvelier.qdoctools.core.helpers;
+package be.tcuvelier.qdoctools.core.constants;
 
 public enum Language {
     FRENCH, ENGLISH;

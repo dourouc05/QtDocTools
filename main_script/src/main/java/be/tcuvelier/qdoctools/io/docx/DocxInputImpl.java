@@ -1,11 +1,15 @@
 package be.tcuvelier.qdoctools.io.docx;
 
+import be.tcuvelier.qdoctools.core.constants.ContributorType;
+import be.tcuvelier.qdoctools.core.constants.Language;
+import be.tcuvelier.qdoctools.core.constants.Translations;
 import be.tcuvelier.qdoctools.io.docx.fromdocx.*;
 import be.tcuvelier.qdoctools.io.docx.helpers.DocBookAlignment;
 import be.tcuvelier.qdoctools.io.docx.helpers.DocBookBlock;
 import be.tcuvelier.qdoctools.io.docx.helpers.DocBookFormatting;
 import be.tcuvelier.qdoctools.io.docx.helpers.Tuple;
 import be.tcuvelier.qdoctools.io.docx.todocx.Level;
+import com.joestelmach.natty.Parser;
 import org.apache.poi.xwpf.usermodel.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -15,6 +19,7 @@ import javax.xml.stream.XMLStreamException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -253,6 +258,73 @@ public class DocxInputImpl {
 
     /** Structure elements. **/
 
+    private static Date parseDate(String str) {
+        Parser parser = new Parser();
+        return parser.parse(str).get(0).getDates().get(0);
+    }
+
+    private static String parseField(String str, Language lang) {
+        String[] elements = str.split(Translations.colon.get(lang));
+        if (elements.length == 2) {
+            return elements[1];
+        } else {
+            throw new AssertionError("Expected to have only one field separator in " + str + ".");
+        }
+    }
+
+    private static MetaDataParagraphs.Contributor parseContributor(String str, Language lang) {
+        // Get the series of fields.
+        String[] split = str.split(". ", 2);
+        String contributorKind = split[0];
+        String contributorInfo = split[1];
+
+        MetaDataParagraphs.Contributor c = new MetaDataParagraphs.Contributor();
+
+        // Parse the kind of contributor.
+        if (contributorKind.equalsIgnoreCase(Translations.author.get(lang))) {
+            c.type = ContributorType.AUTHOR;
+        } else if (contributorKind.equalsIgnoreCase(Translations.proofreader.get(lang))) {
+            c.type = ContributorType.PROOFREADER;
+        } else if (contributorKind.equalsIgnoreCase(Translations.converter.get(lang))) {
+            c.type = ContributorType.CONVERTER;
+        } else if (contributorKind.equalsIgnoreCase(Translations.reviewer.get(lang))) {
+            c.type = ContributorType.REVIEWER;
+        } else if (contributorKind.equalsIgnoreCase(Translations.translator.get(lang))) {
+            c.type = ContributorType.TRANSLATOR;
+        }
+
+        // Parse the other fields.
+        String[] fields = contributorInfo.split(".");
+        for (String field : fields) {
+            String[] items = field.strip().split(Translations.colon.get(lang));
+            if (items.length == 2) {
+                if (items[1].equalsIgnoreCase(Translations.firstName.get(lang))) {
+                    c.firstName = items[1];
+                } else if (items[1].equalsIgnoreCase(Translations.surname.get(lang))) {
+                    c.familyName = items[1];
+                } else if (items[1].equalsIgnoreCase(Translations.pseudonym.get(lang))) {
+                    c.pseudonym = items[1];
+                } else if (items[1].equalsIgnoreCase(Translations.uriMain.get(lang))) {
+                    c.mainUri = items[1];
+                } else if (items[1].equalsIgnoreCase(Translations.uriHomepage.get(lang))) {
+                    c.websiteUri = items[1];
+                } else if (items[1].equalsIgnoreCase(Translations.uriBlog.get(lang))) {
+                    c.blogUri = items[1];
+                } else if (items[1].equalsIgnoreCase(Translations.uriGooglePlus.get(lang))) {
+                    c.googlePlusgUri = items[1];
+                } else if (items[1].equalsIgnoreCase(Translations.uriLinkedIn.get(lang))) {
+                    c.linkedInUri = items[1];
+                } else {
+                    c.name = items[1]; // TODO: test me specifically.
+                }
+            } else {
+                throw new AssertionError("Expected to have only one field separator in " + field + ", part of the larger contributor string " + str + ".");
+            }
+        }
+
+        return c;
+    }
+
     private MetaDataParagraphs gatherAbstractFollowing(@NotNull XWPFParagraph p) {
         int pos = p.getDocument().getPosOfParagraph(p);
         List<XWPFParagraph> paragraphs = p.getDocument().getParagraphs();
@@ -264,48 +336,148 @@ public class DocxInputImpl {
             return metadata;
         }
 
-        // Not all styles are allowed between a title and an abstract.
-        Set<String> allowedBetween = Set.of("Author", "Editor", "AuthorGroup");
-
         // Abstract is made of a sequence of paragraphs with the Abstract style, which implies that there is
         // no paragraph of another style in between.
-        boolean foundNonNullStyle = false;
-//        boolean foundRealAbstract = false;
+        boolean foundRealAbstract = false;
         for (int i = pos + 1; i < paragraphs.size(); ++i) {
             String style = paragraphs.get(i).getStyleID();
 
-            // No style found? This is a default paragraph, i.e. normal text: definitely not an abstract, don't go on.
-            if (style == null) {
-                // Exception: the first few paragraphs after the main title, before any other content, may be authors.
-                // The original styles may be overridden when the document is saved on other computers.
-                if (! foundNonNullStyle) { // && ! foundRealAbstract, but this condition is (for now) always met.
-                    System.out.println("Found a default style before the paragraph. Changing it to Author.");
-                    paragraphs.get(i).setStyle("Author");
-                    style = "Author";
-                    // Let the rest of the loop iteration execute,
-                } else {
-                    break;
+            // Found an abstract: record this paragraph, go to the next one.
+            if (style.equals("Abstract")) {
+                foundRealAbstract = true;
+                metadata.abstractParas.add(paragraphs.get(i));
+                continue;
+            }
+
+            // Already found an abstract, and this is no more an abstract? Stop here.
+            if (foundRealAbstract) {
+                break;
+            }
+
+            // Found an interesting paragraph: record this paragraph, parse it, go to the next one.
+            String text = paragraphs.get(i).getText().strip();
+            boolean recognised = false;
+            for (Language lang : Language.values()) {
+                // Dates.
+                if (text.startsWith(Translations.date.get(lang))) {
+                    metadata.datePara = paragraphs.get(i);
+                    metadata.date = parseDate(parseField(text, lang));
+                    recognised = true;
+                } else if (text.startsWith(Translations.pubdate.get(lang))) {
+                    metadata.pubdatePara = paragraphs.get(i);
+                    metadata.pubdate = parseDate(parseField(text, lang));
+                    recognised = true;
+                }
+
+                // Authors and contributors.
+                else if (text.startsWith(Translations.author.get(lang))
+                        || text.startsWith(Translations.proofreader.get(lang))
+                        || text.startsWith(Translations.converter.get(lang))
+                        || text.startsWith(Translations.reviewer.get(lang))
+                        || text.startsWith(Translations.translator.get(lang))) {
+                    metadata.contributorParas.add(p);
+                    metadata.contributors.add(parseContributor(text, lang));
+                    recognised = true;
                 }
             }
-            foundNonNullStyle = true;
 
-            // Found an abstract or another interesting paragraph: record this paragraph, go to the next one.
-            if (style.equals("Abstract")) {
-//                foundRealAbstract = true;
-                metadata.abstracts.add(paragraphs.get(i));
-                continue;
-            } else if (style.equals("Author")) {
-                assert metadata.author == null; // Only one Author paragraph allowed.
-                metadata.author = paragraphs.get(i);
-            }
-
-            // Style not allowed between abstract paragraph styles: don't go on.
-            if (! allowedBetween.contains(style)) {
+            // Nothing else should follow.
+            if (! recognised) {
                 break;
             }
         }
 
         return metadata;
+    }
+
+    private static String dateToISO(Date date) {
+        return new SimpleDateFormat("yyyy-MM-dd").format(date);
+    }
+
+    private void visitTitle(@NotNull XWPFParagraph p) throws XMLStreamException {
+        dbStream.openParagraphTag("title");
+        visitRuns(p.getRuns());
+        dbStream.closeParagraphTag();
+    }
+
+    private void visitPublicationDate(Date d) throws XMLStreamException {
+        if (d == null) {
+            return;
+        }
+
+        dbStream.openParagraphTag("date");
+        dbStream.writeCharacters(dateToISO(d));
+        dbStream.closeParagraphTag();
+    }
+
+    private void visitUpdateDate(Date d) throws XMLStreamException {
+        if (d == null) {
+            return;
+        }
+
+        dbStream.openParagraphTag("date");
+        dbStream.writeCharacters(dateToISO(d));
+        dbStream.closeParagraphTag();
+    }
+
+    private void visitContributor(@NotNull MetaDataParagraphs.Contributor c) throws XMLStreamException {
+        if (c.type == ContributorType.AUTHOR) {
+            dbStream.openBlockTag("author");
+        } else {
+            String type = ContributorType.typeToDocBookOtherCreditClass(c.type);
+            assert type != null; // Only if not recognised.
+            dbStream.openBlockTag("othercredit", Map.of("class", type));
+        }
+
+        dbStream.openParagraphTag("personname");
+        if (c.pseudonym != null) {
+            dbStream.openParagraphTag("othername", Map.of("role", "pseudonym"));
+            dbStream.writeCharacters(c.pseudonym);
+            dbStream.closeParagraphTag();
+        }
+        if (c.name != null) {
+            dbStream.writeCharacters(c.name);
+        } else {
+            if (c.firstName != null) {
+                dbStream.openParagraphTag("firstname");
+                dbStream.writeCharacters(c.firstName);
+                dbStream.closeParagraphTag();
+            }
+            if (c.familyName != null) {
+                dbStream.openParagraphTag("surname");
+                dbStream.writeCharacters(c.familyName);
+                dbStream.closeParagraphTag();
+            }
+        }
+        dbStream.closeParagraphTag(); // <db:personname>
+
+        if (c.mainUri != null) {
+            dbStream.openParagraphTag("uri", Map.of("type", "main-uri"));
+            dbStream.writeCharacters(c.mainUri);
+            dbStream.closeParagraphTag();
+        }
+        if (c.websiteUri != null) {
+            dbStream.openParagraphTag("uri", Map.of("type", "homepage"));
+            dbStream.writeCharacters(c.websiteUri);
+            dbStream.closeParagraphTag();
+        }
+        if (c.blogUri != null) {
+            dbStream.openParagraphTag("uri", Map.of("type", "blog"));
+            dbStream.writeCharacters(c.blogUri);
+            dbStream.closeParagraphTag();
+        }
+        if (c.googlePlusgUri != null) {
+            dbStream.openParagraphTag("uri", Map.of("type", "google-plus"));
+            dbStream.writeCharacters(c.googlePlusgUri);
+            dbStream.closeParagraphTag();
+        }
+        if (c.linkedInUri != null) {
+            dbStream.openParagraphTag("uri", Map.of("type", "linkedin"));
+            dbStream.writeCharacters(c.linkedInUri);
+            dbStream.closeParagraphTag();
+        }
+
+        dbStream.closeBlockTag(); // <db:author>, <db:editor>, or <db:othercredit>
     }
 
     private void visitTitleAndAbstract(@NotNull XWPFParagraph p) throws XMLStreamException {
@@ -317,18 +489,17 @@ public class DocxInputImpl {
             dbStream.closeParagraphTag();
         } else {
             dbStream.openBlockTag("info");
+            visitTitle(p);
+            visitPublicationDate(metadata.pubdate);
+            visitUpdateDate(metadata.date);
 
-            dbStream.openParagraphTag("title");
-            visitRuns(p.getRuns());
-            dbStream.closeParagraphTag();
-
-            if (metadata.author != null) {
-                visitAuthor(metadata.author);
+            for (MetaDataParagraphs.Contributor c : metadata.contributors) {
+                visitContributor(c);
             }
 
-            if (metadata.abstracts.size() > 0) {
+            if (metadata.abstractParas.size() > 0) {
                 dbStream.openBlockTag("abstract");
-                for (XWPFParagraph ap : metadata.abstracts) {
+                for (XWPFParagraph ap : metadata.abstractParas) {
                     visitNormalParagraph(ap);
                     abstractPositions.add(doc.getPosOfParagraph(ap));
                 }
@@ -336,6 +507,43 @@ public class DocxInputImpl {
             }
 
             dbStream.closeBlockTag(); // </db:info>
+        }
+    }
+
+    private void visitPartTitle(@NotNull XWPFParagraph p) throws XMLStreamException {
+        if (isWithinPart) {
+            dbStream.closeBlockTag(); // </db:part>
+        }
+        isWithinPart = true;
+        dbStream.openBlockTag("part");
+
+        // Major difference with visitTitleAndAbstract: the abstract is output as a partintro, outside the info container.
+        MetaDataParagraphs metadata = gatherAbstractFollowing(p);
+
+        if (! metadata.hasMetaDataExceptAbstract()) {
+            dbStream.openParagraphTag("title");
+            visitRuns(p.getRuns());
+            dbStream.closeParagraphTag();
+        } else {
+            dbStream.openBlockTag("info");
+            visitTitle(p);
+            visitPublicationDate(metadata.pubdate);
+            visitUpdateDate(metadata.date);
+
+            for (MetaDataParagraphs.Contributor c : metadata.contributors) {
+                visitContributor(c);
+            }
+
+            dbStream.closeBlockTag(); // </db:info>
+        }
+
+        if (metadata.abstractParas.size() > 0) {
+            dbStream.openBlockTag("partintro");
+            for (XWPFParagraph ap: metadata.abstractParas) {
+                visitNormalParagraph(ap);
+                abstractPositions.add(doc.getPosOfParagraph(ap)); // TODO: should be done by gatherAbstractFollowing?
+            }
+            dbStream.closeBlockTag();
         }
     }
 
@@ -360,36 +568,6 @@ public class DocxInputImpl {
         dbStream.openParagraphTag("author");
         visitRuns(p.getRuns());
         dbStream.closeParagraphTag(); // </db:author>
-    }
-
-    private void visitPartTitle(@NotNull XWPFParagraph p) throws XMLStreamException {
-        if (isWithinPart) {
-            dbStream.closeBlockTag(); // </db:part>
-        }
-        isWithinPart = true;
-
-        dbStream.openBlockTag("part");
-
-        MetaDataParagraphs metadata = gatherAbstractFollowing(p);
-
-        if (metadata.hasMetaDataExceptAbstract()) {
-            dbStream.openParagraphTag("title");
-            visitRuns(p.getRuns());
-            dbStream.closeParagraphTag(); // </db:title>
-
-            if (metadata.author != null) {
-                visitAuthor(metadata.author);
-            }
-        }
-
-        if (metadata.abstracts.size() > 0) {
-            dbStream.openBlockTag("partintro");
-            for (XWPFParagraph ap: metadata.abstracts) {
-                visitNormalParagraph(ap);
-                abstractPositions.add(doc.getPosOfParagraph(ap));
-            }
-            dbStream.closeBlockTag();
-        }
     }
 
     private void visitSectionTitle(@NotNull XWPFParagraph p) throws XMLStreamException {

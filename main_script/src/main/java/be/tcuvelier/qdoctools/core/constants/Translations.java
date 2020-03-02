@@ -1,6 +1,6 @@
-package be.tcuvelier.qdoctools.io.docx;
+package be.tcuvelier.qdoctools.core.constants;
 
-import be.tcuvelier.qdoctools.core.helpers.Language;
+import be.tcuvelier.qdoctools.core.constants.Language;
 
 import java.util.Map;
 
@@ -38,10 +38,10 @@ public class Translations {
     // <db:author>, <db:authorgroup>, and family.
     public static final Map<Language, String> author =
             Map.of(Language.FRENCH, "Auteur", Language.ENGLISH, "Author");
+    public static final Map<Language, String> converter =
+            Map.of(Language.FRENCH, "Mise au gabarit", Language.ENGLISH, "Converter"); // TODO: find a nice way of saying that in French.
     public static final Map<Language, String> proofreader =
             Map.of(Language.FRENCH, "Correcteur", Language.ENGLISH, "Proofreader");
-    public static final Map<Language, String> converter =
-            Map.of(Language.FRENCH, "Mise au gabarit", Language.ENGLISH, "Converter"); // TODO:
     public static final Map<Language, String> reviewer =
             Map.of(Language.FRENCH, "Relecteur technique", Language.ENGLISH, "Technical reviewer");
     public static final Map<Language, String> translator =
@@ -62,4 +62,12 @@ public class Translations {
             Map.of(Language.FRENCH, "Google+", Language.ENGLISH, "Google+");
     public static final Map<Language, String> uriLinkedIn =
             Map.of(Language.FRENCH, "LinkedIn", Language.ENGLISH, "LinkedIn");
+
+    public static final Map<ContributorType, Map<Language, String>> contributorType = Map.of(
+            ContributorType.AUTHOR, author,
+            ContributorType.CONVERTER, converter,
+            ContributorType.PROOFREADER, proofreader,
+            ContributorType.REVIEWER, reviewer,
+            ContributorType.TRANSLATOR, translator
+    );
 }

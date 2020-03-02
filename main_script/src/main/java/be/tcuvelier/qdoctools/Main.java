@@ -37,7 +37,7 @@ public class Main {
 //        String doc = "16-qdoc-commands-status";
 //        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\";
 //        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-jump-0.21\\julia-jump.xml";
-        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-rapide-1.1\\julia.xml";
+        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-rapide-1.1\\julia.docx";
 //        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-lightgraphs-1.2\\julia-graphes.xml";
 //        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-rapide-1.1\\julia.docx";
 //        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-jump-0.20\\julia-jump.docx";
