@@ -844,7 +844,7 @@ public class DocxOutputImpl extends DefaultHandler {
             if (SAXHelpers.isAuthorTag(qName)) {
                 text = Translations.author.get(language);
             } else if (SAXHelpers.isOtherCreditTag(qName)) {
-                switch (attr.getOrDefault("role", "reviewer")) {
+                switch (attr.getOrDefault("class", "reviewer")) {
                     case "proofreader":
                         text = Translations.proofreader.get(language);
                         break;
@@ -864,7 +864,7 @@ public class DocxOutputImpl extends DefaultHandler {
             run.setText(text + ".");
 
             createNewRun();
-            warnUnknownAttributes(attr, Stream.of("role"));
+            warnUnknownAttributes(attr, Stream.of("class"));
         } else if (SAXHelpers.isPersonNameTag(qName)) {
             // Do nothing: this is usually just a placeholder. It might also contain the full name without further
             // structure, so still allow text here.
@@ -893,6 +893,36 @@ public class DocxOutputImpl extends DefaultHandler {
             }
 
             throw new DocxException("authorgroup not implemented.");
+        } else if (SAXHelpers.isURI(qName) && currentLevel.peekInfo()) { // URIs are also considered as monospace formatting.
+            // TODO: check that this is within an author?
+            run.setText(Translations.pseudonym.get(language) + Translations.colon.get(language));
+
+            Map<String, String> attr = SAXHelpers.attributes(attributes);
+            String text = "";
+            switch (attr.getOrDefault("type", "main-uri").toLowerCase()) {
+                case "main-uri":
+                    text = Translations.uriMain.get(language);
+                    break;
+                case "homepage":
+                case "webpage":
+                case "website":
+                    text = Translations.uriHomepage.get(language);
+                    break;
+                case "blog":
+                case "weblog":
+                    text = Translations.uriBlog.get(language);
+                    break;
+                case "google-plus":
+                    text = Translations.uriGooglePlus.get(language);
+                    break;
+                case "linkedin":
+                    text = Translations.uriLinkedIn.get(language);
+                    break;
+            }
+            run.setText(text + Translations.colon.get(language));
+
+            createNewRun();
+            warnUnknownAttributes(attr, Stream.of("type"));
         }
 
         // Other parts of the info container.
@@ -1458,6 +1488,9 @@ public class DocxOutputImpl extends DefaultHandler {
             createNewRun();
             setRunFormatting();
         } else if (SAXHelpers.isFirstNameTag(qName) || SAXHelpers.isSurNameTag(qName) || SAXHelpers.isOtherNameTag(qName)) {
+            run.setText(". ");
+            run.setLang(Language.toWordLang(language));
+        } else if (SAXHelpers.isURI(qName) && currentLevel.peekInfo()) {
             run.setText(". ");
             run.setLang(Language.toWordLang(language));
         } else if (SAXHelpers.isSectionTag(qName)) {

@@ -74,6 +74,10 @@ public class SAXHelpers {
         return compare(qName, "pubdate");
     }
 
+    public static boolean isURI(String qName) {
+        return compare(qName, "uri");
+    }
+
     public static boolean isAbstractTag(String qName) {
         return compare(qName, "abstract");
     }

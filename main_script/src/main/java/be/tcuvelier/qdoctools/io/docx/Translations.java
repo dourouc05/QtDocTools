@@ -52,4 +52,14 @@ public class Translations {
             Map.of(Language.FRENCH, "Nom de famille", Language.ENGLISH, "Family name");
     public static final Map<Language, String> pseudonym =
             Map.of(Language.FRENCH, "Pseudonyme", Language.ENGLISH, "Pseudonym");
+    public static final Map<Language, String> uriMain =
+            Map.of(Language.FRENCH, "URL principale (profil forum)", Language.ENGLISH, "Main URL (forum profile)");
+    public static final Map<Language, String> uriHomepage =
+            Map.of(Language.FRENCH, "Site Web", Language.ENGLISH, "Website");
+    public static final Map<Language, String> uriBlog =
+            Map.of(Language.FRENCH, "Blog", Language.ENGLISH, "Blog");
+    public static final Map<Language, String> uriGooglePlus =
+            Map.of(Language.FRENCH, "Google+", Language.ENGLISH, "Google+");
+    public static final Map<Language, String> uriLinkedIn =
+            Map.of(Language.FRENCH, "LinkedIn", Language.ENGLISH, "LinkedIn");
 }
