@@ -10,7 +10,7 @@ public class SAXHelpers {
     public static Map<String, String> attributes(Attributes attributes) {
         Map<String, String> d = new HashMap<>();
         for (int i = 0; i < attributes.getLength(); ++i) {
-            d.put(SAXHelpers.qNameToTagName(attributes.getLocalName(i)), attributes.getValue(i));
+            d.put(SAXHelpers.qNameToTagName(attributes.getQName(i)), attributes.getValue(i));
         }
         return d;
     }

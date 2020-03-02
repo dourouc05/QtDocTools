@@ -87,7 +87,7 @@
                         </xsl:if>
                         
                         <xsl:if test="homepage">
-                            <db:uri type="{homepage/title}">
+                            <db:uri type="homepage">
                                 <xsl:value-of select="homepage/url"/>
                             </db:uri>
                         </xsl:if>

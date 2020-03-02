@@ -540,7 +540,7 @@ public class DocxOutputImpl extends DefaultHandler {
             }
 
             // Special message for ubiquitous linking attributes.
-            if (key.equals("href") && currentLink == null) {
+            if ((key.equals("href") || key.equals("xlink:href")) && currentLink == null) {
                 System.err.println(getLocationString() + "ubiquitous linking attributes like " + key + " are not implemented in this context.");
                 // Otherwise, the currentLink variable would be filled with an ID.
                 continue;
@@ -1068,12 +1068,10 @@ public class DocxOutputImpl extends DefaultHandler {
                 // Word cannot store infinitely many tags: one for paragraphs (blocks) and one for runs (inlines).
                 // More than one formatting at a time is thus impossible to render.
                 // Exceptions: italics within <filename>.
-                // TODO: add an exception for bold, italics, underline + something else.
                 DocBookFormatting topFormatting = currentFormatting.get(currentFormatting.size() - 1);
-                if (! DocBookFormatting.isRunFormatting(topFormatting)
-                        && ! (topFormatting.equals(DocBookFormatting.FILE_NAME) // Exception: filename + replaceable.
-                            && DocBookFormatting.formattingToPredicate.get(DocBookFormatting.REPLACEABLE).test(qName))
-                ) {
+                boolean exceptionFilenameReplaceable = topFormatting.equals(DocBookFormatting.FILE_NAME)
+                        && DocBookFormatting.formattingToPredicate.get(DocBookFormatting.REPLACEABLE).test(qName);
+                if (! DocBookFormatting.isRunFormatting(topFormatting) && ! exceptionFilenameReplaceable) {
                     System.err.println(getLocationString() + "style-based formatting (" + qName + ") " +
                             "within a formatting (" + DocBookFormatting.formattingToDocBookTag.get(topFormatting) + "): " +
                             "the document is probably too complex for this kind of tool to ever success at round-tripping; " +
@@ -1089,29 +1087,22 @@ public class DocxOutputImpl extends DefaultHandler {
             }
 
             // Handle ubiquitous links.
-            boolean hasUbiquitous = false;
-            for (int i = 0; i < attributes.getLength(); ++i) {
-                if (attributes.getLocalName(i).equalsIgnoreCase("xlink:href")) {
-                    hasUbiquitous = true;
-                    setCurrentLink(attributes.getValue(i));
-                    break;
-                }
+            Map<String, String> attr = SAXHelpers.attributes(attributes);
+            boolean hasUbiquitous = attr.containsKey("href") || attr.containsKey("xlink:href");
+            if (hasUbiquitous) {
+                setCurrentLink(attr.getOrDefault("href", attr.get("xlink:href")));
             }
 
             // Create a new run if this one is already started. Ubiquitous links already create a new run.
-            if (run == null) {
-                assert run != null;
-            }
-            if (run.text() != null && run.text().length() > 0 && ! hasUbiquitous) {
+            if (run.text().length() > 0) {
                 createNewRun();
             }
 
             setRunFormatting();
-            warnUnknownAttributes(attributes);
+            warnUnknownAttributes(attr, Stream.of("href", "xlink:href"));
         } else if (SAXHelpers.isLinkTag(qName)) {
             Map<String, String> attr = SAXHelpers.attributes(attributes);
             warnUnknownAttributes(attr, Stream.of("href"));
-
 
             // Always create a new run, as it is much easier than to replace a run within the paragraph.
             setCurrentLink(attr.get("href"));
