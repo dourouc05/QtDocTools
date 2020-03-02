@@ -852,6 +852,7 @@ public class DocxOutputImpl extends DefaultHandler {
                         text = Translations.converter.get(language);
                         break;
                     case "reviewer":
+                    case "technicaleditor":
                         text = Translations.reviewer.get(language);
                         break;
                     case "translator":
