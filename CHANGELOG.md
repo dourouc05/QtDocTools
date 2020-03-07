@@ -4,8 +4,8 @@ QtDocTools release notes
 There are currently no compatibility guarantees between versions, especially 
 for DOCX format. Incompatibilities should remaing minor, though.
 
-Version 0.2.1
--------------
+Version 0.2.1 (2 March 2020)
+----------------------------
 
 Round-tripping between DocBook and DOCX: 
 

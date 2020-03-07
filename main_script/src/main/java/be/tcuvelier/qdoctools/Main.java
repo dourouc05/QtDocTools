@@ -36,11 +36,12 @@ public class Main {
 //        String doc = "07-0-qdoc-commands-includingexternalcode";
 //        String doc = "16-qdoc-commands-status";
 //        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\";
-//        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-jump-0.21\\julia-jump.xml";
-        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-rapide-1.1\\julia.docx";
-//        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-lightgraphs-1.2\\julia-graphes.xml";
+        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-rapide-1.1\\julia.xml";
 //        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-rapide-1.1\\julia.docx";
-//        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-jump-0.20\\julia-jump.docx";
+//        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-lightgraphs-1.2\\julia-graphes.xml";
+//        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-lightgraphs-1.2\\julia-graphes.docx";
+//        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-jump-0.21\\julia-jump.xml";
+//        String doc = "C:\\Users\\Thibaut\\Documents\\GitHub\\Articles\\julia\\introduction-jump-0.21\\julia-jump.docx";
 //        String doc = "C:\\Users\\Thibaut\\Desktop\\julia.docx";
 
 //        String[] argv = {"merge",
@@ -53,8 +54,8 @@ public class Main {
 //        String[] argv = {"transform", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\export\\to_docx\\tests\\synthetic\\" + doc + ".db", "--disable-sanity-checks"};
 //        String[] argv = {"transform", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\" + doc + ".docx"};
 
-        String[] argv = {"transform", "-i", doc, "--no-validation"};
-//        String[] argv = {"transform", "-i", doc, "-of", "DvpML", "--generate", "--upload"};
+//        String[] argv = {"transform", "-i", doc, "--no-validation"};
+        String[] argv = {"transform", "-i", doc, "-of", "DvpML", "--generate", "--upload"};
 
         submain(argv);
 //        submain(args);
