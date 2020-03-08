@@ -316,8 +316,6 @@
       </xsl:if>
       <xsl:if test="db:uri[@type='main-uri']">
         <url><xsl:value-of select="db:uri[@type='main-uri']"/></url>
-        <xsl:variable name="profileId" select="translate(tokenize(db:uri[@type='main-uri'], '/')[5], 'u', '')"/>
-        <badge>https://www.developpez.com/ws/badgeimg?user=<xsl:value-of select="$profileId"/>&amp;v=1</badge>
       </xsl:if>
       <xsl:if test="db:uri[@type='blog-uri']">
         <blog><xsl:value-of select="db:uri[@type='blog-uri']"/></blog>
