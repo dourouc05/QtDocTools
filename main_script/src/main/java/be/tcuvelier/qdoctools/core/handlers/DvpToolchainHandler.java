@@ -39,9 +39,8 @@ public class DvpToolchainHandler {
         return folder;
     }
 
-    private static List<Path> neededFiles(String fileName) throws FileNotFoundException, SaxonApiException {
+    private static List<Path> neededFiles(Path file) throws FileNotFoundException, SaxonApiException {
         // First, parse the file.
-        Path file = Paths.get(fileName);
         Processor processor = new Processor(false);
         XdmNode xdm = processor.newDocumentBuilder().build(new StreamSource(new FileReader(file.toFile())));
         XPathCompiler compiler = processor.newXPathCompiler();
@@ -60,8 +59,8 @@ public class DvpToolchainHandler {
         return list;
     }
 
-    private static List<Path> relativisedNeededFiles(String fileName, Path folder) throws FileNotFoundException, SaxonApiException {
-        return neededFiles(fileName).stream().map(folder::relativize).collect(Collectors.toList());
+    private static List<Path> relativisedNeededFiles(Path file, Path folder) throws FileNotFoundException, SaxonApiException {
+        return neededFiles(file).stream().map(folder::relativize).collect(Collectors.toList());
     }
 
     private static boolean isWindows() {
@@ -106,16 +105,19 @@ public class DvpToolchainHandler {
     }
 
     public static void generateHTML(String file, String outputFolder, GlobalConfiguration config) throws IOException, InterruptedException, SaxonApiException {
+        generateHTML(Paths.get(file), outputFolder, config);
+    }
+
+    public static void generateHTML(Path file, String outputFolder, GlobalConfiguration config) throws IOException, InterruptedException, SaxonApiException {
         // Find a good folder name (i.e. one that does not exist yet).
         Path folder = findFreeFolderName(config);
         String folderName = folder.getFileName().toString();
 
         // Copy the XML at the right place.
-        Path xml = Paths.get(file);
-        Path fileFolder = xml.getParent();
+        Path fileFolder = file.getParent();
         List<Path> neededFiles = relativisedNeededFiles(file, fileFolder);
 
-        Files.copy(xml, folder.resolve(folderName + ".xml"));
+        Files.copy(file, folder.resolve(folderName + ".xml"));
         for (Path f: neededFiles) {
             Files.copy(fileFolder.resolve(f), folder.resolve(f), StandardCopyOption.REPLACE_EXISTING);
         }

@@ -11,20 +11,22 @@ import java.util.Optional;
 
 public class ArticleConfiguration extends AbstractConfiguration {
     public static class Helpers {
-        public static Path getConfigurationFileName(String file) {
-            Path path = Paths.get(file);
+        public static Path getConfigurationFileName(String fileName) {
+            return getConfigurationFileName(Paths.get(fileName));
+        }
 
+        public static Path getConfigurationFileName(Path file) {
             // Related files are their own configuration files.
-            if (path.getFileName().endsWith("related.json")) {
-                return path;
+            if (file.getFileName().endsWith("related.json")) {
+                return file;
             }
-            if (path.toFile().isDirectory()) {
-                return path.resolve("related.json");
+            if (file.toFile().isDirectory()) {
+                return file.resolve("related.json");
             }
 
             // Most usual cases.
-            Path parent = path.getParent();
-            String filename = path.getFileName().toString();
+            Path parent = file.getParent();
+            String filename = file.getFileName().toString();
             String fileRoot = filename.substring(0, filename.lastIndexOf('.'));
 
             // If there is a file suffix, remove it.
@@ -95,9 +97,13 @@ public class ArticleConfiguration extends AbstractConfiguration {
     private final Optional<RootArticleConfiguration> root;
     private final Optional<RelatedArticleConfiguration> related;
 
-    public ArticleConfiguration(String file) throws FileNotFoundException {
+    public ArticleConfiguration(String fileName) throws FileNotFoundException {
+        this(Paths.get(fileName));
+    }
+
+    public ArticleConfiguration(Path file) throws FileNotFoundException {
         super(Helpers.getConfigurationFileName(file));
-        articleName = Paths.get(file);
+        articleName = file;
         configName = Helpers.getConfigurationFileName(file);
 
         root = RootArticleConfiguration.getRootConfig(configName);

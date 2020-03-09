@@ -1,5 +1,6 @@
 package be.tcuvelier.qdoctools.core;
 
+import be.tcuvelier.qdoctools.core.exceptions.ConfigurationMissingField;
 import be.tcuvelier.qdoctools.core.handlers.DvpToolchainHandler;
 import be.tcuvelier.qdoctools.core.handlers.FtpHandler;
 import be.tcuvelier.qdoctools.core.config.ArticleConfiguration;
@@ -10,6 +11,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,53 +52,73 @@ public class UploadCore {
     }
 
     public static void callRelated(String input, boolean upload, GlobalConfiguration config) throws IOException, InterruptedException {
-        // Generates and possibly uploads a list of related articles.
-
-        // Perform generation with Dvp toolchain (not the same tool as HTML).
-        String output = outputFolder();
-        DvpToolchainHandler.generateRelated(input, output, config);
-
-        // Upload if required.
+        String output = generateRelated(input, config);
         if (upload) {
-            ArticleConfiguration articleConfig = new ArticleConfiguration(input + "/related.json");
-            askForFtpPasswordIfNeeded(articleConfig);
-            new FtpHandler(articleConfig).uploadDvpArticle(articleConfig, output);
+            uploadRelated(input, output);
         }
-    }
-
-    public static void callRelatedAndSubarticles(String input, boolean upload, GlobalConfiguration config) throws IOException, SaxonApiException, InterruptedException {
-        // Generates and possibly uploads a list of related articles, and the articles contained in this list.
-
-        // Work on the list of related articles.
-        callRelated(input, upload, config);
     }
 
     public static void call(String input, boolean upload, GlobalConfiguration config)
             throws IOException, SaxonApiException, InterruptedException {
-        // Generates and possibly uploads an article.
+        call(Paths.get(input), upload, config);
+    }
+
+    public static void call(Path input, boolean upload, GlobalConfiguration config)
+            throws IOException, SaxonApiException, InterruptedException {
         call(List.of(input), upload, config);
     }
 
-    public static void call(List<String> inputs, boolean upload, GlobalConfiguration config)
+    public static void call(List<Path> inputs, boolean upload, GlobalConfiguration config)
             throws IOException, SaxonApiException, InterruptedException {
-        // Like call(), but for a list of articles. There are no predefined output paths.
-
         // Perform generation with Dvp toolchain.
-        Map<String, String> outputs = new HashMap<>();
-        for (String input : inputs) {
-            String output = outputFolder();
-            DvpToolchainHandler.generateHTML(input, output, config);
-            outputs.put(input, output);
+        Map<Path, String> outputs = new HashMap<>();
+        for (Path input : inputs) {
+            System.out.println("Generating article: " + input);
+            outputs.put(input, generateArticle(input, config));
         }
 
         // Upload if required.
         // TODO: check whether all these articles share the same FTP (they should)? If so, start the FTP connection with any one of them, and reuse it.
         if (upload) {
-            for (String input : inputs) {
-                ArticleConfiguration articleConfig = new ArticleConfiguration(input);
-                askForFtpPasswordIfNeeded(articleConfig);
-                new FtpHandler(articleConfig).uploadDvpArticle(articleConfig, outputs.get(input));
+            for (Path input : inputs) {
+                System.out.println("Uploading article: " + input);
+                uploadArticle(input, outputs.get(input));
             }
         }
+    }
+
+    public static String generateArticle(String input, GlobalConfiguration config) throws IOException, SaxonApiException, InterruptedException {
+        return generateArticle(Paths.get(input), config);
+    }
+
+    public static String generateArticle(Path input, GlobalConfiguration config) throws IOException, SaxonApiException, InterruptedException {
+        String output = outputFolder();
+        DvpToolchainHandler.generateHTML(input, output, config);
+        return output;
+    }
+
+    public static String generateRelated(String input, GlobalConfiguration config) throws IOException, InterruptedException {
+        String output = outputFolder();
+        DvpToolchainHandler.generateRelated(input, output, config);
+        return output;
+    }
+
+    public static FtpHandler connectFtp(ArticleConfiguration articleConfig) throws IOException {
+        askForFtpPasswordIfNeeded(articleConfig);
+        return new FtpHandler(articleConfig);
+    }
+
+    public static void uploadRelated(String input, String output) throws IOException {
+        ArticleConfiguration articleConfig = new ArticleConfiguration(input + "/related.json");
+        connectFtp(articleConfig).uploadDvpArticle(articleConfig, output);
+    }
+
+    public static void uploadArticle(String input, String output) throws IOException {
+        uploadArticle(Paths.get(input), output);
+    }
+
+    public static void uploadArticle(Path input, String output) throws IOException {
+        ArticleConfiguration articleConfig = new ArticleConfiguration(input);
+        connectFtp(articleConfig).uploadDvpArticle(articleConfig, output);
     }
 }

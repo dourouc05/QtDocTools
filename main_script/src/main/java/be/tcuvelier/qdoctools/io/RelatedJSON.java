@@ -12,6 +12,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class RelatedJSON {
@@ -23,6 +25,22 @@ public class RelatedJSON {
         this.file = file + "/related.json";
         this.config = config;
         this.articleConfiguration = articleConfiguration;
+    }
+
+    public List<Path> getListedFiles() throws IOException {
+        // Parse the input related file.
+        JsonObject root = JsonParser.parseReader(new FileReader(file)).getAsJsonObject();
+        JsonObject refs = root.getAsJsonObject("related-documents");
+
+        // Retrieve the listed files.
+        List<Path> files = new ArrayList<>();
+        for (Map.Entry<String, JsonElement> section: refs.entrySet()) {
+            for (Map.Entry<String, JsonElement> ref: section.getValue().getAsJsonObject().entrySet()) {
+                files.add(Paths.get(file).getParent().resolve(ref.getValue().getAsString()));
+            }
+        }
+
+        return files;
     }
 
     public void toDvpML(String output) throws IOException {

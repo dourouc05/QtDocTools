@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TransformHelpers {
@@ -123,6 +124,11 @@ public class TransformHelpers {
     public static void fromRelatedJSONToDvpML(String input, String output, GlobalConfiguration config) throws IOException {
         ArticleConfiguration conf = new ArticleConfiguration(input);
         new RelatedJSON(input, config, conf).toDvpML(output);
+    }
+
+    public static List<Path> fromRelatedJSONToListOfRelatedFiles(String input, GlobalConfiguration config) throws IOException {
+        ArticleConfiguration conf = new ArticleConfiguration(input);
+        return new RelatedJSON(input, config, conf).getListedFiles();
     }
 
     public static void fromODTToDocBook(String input, String output) {

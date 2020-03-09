@@ -111,6 +111,10 @@ public class FileHelpers {
         return file.replaceFirst("[.][^.]+$", "") + extension;
     }
 
+    public static String generateOutputFilename(Path input, TransformCore.Format outputFormat) {
+        return generateOutputFilename(input.toString(), outputFormat);
+    }
+
     public static String generateOutputFilename(String input, TransformCore.Format outputFormat) {
         // Specific handling for collisions between DocBook and DvpML: add a suffix (just before the extension).
         if (input.endsWith("_dvp.xml")) {
