@@ -10,7 +10,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Files;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UploadCore {
     private static String readPassword() throws IOException {
@@ -71,24 +73,29 @@ public class UploadCore {
     public static void call(String input, boolean upload, GlobalConfiguration config)
             throws IOException, SaxonApiException, InterruptedException {
         // Generates and possibly uploads an article.
-
-        // Perform generation with Dvp toolchain.
-        String output = outputFolder();
-        DvpToolchainHandler.generateHTML(input, output, config);
-
-        // Upload if required.
-        if (upload) {
-            ArticleConfiguration articleConfig = new ArticleConfiguration(input);
-            askForFtpPasswordIfNeeded(articleConfig);
-            new FtpHandler(articleConfig).uploadDvpArticle(articleConfig, output);
-        }
+        call(List.of(input), upload, config);
     }
 
-    public static void call(List<String> input, boolean upload, GlobalConfiguration config)
+    public static void call(List<String> inputs, boolean upload, GlobalConfiguration config)
             throws IOException, SaxonApiException, InterruptedException {
         // Like call(), but for a list of articles. There are no predefined output paths.
-        for (String s : input) { // TODO: optimise by first generating all articles, then uploading them all at once (without opening several FTP connections). Rewrite the two other functions on top of this one.
-            call(s, upload, config);
+
+        // Perform generation with Dvp toolchain.
+        Map<String, String> outputs = new HashMap<>();
+        for (String input : inputs) {
+            String output = outputFolder();
+            DvpToolchainHandler.generateHTML(input, output, config);
+            outputs.put(input, output);
+        }
+
+        // Upload if required.
+        // TODO: check whether all these articles share the same FTP (they should)? If so, start the FTP connection with any one of them, and reuse it.
+        if (upload) {
+            for (String input : inputs) {
+                ArticleConfiguration articleConfig = new ArticleConfiguration(input);
+                askForFtpPasswordIfNeeded(articleConfig);
+                new FtpHandler(articleConfig).uploadDvpArticle(articleConfig, outputs.get(input));
+            }
         }
     }
 }

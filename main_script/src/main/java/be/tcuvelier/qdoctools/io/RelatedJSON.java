@@ -2,12 +2,10 @@ package be.tcuvelier.qdoctools.io;
 
 import be.tcuvelier.qdoctools.core.config.ArticleConfiguration;
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import javax.xml.stream.XMLStreamException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
