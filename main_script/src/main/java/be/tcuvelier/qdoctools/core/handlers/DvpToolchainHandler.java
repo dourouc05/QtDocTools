@@ -128,7 +128,7 @@ public class DvpToolchainHandler {
         Path output = Paths.get(outputFolder);
 
         Files.copy(cache.resolve("index.php"), output.resolve("index.php"));
-        Files.copy(cache.resolve(folderName + ".xml"), output.resolve(folderName + ".xml"));
+        Files.copy(cache.resolve(folderName + ".xml"), output.resolve("qdt.xml"));
         for (Path f: neededFiles) {
             // The Developpez tools do not copy files outside the "images" and "fichiers" folders...
             if (cache.resolve(f).toFile().exists()) {
