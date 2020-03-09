@@ -48,24 +48,29 @@ public class TransformCommand implements Callable<Void> {
     private String configurationFile = "config.json";
 
     @Option(names = "--no-validation",
-            description = "Disables the validation of the output against a known XSD or RNG")
+            description = "Disables the validation of the output against a known XSD or RNG (default: ${DEFAULT-VALUE})")
     private boolean validate = true;
 
     @Option(names = { "--disable-sanity-checks" },
-            description = "Perform the sanity checks, but continue with generation even in case of failure")
+            description = "Perform the sanity checks, but continue with generation even in case of failure (default: ${DEFAULT-VALUE})")
     private boolean disableSanityChecks = false;
 
     @Option(names = { "--generate" },
-            description = "Starts the standard DvpML tools to generate PHP/HTML files.")
+            description = "Starts the standard DvpML tools to generate PHP/HTML files (default: ${DEFAULT-VALUE})")
     private boolean generate = false;
 
     @Option(names = { "--upload" },
-            description = "Uploads the generated (--generate) files.")
+            description = "Uploads the generated (with the --generate option) files (default: ${DEFAULT-VALUE})")
     private boolean upload = false;
 
     @Option(names = { "--clean" },
-            description = "Cleans the generated file (mostly useful with --generate and --upload).")
+            description = "Cleans the generated file. This option is mostly useful with --generate and --upload (default: ${DEFAULT-VALUE})")
     private boolean clean = false;
+
+    @Option(names = "--follow-links",
+            description = "Follows the links in the files (default: ${DEFAULT-VALUE}). " +
+                          "If true, for reference files, all linked files will be generated")
+    private boolean followLinks = true;
 
     @Override
     public Void call() throws SaxonApiException, IOException, SAXException, InvalidFormatException,

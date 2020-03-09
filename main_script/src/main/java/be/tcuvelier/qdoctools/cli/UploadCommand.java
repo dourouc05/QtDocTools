@@ -2,6 +2,7 @@ package be.tcuvelier.qdoctools.cli;
 
 import be.tcuvelier.qdoctools.core.UploadCore;
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
+import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 
@@ -13,11 +14,6 @@ public class UploadCommand implements Callable<Void> {
             description = "File or folder to generate and upload", required = true)
     private String input;
 
-    @Option(names = "--follow-links",
-            description = "Follows the links in the files (default: ${DEFAULT-VALUE}). " +
-                          "If true, for reference files, all linked files will be generated.")
-    private boolean followLinks = true;
-
     @Option(names = "--upload",
             description = "Uploads the generated files (default: ${DEFAULT-VALUE})")
     private boolean upload = true;
@@ -28,10 +24,11 @@ public class UploadCommand implements Callable<Void> {
 
     @Override
     public Void call() throws Exception {
-        if (followLinks) {
-            UploadCore.callRelatedAndSubarticles(input, upload, new GlobalConfiguration(configurationFile));
+        GlobalConfiguration config = new GlobalConfiguration(configurationFile);
+        if (FileHelpers.isRelated(input)) {
+            UploadCore.callRelated(input, upload, config);
         } else {
-            UploadCore.callRelated(input, upload, new GlobalConfiguration(configurationFile));
+            UploadCore.call(input, upload, config);
         }
         return null;
     }
