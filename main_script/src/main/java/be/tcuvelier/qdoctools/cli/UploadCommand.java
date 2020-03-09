@@ -13,10 +13,10 @@ public class UploadCommand implements Callable<Void> {
             description = "File or folder to generate and upload", required = true)
     private String input;
 
-    @Option(names = { "-f", "--generate-folder" },
-            description = "Folder where the generated files are put. If empty, a temporary folder is created and " +
-                    "files are removed upon completion. Otherwise, the files are kept (default: ${DEFAULT-VALUE})")
-    private String folder = "";
+    @Option(names = "--follow-links",
+            description = "Follows the links in the files (default: ${DEFAULT-VALUE}). " +
+                          "If true, for reference files, all linked files will be generated.")
+    private boolean followLinks = true;
 
     @Option(names = "--upload",
             description = "Uploads the generated files (default: ${DEFAULT-VALUE})")
@@ -28,7 +28,11 @@ public class UploadCommand implements Callable<Void> {
 
     @Override
     public Void call() throws Exception {
-        UploadCore.callRelated(input, folder, upload, new GlobalConfiguration(configurationFile));
+        if (followLinks) {
+            UploadCore.callRelatedAndSubarticles(input, upload, new GlobalConfiguration(configurationFile));
+        } else {
+            UploadCore.callRelated(input, upload, new GlobalConfiguration(configurationFile));
+        }
         return null;
     }
 }

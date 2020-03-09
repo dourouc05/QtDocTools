@@ -42,15 +42,15 @@ public class UploadCore {
         }
     }
 
-    private static String outputFolderOrCreate(String folder) throws IOException {
-        return folder.isEmpty() ? Files.createTempDirectory("qdt").toString() : folder;
+    private static String outputFolder() throws IOException {
+        return Files.createTempDirectory("qdt").toString();
     }
 
-    public static void callRelated(String input, String folder, boolean upload, GlobalConfiguration config) throws IOException, InterruptedException {
+    public static void callRelated(String input, boolean upload, GlobalConfiguration config) throws IOException, InterruptedException {
         // Generates and possibly uploads a list of related articles.
 
         // Perform generation with Dvp toolchain (not the same tool as HTML).
-        String output = outputFolderOrCreate(folder);
+        String output = outputFolder();
         DvpToolchainHandler.generateRelated(input, output, config);
 
         // Upload if required.
@@ -61,19 +61,19 @@ public class UploadCore {
         }
     }
 
-    public static void callRelatedAndSubarticles(String input, String folder, boolean upload, GlobalConfiguration config) throws IOException, SaxonApiException, InterruptedException {
+    public static void callRelatedAndSubarticles(String input, boolean upload, GlobalConfiguration config) throws IOException, SaxonApiException, InterruptedException {
         // Generates and possibly uploads a list of related articles, and the articles contained in this list.
 
         // Work on the list of related articles.
-        callRelated(input, folder, upload, config);
+        callRelated(input, upload, config);
     }
 
-    public static void call(String input, String folder, boolean upload, GlobalConfiguration config)
+    public static void call(String input, boolean upload, GlobalConfiguration config)
             throws IOException, SaxonApiException, InterruptedException {
         // Generates and possibly uploads an article.
 
         // Perform generation with Dvp toolchain.
-        String output = outputFolderOrCreate(folder);
+        String output = outputFolder();
         DvpToolchainHandler.generateHTML(input, output, config);
 
         // Upload if required.
@@ -87,16 +87,8 @@ public class UploadCore {
     public static void call(List<String> input, boolean upload, GlobalConfiguration config)
             throws IOException, SaxonApiException, InterruptedException {
         // Like call(), but for a list of articles. There are no predefined output paths.
-        for (String s : input) {
-            call(s, "", upload, config);
-        }
-    }
-
-    public static void call(List<String> input, List<String> folder, boolean upload, GlobalConfiguration config)
-            throws IOException, SaxonApiException, InterruptedException {
-        // Like call(), but for a list of articles, each in its output path.
-        for (int i = 0; i < input.size(); ++i) { // TODO: optimise by first generating all articles, then uploading them all at once (without opening several FTP connections). Rewrite the two other functions on top of this one.
-            call(input.get(i), folder.get(i), upload, config);
+        for (String s : input) { // TODO: optimise by first generating all articles, then uploading them all at once (without opening several FTP connections). Rewrite the two other functions on top of this one.
+            call(s, upload, config);
         }
     }
 }

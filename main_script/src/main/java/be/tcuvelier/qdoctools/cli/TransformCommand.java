@@ -78,7 +78,7 @@ public class TransformCommand implements Callable<Void> {
 
             // Perform the upload if needed.
             if (generate) {
-                UploadCore.callRelated(input, "", upload, config);
+                UploadCore.callRelated(input, upload, config);
             }
 
             return null;
@@ -103,7 +103,7 @@ public class TransformCommand implements Callable<Void> {
 
             // Perform the upload if needed.
             if (isOutputDvpML && generate) {
-                UploadCore.call(output, "", upload, config);
+                UploadCore.call(output, upload, config);
             }
 
             return null;
