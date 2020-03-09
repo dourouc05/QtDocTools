@@ -55,7 +55,7 @@ public class Main {
 //        String[] argv = {"transform", "-i", "C:\\Users\\Thibaut\\Documents\\GitHub\\QtDocTools\\proofread\\proofread_fromdocx\\tests\\" + doc + ".docx"};
 
 //        String[] argv = {"transform", "-i", doc, "--no-validation"};
-        String[] argv = {"transform", "-i", doc, "-of", "DvpML", "--generate", "--upload"};
+        String[] argv = {"transform", "-i", doc, "-of", "DvpML", "--generate", "--upload", "--clean"};
 
         submain(argv);
 //        submain(args);

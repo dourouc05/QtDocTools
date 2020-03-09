@@ -19,9 +19,11 @@ import picocli.CommandLine.Option;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.concurrent.Callable;
 
 @Command(name = "transform", description = "Perform transformations to and from DocBook for publishing")
+// No other formats are handled here. In particular, DvpML tools are wrapped by UploadCore.
 public class TransformCommand implements Callable<Void> {
     @Option(names = { "-i", "--input-file", "--input-folder" },
             description = "File or folder to process", required = true)
@@ -61,6 +63,10 @@ public class TransformCommand implements Callable<Void> {
             description = "Uploads the generated (--generate) files.")
     private boolean upload = false;
 
+    @Option(names = { "--clean" },
+            description = "Cleans the generated file (mostly useful with --generate and --upload).")
+    private boolean clean = false;
+
     @Override
     public Void call() throws SaxonApiException, IOException, SAXException, InvalidFormatException,
             XMLStreamException, ParserConfigurationException, InterruptedException {
@@ -80,12 +86,10 @@ public class TransformCommand implements Callable<Void> {
             if (generate) {
                 UploadCore.callRelated(input, upload, config);
             }
-
-            return null;
         }
 
         // Handle articles.
-        {
+        else {
             // Replace default values.
             inputFormat = FileHelpers.parseFileFormat(inputFormat, input);
             outputFormat = FileHelpers.parseOutputFileFormat(inputFormat, outputFormat);
@@ -105,8 +109,13 @@ public class TransformCommand implements Callable<Void> {
             if (isOutputDvpML && generate) {
                 UploadCore.call(output, upload, config);
             }
-
-            return null;
         }
+
+        // Clean-up operations.
+        if (clean) {
+            Paths.get(output).toFile().delete();
+        }
+
+        return null;
     }
 }
