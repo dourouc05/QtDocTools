@@ -124,6 +124,11 @@
               <xsl:message>WARNING: FTP information missing.</xsl:message>
             </xsl:otherwise>
           </xsl:choose>
+          
+          <nopdf/>
+          <nozip/>
+          <nodownload/>
+          <noebook/>
         </entete>
         
         <xsl:if test="string-length($license-author) = 0 and $license-number &lt; 0 and $license-year &lt; 0">
