@@ -43,6 +43,8 @@ public class TransformHelpers {
         HashMap<String, Object> params = new HashMap();
 
         // Generalities.
+        params.put("document-file-name", conf.getArticleName().getFileName().toString().replace(".xml", ""));
+        params.put("configuration-file-name", conf.getConfigurationName().getFileName().toString());
         params.put("section", conf.getSection());
 
         if (conf.getDocQt()) {

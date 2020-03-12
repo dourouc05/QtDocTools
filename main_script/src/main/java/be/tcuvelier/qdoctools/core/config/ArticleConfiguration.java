@@ -115,6 +115,14 @@ public class ArticleConfiguration extends AbstractConfiguration {
         }
     }
 
+    public Path getArticleName() {
+        return articleName;
+    }
+
+    public Path getConfigurationName() {
+        return configName;
+    }
+
     private Optional<String> getOptionalStringAttributeOrRoot(@SuppressWarnings("SameParameterValue") String field) {
         Optional<String> value = getOptionalStringAttribute(field);
         if (value.isPresent()) {

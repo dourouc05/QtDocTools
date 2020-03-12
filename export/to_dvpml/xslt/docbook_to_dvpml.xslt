@@ -9,6 +9,8 @@
   <xsl:output method="xml" indent="yes" suppress-indentation="inline link i b paragraph code"/>
   <xsl:import-schema schema-location="../../../schemas/dvpml/article.xsd" use-when="system-property('xsl:is-schema-aware')='yes'"/>
   
+  <xsl:param name="document-file-name" as="xs:string" select="''"/>
+  <xsl:param name="configuration-file-name" as="xs:string" select="''"/>
   <xsl:param name="doc-qt" as="xs:boolean" select="false()"/>
   <xsl:param name="section" as="xs:integer" select="1"/>
   <xsl:param name="license-number" as="xs:integer" select="-1"/>
@@ -21,6 +23,172 @@
   <xsl:param name="ftp-folder" as="xs:string" select="''"/>
   <xsl:param name="google-analytics" as="xs:string" select="''"/>
   <xsl:param name="related" as="xs:string" select="''"/>
+  
+  <xsl:template match="db:book">
+    <xsl:if test="string-length($document-file-name) = 0">
+      <xsl:message>WARNING: Missing parameter document-file-name.</xsl:message>
+    </xsl:if>
+    <xsl:if test="ends-with($document-file-name, '.xml')">
+      <xsl:message>WARNING: Parameter document-file-name should not have an extension.</xsl:message>
+    </xsl:if>
+    
+    <!-- Main document. -->
+    <xsl:result-document validation="lax" href="{$document-file-name}_dvp.xml">
+      <xsl:apply-templates mode="book_root" select="."/>
+    </xsl:result-document>
+    
+    <!-- Iterate over parts and chapters, each in its own file. -->
+  </xsl:template>
+  
+  <xsl:template match="db:book" mode="book_root">
+    <document>
+      <entete>
+        <rubrique><xsl:value-of select="$section"/></rubrique>
+        <meta>
+          <description>
+            <xsl:choose>
+              <xsl:when test="db:info/db:abstract/db:para">
+                <xsl:value-of select="db:info/db:abstract/db:para[1]/text()"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="db:info/db:title"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </description>
+          <keywords>
+            <xsl:choose>
+              <xsl:when test="db:info/db:keywordset">
+                <xsl:for-each select="db:info/db:keywordset/db:keyword">
+                  <xsl:value-of select="."/>
+                  <xsl:if test="position() &lt; last()">
+                    <xsl:value-of select="','"/>
+                  </xsl:if>
+                </xsl:for-each>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="translate(translate(db:info/db:title, ',', ''), ' ', ',')"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </keywords>
+        </meta>
+        <titre>
+          <page>
+            <xsl:value-of select="db:info/db:title"/>
+          </page>
+          <article>
+            <xsl:value-of select="db:info/db:title"/>
+          </article>
+        </titre>
+        <date>
+          <xsl:choose>
+            <xsl:when test="db:info/db:pubdate">
+              <xsl:value-of select="format-date(db:info/db:pubdate, '[Y0001]-[M01]-[D01]')"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:message>WARNING: no pubdate found in info, the field date will be set to today.</xsl:message>
+              <xsl:value-of select="format-date(current-date(), '[Y0001]-[M01]-[D01]')"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </date>
+        <miseajour>
+          <xsl:choose>
+            <xsl:when test="db:info/db:date">
+              <xsl:value-of select="format-date(db:info/db:date, '[Y0001]-[M01]-[D01]')"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:message>WARNING: no date found in info, the field miseajour will be set to today.</xsl:message>
+              <xsl:value-of select="format-date(current-date(), '[Y0001]-[M01]-[D01]')"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </miseajour>
+        
+        <xsl:call-template name="tc:document-entete-from-parameters"/>
+      </entete>
+      
+      <xsl:if test="string-length($license-author) = 0 and $license-number &lt; 0 and $license-year &lt; 0">
+        <xsl:choose>
+          <xsl:when test="string-length($license-text) > 0">
+            <licence>
+              <xsl:value-of select="$license-text"/>
+            </licence>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:message>WARNING: Global license parameters not consistent: either the three parameters license-author, license-number, and license-year must be set, or only license-text.</xsl:message>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:if>
+      
+      <authorDescriptions>
+        <xsl:choose>
+          <xsl:when test="db:info/(db:authorgroup | db:author | db:editor | db:othercredit)">
+            <xsl:for-each select="db:info//(db:author | db:editor | db:othercredit)">
+              <xsl:apply-templates mode="header_author" select="."/>
+            </xsl:for-each>
+          </xsl:when>
+          <xsl:otherwise>
+            <authorDescription name="Dummy" role="auteur">
+              <fullname>Dummy</fullname>
+              <url>https://www.developpez.net/forums/u1/dummy/</url>
+            </authorDescription>
+          </xsl:otherwise>
+        </xsl:choose>
+      </authorDescriptions>
+      
+      <xsl:if test="string-length($related) > 0">
+        <reference><xsl:value-of select="$related"/></reference>
+      </xsl:if>
+      
+      <synopsis>
+        <!-- voiraussi is not implemented. This simplifies a lot this code. -->
+        <xsl:for-each select="db:info/db:abstract/db:para">
+          <xsl:apply-templates mode="content" select="."/>
+        </xsl:for-each>
+        
+        <!-- Deprecated/obsolete articles with replacement -->
+        <xsl:if test="db:info/db:bibliorelation[@class='uri' and @type='isreplacedby']">
+          <rich-imgtext type="error">
+            <paragraph>
+              Cet article est obsolète et n'est gardé que pour des raisons historiques, 
+              <link href="{db:info/db:bibliorelation[@class='uri' and @type='isreplacedby']}">car une version 
+                plus à jour est disponible</link>. 
+            </paragraph>
+          </rich-imgtext>
+        </xsl:if>
+        
+        <!-- Link to the forum. -->
+        <xsl:choose>
+          <xsl:when test="$forum-topic > 0">
+            <paragraph>
+              <lien-forum avecnote="1" id="{$forum-topic}">
+                <xsl:if test="$forum-post > 0">
+                  <xsl:attribute name="idpost" select="$forum-post"/>
+                </xsl:if>
+              </lien-forum>
+            </paragraph>
+          </xsl:when>
+          <xsl:when test="$forum-post > 0">
+            <xsl:message>WARNING: a forum post is present, but not a forum topic.</xsl:message>
+          </xsl:when>
+        </xsl:choose>
+      </synopsis>
+      
+      <summary>
+        <xsl:choose>
+          <xsl:when test="not(child::*[2][self::db:section])">
+            <!-- A document must have a section in DvpML, not necessarily in DocBook. -->
+            <section id="I" noNumber="1">
+              <title><xsl:value-of select="db:info/db:title"/></title>
+              
+              <xsl:apply-templates mode="content" select="./*"/>
+            </section>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:apply-templates mode="content" select="./*"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </summary>
+    </document>
+  </xsl:template>
   
   <xsl:template match="db:article">
     <xsl:result-document validation="lax">
@@ -85,50 +253,7 @@
             </xsl:choose>
           </miseajour>
           
-          <xsl:if test="$doc-qt">
-            <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php'); include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
-          </xsl:if>
-          
-          <xsl:if test="string-length($google-analytics) > 0">
-            <google-analytics><xsl:value-of select="$google-analytics"/></google-analytics>
-          </xsl:if>
-          
-          <xsl:choose>
-            <xsl:when test="string-length($license-author) > 0 and $license-number > 0 and $license-year > 0">
-              <licauteur><xsl:value-of select="$license-author"/></licauteur>
-              <lictype><xsl:value-of select="$license-number"/></lictype>
-              <licannee><xsl:value-of select="$license-year"/></licannee>
-            </xsl:when>
-            <xsl:when test="string-length($license-author) > 0 or $license-number > 0 or $license-year > 0">
-              <xsl:message>WARNING: Global license parameters not consistent: either the three parameters license-author, license-number, and license-year must be set, or only license-text.</xsl:message>
-            </xsl:when>
-          </xsl:choose>
-          
-          <xsl:choose>
-            <xsl:when test="$doc-qt">
-              <serveur>Qt</serveur>
-              <xsl:variable name="url">
-                <xsl:variable name="documentQdt" select="tokenize(base-uri(), '/')[last()]"/>
-                <xsl:variable name="document" select="tokenize($documentQdt, '\.')[1]"/>
-                <xsl:value-of select="concat(lower-case(db:info/db:productname), '/', db:info/db:productnumber, '/', $document)"/>
-              </xsl:variable>
-              <chemin>/doc/<xsl:value-of select="$url"/></chemin>
-              <urlhttp>http://qt.developpez.com/doc/<xsl:value-of select="$url"/></urlhttp>
-            </xsl:when>
-            <xsl:when test="string-length($ftp-user) > 0 and string-length($ftp-folder) > 0">
-              <serveur><xsl:value-of select="$ftp-user"/></serveur>
-              <chemin><xsl:value-of select="$ftp-folder"/></chemin>
-              <urlhttp>http://<xsl:value-of select="$ftp-user"/>.developpez.com/<xsl:value-of select="$ftp-folder"/></urlhttp>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:message>WARNING: FTP information missing.</xsl:message>
-            </xsl:otherwise>
-          </xsl:choose>
-          
-          <nopdf/>
-          <nozip/>
-          <nodownload/>
-          <noebook/>
+          <xsl:call-template name="tc:document-entete-from-parameters"/>
         </entete>
         
         <xsl:if test="string-length($license-author) = 0 and $license-number &lt; 0 and $license-year &lt; 0">
@@ -258,6 +383,53 @@
         </summary>
       </document>
     </xsl:result-document>
+  </xsl:template>
+  
+  <xsl:template name="tc:document-entete-from-parameters">
+    <xsl:if test="$doc-qt">
+      <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php'); include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
+    </xsl:if>
+    
+    <xsl:if test="string-length($google-analytics) > 0">
+      <google-analytics><xsl:value-of select="$google-analytics"/></google-analytics>
+    </xsl:if>
+    
+    <xsl:choose>
+      <xsl:when test="string-length($license-author) > 0 and $license-number > 0 and $license-year > 0">
+        <licauteur><xsl:value-of select="$license-author"/></licauteur>
+        <lictype><xsl:value-of select="$license-number"/></lictype>
+        <licannee><xsl:value-of select="$license-year"/></licannee>
+      </xsl:when>
+      <xsl:when test="string-length($license-author) > 0 or $license-number > 0 or $license-year > 0">
+        <xsl:message>WARNING: Global license parameters not consistent: either the three parameters license-author, license-number, and license-year must be set, or only license-text.</xsl:message>
+      </xsl:when>
+    </xsl:choose>
+    
+    <xsl:choose>
+      <xsl:when test="$doc-qt">
+        <serveur>Qt</serveur>
+        <xsl:variable name="url">
+          <xsl:variable name="documentQdt" select="tokenize(base-uri(), '/')[last()]"/>
+          <xsl:variable name="document" select="tokenize($documentQdt, '\.')[1]"/>
+          <xsl:value-of select="concat(lower-case(db:info/db:productname), '/', db:info/db:productnumber, '/', $document)"/>
+        </xsl:variable>
+        <chemin>/doc/<xsl:value-of select="$url"/></chemin>
+        <urlhttp>http://qt.developpez.com/doc/<xsl:value-of select="$url"/></urlhttp>
+      </xsl:when>
+      <xsl:when test="string-length($ftp-user) > 0 and string-length($ftp-folder) > 0">
+        <serveur><xsl:value-of select="$ftp-user"/></serveur>
+        <chemin><xsl:value-of select="$ftp-folder"/></chemin>
+        <urlhttp>http://<xsl:value-of select="$ftp-user"/>.developpez.com/<xsl:value-of select="$ftp-folder"/></urlhttp>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:message>WARNING: FTP information missing.</xsl:message>
+      </xsl:otherwise>
+    </xsl:choose>
+    
+    <nopdf/>
+    <nozip/>
+    <nodownload/>
+    <noebook/>
   </xsl:template>
   
   <xsl:template mode="header_author" match="db:author | db:editor | db:othercredit">
