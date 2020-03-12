@@ -52,7 +52,7 @@ public class DocBookSanityCheckHandler {
             String rootName = rootElement.getNodeName().toString();
             if (rootName.contains("book")) {
                 isBook = true;
-                System.out.println("SANITY CHECK: books have a very different DvpML output, incompatible with DocBook round-tripping. Other tools should still maintain semantics, though.");
+                System.out.println("SANITY WARNING: books have a very different DvpML output, incompatible with DocBook round-tripping. Other tools should still maintain semantics, though.");
                 // No change in result: this is just a warning.
             } else if (! rootName.contains("article")) {
                 System.out.println("SANITY CHECK: unknown root tag: " + rootName + ". Is this file DocBook?");
@@ -64,7 +64,7 @@ public class DocBookSanityCheckHandler {
         {
             XdmValue listInPara = xpath("//db:para/db:itemizedlist union //para/itemizedlist");
             if (listInPara.size() > 0) {
-                System.out.println("SANITY CHECK: found " + listInPara.size() + " list(s) within paragraphs: ");
+                System.out.println("SANITY WARNING: found " + listInPara.size() + " list(s) within paragraphs: ");
                 for (XdmValue v : listInPara) {
                     signalElement(v);
                 }
@@ -79,7 +79,7 @@ public class DocBookSanityCheckHandler {
                             "union //db:para/db:screen union //para/screen"
             );
             if (codeInPara.size() > 0) {
-                System.out.println("SANITY CHECK: found " + codeInPara.size() + " code blocks(s) within paragraphs: ");
+                System.out.println("SANITY WARNING: found " + codeInPara.size() + " code blocks(s) within paragraphs: ");
                 for (XdmValue v : codeInPara) {
                     signalElement(v);
                 }
@@ -135,7 +135,7 @@ public class DocBookSanityCheckHandler {
                             "union //db:informaltable/(db:row, db:entry) union //db:table/(db:row, db:entry)"
             );
             if (calsTable.size() > 0) {
-                System.out.println("SANITY CHECK: found CALS tables, which will be converted to HTML tables after" +
+                System.out.println("SANITY WARNING: found CALS tables, which will be converted to HTML tables after" +
                         "round tripping: ");
                 for (XdmValue v : calsTable) {
                     signalElement(v);
@@ -156,7 +156,7 @@ public class DocBookSanityCheckHandler {
                     for (XdmValue v : sequences) {
                         if (v.getUnderlyingValue().effectiveBooleanValue()) {
                             if (! printedIntro) {
-                                System.out.println("SANITY CHECK: found tables with just one column, which will be " +
+                                System.out.println("SANITY WARNING: found tables with just one column, which will be " +
                                         "converted to simple lists after round tripping: ");
                                 printedIntro = true;
                             }
