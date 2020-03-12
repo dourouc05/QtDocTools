@@ -146,28 +146,14 @@ public class DocBookSanityCheckHandler {
 
         // Tables with just one column are understood as <simplelist>s.
         {
-            XdmValue nColumns = xpath("//informaltable[not(/tbody/tr/count(td) > 1)]");
-            XdmValue nColumnsNS = xpath("//db:informaltable[not(/db:tbody/db:tr/count(db:td) > 1)]");
-
-            try {
-                boolean printedIntro = false;
-
-                for (XdmValue sequences : new XdmValue[]{nColumns, nColumnsNS}) {
-                    for (XdmValue v : sequences) {
-                        if (v.getUnderlyingValue().effectiveBooleanValue()) {
-                            if (! printedIntro) {
-                                System.out.println("SANITY WARNING: found tables with just one column, which will be " +
-                                        "converted to simple lists after round tripping: ");
-                                printedIntro = true;
-                            }
-
-                            signalElement(v);
-                        }
-                    }
+            XdmValue nColumns = xpath("//informaltable[not(/tbody/tr/count(td) > 1)] union //db:informaltable[not(/db:tbody/db:tr/count(db:td) > 1)]");
+            if (nColumns.size() > 0) {
+                System.out.println("SANITY WARNING: found tables with just one column, which will be " +
+                        "converted to simple lists after round tripping: ");
+                for (XdmValue v : nColumns) {
+                    signalElement(v);
                 }
-            } catch (XPathException e) {
-                // Due to the design of the XPath query, this exception shall never be thrown.
-                e.printStackTrace();
+                // No change in result: this is just a warning.
             }
         }
 
