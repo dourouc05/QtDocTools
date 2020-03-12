@@ -39,6 +39,12 @@ public class DocBookSanityCheckHandler {
                 "the culprit is a " + ((XdmNode) v).getNodeName() + " tag");
     }
 
+    private static void signalElements(XdmValue lv) {
+        for (XdmValue v : lv) {
+            signalElement(v);
+        }
+    }
+
     public boolean performSanityCheck() throws SaxonApiException {
         // Accumulate the negative results. Along the way, show as many things as possible.
         // Not all checks update this value: only if there is a high risk of content loss. If something may be
@@ -52,7 +58,8 @@ public class DocBookSanityCheckHandler {
             String rootName = rootElement.getNodeName().toString();
             if (rootName.contains("book")) {
                 isBook = true;
-                System.out.println("SANITY WARNING: books have a very different DvpML output, incompatible with DocBook round-tripping. Other tools should still maintain semantics, though.");
+                System.out.println("SANITY WARNING: books have a very different DvpML output, incompatible with " +
+                        "DocBook round-tripping. Other tools should still maintain semantics, though.");
                 // No change in result: this is just a warning.
             } else if (! rootName.contains("article")) {
                 System.out.println("SANITY CHECK: unknown root tag: " + rootName + ". Is this file DocBook?");
@@ -65,9 +72,7 @@ public class DocBookSanityCheckHandler {
             XdmValue listInPara = xpath("//db:para/db:itemizedlist union //para/itemizedlist");
             if (listInPara.size() > 0) {
                 System.out.println("SANITY WARNING: found " + listInPara.size() + " list(s) within paragraphs: ");
-                for (XdmValue v : listInPara) {
-                    signalElement(v);
-                }
+                signalElements(listInPara);
                 // No change in result: this is just a warning.
             }
         }
@@ -80,9 +85,7 @@ public class DocBookSanityCheckHandler {
             );
             if (codeInPara.size() > 0) {
                 System.out.println("SANITY WARNING: found " + codeInPara.size() + " code blocks(s) within paragraphs: ");
-                for (XdmValue v : codeInPara) {
-                    signalElement(v);
-                }
+                signalElements(codeInPara);
                 // No change in result: this is just a warning.
             }
         }
@@ -112,18 +115,14 @@ public class DocBookSanityCheckHandler {
                         "the title and the main content (all content should be either in the abstract or " +
                         "in a section), but these may be recovered by post-processing (merge subcommand, " +
                         "AFTER_PROOFREADING mode): ");
-                for (XdmValue v : textAfterInfo) {
-                    signalElement(v);
-                }
+                signalElements(textAfterInfo);
                 // No change in result: this is just a warning.
             }
 
             if (errors.size() > 0) {
                 System.out.println("SANITY CHECK: found " + textAfterInfo.size() + " block elements between the title " +
                         "and the main content (all content should be either in the abstract or in a section): ");
-                for (XdmValue v : textAfterInfo) {
-                    signalElement(v);
-                }
+                signalElements(textAfterInfo);
                 result = false;
             }
         }
@@ -135,24 +134,23 @@ public class DocBookSanityCheckHandler {
                             "union //db:informaltable/(db:row, db:entry) union //db:table/(db:row, db:entry)"
             );
             if (calsTable.size() > 0) {
-                System.out.println("SANITY WARNING: found CALS tables, which will be converted to HTML tables after" +
+                System.out.println("SANITY WARNING: found " + calsTable.size() + " CALS tables, which will be converted to HTML tables after" +
                         "round tripping: ");
-                for (XdmValue v : calsTable) {
-                    signalElement(v);
-                }
+                signalElements(calsTable);
                 // No change in result: this is just a warning.
             }
         }
 
         // Tables with just one column are understood as <simplelist>s.
         {
-            XdmValue nColumns = xpath("//informaltable[not(/tbody/tr/count(td) > 1)] union //db:informaltable[not(/db:tbody/db:tr/count(db:td) > 1)]");
+            XdmValue nColumns = xpath(
+                    "//informaltable[not(/tbody/tr/count(td) > 1)] " +
+                    "union //db:informaltable[not(/db:tbody/db:tr/count(db:td) > 1)]"
+            );
             if (nColumns.size() > 0) {
-                System.out.println("SANITY WARNING: found tables with just one column, which will be " +
+                System.out.println("SANITY WARNING: found " + nColumns.size() + " tables with just one column, which will be " +
                         "converted to simple lists after round tripping: ");
-                for (XdmValue v : nColumns) {
-                    signalElement(v);
-                }
+                signalElements(nColumns);
                 // No change in result: this is just a warning.
             }
         }
