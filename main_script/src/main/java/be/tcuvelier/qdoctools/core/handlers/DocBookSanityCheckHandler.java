@@ -44,12 +44,14 @@ public class DocBookSanityCheckHandler {
         // Not all checks update this value: only if there is a high risk of content loss. If something may be
         // represented in a similar but different way, just warn and don't update it.
         boolean result = true;
+        boolean isBook = false; // Some checks depend on this state.
 
         // Articles and books are supported.
         {
             XdmNode rootElement = (XdmNode) xpath("/*").itemAt(0);
             String rootName = rootElement.getNodeName().toString();
             if (rootName.contains("book")) {
+                isBook = true;
                 System.out.println("SANITY CHECK: books have a very different DvpML output, incompatible with DocBook round-tripping. Other tools should still maintain semantics, though.");
                 // No change in result: this is just a warning.
             } else if (! rootName.contains("article")) {
@@ -88,9 +90,15 @@ public class DocBookSanityCheckHandler {
         // No text before the first section (would be included in the abstract).
         // Code synopses will be lost, but can easily be retrieved.
         {
+            String forbiddingChildren = "not(self::section)";
+            String forbiddingChildrenNS = "not(self::db:section)";
+            if (isBook) {
+                forbiddingChildren += " and not(self::chapter)";
+                forbiddingChildrenNS += " and not(self::db:chapter)";
+            }
             XdmValue textAfterInfo = xpath(
-                    "/*/info[1]/following-sibling::*[not(self::section)] " +
-                            "union /*/db:info[1]/following-sibling::*[not(self::db:section)]"
+                    "/*/info[1]/following-sibling::*[" + forbiddingChildren + "] " +
+                            "union /*/db:info[1]/following-sibling::*[" + forbiddingChildrenNS + "]"
             );
 
             // Split the list into two parts: the elements that are recoverable with post-processing (not really a
