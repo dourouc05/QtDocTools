@@ -401,7 +401,9 @@
     </xsl:template>
     <xsl:template mode="content" match="entete">
         <db:thead>
-            <xsl:apply-templates mode="content"/>
+            <db:tr>
+                <xsl:apply-templates mode="content"/>
+            </db:tr>
         </db:thead>
     </xsl:template>
     <xsl:template mode="content" match="ligne">
