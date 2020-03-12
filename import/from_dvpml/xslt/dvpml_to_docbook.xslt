@@ -28,7 +28,16 @@
     </xsl:function>
     
     <xsl:template match="document">
-        <db:article version="5.2">
+        <xsl:variable name="maintag" as="xs:string">
+            <xsl:choose>
+                <xsl:when test="multi-page"><xsl:value-of select="'db:book'"/></xsl:when>
+                <xsl:otherwise><xsl:value-of select="'db:article'"/></xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:element name="{$maintag}" inherit-namespaces="yes">
+            <xsl:attribute name="version" select="'5.2'"/>
+            
             <db:info>
                 <db:title><xsl:value-of select="entete/titre/article"/></db:title>
                 
@@ -118,15 +127,29 @@
             <xsl:if test="lecteur">
                 <xsl:message>WARNING: tag lecteur is not handled. Please propose a way to encode it in DocBook.</xsl:message>
             </xsl:if>
-            <xsl:if test="multi-page">
-                <xsl:message>WARNING: tag multi-page is not handled. Please propose a way to encode it in DocBook. (Probably in an outside file.)</xsl:message>
-            </xsl:if>
             <xsl:if test="soustitre">
                 <xsl:message>WARNING: tag soustitre is not handled. Please propose a way to encode it in DocBook.</xsl:message>
             </xsl:if>
             
-            <xsl:apply-templates select="summary" mode="content"/>
-        </db:article>
+            <!-- Main content of the article. -->
+            <xsl:choose>
+                <xsl:when test="multi-page">
+                    <xsl:for-each select="multi-page/page">
+                        <db:chapter>
+                            <db:title><xsl:value-of select="title"/></db:title>
+                            
+                            <xsl:for-each select="link">
+                                <xsl:variable name="current-link" select="."/>
+                                <xsl:apply-templates select="//summary/section[@id=$current-link/@href]" mode="content"/>
+                            </xsl:for-each>
+                        </db:chapter>
+                    </xsl:for-each>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:apply-templates select="summary" mode="content"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:element>
     </xsl:template>
     
     <xsl:template mode="content" match="section">
