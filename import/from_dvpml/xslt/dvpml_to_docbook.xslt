@@ -569,8 +569,7 @@
         
         <db:link xlink:href="{$link}" role="lien-forum">
             <xsl:attribute name="role" select="if (@avecnote and @avecnote='1') then 'lien-forum-avec-note' else 'lien-forum'"></xsl:attribute>
-            
-            Commentez&#0160;!
+            <xsl:text>Commentez&#0160;!</xsl:text>
         </db:link>
     </xsl:template>
 </xsl:stylesheet>
