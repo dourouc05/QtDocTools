@@ -40,17 +40,18 @@ public class DocBookSanityCheckHandler {
     }
 
     public boolean performSanityCheck() throws SaxonApiException {
-        // Accumulate the results and show as many things as possible.
+        // Accumulate the negative results. Along the way, show as many things as possible.
+        // Not all checks update this value: only if there is a high risk of content loss. If something may be
+        // represented in a similar but different way, just warn and don't update it.
         boolean result = true;
 
-        // Only articles are implemented for now.
-        // TODO: Allow books at some point. Very unlikely that other root elements will ever be supported.
+        // Articles and books are supported.
         {
             XdmNode rootElement = (XdmNode) xpath("/*").itemAt(0);
             String rootName = rootElement.getNodeName().toString();
             if (rootName.contains("book")) {
-                System.out.println("SANITY CHECK: books are not yet implemented");
-                result = false;
+                System.out.println("SANITY CHECK: books have a very different DvpML output, incompatible with DocBook round-tripping. Other tools should still maintain semantics, though.");
+                // No change in result: this is just a warning.
             } else if (! rootName.contains("article")) {
                 System.out.println("SANITY CHECK: unknown root tag: " + rootName + ". Is this file DocBook?");
                 result = false;
@@ -65,7 +66,7 @@ public class DocBookSanityCheckHandler {
                 for (XdmValue v : listInPara) {
                     signalElement(v);
                 }
-                result = false;
+                // No change in result: this is just a warning.
             }
         }
 
@@ -80,7 +81,7 @@ public class DocBookSanityCheckHandler {
                 for (XdmValue v : codeInPara) {
                     signalElement(v);
                 }
-                result = false;
+                // No change in result: this is just a warning.
             }
         }
 
@@ -131,7 +132,7 @@ public class DocBookSanityCheckHandler {
                 for (XdmValue v : calsTable) {
                     signalElement(v);
                 }
-                result = false;
+                // No change in result: this is just a warning.
             }
         }
 
