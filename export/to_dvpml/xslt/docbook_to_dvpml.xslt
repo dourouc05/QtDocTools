@@ -257,13 +257,9 @@
           <xsl:variable name="abstractParagraphs" as="node()*">
             <xsl:choose>
               <xsl:when test="not($doc-qt) or (db:info/db:abstract/db:para[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and string-length(text()[1]) > 0])">
-                <!-- The abstract has paragraphs with something else than links to linked documents, great! (Linked documents are only available for Qt documentation.) -->
+                <!-- The abstract has paragraphs with something else than links to linked documents, great! -->
+                <!-- (Linked documents are only available for Qt documentation.) -->
                 <!-- Most normal case. -->
-                
-                <!-- Do some checks to ensure that no text is ignored (paragraphs outside sections). -->
-                <xsl:if test="db:info/following-sibling::*[1][self::db:para]">
-                  <xsl:message>WARNING: Paragraphs outside sections not being converted!</xsl:message>
-                </xsl:if>
                 
                 <!-- <db:simplelist> is already eaten for <voiraussi>. -->
                 <xsl:copy-of select="db:info/db:abstract/db:para[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and text()]"/>
@@ -295,21 +291,7 @@
             </rich-imgtext>
           </xsl:if>
           
-          <!-- Link to the forum. -->
-          <xsl:choose>
-            <xsl:when test="$forum-topic > 0">
-              <paragraph>
-                <lien-forum avecnote="1" id="{$forum-topic}">
-                  <xsl:if test="$forum-post > 0">
-                    <xsl:attribute name="idpost" select="$forum-post"/>
-                  </xsl:if>
-                </lien-forum>
-              </paragraph>
-            </xsl:when>
-            <xsl:when test="$forum-post > 0">
-              <xsl:message>WARNING: a forum post is present, but not a forum topic.</xsl:message>
-            </xsl:when>
-          </xsl:choose>
+          <xsl:call-template name="tc:document-abstract-forum-link-from-parameters"/>
         </synopsis>
         
         <summary>
@@ -406,6 +388,23 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:if>
+  </xsl:template>
+  
+  <xsl:template name="tc:document-abstract-forum-link-from-parameters">
+    <xsl:choose>
+      <xsl:when test="$forum-topic > 0">
+        <paragraph>
+          <lien-forum avecnote="1" id="{$forum-topic}">
+            <xsl:if test="$forum-post > 0">
+              <xsl:attribute name="idpost" select="$forum-post"/>
+            </xsl:if>
+          </lien-forum>
+        </paragraph>
+      </xsl:when>
+      <xsl:when test="$forum-post > 0">
+        <xsl:message>WARNING: a forum post is present, but not a forum topic.</xsl:message>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template mode="header_author" match="db:author | db:editor | db:othercredit">
