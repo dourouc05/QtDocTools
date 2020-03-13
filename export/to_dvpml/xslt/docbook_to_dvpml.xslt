@@ -38,8 +38,11 @@
     </xsl:result-document>
     
     <!-- Iterate over parts and chapters, each in its own file. -->
-    <xsl:for-each select="db:part union db:chapter">
-      <xsl:apply-templates mode="book_root"/>
+    <xsl:for-each select="db:part">
+      <xsl:apply-templates mode="book_root" select="."/>
+    </xsl:for-each>
+    <xsl:for-each select=".//db:chapter">
+      <xsl:apply-templates mode="book_root" select="."/>
     </xsl:for-each>
   </xsl:template>
   
