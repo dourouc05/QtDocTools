@@ -38,6 +38,9 @@
     </xsl:result-document>
     
     <!-- Iterate over parts and chapters, each in its own file. -->
+    <xsl:for-each select="db:part union db:chapter">
+      <xsl:apply-templates mode="book_root"/>
+    </xsl:for-each>
   </xsl:template>
   
   <xsl:template match="db:book" mode="book_root">
@@ -83,59 +86,22 @@
       </entete>
       
       <xsl:call-template name="tc:document-license-from-parameters"/>
-      
-      <authorDescriptions>
-        <xsl:choose>
-          <xsl:when test="db:info/(db:authorgroup | db:author | db:editor | db:othercredit)">
-            <xsl:for-each select="db:info//(db:author | db:editor | db:othercredit)">
-              <xsl:apply-templates mode="header_author" select="."/>
-            </xsl:for-each>
-          </xsl:when>
-          <xsl:otherwise>
-            <authorDescription name="Dummy" role="auteur">
-              <fullname>Dummy</fullname>
-              <url>https://www.developpez.net/forums/u1/dummy/</url>
-            </authorDescription>
-          </xsl:otherwise>
-        </xsl:choose>
-      </authorDescriptions>
-      
-      <xsl:if test="string-length($related) > 0">
-        <reference><xsl:value-of select="$related"/></reference>
-      </xsl:if>
+      <xsl:call-template name="tc:document-authors">
+        <xsl:with-param name="info" select="db:info"/>
+      </xsl:call-template>
+      <xsl:call-template name="tc:document-related-from-parameters"/>
       
       <synopsis>
-        <!-- voiraussi is not implemented. This simplifies a lot this code. -->
+        <!-- voiraussi is not implemented (book is not used for Qt's documentation). -->
+        <!-- This simplifies a lot this code. -->
         <xsl:for-each select="db:info/db:abstract/db:para">
           <xsl:apply-templates mode="content" select="."/>
         </xsl:for-each>
-        
-        <!-- Deprecated/obsolete articles with replacement -->
-        <xsl:if test="db:info/db:bibliorelation[@class='uri' and @type='isreplacedby']">
-          <rich-imgtext type="error">
-            <paragraph>
-              Cet article est obsolète et n'est gardé que pour des raisons historiques, 
-              <link href="{db:info/db:bibliorelation[@class='uri' and @type='isreplacedby']}">car une version 
-                plus à jour est disponible</link>. 
-            </paragraph>
-          </rich-imgtext>
-        </xsl:if>
-        
-        <!-- Link to the forum. -->
-        <xsl:choose>
-          <xsl:when test="$forum-topic > 0">
-            <paragraph>
-              <lien-forum avecnote="1" id="{$forum-topic}">
-                <xsl:if test="$forum-post > 0">
-                  <xsl:attribute name="idpost" select="$forum-post"/>
-                </xsl:if>
-              </lien-forum>
-            </paragraph>
-          </xsl:when>
-          <xsl:when test="$forum-post > 0">
-            <xsl:message>WARNING: a forum post is present, but not a forum topic.</xsl:message>
-          </xsl:when>
-        </xsl:choose>
+          
+        <xsl:call-template name="tc:document-abstract-obsoleted-by">
+          <xsl:with-param name="info" select="db:info"/>
+        </xsl:call-template>
+        <xsl:call-template name="tc:document-abstract-forum-link-from-parameters"/>
       </synopsis>
       
       <summary>
@@ -200,44 +166,13 @@
         </entete>
         
         <xsl:call-template name="tc:document-license-from-parameters"/>
-        
-        <!-- If the synopsis has a specific form (last paragraph has only one children, a simple list), -->
-        <!-- consider this list has links to linked documents. -->
-        <xsl:if test="$doc-qt and db:info/db:abstract/db:para[last()]/child::*[1][self::db:simplelist and @role='see-also']">
-          <voiraussi>
-            <!-- First, the linked documents (previous/next). -->
-            <xsl:for-each select="db:info/db:abstract/db:para[last()]/db:simplelist/db:member">
-              <lien>
-                <texte><xsl:value-of select="db:link/text()"/></texte>
-                <url>
-                  <xsl:variable name="filename" select="substring-before(string(db:link/@xlink:href), '.html')"/>
-                  <xsl:value-of select="concat('http://qt.developpez.com/doc/', lower-case(//db:info/db:productname), '/', //db:info/db:productnumber, '/', $filename)"/>
-                </url>
-              </lien>
-            </xsl:for-each>
-            <!-- Then, anything else? -->
-          </voiraussi>
-        </xsl:if>
-        
-        <authorDescriptions>
-          <xsl:choose>
-            <xsl:when test="db:info/(db:authorgroup | db:author | db:editor | db:othercredit)">
-              <xsl:for-each select="db:info//(db:author | db:editor | db:othercredit)">
-                <xsl:apply-templates mode="header_author" select="."/>
-              </xsl:for-each>
-            </xsl:when>
-            <xsl:otherwise>
-              <authorDescription name="Dummy" role="auteur">
-                <fullname>Dummy</fullname>
-                <url>https://www.developpez.net/forums/u1/dummy/</url>
-              </authorDescription>
-            </xsl:otherwise>
-          </xsl:choose>
-        </authorDescriptions>
-        
-        <xsl:if test="string-length($related) > 0">
-          <reference><xsl:value-of select="$related"/></reference>
-        </xsl:if>
+        <xsl:call-template name="tc:document-see-also">
+          <xsl:with-param name="info" select="db:info"/>
+        </xsl:call-template>
+        <xsl:call-template name="tc:document-authors">
+          <xsl:with-param name="info" select="db:info"/>
+        </xsl:call-template>
+        <xsl:call-template name="tc:document-related-from-parameters"/>
         
         <synopsis>
           <xsl:variable name="abstractParagraphs" as="node()*">
@@ -262,21 +197,14 @@
               </xsl:otherwise>
             </xsl:choose>
           </xsl:variable>
+          
           <xsl:for-each select="$abstractParagraphs">
             <xsl:apply-templates mode="content" select="."/>
           </xsl:for-each>
           
-          <!-- Deprecated/obsolete articles with replacement -->
-          <xsl:if test="db:info/db:bibliorelation[@class='uri' and @type='isreplacedby']">
-            <rich-imgtext type="error">
-              <paragraph>
-                Cet article est obsolète et n'est gardé que pour des raisons historiques, 
-                <link href="{db:info/db:bibliorelation[@class='uri' and @type='isreplacedby']}">car une version 
-                  plus à jour est disponible</link>. 
-              </paragraph>
-            </rich-imgtext>
-          </xsl:if>
-          
+          <xsl:call-template name="tc:document-abstract-obsoleted-by">
+            <xsl:with-param name="info" select="db:info"/>
+          </xsl:call-template>
           <xsl:call-template name="tc:document-abstract-forum-link-from-parameters"/>
         </synopsis>
         
@@ -336,6 +264,7 @@
     
     <xsl:choose>
       <xsl:when test="$doc-qt">
+        <!-- TODO: generate all this in the configuration file? -->
         <serveur>Qt</serveur>
         <xsl:variable name="url">
           <xsl:variable name="documentQdt" select="tokenize(base-uri(), '/')[last()]"/>
@@ -361,6 +290,26 @@
     <noebook/>
   </xsl:template>
   
+  <xsl:template name="tc:document-authors">
+    <xsl:param name="info" as="element(db:info)"/>
+    
+    <authorDescriptions>
+      <xsl:choose>
+        <xsl:when test="$info/(db:authorgroup | db:author | db:editor | db:othercredit)">
+          <xsl:for-each select="$info//(db:author | db:editor | db:othercredit)">
+            <xsl:apply-templates mode="header_author" select="."/>
+          </xsl:for-each>
+        </xsl:when>
+        <xsl:otherwise>
+          <authorDescription name="Dummy" role="auteur">
+            <fullname>Dummy</fullname>
+            <url>https://www.developpez.net/forums/u1/dummy/</url>
+          </authorDescription>
+        </xsl:otherwise>
+      </xsl:choose>
+    </authorDescriptions>
+  </xsl:template>
+  
   <xsl:template name="tc:document-license-from-parameters">
     <xsl:if test="string-length($license-author) = 0 and $license-number &lt; 0 and $license-year &lt; 0">
       <xsl:choose>
@@ -373,6 +322,49 @@
           <xsl:message>WARNING: Global license parameters not consistent: either the three parameters license-author, license-number, and license-year must be set, or only license-text.</xsl:message>
         </xsl:otherwise>
       </xsl:choose>
+    </xsl:if>
+  </xsl:template>
+  
+  <xsl:template name="tc:document-see-also">
+    <xsl:param name="info" as="element(db:info)"/>
+    
+    <!-- If the synopsis has a specific form (last paragraph has only one children, a simple list), -->
+    <!-- consider this list has links to linked documents. -->
+    <xsl:if test="$doc-qt and $info/db:abstract/db:para[last()]/child::*[1][self::db:simplelist and @role='see-also']">
+      <voiraussi>
+        <!-- First, the linked documents (previous/next). -->
+        <xsl:for-each select="$info/db:abstract/db:para[last()]/db:simplelist/db:member">
+          <lien>
+            <texte><xsl:value-of select="db:link/text()"/></texte>
+            <url>
+              <xsl:variable name="filename" select="substring-before(string(db:link/@xlink:href), '.html')"/>
+              <xsl:value-of select="concat('http://qt.developpez.com/doc/', lower-case(//db:info/db:productname), '/', //db:info/db:productnumber, '/', $filename)"/>
+            </url>
+          </lien>
+        </xsl:for-each>
+        <!-- Then, anything else? -->
+      </voiraussi>
+    </xsl:if>
+  </xsl:template>
+  
+  <xsl:template name="tc:document-related-from-parameters">
+    <xsl:if test="string-length($related) > 0">
+      <reference><xsl:value-of select="$related"/></reference>
+    </xsl:if>
+  </xsl:template>
+  
+  <xsl:template name="tc:document-abstract-obsoleted-by">
+    <xsl:param name="info" as="element(db:info)"/>
+    
+    <!-- Deprecated/obsolete articles with replacement -->
+    <xsl:if test="$info/db:bibliorelation[@class='uri' and @type='isreplacedby']">
+      <rich-imgtext type="error">
+        <paragraph>
+          Cet article est obsolète et n'est gardé que pour des raisons historiques, 
+          <link href="{$info/db:bibliorelation[@class='uri' and @type='isreplacedby']}">car une version 
+            plus à jour est disponible</link>. 
+        </paragraph>
+      </rich-imgtext>
     </xsl:if>
   </xsl:template>
   
