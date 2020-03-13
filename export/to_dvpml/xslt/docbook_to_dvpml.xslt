@@ -112,41 +112,31 @@
         <!-- Generate the table of contents. -->
         <section id="I" noNumber="1">
           <title>Table des matières</title>
-          <xsl:choose>
-            <xsl:when test="db:part">
-              <!-- Several parts: one section per part. Don't forget the first few chapters, if any! -->
-              <xsl:if test="./db:chapter">
-                <xsl:for-each select="db:chapter">
-                  <xsl:apply-templates mode="tc:document-toc" select="."/>
-                </xsl:for-each>
-              </xsl:if>
+          
+          <xsl:if test="./db:chapter">
+            <xsl:for-each select="db:chapter">
+              <xsl:apply-templates mode="tc:document-toc" select="."/>
+            </xsl:for-each>
+          </xsl:if>
+          
+          <xsl:for-each select="db:part">
+            <section id="{position()}">
+              <title><xsl:value-of select="db:title | db:info/db:title"/></title>
               
-              <xsl:for-each select="db:part">
-                <section id="{position()}">
-                  <title><xsl:value-of select="db:title | db:info/db:title"/></title>
-                  
-                  <!-- TODO: generate the URL based on the configuration. -->
-                  <paragraph>
-                    <link href="http://bullshit#{position()}">
-                      <xsl:value-of select="position()"/>
-                      <xsl:text>. </xsl:text>
-                      <xsl:value-of select="db:title | db:info/db:title"/>
-                    </link>
-                  </paragraph>
-                  
-                  <xsl:for-each select="db:chapter">
-                    <xsl:apply-templates mode="tc:document-toc" select="."/>
-                  </xsl:for-each>
-                </section>
-              </xsl:for-each>
-              <xsl:message>WARNING: Parts are not yet implemented.</xsl:message>
-            </xsl:when>
-            <xsl:otherwise>
+              <!-- TODO: generate the URL based on the configuration. -->
+              <paragraph>
+                <link href="http://bullshit#{position()}">
+                  <xsl:value-of select="position()"/>
+                  <xsl:text>. </xsl:text>
+                  <xsl:value-of select="db:title | db:info/db:title"/>
+                </link>
+              </paragraph>
+              
               <xsl:for-each select="db:chapter">
                 <xsl:apply-templates mode="tc:document-toc" select="."/>
               </xsl:for-each>
-            </xsl:otherwise>
-          </xsl:choose>
+            </section>
+          </xsl:for-each>
         </section>
       </summary>
     </document>
