@@ -80,43 +80,16 @@
           </article>
         </titre>
         <date>
-          <xsl:choose>
-            <xsl:when test="db:info/db:pubdate">
-              <xsl:value-of select="format-date(db:info/db:pubdate, '[Y0001]-[M01]-[D01]')"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:message>WARNING: no pubdate found in info, the field date will be set to today.</xsl:message>
-              <xsl:value-of select="format-date(current-date(), '[Y0001]-[M01]-[D01]')"/>
-            </xsl:otherwise>
-          </xsl:choose>
+          <xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/>
         </date>
         <miseajour>
-          <xsl:choose>
-            <xsl:when test="db:info/db:date">
-              <xsl:value-of select="format-date(db:info/db:date, '[Y0001]-[M01]-[D01]')"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:message>WARNING: no date found in info, the field miseajour will be set to today.</xsl:message>
-              <xsl:value-of select="format-date(current-date(), '[Y0001]-[M01]-[D01]')"/>
-            </xsl:otherwise>
-          </xsl:choose>
+          <xsl:value-of select="tc:format-date(db:info/date, 'date')"/>
         </miseajour>
         
         <xsl:call-template name="tc:document-entete-from-parameters"/>
       </entete>
       
-      <xsl:if test="string-length($license-author) = 0 and $license-number &lt; 0 and $license-year &lt; 0">
-        <xsl:choose>
-          <xsl:when test="string-length($license-text) > 0">
-            <licence>
-              <xsl:value-of select="$license-text"/>
-            </licence>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:message>WARNING: Global license parameters not consistent: either the three parameters license-author, license-number, and license-year must be set, or only license-text.</xsl:message>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:if>
+      <xsl:call-template name="tc:document-license-from-parameters"/>
       
       <authorDescriptions>
         <xsl:choose>
@@ -231,47 +204,20 @@
             </article>
           </titre>
           <date>
-            <xsl:choose>
-              <xsl:when test="db:info/db:pubdate">
-                <xsl:value-of select="format-date(db:info/db:pubdate, '[Y0001]-[M01]-[D01]')"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:message>WARNING: no pubdate found in info, the field date will be set to today.</xsl:message>
-                <xsl:value-of select="format-date(current-date(), '[Y0001]-[M01]-[D01]')"/>
-              </xsl:otherwise>
-            </xsl:choose>
+            <xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/>
           </date>
           <miseajour>
-            <xsl:choose>
-              <xsl:when test="db:info/db:date">
-                <xsl:value-of select="format-date(db:info/db:date, '[Y0001]-[M01]-[D01]')"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:message>WARNING: no date found in info, the field miseajour will be set to today.</xsl:message>
-                <xsl:value-of select="format-date(current-date(), '[Y0001]-[M01]-[D01]')"/>
-              </xsl:otherwise>
-            </xsl:choose>
+            <xsl:value-of select="tc:format-date(db:info/date, 'date')"/>
           </miseajour>
           
           <xsl:call-template name="tc:document-entete-from-parameters"/>
         </entete>
         
-        <xsl:if test="string-length($license-author) = 0 and $license-number &lt; 0 and $license-year &lt; 0">
-          <xsl:choose>
-            <xsl:when test="string-length($license-text) > 0">
-              <licence>
-                <xsl:value-of select="$license-text"/>
-              </licence>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:message>WARNING: Global license parameters not consistent: either the three parameters license-author, license-number, and license-year must be set, or only license-text.</xsl:message>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:if>
+        <xsl:call-template name="tc:document-license-from-parameters"/>
         
         <!-- If the synopsis has a specific form (last paragraph has only one children, a simple list), -->
         <!-- consider this list has links to linked documents. -->
-        <xsl:if test="db:info/db:abstract/db:para[last()]/child::*[1][self::db:simplelist and @role='see-also']">
+        <xsl:if test="$doc-qt and db:info/db:abstract/db:para[last()]/child::*[1][self::db:simplelist and @role='see-also']">
           <voiraussi>
             <!-- First, the linked documents (previous/next). -->
             <xsl:for-each select="db:info/db:abstract/db:para[last()]/db:simplelist/db:member">
@@ -310,8 +256,8 @@
         <synopsis>
           <xsl:variable name="abstractParagraphs" as="node()*">
             <xsl:choose>
-              <xsl:when test="db:info/db:abstract/db:para[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and string-length(text()[1]) > 0]">
-                <!-- The abstract has paragraphs with something else than links to linked documents, great! -->
+              <xsl:when test="not($doc-qt) or (db:info/db:abstract/db:para[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and string-length(text()[1]) > 0])">
+                <!-- The abstract has paragraphs with something else than links to linked documents, great! (Linked documents are only available for Qt documentation.) -->
                 <!-- Most normal case. -->
                 
                 <!-- Do some checks to ensure that no text is ignored (paragraphs outside sections). -->
@@ -385,6 +331,21 @@
     </xsl:result-document>
   </xsl:template>
   
+  <xsl:function name="tc:format-date">
+    <xsl:param name="date" as="node()"/>
+    <xsl:param name="tag-name" as="xs:string"/>
+    
+    <xsl:choose>
+      <xsl:when test="$date">
+        <xsl:value-of select="format-date($date, '[Y0001]-[M01]-[D01]')"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:message>WARNING: no <xsl:value-of select="$tag-name"/> found in info, the field will be set to today.</xsl:message>
+        <xsl:value-of select="format-date(current-date(), '[Y0001]-[M01]-[D01]')"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+  
   <xsl:template name="tc:document-entete-from-parameters">
     <xsl:if test="$doc-qt">
       <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php'); include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
@@ -430,6 +391,21 @@
     <nozip/>
     <nodownload/>
     <noebook/>
+  </xsl:template>
+  
+  <xsl:template name="tc:document-license-from-parameters">
+    <xsl:if test="string-length($license-author) = 0 and $license-number &lt; 0 and $license-year &lt; 0">
+      <xsl:choose>
+        <xsl:when test="string-length($license-text) > 0">
+          <licence>
+            <xsl:value-of select="$license-text"/>
+          </licence>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:message>WARNING: Global license parameters not consistent: either the three parameters license-author, license-number, and license-year must be set, or only license-text.</xsl:message>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template mode="header_author" match="db:author | db:editor | db:othercredit">
