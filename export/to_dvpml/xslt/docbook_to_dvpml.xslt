@@ -110,23 +110,50 @@
       
       <summary>
         <!-- Generate the table of contents. -->
-        <xsl:choose>
-          <xsl:when test="db:part">
-            <xsl:message>WARNING: Parts are not yet implemented.</xsl:message>
-          </xsl:when>
-          <xsl:otherwise>
-            <section id="I" noNumber="1">
+        <section id="I" noNumber="1">
+          <title>Table des matières</title>
+          <xsl:choose>
+            <xsl:when test="db:part">
+              <!-- Several parts: one section per part. Don't forget the first few chapters, if any! -->
+              <xsl:if test="./db:chapter">
+                <xsl:for-each select="db:chapter">
+                  <xsl:apply-templates mode="tc:document-toc" select="."/>
+                </xsl:for-each>
+              </xsl:if>
+              
+              <xsl:for-each select="db:part">
+                <section id="{position()}">
+                  <title><xsl:value-of select="db:title | db:info/db:title"/></title>
+                  
+                  <!-- TODO: generate the URL based on the configuration. -->
+                  <paragraph>
+                    <link href="http://bullshit#{position()}">
+                      <xsl:value-of select="position()"/>
+                      <xsl:text>. </xsl:text>
+                      <xsl:value-of select="db:title | db:info/db:title"/>
+                    </link>
+                  </paragraph>
+                  
+                  <xsl:for-each select="db:chapter">
+                    <xsl:apply-templates mode="tc:document-toc" select="."/>
+                  </xsl:for-each>
+                </section>
+              </xsl:for-each>
+              <xsl:message>WARNING: Parts are not yet implemented.</xsl:message>
+            </xsl:when>
+            <xsl:otherwise>
               <xsl:for-each select="db:chapter">
                 <xsl:apply-templates mode="tc:document-toc" select="."/>
               </xsl:for-each>
-            </section>
-          </xsl:otherwise>
-        </xsl:choose>
+            </xsl:otherwise>
+          </xsl:choose>
+        </section>
       </summary>
     </document>
   </xsl:template>
   
   <xsl:template mode="document-toc" match="db:chapter | db:section">
+    <!-- TODO: does not work with sect1/sect6. -->
     <xsl:param name="section" as="element()"/>
     <xsl:variable name="sectionId">
       <xsl:number level="multiple" format="1"/>
