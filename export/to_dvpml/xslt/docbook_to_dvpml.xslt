@@ -71,20 +71,13 @@
             </xsl:choose>
           </keywords>
         </meta>
+        
         <titre>
-          <page>
-            <xsl:value-of select="db:info/db:title"/>
-          </page>
-          <article>
-            <xsl:value-of select="db:info/db:title"/>
-          </article>
+          <page><xsl:value-of select="db:info/db:title"/></page>
+          <article><xsl:value-of select="db:info/db:title"/></article>
         </titre>
-        <date>
-          <xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/>
-        </date>
-        <miseajour>
-          <xsl:value-of select="tc:format-date(db:info/date, 'date')"/>
-        </miseajour>
+        <date><xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/></date>
+        <miseajour><xsl:value-of select="tc:format-date(db:info/date, 'date')"/></miseajour>
         
         <xsl:call-template name="tc:document-entete-from-parameters"/>
       </entete>
@@ -195,20 +188,13 @@
               </xsl:choose>
             </keywords>
           </meta>
+          
           <titre>
-            <page>
-              <xsl:value-of select="db:info/db:title"/>
-            </page>
-            <article>
-              <xsl:value-of select="db:info/db:title"/>
-            </article>
+            <page><xsl:value-of select="db:info/db:title"/></page>
+            <article><xsl:value-of select="db:info/db:title"/></article>
           </titre>
-          <date>
-            <xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/>
-          </date>
-          <miseajour>
-            <xsl:value-of select="tc:format-date(db:info/date, 'date')"/>
-          </miseajour>
+          <date><xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/></date>
+          <miseajour><xsl:value-of select="tc:format-date(db:info/date, 'date')"/></miseajour>
           
           <xsl:call-template name="tc:document-entete-from-parameters"/>
         </entete>
