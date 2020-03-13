@@ -83,6 +83,10 @@
         <miseajour><xsl:value-of select="tc:format-date(db:info/date, 'date')"/></miseajour>
         
         <xsl:call-template name="tc:document-entete-from-parameters"/>
+        
+        <!-- Avoid generating a table of contents, as this page only contains a table of contents for the whole book. -->
+        <nosummary/>
+        <nosummarypage/>
       </entete>
       
       <xsl:call-template name="tc:document-license-from-parameters"/>
@@ -105,21 +109,45 @@
       </synopsis>
       
       <summary>
+        <!-- Generate the table of contents. -->
         <xsl:choose>
-          <xsl:when test="not(child::*[2][self::db:section])">
-            <!-- A document must have a section in DvpML, not necessarily in DocBook. -->
-            <section id="I" noNumber="1">
-              <title><xsl:value-of select="db:info/db:title"/></title>
-              
-              <xsl:apply-templates mode="content" select="./*"/>
-            </section>
+          <xsl:when test="db:part">
+            <xsl:message>WARNING: Parts are not yet implemented.</xsl:message>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:apply-templates mode="content" select="./*"/>
+            <section id="I" noNumber="1">
+              <xsl:for-each select="db:chapter">
+                <xsl:apply-templates mode="tc:document-toc" select="."/>
+              </xsl:for-each>
+            </section>
           </xsl:otherwise>
         </xsl:choose>
       </summary>
     </document>
+  </xsl:template>
+  
+  <xsl:template mode="document-toc" match="db:chapter | db:section">
+    <xsl:param name="section" as="element()"/>
+    <xsl:variable name="sectionId">
+      <xsl:number level="multiple" format="1"/>
+    </xsl:variable>
+    
+    <!-- TODO: generate the URL based on the configuration. -->
+    <paragraph>
+      <link href="http://bullshit#{$sectionId}">
+        <xsl:value-of select="$sectionId"/>
+        <xsl:text>. </xsl:text>
+        <xsl:value-of select="db:title | db:info/db:title"/>
+      </link>
+    </paragraph>
+    
+    <xsl:if test="./db:section">
+      <liste useText="0">
+        <xsl:for-each select="./db:section">
+          <xsl:apply-templates select="." mode="document-toc"/>
+        </xsl:for-each>
+      </liste>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template match="db:article">
