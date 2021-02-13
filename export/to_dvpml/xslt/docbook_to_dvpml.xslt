@@ -276,7 +276,7 @@
   </xsl:template>
   
   <xsl:function name="tc:format-date">
-    <xsl:param name="date" as="node()"/>
+    <xsl:param name="date" as="node()?"/>
     <xsl:param name="tag-name" as="xs:string"/>
     
     <xsl:choose>
