@@ -118,7 +118,7 @@
           
           <xsl:if test="./db:chapter">
             <xsl:for-each select="db:chapter">
-              <xsl:apply-templates mode="tc:document-toc" select="."/>
+              <xsl:apply-templates mode="document-toc" select="."/>
             </xsl:for-each>
           </xsl:if>
           
@@ -136,7 +136,7 @@
               </paragraph>
               
               <xsl:for-each select="db:chapter">
-                <xsl:apply-templates mode="tc:document-toc" select="."/>
+                <xsl:apply-templates mode="document-toc" select="."/>
               </xsl:for-each>
             </section>
           </xsl:for-each>
@@ -147,7 +147,6 @@
   
   <xsl:template mode="document-toc" match="db:chapter | db:section">
     <!-- TODO: does not work with sect1/sect6. -->
-    <xsl:param name="section" as="element()"/>
     <xsl:variable name="sectionId">
       <xsl:number level="multiple" format="1"/>
     </xsl:variable>
