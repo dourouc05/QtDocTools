@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<article 
+<book 
         xmlns="http://docbook.org/ns/docbook"
         xmlns:xlink="http://www.w3.org/1999/xlink" 
         version="5.1"
         xml:lang="fr">
     <info>
-        <title><?oxy-placeholder content="Entrez ici le titre du document"?></title>
+        <title><?oxy-placeholder content="Entrez ici le titre du livtr"?></title>
         
         <date><?oxy-placeholder content="Entrez ici la date de dernière modification du document. Par exemple : 2020-12-31"?></date>
         <pubdate><?oxy-placeholder content="Entrez ici la date de publication du document. Par exemple : 2020-12-31"?></pubdate>
@@ -20,8 +20,15 @@
             <para><?oxy-placeholder content="Entrez ici le résumé de l'article"?></para>
         </abstract>
     </info>
-    <section>
-        <title><?oxy-placeholder content="Entrez ici le premier titre de l'article"?></title>
+    <chapter>
+        <title><?oxy-placeholder content="Entrez ici le titre du premier chapitre"?></title>
         <para><?oxy-placeholder content="Commencez à rédiger 😀 !"?></para>
-    </section>
-</article>
+    </chapter>
+    <part>
+        <title><?oxy-placeholder content="Entrez ici le titre de la première partie (collection de chapitres)"?></title>
+        <chapter>
+            <title><?oxy-placeholder content="Entrez ici le titre du premier chapitre de la partie"?></title>
+            <para><?oxy-placeholder content="Continuez à rédiger 😀 !"?></para>
+        </chapter>
+    </part>
+</book>
