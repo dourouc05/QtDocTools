@@ -31,16 +31,60 @@
 									</poPatch>
 									<poPatch>
 										<field name="fieldPath">
-											<String>authorExtensionDescriptor/cssDescriptors/[2]/alternate</String>
+											<String>authorExtensionDescriptor/cssDescriptors</String>
 										</field>
 										<field name="index">
-											<Integer>-1</Integer>
+											<Integer>2</Integer>
 										</field>
 										<field name="value">
-											<Boolean>false</Boolean>
+											<null/>
 										</field>
 										<field name="patchHandling">
-											<String>set</String>
+											<String>removeIndex</String>
+										</field>
+										<field name="anchor">
+											<String>${baseFramework}/css/docbook_syntax_highlight.css</String>
+										</field>
+									</poPatch>
+									<poPatch>
+										<field name="fieldPath">
+											<String>authorExtensionDescriptor/cssDescriptors</String>
+										</field>
+										<field name="index">
+											<Integer>0</Integer>
+										</field>
+										<field name="value">
+											<null/>
+										</field>
+										<field name="patchHandling">
+											<String>removeIndex</String>
+										</field>
+										<field name="anchor">
+											<String>${baseFramework}/css/docbook.css</String>
+										</field>
+									</poPatch>
+									<poPatch>
+										<field name="fieldPath">
+											<String>authorExtensionDescriptor/cssDescriptors</String>
+										</field>
+										<field name="index">
+											<Integer>0</Integer>
+										</field>
+										<field name="value">
+											<cssFile>
+												<field name="href">
+													<String>${framework}/css/docbook.css</String>
+												</field>
+												<field name="title">
+													<String>Default</String>
+												</field>
+												<field name="alternate">
+													<Boolean>false</Boolean>
+												</field>
+											</cssFile>
+										</field>
+										<field name="patchHandling">
+											<String>addIndex</String>
 										</field>
 										<field name="anchor">
 											<null/>
