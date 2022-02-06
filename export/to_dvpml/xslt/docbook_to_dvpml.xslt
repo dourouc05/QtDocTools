@@ -152,21 +152,23 @@
     </xsl:variable>
     
     <!-- TODO: generate the URL based on the configuration. -->
-    <paragraph>
-      <link href="http://bullshit#{$sectionId}">
-        <xsl:value-of select="$sectionId"/>
-        <xsl:text>. </xsl:text>
-        <xsl:value-of select="db:title | db:info/db:title"/>
-      </link>
-    </paragraph>
+    <element useText="0">
+      <paragraph>
+        <link href="http://bullshit#{$sectionId}">
+          <xsl:value-of select="$sectionId"/>
+          <xsl:text>. </xsl:text>
+          <xsl:value-of select="db:title | db:info/db:title"/>
+        </link>
+      </paragraph>
     
-    <xsl:if test="./db:section">
-      <liste useText="0">
-        <xsl:for-each select="./db:section">
-          <xsl:apply-templates select="." mode="document-toc"/>
-        </xsl:for-each>
-      </liste>
-    </xsl:if>
+      <xsl:if test="./db:section">
+        <liste>
+          <xsl:for-each select="./db:section">
+            <xsl:apply-templates select="." mode="document-toc"/>
+          </xsl:for-each>
+        </liste>
+      </xsl:if>
+    </element>
   </xsl:template>
   
   <xsl:template match="db:article">
