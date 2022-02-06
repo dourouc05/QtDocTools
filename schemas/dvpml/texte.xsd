@@ -691,7 +691,7 @@
 				<xs:documentation>
 					Si vous ne trouvez pas le langage qui vous intéresse, par défaut mettez de préférence
 					'other', 'text' ou 'perso' (lesquels donneront le même résultat). Il vous est possible de combler 
-					ce manque. Pour cela consultez le forum outils et http://vedaer.developpez.com/projets/coloration/
+					ce manque. Pour cela consultez le forum outils et https://vedaer.developpez.com/projets/coloration/
 				</xs:documentation>
 				<xs:documentation>
 					Remarque : Certains langages ont des alias tels que cpp et c++, csharp et c#...
@@ -1008,7 +1008,7 @@
 				<xs:documentation>
 					Si vous ne trouvez pas le langage qui vous intéresse, par défaut mettez de préférence
 					'other', 'text' ou 'perso' (lesquels donneront le même résultat). Il vous est possible de combler 
-					ce manque. Pour cela consultez le forum outils et http://vedaer.developpez.com/projets/coloration/
+					ce manque. Pour cela consultez le forum outils et https://vedaer.developpez.com/projets/coloration/
 				</xs:documentation>
 				<xs:documentation>
 					Remarque : Certains langages ont des alias tels que cpp et c++, csharp et c#...
@@ -1033,13 +1033,16 @@
 					grâce à la possibilité de mettre une valeur arbitraire. 
 				-->
 				<xs:restriction base="xs:string">
+					<xs:enumeration value="_4D" />
 					<xs:enumeration value="actionscript" />
 					<xs:enumeration value="ada95" />
 					<xs:enumeration value="al" />
+					<xs:enumeration value="algo" />
 					<xs:enumeration value="antlr" />
 					<xs:enumeration value="apacheconf" />
 					<xs:enumeration value="apdl" />
 					<xs:enumeration value="applescript" />
+					<xs:enumeration value="arduino" />
 					<xs:enumeration value="as" />
 					<xs:enumeration value="asp" />
 					<xs:enumeration value="aspect-j" />
@@ -1088,6 +1091,7 @@
 					<xs:enumeration value="embperl" />
 					<xs:enumeration value="erlang" />
 					<xs:enumeration value="factor" />
+					<xs:enumeration value="formule" />
 					<xs:enumeration value="forth" />
 					<xs:enumeration value="fortran" />
 					<xs:enumeration value="foxpro" />
@@ -1095,6 +1099,7 @@
 					<xs:enumeration value="freemarker" />
 					<xs:enumeration value="fsharp" />
 					<xs:enumeration value="gettext" />
+					<xs:enumeration value="gherkin" />
 					<xs:enumeration value="glsl" />
 					<xs:enumeration value="gnuplot" />
 					<xs:enumeration value="go" />
@@ -1120,9 +1125,11 @@
 					<xs:enumeration value="jhtml" />
 					<xs:enumeration value="jmk" />
 					<xs:enumeration value="js" />
+					<xs:enumeration value="jsf" />
 					<xs:enumeration value="json" />
 					<xs:enumeration value="jsp" />
 					<xs:enumeration value="jsx" />
+					<xs:enumeration value="julia" />
 					<xs:enumeration value="kotlin" />
 					<xs:enumeration value="latex" />
 					<xs:enumeration value="lilypond" />
@@ -1134,6 +1141,7 @@
 					<xs:enumeration value="mail" />
 					<xs:enumeration value="makefile" />
 					<xs:enumeration value="maple" />
+					<xs:enumeration value="markdown" />
 					<xs:enumeration value="mathematica" />
 					<xs:enumeration value="matlab" />
 					<xs:enumeration value="ml" />
@@ -1181,6 +1189,7 @@
 					<xs:enumeration value="pyrex" />
 					<xs:enumeration value="python" />
 					<xs:enumeration value="qml" />
+					<xs:enumeration value="qdoc" />
 					<xs:enumeration value="qt" />
 					<xs:enumeration value="qt-pro" />
 					<xs:enumeration value="r" />
@@ -1236,6 +1245,7 @@
 					<xs:enumeration value="velocity" />
 					<xs:enumeration value="verilog" />
 					<xs:enumeration value="vhdl" />
+					<xs:enumeration value="vue" />
 					<xs:enumeration value="windev" />
 					<xs:enumeration value="xml" />
 					<xs:enumeration value="xq" />
