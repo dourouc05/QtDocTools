@@ -47,6 +47,8 @@
   </xsl:template>
   
   <xsl:template match="db:book" mode="book_root">
+    <!-- TODO: think about using this specific machinery only if there are parts. If there are only chapters, the existing mechanisms in DvpML are sufficient. -->
+    
     <document>
       <entete>
         <rubrique><xsl:value-of select="$section"/></rubrique>
@@ -97,18 +99,20 @@
       </xsl:call-template>
       <xsl:call-template name="tc:document-related-from-parameters"/>
       
-      <synopsis>
-        <!-- voiraussi is not implemented (book is not used for Qt's documentation). -->
-        <!-- This simplifies a lot this code. -->
-        <xsl:for-each select="db:info/db:abstract/db:para">
-          <xsl:apply-templates mode="content" select="."/>
-        </xsl:for-each>
-          
-        <xsl:call-template name="tc:document-abstract-obsoleted-by">
-          <xsl:with-param name="info" select="db:info"/>
-        </xsl:call-template>
-        <xsl:call-template name="tc:document-abstract-forum-link-from-parameters"/>
-      </synopsis>
+      <xsl:if test="count(db:info/db:abstract/child::node()) &gt; 0 or tc:has-document-abstract-obsoleted-by(db:info) or tc:has-document-abstract-forum-link-from-parameters()">
+        <synopsis>
+          <!-- voiraussi is not implemented (book is not used for Qt's documentation). -->
+          <!-- This simplifies a lot this code. -->
+          <xsl:for-each select="db:info/db:abstract/child::node()">
+            <xsl:apply-templates mode="content" select="."/>
+          </xsl:for-each>
+            
+          <xsl:call-template name="tc:document-abstract-obsoleted-by">
+            <xsl:with-param name="info" select="db:info"/>
+          </xsl:call-template>
+          <xsl:call-template name="tc:document-abstract-forum-link-from-parameters"/>
+        </synopsis>
+      </xsl:if>
       
       <summary>
         <!-- Generate the table of contents. -->
@@ -408,6 +412,11 @@
     </xsl:if>
   </xsl:template>
   
+  <xsl:function name="tc:has-document-abstract-obsoleted-by" as="xs:boolean">
+    <xsl:param name="info" as="element(db:info)"/>
+    <xsl:sequence select="count($info/db:bibliorelation[@class='uri' and @type='isreplacedby']) &gt; 0"/>
+  </xsl:function>
+  
   <xsl:template name="tc:document-abstract-obsoleted-by">
     <xsl:param name="info" as="element(db:info)"/>
     
@@ -423,6 +432,10 @@
     </xsl:if>
   </xsl:template>
   
+  <xsl:function name="tc:has-document-abstract-forum-link-from-parameters" as="xs:boolean">
+    <xsl:sequence select="$forum-topic > 0"/>
+  </xsl:function>
+  
   <xsl:template name="tc:document-abstract-forum-link-from-parameters">
     <xsl:choose>
       <xsl:when test="$forum-topic > 0">
@@ -435,7 +448,7 @@
         </paragraph>
       </xsl:when>
       <xsl:when test="$forum-post > 0">
-        <xsl:message>WARNING: a forum post is present, but not a forum topic.</xsl:message>
+        <xsl:message>WARNING: a forum post ID is present, but not a forum topic ID.</xsl:message>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
