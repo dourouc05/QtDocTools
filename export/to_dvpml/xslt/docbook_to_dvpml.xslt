@@ -8,7 +8,7 @@
   
   <xsl:output method="xml" indent="yes" suppress-indentation="inline link i b paragraph code"/>
   <xsl:import-schema schema-location="../../../schemas/dvpml/article.xsd" use-when="system-property('xsl:is-schema-aware')='yes'"/>
-  
+  <!-- Global sheet parameters, mostly used to fill the header. -->
   <xsl:param name="document-file-name" as="xs:string" select="''"/>
   <xsl:param name="configuration-file-name" as="xs:string" select="''"/>
   <xsl:param name="doc-qt" as="xs:boolean" select="false()"/>
@@ -26,10 +26,10 @@
   
   <xsl:template match="db:book">
     <xsl:if test="string-length($document-file-name) = 0">
-      <xsl:message>WARNING: Missing parameter document-file-name.</xsl:message>
+      <xsl:message>ERROR: Missing parameter document-file-name.</xsl:message>
     </xsl:if>
     <xsl:if test="ends-with($document-file-name, '.xml')">
-      <xsl:message>WARNING: Parameter document-file-name should not have an extension.</xsl:message>
+      <xsl:message>WARNING: Parameter document-file-name should not have an extension, as the name for other files is determined based on this value.</xsl:message>
     </xsl:if>
     
     <!-- Main document. -->
