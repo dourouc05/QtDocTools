@@ -31,6 +31,23 @@
 									</poPatch>
 									<poPatch>
 										<field name="fieldPath">
+											<String>authorExtensionDescriptor/cssDescriptors/[2]/alternate</String>
+										</field>
+										<field name="index">
+											<Integer>-1</Integer>
+										</field>
+										<field name="value">
+											<Boolean>false</Boolean>
+										</field>
+										<field name="patchHandling">
+											<String>set</String>
+										</field>
+										<field name="anchor">
+											<null/>
+										</field>
+									</poPatch>
+									<poPatch>
+										<field name="fieldPath">
 											<String>authorExtensionDescriptor/actionDescriptors</String>
 										</field>
 										<field name="index">
@@ -334,6 +351,23 @@
 											<String>scenarios</String>
 										</field>
 										<field name="index">
+											<Integer>11</Integer>
+										</field>
+										<field name="value">
+											<null/>
+										</field>
+										<field name="patchHandling">
+											<String>removeIndex</String>
+										</field>
+										<field name="anchor">
+											<String>DocBook PDF (Show Change Tracking and Comments)</String>
+										</field>
+									</poPatch>
+									<poPatch>
+										<field name="fieldPath">
+											<String>scenarios</String>
+										</field>
+										<field name="index">
 											<Integer>10</Integer>
 										</field>
 										<field name="value">
@@ -361,6 +395,288 @@
 										</field>
 										<field name="anchor">
 											<String>DocBook to DITA</String>
+										</field>
+									</poPatch>
+									<poPatch>
+										<field name="fieldPath">
+											<String>scenarios</String>
+										</field>
+										<field name="index">
+											<Integer>5</Integer>
+										</field>
+										<field name="value">
+											<antScenario>
+												<field name="additionalAntArgs">
+													<String></String>
+												</field>
+												<field name="buildTarget">
+													<String></String>
+												</field>
+												<field name="buildFilePath">
+													<String>${baseFrameworkDir}/xsl/fo-oxy-ct/build.xml</String>
+												</field>
+												<field name="ditaParams">
+													<list>
+														<antParameter>
+															<field name="name">
+																<String>currentFile</String>
+															</field>
+															<field name="description">
+																<String></String>
+															</field>
+															<field name="value">
+																<String>${cf}</String>
+															</field>
+															<field name="defaultValue">
+																<null/>
+															</field>
+															<field name="type">
+																<Integer>5</Integer>
+															</field>
+															<field name="possibleValues">
+																<null/>
+															</field>
+															<field name="possibleValuesDescriptions">
+																<null/>
+															</field>
+														</antParameter>
+														<antParameter>
+															<field name="name">
+																<String>currentFileFolder</String>
+															</field>
+															<field name="description">
+																<String></String>
+															</field>
+															<field name="value">
+																<String>${cfd}</String>
+															</field>
+															<field name="defaultValue">
+																<null/>
+															</field>
+															<field name="type">
+																<Integer>5</Integer>
+															</field>
+															<field name="possibleValues">
+																<null/>
+															</field>
+															<field name="possibleValuesDescriptions">
+																<null/>
+															</field>
+														</antParameter>
+														<antParameter>
+															<field name="name">
+																<String>outputFileName</String>
+															</field>
+															<field name="description">
+																<String></String>
+															</field>
+															<field name="value">
+																<String>${cfn}</String>
+															</field>
+															<field name="defaultValue">
+																<null/>
+															</field>
+															<field name="type">
+																<Integer>5</Integer>
+															</field>
+															<field name="possibleValues">
+																<null/>
+															</field>
+															<field name="possibleValuesDescriptions">
+																<null/>
+															</field>
+														</antParameter>
+														<antParameter>
+															<field name="name">
+																<String>show.changes.and.comments</String>
+															</field>
+															<field name="description">
+																<String></String>
+															</field>
+															<field name="value">
+																<String>yes</String>
+															</field>
+															<field name="defaultValue">
+																<null/>
+															</field>
+															<field name="type">
+																<Integer>5</Integer>
+															</field>
+															<field name="possibleValues">
+																<null/>
+															</field>
+															<field name="possibleValuesDescriptions">
+																<null/>
+															</field>
+														</antParameter>
+													</list>
+												</field>
+												<field name="jvmArgs">
+													<String>-Xmx256m</String>
+												</field>
+												<field name="useCustomJavaHome">
+													<Boolean>false</Boolean>
+												</field>
+												<field name="customJavaHomeDir">
+													<String></String>
+												</field>
+												<field name="useCustomANTHome">
+													<Boolean>false</Boolean>
+												</field>
+												<field name="customANTHomeDir">
+													<String></String>
+												</field>
+												<field name="workingDir">
+													<String>${cfd}</String>
+												</field>
+												<field name="showConsoleAlways">
+													<Boolean>true</Boolean>
+												</field>
+												<field name="advancedOptionsMap">
+													<null/>
+												</field>
+												<field name="name">
+													<String>DocBook PDF (Show Change Tracking and Comments)</String>
+												</field>
+												<field name="baseURL">
+													<null/>
+												</field>
+												<field name="footerURL">
+													<null/>
+												</field>
+												<field name="fOPMethod">
+													<null/>
+												</field>
+												<field name="fOProcessorName">
+													<null/>
+												</field>
+												<field name="headerURL">
+													<null/>
+												</field>
+												<field name="inputXSLURL">
+													<null/>
+												</field>
+												<field name="inputXMLURL">
+													<null/>
+												</field>
+												<field name="defaultScenario">
+													<Boolean>false</Boolean>
+												</field>
+												<field name="isFOPPerforming">
+													<Boolean>false</Boolean>
+												</field>
+												<field name="type">
+													<String>ANT</String>
+												</field>
+												<field name="saveAs">
+													<Boolean>true</Boolean>
+												</field>
+												<field name="openInBrowser">
+													<Boolean>true</Boolean>
+												</field>
+												<field name="outputResource">
+													<null/>
+												</field>
+												<field name="openOtherLocationInBrowser">
+													<Boolean>true</Boolean>
+												</field>
+												<field name="locationToOpenInBrowserURL">
+													<String>${cfd}/${cfn}.pdf</String>
+												</field>
+												<field name="openInEditor">
+													<Boolean>false</Boolean>
+												</field>
+												<field name="showInHTMLPane">
+													<Boolean>false</Boolean>
+												</field>
+												<field name="showInXMLPane">
+													<Boolean>false</Boolean>
+												</field>
+												<field name="showInSVGPane">
+													<Boolean>false</Boolean>
+												</field>
+												<field name="showInResultSetPane">
+													<Boolean>false</Boolean>
+												</field>
+												<field name="useXSLTInput">
+													<Boolean>false</Boolean>
+												</field>
+												<field name="xsltParams">
+													<list/>
+												</field>
+												<field name="cascadingStylesheets">
+													<String-array/>
+												</field>
+												<field name="xslTransformer">
+													<String>ANT</String>
+												</field>
+												<field name="extensionURLs">
+													<String-array>
+														<String>${oxygenHome}/classes/</String>
+														<String>${oxygenHome}/lib/oxygenCommons.jar</String>
+														<String>${oxygenHome}/lib/oxygen.jar</String>
+														<String>${oxygenHome}/lib/oxygenAuthor.jar</String>
+														<String>${oxygenHome}/lib/oxygenDeveloper.jar</String>
+														<String>${oxygenHome}/lib/oxygenEclipse.jar</String>
+														<String>${oxygenHome}/lib/oxygenAuthorEclipse.jar</String>
+														<String>${oxygenHome}/lib/oxygenDeveloperEclipse.jar</String>
+														<String>${oxygenHome}/lib/oxygen-basic-utilities.jar</String>
+														<String>${oxygenHome}/lib/oxygen-editor-variables-parser.jar</String>
+														<String>${oxygenHome}/lib/*saxon*9*.jar</String>
+														<String>${oxygenHome}/lib/*saxon*6*.jar</String>
+														<String>${oxygenHome}/lib/*log4j*.jar</String>
+														<String>${oxygenHome}/lib/*xerces*.jar</String>
+														<String>${oxygenHome}/lib/*fop.jar</String>
+														<String>${oxygenHome}/lib/commons-logging-*.jar</String>
+														<String>${oxygenHome}/lib/*xmlgraphics*.jar</String>
+														<String>${oxygenHome}/lib/*commons-io*.jar</String>
+														<String>${oxygenHome}/lib/*batik*.jar</String>
+														<String>${oxygenHome}/lib/*resolver.jar</String>
+														<String>${oxygenHome}/lib/xml-apis.jar</String>
+														<String>${oxygenHome}/lib/*jeuclid*.jar</String>
+													</String-array>
+												</field>
+											</antScenario>
+										</field>
+										<field name="patchHandling">
+											<String>addIndex</String>
+										</field>
+										<field name="anchor">
+											<null/>
+										</field>
+									</poPatch>
+									<poPatch>
+										<field name="fieldPath">
+											<String>scenarios</String>
+										</field>
+										<field name="index">
+											<Integer>3</Integer>
+										</field>
+										<field name="value">
+											<null/>
+										</field>
+										<field name="patchHandling">
+											<String>removeIndex</String>
+										</field>
+										<field name="anchor">
+											<String>DocBook HTML - Chunk</String>
+										</field>
+									</poPatch>
+									<poPatch>
+										<field name="fieldPath">
+											<String>scenarios</String>
+										</field>
+										<field name="index">
+											<Integer>2</Integer>
+										</field>
+										<field name="value">
+											<null/>
+										</field>
+										<field name="patchHandling">
+											<String>removeIndex</String>
+										</field>
+										<field name="anchor">
+											<String>DocBook HTML</String>
 										</field>
 									</poPatch>
 									<poPatch>
@@ -399,33 +715,13 @@
 									</poPatch>
 									<poPatch>
 										<field name="fieldPath">
-											<String>defaultTransformationScenarios</String>
-										</field>
-										<field name="index">
-											<Integer>-1</Integer>
-										</field>
-										<field name="value">
-											<list>
-												<String>DocBook PDF</String>
-												<String>DocBook PDF (Show Change Tracking and Comments)</String>
-											</list>
-										</field>
-										<field name="patchHandling">
-											<String>set</String>
-										</field>
-										<field name="anchor">
-											<null/>
-										</field>
-									</poPatch>
-									<poPatch>
-										<field name="fieldPath">
 											<String>priority</String>
 										</field>
 										<field name="index">
 											<Integer>-1</Integer>
 										</field>
 										<field name="value">
-											<Integer>3</Integer>
+											<Integer>4</Integer>
 										</field>
 										<field name="patchHandling">
 											<String>set</String>
