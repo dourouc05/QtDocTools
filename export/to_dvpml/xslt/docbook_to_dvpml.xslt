@@ -85,11 +85,10 @@
         <date><xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/></date>
         <miseajour><xsl:value-of select="tc:format-date(db:info/date, 'date')"/></miseajour>
         
-        <xsl:call-template name="tc:document-entete-from-parameters"/>
-        
-        <!-- Avoid generating a table of contents, as this page only contains a table of contents for the whole book. -->
-        <nosummary/>
-        <nosummarypage/>
+        <xsl:call-template name="tc:document-entete-from-parameters">
+          <!-- Avoid generating a table of contents, as this page only contains a table of contents for the whole book. -->
+          <xsl:with-param name="generate-summary" select="false()"/>
+        </xsl:call-template>
       </entete>
       
       <xsl:call-template name="tc:document-license-from-parameters"/>
@@ -292,6 +291,8 @@
   </xsl:function>
   
   <xsl:template name="tc:document-entete-from-parameters">
+    <xsl:param name="generate-summary" as="xs:boolean" select="true()"/>
+    
     <xsl:if test="$doc-qt">
       <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php'); include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
     </xsl:if>
@@ -332,6 +333,11 @@
         <xsl:message>WARNING: FTP information missing.</xsl:message>
       </xsl:otherwise>
     </xsl:choose>
+    
+    <xsl:if test="$generate-summary">
+      <nosummary/>
+      <nosummarypage/>
+    </xsl:if>
     
     <nopdf/>
     <nozip/>
