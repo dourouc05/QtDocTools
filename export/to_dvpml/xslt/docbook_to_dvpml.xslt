@@ -115,7 +115,7 @@
       </xsl:if>
       
       <summary>
-        <!-- Generate the table of contents. -->
+        <!-- Generate the table of contents: first, solo chapters; then, parts (as subsections, one subsection per part). -->
         <section id="I" noNumber="1">
           <title>Table des matières</title>
           
@@ -127,14 +127,16 @@
           
           <xsl:for-each select="db:part">
             <section id="{position()}">
-              <title><xsl:value-of select="db:title | db:info/db:title"/></title>
+              <!-- TODO: see TODO for document-toc -->
+              <title><xsl:value-of select="(db:title | db:info/db:title)/text()"/></title>
               
-              <!-- TODO: generate the URL based on the configuration. -->
+              <!-- TODO: generate the URL based on the configuration instead of bullshit. -->
               <paragraph>
                 <link href="http://bullshit#{position()}">
                   <xsl:value-of select="position()"/>
                   <xsl:text>. </xsl:text>
-                  <xsl:value-of select="db:title | db:info/db:title"/>
+                  <!-- TODO: see TODO for document-toc -->
+                  <xsl:value-of select="(db:title | db:info/db:title)/text()"/>
                 </link>
               </paragraph>
               
@@ -160,7 +162,8 @@
         <link href="http://bullshit#{$sectionId}">
           <xsl:value-of select="$sectionId"/>
           <xsl:text>. </xsl:text>
-          <xsl:value-of select="db:title | db:info/db:title"/>
+          <!-- TODO: text() allows to only select the true title when there are indexterm, but not for formatting. Formatting should be kept intact, while some tags like indexterm should be eliminated -->
+          <xsl:value-of select="(db:title | db:info/db:title)/text()"/>
         </link>
       </paragraph>
     
