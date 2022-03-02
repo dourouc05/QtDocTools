@@ -38,16 +38,17 @@
     </xsl:result-document>
     
     <!-- Iterate over parts and chapters, each in its own file. -->
-    <xsl:for-each select="db:part">
-      <xsl:apply-templates mode="book_root" select="."/>
-    </xsl:for-each>
     <xsl:for-each select=".//db:chapter">
+      <xsl:apply-templates mode="chapter_root" select="."/>
+    </xsl:for-each>
+    <xsl:for-each select="db:part">
+      <!-- TODO: as there are no subparts, generate one multipage article per part. -->
       <xsl:apply-templates mode="book_root" select="."/>
     </xsl:for-each>
   </xsl:template>
   
   <xsl:template match="db:book" mode="book_root">
-    <!-- TODO: think about using this specific machinery only if there are parts. If there are only chapters, the existing mechanisms in DvpML are sufficient. -->
+    <!-- TODO: think about using this specific machinery only if there are parts. If there are only chapters, the existing mechanisms in DvpML are sufficient (multipage article). -->
     
     <document>
       <entete>
@@ -58,8 +59,11 @@
               <xsl:when test="db:info/db:abstract/db:para">
                 <xsl:value-of select="db:info/db:abstract/db:para[1]/text()"/>
               </xsl:when>
-              <xsl:otherwise>
+              <xsl:when test="db:info/db:title">
                 <xsl:value-of select="db:info/db:title"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="db:title"/>
               </xsl:otherwise>
             </xsl:choose>
           </description>
@@ -178,7 +182,7 @@
       </xsl:if>
     </element>
   </xsl:template>
-  
+    
   <xsl:template match="db:article">
     <xsl:result-document validation="lax">
       <document>
@@ -190,8 +194,11 @@
                 <xsl:when test="db:info/db:abstract/db:para">
                   <xsl:value-of select="db:info/db:abstract/db:para[1]/text()"/>
                 </xsl:when>
-                <xsl:otherwise>
+                <xsl:when test="db:info/db:title">
                   <xsl:value-of select="db:info/db:title"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="db:title"/>
                 </xsl:otherwise>
               </xsl:choose>
             </description>
