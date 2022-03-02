@@ -151,7 +151,7 @@
       <xsl:when test="db:part">
         <!-- Main document: table of contents and first few chapters (outside parts). -->
         <xsl:result-document validation="lax" href="{$document-file-name}_dvp.xml">
-          <xsl:apply-templates mode="book_root" select="."/>
+          <xsl:apply-templates mode="book-root" select="."/>
         </xsl:result-document>
         
         <!-- Iterate over parts, each in its own file. -->
@@ -166,7 +166,7 @@
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template match="db:book" mode="book_root">
+  <xsl:template match="db:book" mode="book-root">
     <document>
       <entete>
         <rubrique><xsl:value-of select="$section"/></rubrique>
@@ -303,7 +303,7 @@
     </element>
   </xsl:template>
   
-  <xsl:template match="db:chapter" mode="chapter_root">
+  <xsl:template match="db:chapter" mode="chapter-root">
     <xsl:result-document validation="lax">
       <document>
         <entete>
