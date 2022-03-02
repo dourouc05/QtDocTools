@@ -32,26 +32,27 @@
       <xsl:message>WARNING: Parameter document-file-name should not have an extension, as the name for other files is determined based on this value.</xsl:message>
     </xsl:if>
     
-    <!-- Main document. -->
-    <xsl:result-document validation="lax" href="{$document-file-name}_dvp.xml">
-      <xsl:apply-templates mode="book_root" select="."/>
-    </xsl:result-document>
-    
-    <!-- Iterate over parts and chapters, each in its own file. -->
-    <xsl:for-each select="db:chapter">
-      <xsl:result-document validation="lax" href="{$document-file-name}_chap_{position()}_dvp.xml">
-        <xsl:apply-templates mode="chapter_root" select="."/>
-      </xsl:result-document>
-    </xsl:for-each>
-    <xsl:for-each select="db:part">
-      <!-- TODO: as there are no subparts, generate one multipage article per part. -->
-      <xsl:apply-templates mode="book_root" select="."/>
-    </xsl:for-each>
+    <xsl:choose>
+      <!-- When there are parts, generate one article per part (the first chapters, not within any part, will be output in the first file, with the table of contents). -->
+      <xsl:when test="db:part">
+        <!-- Main document: table of contents and first few chapters (outside parts). -->
+        <xsl:result-document validation="lax" href="{$document-file-name}_dvp.xml">
+          <xsl:apply-templates mode="book_root" select="."/>
+        </xsl:result-document>
+        
+        <!-- Iterate over parts, each in its own file. -->
+        <xsl:for-each select="db:part">
+          <xsl:result-document validation="lax" href="{$document-file-name}_part_{position() + 1}_dvp.xml">
+            <xsl:apply-templates mode="part_root" select="."/>
+          </xsl:result-document>
+        </xsl:for-each>
+      </xsl:when>
+      <!-- When there are only chapters, use the default mechanisms. -->
+      <xsl:otherwise></xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template match="db:book" mode="book_root">
-    <!-- TODO: think about using this specific machinery only if there are parts. If there are only chapters, the existing mechanisms in DvpML are sufficient (multipage article). -->
-    
     <document>
       <entete>
         <rubrique><xsl:value-of select="$section"/></rubrique>
