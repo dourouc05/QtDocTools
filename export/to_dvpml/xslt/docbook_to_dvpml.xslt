@@ -24,6 +24,117 @@
   <xsl:param name="google-analytics" as="xs:string" select="''"/>
   <xsl:param name="related" as="xs:string" select="''"/>
   
+  <xsl:template match="db:article">
+    <xsl:result-document validation="lax">
+      <document>
+        <entete>
+          <rubrique><xsl:value-of select="$section"/></rubrique>
+          <meta>
+            <description>
+              <xsl:choose>
+                <xsl:when test="db:info/db:abstract/db:para">
+                  <xsl:value-of select="db:info/db:abstract/db:para[1]/text()"/>
+                </xsl:when>
+                <xsl:when test="db:info/db:title">
+                  <xsl:value-of select="db:info/db:title"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="db:title"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </description>
+            <keywords>
+              <xsl:choose>
+                <xsl:when test="db:info/db:keywordset">
+                  <xsl:for-each select="db:info/db:keywordset/db:keyword">
+                    <xsl:value-of select="."/>
+                    <xsl:if test="position() &lt; last()">
+                      <xsl:value-of select="','"/>
+                    </xsl:if>
+                  </xsl:for-each>
+                </xsl:when>
+                <xsl:when test="db:info/db:title">
+                  <xsl:value-of select="translate(translate(db:info/db:title, ',', ''), ' ', ',')"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="translate(translate(db:title, ',', ''), ' ', ',')"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </keywords>
+          </meta>
+          
+          <titre>
+            <page><xsl:value-of select="db:info/db:title"/></page>
+            <article><xsl:value-of select="db:info/db:title"/></article>
+          </titre>
+          <date><xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/></date>
+          <miseajour><xsl:value-of select="tc:format-date(db:info/date, 'date')"/></miseajour>
+          
+          <xsl:call-template name="tc:document-entete-from-parameters"/>
+        </entete>
+        
+        <xsl:call-template name="tc:document-license-from-parameters"/>
+        <xsl:call-template name="tc:document-see-also">
+          <xsl:with-param name="info" select="db:info"/>
+        </xsl:call-template>
+        <xsl:call-template name="tc:document-authors">
+          <xsl:with-param name="info" select="db:info"/>
+        </xsl:call-template>
+        <xsl:call-template name="tc:document-related-from-parameters"/>
+        
+        <synopsis>
+          <xsl:variable name="abstractParagraphs" as="node()*">
+            <xsl:choose>
+              <xsl:when test="not($doc-qt) or (db:info/db:abstract/db:para[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and string-length(text()[1]) > 0])">
+                <!-- The abstract has paragraphs with something else than links to linked documents, great! -->
+                <!-- (Linked documents are only available for Qt documentation.) -->
+                <!-- Most normal case. -->
+                
+                <!-- <db:simplelist> is already eaten for <voiraussi>. -->
+                <xsl:copy-of select="db:info/db:abstract/db:para[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and text()]"/>
+              </xsl:when>
+              <xsl:when test="db:info/following-sibling::*[1][self::db:para]">
+                <!-- Just links in the DocBook abstract, but something resembling an abstract -->
+                <!-- (paragraphs before the first section). -->
+                <xsl:variable name="tentative" select="db:info/following-sibling::*[not(preceding-sibling::db:section) and not(self::db:section)]"/>
+                <xsl:copy-of select="if (count($tentative) &lt; count(db:info/following-sibling::*)) then $tentative else $tentative[1]"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <!-- Nothing to do, sorry about that... -->
+                <db:para/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:variable>
+          
+          <xsl:for-each select="$abstractParagraphs">
+            <xsl:apply-templates mode="content" select="."/>
+          </xsl:for-each>
+          
+          <xsl:call-template name="tc:document-abstract-obsoleted-by">
+            <xsl:with-param name="info" select="db:info"/>
+          </xsl:call-template>
+          <xsl:call-template name="tc:document-abstract-forum-link-from-parameters"/>
+        </synopsis>
+        
+        <summary>
+          <xsl:choose>
+            <xsl:when test="not(child::*[2][self::db:section])">
+              <!-- A document must have a section in DvpML, not necessarily in DocBook. -->
+              <section id="I" noNumber="1">
+                <title><xsl:value-of select="db:info/db:title"/></title>
+                
+                <xsl:apply-templates mode="content" select="./*"/>
+              </section>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:apply-templates mode="content" select="./*"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </summary>
+      </document>
+    </xsl:result-document>
+  </xsl:template>
+  
   <xsl:template match="db:book">
     <xsl:if test="string-length($document-file-name) = 0">
       <xsl:message>ERROR: Missing parameter document-file-name.</xsl:message>
@@ -298,118 +409,7 @@
       </document>
     </xsl:result-document>
   </xsl:template>
-  
-  <xsl:template match="db:article">
-    <xsl:result-document validation="lax">
-      <document>
-        <entete>
-          <rubrique><xsl:value-of select="$section"/></rubrique>
-          <meta>
-            <description>
-              <xsl:choose>
-                <xsl:when test="db:info/db:abstract/db:para">
-                  <xsl:value-of select="db:info/db:abstract/db:para[1]/text()"/>
-                </xsl:when>
-                <xsl:when test="db:info/db:title">
-                  <xsl:value-of select="db:info/db:title"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="db:title"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </description>
-            <keywords>
-              <xsl:choose>
-                <xsl:when test="db:info/db:keywordset">
-                  <xsl:for-each select="db:info/db:keywordset/db:keyword">
-                    <xsl:value-of select="."/>
-                    <xsl:if test="position() &lt; last()">
-                      <xsl:value-of select="','"/>
-                    </xsl:if>
-                  </xsl:for-each>
-                </xsl:when>
-                <xsl:when test="db:info/db:title">
-                  <xsl:value-of select="translate(translate(db:info/db:title, ',', ''), ' ', ',')"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="translate(translate(db:title, ',', ''), ' ', ',')"/>
-                </xsl:otherwise>
-              </xsl:choose>
-            </keywords>
-          </meta>
-          
-          <titre>
-            <page><xsl:value-of select="db:info/db:title"/></page>
-            <article><xsl:value-of select="db:info/db:title"/></article>
-          </titre>
-          <date><xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/></date>
-          <miseajour><xsl:value-of select="tc:format-date(db:info/date, 'date')"/></miseajour>
-          
-          <xsl:call-template name="tc:document-entete-from-parameters"/>
-        </entete>
-        
-        <xsl:call-template name="tc:document-license-from-parameters"/>
-        <xsl:call-template name="tc:document-see-also">
-          <xsl:with-param name="info" select="db:info"/>
-        </xsl:call-template>
-        <xsl:call-template name="tc:document-authors">
-          <xsl:with-param name="info" select="db:info"/>
-        </xsl:call-template>
-        <xsl:call-template name="tc:document-related-from-parameters"/>
-        
-        <synopsis>
-          <xsl:variable name="abstractParagraphs" as="node()*">
-            <xsl:choose>
-              <xsl:when test="not($doc-qt) or (db:info/db:abstract/db:para[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and string-length(text()[1]) > 0])">
-                <!-- The abstract has paragraphs with something else than links to linked documents, great! -->
-                <!-- (Linked documents are only available for Qt documentation.) -->
-                <!-- Most normal case. -->
-                
-                <!-- <db:simplelist> is already eaten for <voiraussi>. -->
-                <xsl:copy-of select="db:info/db:abstract/db:para[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and text()]"/>
-              </xsl:when>
-              <xsl:when test="db:info/following-sibling::*[1][self::db:para]">
-                <!-- Just links in the DocBook abstract, but something resembling an abstract -->
-                <!-- (paragraphs before the first section). -->
-                <xsl:variable name="tentative" select="db:info/following-sibling::*[not(preceding-sibling::db:section) and not(self::db:section)]"/>
-                <xsl:copy-of select="if (count($tentative) &lt; count(db:info/following-sibling::*)) then $tentative else $tentative[1]"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <!-- Nothing to do, sorry about that... -->
-                <db:para/>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:variable>
-          
-          <xsl:for-each select="$abstractParagraphs">
-            <xsl:apply-templates mode="content" select="."/>
-          </xsl:for-each>
-          
-          <xsl:call-template name="tc:document-abstract-obsoleted-by">
-            <xsl:with-param name="info" select="db:info"/>
-          </xsl:call-template>
-          <xsl:call-template name="tc:document-abstract-forum-link-from-parameters"/>
-        </synopsis>
-        
-        <summary>
-          <xsl:choose>
-            <xsl:when test="not(child::*[2][self::db:section])">
-              <!-- A document must have a section in DvpML, not necessarily in DocBook. -->
-              <section id="I" noNumber="1">
-                <title><xsl:value-of select="db:info/db:title"/></title>
-                
-                <xsl:apply-templates mode="content" select="./*"/>
-              </section>
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:apply-templates mode="content" select="./*"/>
-            </xsl:otherwise>
-          </xsl:choose>
-        </summary>
-      </document>
-    </xsl:result-document>
-  </xsl:template>
-  
+    
   <xsl:function name="tc:format-date">
     <xsl:param name="date" as="node()?"/>
     <xsl:param name="tag-name" as="xs:string"/>
