@@ -276,7 +276,7 @@
     </document>
   </xsl:template>
   
-  <xsl:template mode="document-toc" match="db:chapter | db:section">
+  <xsl:template match="db:chapter | db:section" mode="document-toc">
     <!-- TODO: does not work with sect1/sect6. -->
     <xsl:variable name="sectionId">
       <xsl:number level="multiple" format="1"/>
@@ -587,7 +587,7 @@
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template mode="header_author" match="db:author | db:editor | db:othercredit">
+  <xsl:template match="db:author | db:editor | db:othercredit" mode="header_author">
     <xsl:variable name="role" as="xs:string">
       <xsl:choose>
         <xsl:when test="self::db:author">auteur</xsl:when>
