@@ -143,4 +143,28 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+  
+  <xsl:template mode="content" match="db:inlinemediaobject">
+    <image>
+      <xsl:attribute name="src" select="db:imageobject/db:imagedata/@fileref"/>
+      
+      <xsl:if test="db:alt">
+        <xsl:attribute name="alt" select="db:alt"/>
+      </xsl:if>
+      <xsl:if test="db:title">
+        <xsl:attribute name="titre" select="db:title"/>
+      </xsl:if>
+      <xsl:variable name="link" as="xs:string?">
+        <xsl:choose>
+          <xsl:when test="@xlink:href"><xsl:value-of select="@xlink:href"/></xsl:when>
+          <xsl:when test="db:imageobject/@xlink:href"><xsl:value-of select="db:imageobject/@xlink:href"/></xsl:when>
+          <xsl:when test="db:imageobject/@xlink:href"><xsl:value-of select="db:imageobject/@xlink:href"/></xsl:when>
+          <!-- db:imagedata does not have linking attributes. -->
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:if test="string-length($link) &gt; 0">
+        <xsl:attribute name="href" select="$link"/>
+      </xsl:if>
+    </image>
+  </xsl:template>
 </xsl:stylesheet>
