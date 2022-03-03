@@ -79,15 +79,14 @@
     </xsl:if>
     
     <image>
-      <xsl:attribute name="src">
-        <xsl:value-of select="db:mediaobject/db:imageobject/db:imagedata/@fileref"/>
-      </xsl:attribute>
+      <xsl:attribute name="src" select="db:mediaobject/db:imageobject/db:imagedata/@fileref"/>
       
+      <xsl:if test="db:alt">
+        <xsl:attribute name="alt" select="db:alt"/>
+      </xsl:if>
       <!-- A figure must have a title, unlike an informalfigure. -->
       <xsl:if test="db:title">
-        <xsl:attribute name="legende">
-          <xsl:value-of select="db:title"/>
-        </xsl:attribute>
+        <xsl:attribute name="legende" select="db:title"/>
       </xsl:if>
     </image>
   </xsl:template>
