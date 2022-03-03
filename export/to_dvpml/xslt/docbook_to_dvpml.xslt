@@ -150,6 +150,10 @@
   
   <xsl:template match="db:book">
     <xsl:call-template name="tc:check-valid-document-file-name"/>
+    <xsl:if test="$doc-qt">
+      <xsl:message terminate="yes">Qt documentation is not supposed to contain books.</xsl:message>
+    </xsl:if>
+    
     <xsl:choose>
       <!-- When there are parts, generate one article per part (the first chapters, not within any part, will be output in the first file, with the table of contents). -->
       <xsl:when test="db:part">
@@ -233,9 +237,9 @@
       <xsl:call-template name="tc:document-related-from-parameters"/>
       
       <synopsis>
-        <xsl:variable name="abstractParagraphs" as="node()*">
+        <xsl:variable name="abstractParagraphs" as="node()+">
           <xsl:choose>
-            <xsl:when test="not($doc-qt) or (db:info/db:abstract/db:para[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and string-length(text()[1]) > 0])">
+            <xsl:when test="db:info/db:abstract and db:info/db:abstract/db:para[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and string-length(text()[1]) > 0]">
               <!-- The abstract has paragraphs with something else than links to linked documents, great! -->
               <!-- (Linked documents are only available for Qt documentation.) -->
               <!-- Most normal case. -->
@@ -249,12 +253,17 @@
               <xsl:variable name="tentative" select="db:info/following-sibling::*[not(preceding-sibling::db:section) and not(self::db:section)]"/>
               <xsl:copy-of select="if (count($tentative) &lt; count(db:info/following-sibling::*)) then $tentative else $tentative[1]"/>
             </xsl:when>
+            <xsl:when test="db:preface">
+              <xsl:copy-of select="db:preface/node()[not(self::db:title)]"/>
+            </xsl:when>
             <xsl:otherwise>
               <!-- Nothing to do, sorry about that... -->
-              <db:para/>
+              <db:para> </db:para>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
+        
+        <xsl:variable name="test" as="xs:boolean" select="not(db:preface)"/>
         
         <xsl:for-each select="$abstractParagraphs">
           <xsl:apply-templates mode="content" select="."/>
