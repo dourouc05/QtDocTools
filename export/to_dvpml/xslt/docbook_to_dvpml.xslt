@@ -36,6 +36,10 @@
     </xsl:if>
   </xsl:template>
   
+  <xsl:template match="db:set">
+    <xsl:message terminate="yes">ERROR: book sets are not supported.</xsl:message>
+  </xsl:template>
+  
   <xsl:template match="db:article">
     <xsl:call-template name="tc:check-valid-document-file-name"/>
     <xsl:result-document validation="lax" href="{$document-file-name}_dvp.xml">
