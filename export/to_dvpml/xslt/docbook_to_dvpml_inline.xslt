@@ -3,8 +3,8 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:db="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:saxon="http://saxon.sf.net/" xmlns:tc="http://tcuvelier.be"
-  xmlns:map=" http://www.w3.org/2005/xpath-functions/map"
-  exclude-result-prefixes="xsl xs html saxon tc db xlink"
+  xmlns:map="http://www.w3.org/2005/xpath-functions/map"
+  exclude-result-prefixes="xsl xs html saxon tc db xlink map"
   version="3.0">
   <xsl:template mode="content_para" match="db:emphasis">
     <xsl:choose>
