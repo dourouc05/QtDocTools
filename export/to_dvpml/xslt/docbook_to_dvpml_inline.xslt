@@ -144,7 +144,7 @@
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template mode="content" match="db:inlinemediaobject">
+  <xsl:template mode="content_para" match="db:inlinemediaobject">
     <image>
       <xsl:attribute name="src" select="db:imageobject/db:imagedata/@fileref"/>
       
