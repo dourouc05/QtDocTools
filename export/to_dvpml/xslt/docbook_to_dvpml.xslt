@@ -158,6 +158,10 @@
               <xsl:apply-templates mode="content" select="./*"/>
             </xsl:otherwise>
           </xsl:choose>
+          
+          <xsl:if test="db:bibliography">
+            <xsl:apply-templates select="db:bibliography"/>
+          </xsl:if>
         </summary>
       </document>
     </xsl:result-document>
@@ -318,6 +322,10 @@
             <xsl:apply-templates mode="content" select="."/><!-- child::node()[position() &gt; ] -->
           </section>
         </xsl:for-each>
+        
+        <xsl:if test="db:bibliography">
+          <xsl:apply-templates select="db:bibliography"/>
+        </xsl:if>
       </summary>
     </document>
   </xsl:template>
@@ -427,6 +435,13 @@
               </xsl:for-each>
             </section>
           </xsl:for-each>
+          
+          <xsl:if test="db:bibliography">
+            <!-- TODO: generate a true URL. -->
+            <link href="http://bullshit#bibliography">
+              <xsl:text>Bibliography</xsl:text>
+            </link>
+          </xsl:if>
         </section>
       </summary>
     </document>
@@ -815,6 +830,13 @@
         <linkedin><xsl:value-of select="db:uri[@type='linkedin']"/></linkedin>
       </xsl:if>
     </authorDescription>
+  </xsl:template>
+  
+  <xsl:template match="db:bibliography">
+    <section noNumber="1" id="B">
+      <title>Bibliographie</title>
+      <xsl:apply-templates select="." mode="content_bibliography"/>
+    </section>
   </xsl:template>
   
   <!-- Catch-all block for the remaining content that has not been handled with. -->
