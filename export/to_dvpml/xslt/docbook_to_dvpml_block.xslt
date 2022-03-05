@@ -192,13 +192,31 @@
   </xsl:template>
   
   <xsl:template mode="content" match="db:varlistentry">
-    <element useText="0">
-      <b>
-        <xsl:apply-templates mode="content_para" select="term"/>
-      </b>
-      <xsl:text>&#0160;: </xsl:text>
-      <xsl:apply-templates mode="content_para" select="listitem/para"/>
-    </element>
+    <xsl:choose>
+      <xsl:when test="count(db:listitem/node()[not(self::text())]) > 1">
+        <!-- Complex case: several paragraphs in the listitem. Output several paragraphs. -->
+        <element useText="0">
+          <paragraph>
+            <b>
+              <xsl:apply-templates mode="content_para" select="db:term"/>
+            </b>
+            <xsl:text>&#0160;: </xsl:text>
+          </paragraph>
+          
+          <xsl:apply-templates mode="content_para" select="db:listitem/*"/>
+        </element>
+      </xsl:when>
+      <xsl:otherwise>
+        <!-- Simple case: only one paragraph in the listitem. -->
+        <element>
+          <b>
+            <xsl:apply-templates mode="content_para" select="db:term/node()"/>
+          </b>
+          <xsl:text>&#0160;: </xsl:text>
+          <xsl:apply-templates mode="content_para" select="db:listitem/db:para/node()"/>
+        </element>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:template mode="content" match="db:note">
