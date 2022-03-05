@@ -868,6 +868,41 @@
     </paragraph>
   </xsl:template>
   
+  <xsl:template match="db:biblioentry" mode="content_bibliography">
+    <signet id="{@xml:id}">[<xsl:value-of select="$biblioRefs(xs:string(@xml:id))"/>]</signet>
+    <!-- Basic formatting of the entry. -->
+    <!-- If need be, implement something more intelligent, like https://github.com/docbook/xslTNG/blob/main/src/main/xslt/modules/bibliography.xsl. -->
+    <paragraph>
+      <xsl:apply-templates mode="content_bibliography_author"/>, 
+      <xsl:apply-templates mode="content_bibliography_title"/>. 
+    </paragraph>
+  </xsl:template>
+  
+  <xsl:template match="db:authorgroup" mode="content_bibliography_author">
+    <xsl:for-each select="db:author">
+      <xsl:apply-templates mode="content_bibliography_author"/>
+      <xsl:if test="position() != last()">
+        <xsl:text>, </xsl:text>
+      </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
+  
+  <xsl:template match="db:author" mode="content_bibliography_author">
+    <xsl:apply-templates mode="content_para"/>
+  </xsl:template>
+  
+  <xsl:template match="*" mode="content_bibliography_author">
+    <!-- Ignore this. -->
+  </xsl:template>
+  
+  <xsl:template match="db:title" mode="content_bibliography_title">
+    <xsl:apply-templates mode="content_para"/>
+  </xsl:template>
+  
+  <xsl:template match="*" mode="content_bibliography_title">
+    <!-- Ignore this. -->
+  </xsl:template>
+  
   <!-- Catch-all block for the remaining content that has not been handled with. -->
   <xsl:template match="*" mode="#all">
     <xsl:choose>
