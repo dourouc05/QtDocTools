@@ -263,15 +263,10 @@
           </xsl:choose>
         </xsl:variable>
         
-        <xsl:variable name="test" as="xs:boolean" select="not(db:preface)"/>
-        
         <xsl:for-each select="$abstractParagraphs">
           <xsl:apply-templates mode="content" select="."/>
         </xsl:for-each>
         
-        <xsl:call-template name="tc:document-abstract-obsoleted-by">
-          <xsl:with-param name="info" select="db:info"/>
-        </xsl:call-template>
         <xsl:call-template name="tc:document-abstract-forum-link-from-parameters"/>
       </synopsis>
       
