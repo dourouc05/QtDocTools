@@ -297,19 +297,16 @@
       </multi-page>
       
       <summary>
-        <xsl:choose>
-          <xsl:when test="not(child::*[2][self::db:section])">
-            <!-- A document must have a section in DvpML, not necessarily in DocBook. -->
-            <section id="I" noNumber="1">
-              <title><xsl:value-of select="db:info/db:title"/></title>
-              
-              <xsl:apply-templates mode="content" select="./*"/>
-            </section>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:apply-templates mode="content" select="./*"/>
-          </xsl:otherwise>
-        </xsl:choose>
+        <xsl:for-each select="db:chapter">
+          <section>
+            <xsl:attribute name="id">
+              <xsl:number value="position()" format="I"/>
+            </xsl:attribute>
+            
+            <title><xsl:value-of select="if (db:info/db:title) then db:info/db:title else db:title"/></title>
+            <xsl:apply-templates mode="content" select="."/><!-- child::node()[position() &gt; ] -->
+          </section>
+        </xsl:for-each>
       </summary>
     </document>
   </xsl:template>

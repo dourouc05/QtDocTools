@@ -6,10 +6,10 @@
   exclude-result-prefixes="xsl xs html saxon tc db xlink"
   version="3.0">
   <xsl:template mode="content" match="db:info">
-    <!-- Everything is done in <db:article>. -->
+    <xsl:apply-templates mode="content"/>
   </xsl:template>
   
-  <xsl:template mode="content" match="db:section">
+  <xsl:template mode="content" match="db:section | db:chapter">
     <xsl:variable name="sectionId">
       <xsl:number level="multiple" format="1"/>
     </xsl:variable>
@@ -17,18 +17,21 @@
     <section id="{$sectionId}">
       <xsl:choose>
         <xsl:when test="@xml:id">
-          <!-- First the title, then some raw HTML. -->
-          <title><xsl:value-of select="node()[db:title][1]"/></title>
+          <!-- First the title, then some raw HTML to encode the ID, then the rest of the section/chapter. -->
+          <!-- Generic code cannot be applied because of the specific position of the ID. -->
+          <xsl:apply-templates mode="content" select="db:info"/>
+          <xsl:apply-templates mode="content" select="db:title"/>
           <html-brut>
             <xsl:value-of select="concat('&lt;![CDATA[&lt;a name=&#34;', @xml:id, '&#34;]]>')"/>
           </html-brut>
-          <xsl:apply-templates mode="content" select="node()[not(db:title)]"/>
+          
+          <xsl:variable name="titlePosition" select="if (db:info/db:title) then db:info/db:title/position() else db:title/position()"/>
+          <xsl:apply-templates mode="content" select="node()[position() > $titlePosition]"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:apply-templates mode="content" select="node()"/>
         </xsl:otherwise>
       </xsl:choose>
-      
     </section>
   </xsl:template>
   
