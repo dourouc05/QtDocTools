@@ -834,9 +834,31 @@
   
   <xsl:template match="db:bibliography">
     <section noNumber="1" id="B">
-      <title>Bibliographie</title>
-      <xsl:apply-templates select="." mode="content_bibliography"/>
+      <title>
+        <xsl:choose>
+          <xsl:when test="db:info/db:title"><xsl:value-of select="db:info/db:title"/></xsl:when>
+          <xsl:when test="db:title"><xsl:value-of select="db:title"/></xsl:when>
+          <xsl:otherwise>Bibliographie</xsl:otherwise>
+        </xsl:choose>
+      </title>
+      <xsl:apply-templates mode="content_bibliography"/>
     </section>
+  </xsl:template>
+  
+  <xsl:template match="db:bibliodiv" mode="content_bibliography">
+    <section>
+      <title>
+        <xsl:choose>
+          <xsl:when test="db:info/db:title"><xsl:value-of select="db:info/db:title"/></xsl:when>
+          <xsl:when test="db:title"><xsl:value-of select="db:title"/></xsl:when>
+        </xsl:choose>
+      </title>
+      <xsl:apply-templates mode="content_bibliography"/>
+    </section>
+  </xsl:template>
+  
+  <xsl:template match="db:bibliomixed | db:biblioentry" mode="content_bibliography">
+    <xsl:apply-templates mode="content_bibliography"/>
   </xsl:template>
   
   <!-- Catch-all block for the remaining content that has not been handled with. -->
