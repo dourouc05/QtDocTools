@@ -27,6 +27,17 @@
   <xsl:param name="google-analytics" as="xs:string" select="''"/>
   <xsl:param name="related" as="xs:string" select="''"/>
   
+  <xsl:variable name="biblioRefs" as="map(xs:string, xs:decimal)">
+    <!-- Create a global map between bibliographic IDs and the numbers they are assigned to. These numbers are increasing in order of appearance in the text. This is not configurable. -->
+    <xsl:variable name="uniqueRefs" select="distinct-values(//db:biblioref/@endterm)"/>
+    
+    <xsl:map>
+      <xsl:for-each select="$uniqueRefs">
+        <xsl:map-entry key="xs:string(.)" select="xs:decimal(position())"/>
+      </xsl:for-each>
+    </xsl:map>
+  </xsl:variable>
+  
   <xsl:template name="tc:check-valid-document-file-name">
     <xsl:if test="string-length($document-file-name) = 0">
       <xsl:message>ERROR: Missing parameter document-file-name.</xsl:message>

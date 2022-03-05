@@ -3,6 +3,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:db="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:saxon="http://saxon.sf.net/" xmlns:tc="http://tcuvelier.be"
+  xmlns:map=" http://www.w3.org/2005/xpath-functions/map"
   exclude-result-prefixes="xsl xs html saxon tc db xlink"
   version="3.0">
   <xsl:template mode="content_para" match="db:emphasis">
@@ -142,6 +143,10 @@
         <index id1="{db:primary}" id2="{db:secondary}"/>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+  
+  <xsl:template mode="content_para" match="db:biblioref">
+    <renvoi id="{@endterm}">[<xsl:value-of select="$biblioRefs(xs:string(@endterm))"/>]</renvoi>
   </xsl:template>
   
   <xsl:template mode="content_para" match="db:inlinemediaobject">
