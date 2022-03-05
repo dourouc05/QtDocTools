@@ -861,6 +861,13 @@
     <xsl:apply-templates mode="content_bibliography"/>
   </xsl:template>
   
+  <xsl:template match="db:bibliomixed" mode="content_bibliography">
+    <signet id="{@xml:id}">[<xsl:value-of select="$biblioRefs(xs:string(@xml:id))"/>]</signet>
+    <paragraph>
+      <xsl:apply-templates mode="content_para"/>
+    </paragraph>
+  </xsl:template>
+  
   <!-- Catch-all block for the remaining content that has not been handled with. -->
   <xsl:template match="*" mode="#all">
     <xsl:choose>
