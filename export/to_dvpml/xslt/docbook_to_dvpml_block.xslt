@@ -336,4 +336,20 @@
       <xsl:value-of select="db:alt[@role='tex' or @role='latex']/text()"/>
     </latex>
   </xsl:template>
+  
+  <xsl:template mode="content" match="db:formalgroup">
+    <xsl:if test="@xml:id">
+      <signet id="{@xml:id}"/>
+    </xsl:if>
+    
+    <tableau width="80%" border="0" legende="{if (db:title) then db:title else db:info/db:title}">
+      <xsl:for-each select="*[not(self::db:title) and not(self::db:info)]">
+        <ligne>
+          <colonne useText="0">
+            <xsl:apply-templates mode="content" select="."/>
+          </colonne>
+        </ligne>
+      </xsl:for-each>
+    </tableau>
+  </xsl:template>
 </xsl:stylesheet>
