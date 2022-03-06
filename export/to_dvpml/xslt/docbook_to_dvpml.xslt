@@ -314,16 +314,7 @@
       </multi-page>
       
       <summary>
-        <xsl:for-each select="db:chapter">
-          <section>
-            <xsl:attribute name="id">
-              <xsl:number value="position()" format="I"/>
-            </xsl:attribute>
-            
-            <title><xsl:value-of select="if (db:info/db:title) then db:info/db:title else db:title"/></title>
-            <xsl:apply-templates mode="content" select="."/><!-- child::node()[position() &gt; ] -->
-          </section>
-        </xsl:for-each>
+        <xsl:apply-templates mode="content" select="./*[self::db:chapter or self::db:section]"/>
         
         <xsl:if test="db:bibliography">
           <xsl:apply-templates select="db:bibliography"/>
