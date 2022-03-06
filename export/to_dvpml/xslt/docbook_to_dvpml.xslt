@@ -908,12 +908,15 @@
   <!-- Catch-all block for the remaining content that has not been handled with. -->
   <xsl:template match="*" mode="#all">
     <xsl:choose>
-      <xsl:when test="self::db:guilabel | self::db:accel | self::db:prompt | self::db:keysym">
+      <xsl:when test="db:guilabel | db:accel | db:prompt | db:keysym">
         <xsl:message>WARNING: Tag <xsl:value-of select="name(.)" /> has no matching construct in the target format. Content is not lost, but is not marked either.</xsl:message>
         <xsl:apply-templates/>
       </xsl:when>
+      <xsl:when test="db:sect1 | db:sect2 | db:sect3 | db:sect4 | db:sect5 | db:sect6">
+        <xsl:message>WARNING: Only section tags are supported, not numbered ones like <xsl:value-of select="name(.)" />. You can replace automatically instances of <xsl:value-of select="name(.)" /> by section.</xsl:message>
+      </xsl:when>
       <xsl:otherwise>
-        <xsl:message>WARNING: Unhandled content with tag <xsl:value-of select="name(.)" /></xsl:message>
+        <xsl:message>WARNING: Unhandled content with tag <xsl:value-of select="name(.)" />.</xsl:message>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

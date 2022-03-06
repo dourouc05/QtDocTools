@@ -11,7 +11,7 @@
   
   <xsl:template mode="content" match="db:section | db:chapter">
     <xsl:variable name="sectionId">
-      <xsl:number level="multiple" format="1"/>
+      <xsl:number level="multiple"/>
     </xsl:variable>
     
     <section id="{$sectionId}">
