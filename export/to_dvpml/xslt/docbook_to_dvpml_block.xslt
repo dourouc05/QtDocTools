@@ -298,8 +298,15 @@
     </xsl:choose>
   </xsl:template>
   
-  <xsl:template mode="content_para content" match="db:equation | db:inlineequation">
-    <latex id="{@xml:id}"><xsl:value-of select="mathphrase[@role='latex']"/></latex>
+  <xsl:template mode="content_para content" match="db:equation">
+    <xsl:if test="not(db:alt[@role='tex' or @role='latex'])">
+      <xsl:message terminate="yes">ERROR: informalequation with no TeX or LaTeX encoding. MathML is not supported.</xsl:message>
+    </xsl:if>
+    
+    <xsl:variable name="index" select="if (@xml:id) then @xml:id else generate-id()"/>
+    <latex id="{$index}">
+      <xsl:value-of select="db:alt[@role='tex' or @role='latex']/text()"/>
+    </latex>
   </xsl:template>
   
   <xsl:template match="*[preceding-sibling::*[1][self::db:mediaobject]]" mode="content" priority="-1">
