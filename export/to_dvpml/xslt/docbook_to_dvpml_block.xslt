@@ -309,4 +309,8 @@
       <xsl:apply-templates mode="content_para"/>
     </paragraph>
   </xsl:template>
+  
+  <xsl:template mode="content" match="db:anchor">
+    <signet id="{@xml:id}"/>
+  </xsl:template>
 </xsl:stylesheet>

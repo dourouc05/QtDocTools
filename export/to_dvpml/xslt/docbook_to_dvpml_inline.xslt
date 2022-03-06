@@ -188,4 +188,8 @@
     </xsl:variable>
     <renvoi id="{$soughtId}"><xsl:value-of select="normalize-space($title)"/></renvoi>
   </xsl:template>
+  
+  <xsl:template mode="content_para" match="db:anchor">
+    <signet id="{@xml:id}"/>
+  </xsl:template>
 </xsl:stylesheet>
