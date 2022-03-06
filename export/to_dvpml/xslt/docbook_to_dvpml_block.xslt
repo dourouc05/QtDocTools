@@ -203,17 +203,17 @@
             <xsl:text>&#0160;: </xsl:text>
           </paragraph>
           
-          <xsl:apply-templates mode="content_para" select="db:listitem/*"/>
+          <xsl:apply-templates mode="content" select="db:listitem/*"/>
         </element>
       </xsl:when>
       <xsl:otherwise>
         <!-- Simple case: only one paragraph in the listitem. -->
         <element>
           <b>
-            <xsl:apply-templates mode="content_para" select="db:term/node()"/>
+            <xsl:apply-templates mode="content_para" select="db:term"/>
           </b>
           <xsl:text>&#0160;: </xsl:text>
-          <xsl:apply-templates mode="content_para" select="db:listitem/db:para/node()"/>
+          <xsl:apply-templates mode="content_para" select="db:listitem/db:para/*"/>
         </element>
       </xsl:otherwise>
     </xsl:choose>

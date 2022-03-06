@@ -197,4 +197,9 @@
     <!-- Semantic markup, no need to have a specific output. -->
     <xsl:apply-templates mode="content_para"/>
   </xsl:template>
+  
+  <xsl:template mode="content_para" match="db:term">
+    <!-- Allow recursion within variablelist entries. -->
+    <xsl:apply-templates mode="content_para"/>
+  </xsl:template>
 </xsl:stylesheet>
