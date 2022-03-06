@@ -76,7 +76,7 @@
   <xsl:template mode="content" match="db:th | db:td">
     <colonne useText="0">
       <xsl:choose>
-        <xsl:when test="db:para | db:note | db:itemizedlist | db:orderedlist | db:mediaobject | db:programlisting | db:screen">
+        <xsl:when test="db:para | db:note | db:itemizedlist | db:orderedlist | db:variablelist | db:mediaobject | db:programlisting | db:screen | db:informaltable">
           <xsl:apply-templates mode="content"/>
         </xsl:when>
         <xsl:otherwise>
