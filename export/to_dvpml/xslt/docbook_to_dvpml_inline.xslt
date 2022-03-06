@@ -192,4 +192,9 @@
   <xsl:template mode="content_para" match="db:anchor">
     <signet id="{@xml:id}"/>
   </xsl:template>
+  
+  <xsl:template mode="content_para" match="db:personname">
+    <!-- Semantic markup, no need to have a specific output. -->
+    <xsl:apply-templates mode="content_para"/>
+  </xsl:template>
 </xsl:stylesheet>
