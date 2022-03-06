@@ -172,4 +172,20 @@
       </xsl:if>
     </image>
   </xsl:template>
+  
+  <xsl:template mode="content_para" match="db:xref">
+    <!-- TODO: add chapter/section/appendix numbers if relevant. Quite complicated to do... -->
+    <!-- See https://github.com/docbook/xslTNG/blob/main/src/main/xslt/modules/xref.xsl -->
+    <xsl:variable name="soughtId" as="xs:string" select="@linkend"/>
+    <xsl:variable name="pointee" select="$document//*[@xml:id=$soughtId]"/>
+    <xsl:variable name="title" as="xs:string">
+      <xsl:choose>
+        <xsl:when test="$pointee/db:title"><xsl:value-of select="$pointee/db:title"/></xsl:when>
+        <xsl:when test="$pointee/db:info/db:title"><xsl:value-of select="$pointee/db:info/db:title"/></xsl:when>
+        <xsl:when test="$pointee/ancestor::db:bridgehead"><xsl:value-of select="$pointee/ancestor::db:bridgehead"/></xsl:when>
+        <xsl:otherwise>[]</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <renvoi id="{$soughtId}"><xsl:value-of select="normalize-space($title)"/></renvoi>
+  </xsl:template>
 </xsl:stylesheet>

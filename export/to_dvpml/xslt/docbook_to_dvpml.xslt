@@ -38,6 +38,8 @@
     </xsl:map>
   </xsl:variable>
   
+  <xsl:variable name="document" select="."/>
+  
   <xsl:template name="tc:check-valid-document-file-name">
     <xsl:if test="string-length($document-file-name) = 0">
       <xsl:message>ERROR: Missing parameter document-file-name.</xsl:message>
