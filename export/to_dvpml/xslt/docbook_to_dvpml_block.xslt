@@ -46,8 +46,20 @@
   </xsl:template>
   
   <xsl:template mode="content" match="db:table">
-    <tableau width="80%" border="1" legende="{if (title) then title else info/title}">
-      <xsl:apply-templates mode="content"/>
+    <xsl:variable name="caption" as="xs:string?">
+      <xsl:choose>
+        <xsl:when test="db:title"><xsl:value-of select="db:title"/></xsl:when>
+        <xsl:when test="db:info/db:title"><xsl:value-of select="db:info/db:title"/></xsl:when>
+        <xsl:when test="db:caption"><xsl:value-of select="db:caption"/></xsl:when>
+      </xsl:choose>
+    </xsl:variable>
+    
+    <tableau width="80%" border="1">
+      <xsl:if test="$caption">
+        <xsl:attribute name="legende" select="$caption"></xsl:attribute>
+      </xsl:if>
+      
+      <xsl:apply-templates mode="content" select="child::node()/*[not(db:title) and not(db:info) and not(db:caption)]"/>
     </tableau>
   </xsl:template>
   
