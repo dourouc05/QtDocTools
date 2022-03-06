@@ -21,12 +21,9 @@
           <!-- Generic code cannot be applied because of the specific position of the ID. -->
           <xsl:apply-templates mode="content" select="db:info"/>
           <xsl:apply-templates mode="content" select="db:title"/>
-          <html-brut>
-            <xsl:value-of select="concat('&lt;![CDATA[&lt;a name=&#34;', @xml:id, '&#34;]]>')"/>
-          </html-brut>
+          <signet id="{@xml:id}"/>
           
-          <xsl:variable name="titlePosition" select="if (db:info/db:title) then db:info/db:title/position() else db:title/position()"/>
-          <xsl:apply-templates mode="content" select="node()[position() > $titlePosition]"/>
+          <xsl:apply-templates mode="content" select="./*[not(self::db:title) and not(self::db:info)]"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:apply-templates mode="content" select="node()"/>
