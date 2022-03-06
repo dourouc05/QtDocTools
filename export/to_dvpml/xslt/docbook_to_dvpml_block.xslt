@@ -297,9 +297,16 @@
   </xsl:template>
   
   <xsl:template mode="content" match="db:bridgehead">
-    <!-- Due to poor formatting possibilities in the output format, just do the text in bold. -->
+    <!-- Due to poor formatting possibilities in the output format (like font size), just do the text in bold. -->
     <paragraph>
       <b><xsl:apply-templates mode="content_para"/></b>
+    </paragraph>
+  </xsl:template>
+  
+  <xsl:template mode="content" match="db:address">
+    <!-- Due to poor formatting possibilities in the output format (like alignment), just do a plain paragraph. -->
+    <paragraph>
+      <xsl:apply-templates mode="content_para"/>
     </paragraph>
   </xsl:template>
 </xsl:stylesheet>
