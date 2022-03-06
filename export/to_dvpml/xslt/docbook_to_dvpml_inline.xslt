@@ -202,4 +202,15 @@
     <!-- Allow recursion within variablelist entries. -->
     <xsl:apply-templates mode="content_para"/>
   </xsl:template>
+  
+  <xsl:template mode="content_para" match="db:inlineequation">
+    <xsl:if test="not(db:alt[@role='tex' or @role='latex'])">
+      <xsl:message terminate="yes">ERROR: informalequation with no TeX or LaTeX encoding. MathML is not supported.</xsl:message>
+    </xsl:if>
+    
+    <xsl:variable name="index" select="if (@xml:id) then @xml:id else generate-id()"/>
+    <latex id="{$index}">
+      <xsl:value-of select="db:alt[@role='tex' or @role='latex']/text()"/>
+    </latex>
+  </xsl:template>
 </xsl:stylesheet>
