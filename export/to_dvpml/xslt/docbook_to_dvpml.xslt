@@ -850,10 +850,6 @@
     </section>
   </xsl:template>
   
-  <xsl:template match="db:bibliomixed | db:biblioentry" mode="content_bibliography">
-    <xsl:apply-templates mode="content_bibliography"/>
-  </xsl:template>
-  
   <xsl:template match="db:bibliomixed" mode="content_bibliography">
     <signet id="{@xml:id}">[<xsl:value-of select="$biblioRefs(xs:string(@xml:id))"/>]</signet>
     <paragraph>
