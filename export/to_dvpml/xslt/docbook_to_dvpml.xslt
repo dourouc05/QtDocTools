@@ -8,6 +8,7 @@
   
   <xsl:include href="docbook_to_dvpml_block.xslt"/>
   <xsl:include href="docbook_to_dvpml_inline.xslt"/>
+  <xsl:include href="docbook_to_dvpml_biblio.xslt"/>
   
   <xsl:output method="xml" indent="yes" suppress-indentation="inline link i b paragraph code"/>
   <xsl:import-schema schema-location="../../../schemas/dvpml/article.xsd" use-when="system-property('xsl:is-schema-aware')='yes'"/>
@@ -26,17 +27,6 @@
   <xsl:param name="ftp-folder" as="xs:string" select="''"/>
   <xsl:param name="google-analytics" as="xs:string" select="''"/>
   <xsl:param name="related" as="xs:string" select="''"/>
-  
-  <xsl:variable name="biblioRefs" as="map(xs:string, xs:decimal)">
-    <!-- Create a global map between bibliographic IDs and the numbers they are assigned to. These numbers are increasing in order of appearance in the text. This is not configurable. -->
-    <xsl:variable name="uniqueRefs" select="distinct-values(//db:biblioref/@endterm)"/>
-    
-    <xsl:map>
-      <xsl:for-each select="$uniqueRefs">
-        <xsl:map-entry key="xs:string(.)" select="xs:decimal(position())"/>
-      </xsl:for-each>
-    </xsl:map>
-  </xsl:variable>
   
   <xsl:variable name="document" select="."/>
   
@@ -186,7 +176,7 @@
         <!-- Iterate over parts, each in its own file. -->
         <xsl:for-each select="db:part">
           <xsl:result-document validation="lax" href="{$document-file-name}_part_{position() + 1}_dvp.xml">
-            <xsl:apply-templates mode="part_root" select="."/>
+            <xsl:apply-templates mode="part-root" select="."/>
           </xsl:result-document>
         </xsl:for-each>
       </xsl:when>
@@ -823,73 +813,6 @@
         <linkedin><xsl:value-of select="db:uri[@type='linkedin']"/></linkedin>
       </xsl:if>
     </authorDescription>
-  </xsl:template>
-  
-  <xsl:template match="db:bibliography">
-    <section noNumber="1" id="B">
-      <title>
-        <xsl:choose>
-          <xsl:when test="db:info/db:title"><xsl:value-of select="db:info/db:title"/></xsl:when>
-          <xsl:when test="db:title"><xsl:value-of select="db:title"/></xsl:when>
-          <xsl:otherwise>Bibliographie</xsl:otherwise>
-        </xsl:choose>
-      </title>
-      <xsl:apply-templates mode="content_bibliography"/>
-    </section>
-  </xsl:template>
-  
-  <xsl:template match="db:bibliodiv" mode="content_bibliography">
-    <section>
-      <title>
-        <xsl:choose>
-          <xsl:when test="db:info/db:title"><xsl:value-of select="db:info/db:title"/></xsl:when>
-          <xsl:when test="db:title"><xsl:value-of select="db:title"/></xsl:when>
-        </xsl:choose>
-      </title>
-      <xsl:apply-templates mode="content_bibliography"/>
-    </section>
-  </xsl:template>
-  
-  <xsl:template match="db:bibliomixed" mode="content_bibliography">
-    <signet id="{@xml:id}">[<xsl:value-of select="$biblioRefs(xs:string(@xml:id))"/>]</signet>
-    <paragraph>
-      <xsl:apply-templates mode="content_para"/>
-    </paragraph>
-  </xsl:template>
-  
-  <xsl:template match="db:biblioentry" mode="content_bibliography">
-    <signet id="{@xml:id}">[<xsl:value-of select="$biblioRefs(xs:string(@xml:id))"/>]</signet>
-    <!-- Basic formatting of the entry. -->
-    <!-- If need be, implement something more intelligent, like https://github.com/docbook/xslTNG/blob/main/src/main/xslt/modules/bibliography.xsl. -->
-    <paragraph>
-      <xsl:apply-templates mode="content_bibliography_author"/>, 
-      <xsl:apply-templates mode="content_bibliography_title"/>. 
-    </paragraph>
-  </xsl:template>
-  
-  <xsl:template match="db:authorgroup" mode="content_bibliography_author">
-    <xsl:for-each select="db:author">
-      <xsl:apply-templates mode="content_bibliography_author"/>
-      <xsl:if test="position() != last()">
-        <xsl:text>, </xsl:text>
-      </xsl:if>
-    </xsl:for-each>
-  </xsl:template>
-  
-  <xsl:template match="db:author" mode="content_bibliography_author">
-    <xsl:apply-templates mode="content_para"/>
-  </xsl:template>
-  
-  <xsl:template match="*" mode="content_bibliography_author">
-    <!-- Ignore this. -->
-  </xsl:template>
-  
-  <xsl:template match="db:title" mode="content_bibliography_title">
-    <xsl:apply-templates mode="content_para"/>
-  </xsl:template>
-  
-  <xsl:template match="*" mode="content_bibliography_title">
-    <!-- Ignore this. -->
   </xsl:template>
   
   <!-- Catch-all block for the remaining content that has not been handled with. -->
