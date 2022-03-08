@@ -174,11 +174,13 @@
         </xsl:result-document>
         
         <!-- Iterate over parts, each in its own file. -->
+        <!-- 
         <xsl:for-each select="db:part">
           <xsl:result-document validation="lax" href="{$document-file-name}_part_{position() + 1}_dvp.xml">
             <xsl:apply-templates mode="part-root" select="."/>
           </xsl:result-document>
         </xsl:for-each>
+        -->
       </xsl:when>
       <!-- When there are only chapters, use the default mechanisms. -->
       <xsl:otherwise>
@@ -387,7 +389,7 @@
       
       <summary>
         <!-- Generate the table of contents: first, solo chapters; then, parts (as subsections, one subsection per part). -->
-        <section id="I" noNumber="1">
+        <section id="TOC" noNumber="1">
           <title>Table des matières</title>
           
           <xsl:if test="./db:chapter">
@@ -399,14 +401,16 @@
           </xsl:if>
           
           <xsl:for-each select="db:part">
-            <section id="{position()}">
+            <xsl:variable name="partIndex" as="xs:integer" select="position()"/>
+            
+            <section id="TOC.{$partIndex}" noNumber="1">
               <!-- TODO: see TODO for document-toc -->
               <title><xsl:value-of select="(db:title | db:info/db:title)/text()"/></title>
               
               <!-- TODO: generate the URL based on the configuration instead of bullshit. -->
               <paragraph>
                 <link href="http://bullshit#{position()}">
-                  <xsl:value-of select="position()"/>
+                  <xsl:value-of select="$partIndex"/>
                   <xsl:text>. </xsl:text>
                   <!-- TODO: see TODO for document-toc -->
                   <xsl:value-of select="(db:title | db:info/db:title)/text()"/>
@@ -422,10 +426,11 @@
           </xsl:for-each>
           
           <xsl:if test="db:bibliography">
-            <!-- TODO: generate a true URL. -->
-            <link href="http://bullshit#bibliography">
-              <xsl:text>Bibliography</xsl:text>
-            </link>
+            <section id="TOC.BIB" noNumber="1">
+              <title>Bibliographie</title>
+              <!-- TODO: generate a true URL. -->
+              <paragraph><link href="http://bullshit#bibliography"><xsl:text>Bibliographie</xsl:text></link></paragraph>
+            </section>
           </xsl:if>
         </section>
       </summary>

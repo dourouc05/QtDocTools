@@ -17,7 +17,7 @@
   </xsl:variable>
   
   <xsl:template match="db:bibliography">
-    <section noNumber="1" id="B">
+    <section noNumber="1" id="BIBLIOGRAPHY">
       <title>
         <xsl:choose>
           <xsl:when test="db:info/db:title"><xsl:value-of select="db:info/db:title"/></xsl:when>
