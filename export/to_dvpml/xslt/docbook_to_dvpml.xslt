@@ -632,6 +632,7 @@
           </meta>
           
           <titre>
+            <!-- TODO: introduce a template to gather this information. I'm getting fed up with copying the same code over and over again. -->
             <page><xsl:value-of select="$document/db:info/db:title"/></page>
             <article><xsl:value-of select="$document/db:info/db:title"/></article>
           </titre>
