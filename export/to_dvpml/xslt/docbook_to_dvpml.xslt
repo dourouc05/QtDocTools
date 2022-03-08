@@ -413,9 +413,11 @@
                 </link>
               </paragraph>
               
-              <xsl:for-each select="db:chapter">
-                <xsl:apply-templates mode="document-toc" select="."/>
-              </xsl:for-each>
+              <liste>
+                <xsl:for-each select="db:chapter">
+                  <xsl:apply-templates mode="document-toc" select="."/>
+                </xsl:for-each>
+              </liste>
             </section>
           </xsl:for-each>
           
