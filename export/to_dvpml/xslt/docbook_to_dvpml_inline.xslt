@@ -137,7 +137,7 @@
   <xsl:template mode="content_para" match="db:indexterm">
     <xsl:choose>
       <xsl:when test="db:primary and not(db:secondary)">
-        <index><xsl:value-of select="@db:primary"/></index>
+        <index><xsl:value-of select="db:primary"/></index>
       </xsl:when>
       <xsl:otherwise>
         <index id1="{db:primary}" id2="{db:secondary}"/>
