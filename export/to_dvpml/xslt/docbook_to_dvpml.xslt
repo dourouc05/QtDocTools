@@ -433,6 +433,25 @@
             </section>
           </xsl:if>
         </section>
+        
+        <!-- Generate the chapters outside parts on this first page. -->
+        <xsl:for-each select="db:chapter">
+          <xsl:variable name="sectionIndex" as="xs:string">
+            <xsl:number format="I"/>
+          </xsl:variable>
+          <section id="{$sectionIndex}">
+            <!-- Do manually the title and the first few paragraphs. They would otherwise be considered as synopsis (the title must be put before the paragraphs, hence the special treatment). -->
+            
+            <xsl:apply-templates mode="content" select="db:title | db:info"/>
+            <xsl:for-each select="db:para">
+              <paragraph>
+                <xsl:apply-templates mode="content_para"/>
+              </paragraph>
+            </xsl:for-each>
+            
+            <xsl:apply-templates mode="content" select="./*[not(self::db:title) and not(self::db:info) and not(self::db:para)]"/>
+          </section>
+        </xsl:for-each>
       </summary>
     </document>
   </xsl:template>
