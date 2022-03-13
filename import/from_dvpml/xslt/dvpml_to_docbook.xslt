@@ -35,7 +35,8 @@
             </xsl:choose>
         </xsl:variable>
         
-        <xsl:result-document method="json" href="{current-output-uri()}.json">
+        <xsl:variable name="outputJson" as="xs:string" select="if (ends-with(current-output-uri(), '.xml')) then replace(current-output-uri(), '.xml', '.json') else concat(current-output-uri(), '.json')"/>
+        <xsl:result-document method="json" href="{$outputJson}">
             {}
         </xsl:result-document>
         
