@@ -42,6 +42,9 @@
                 <db:title>
                     <xsl:apply-templates mode="content" select="entete/titre/article"/>
                 </db:title>
+                <db:titleabbrev>
+                    <xsl:apply-templates mode="content" select="entete/titre/page"/>
+                </db:titleabbrev>
                 <db:subtitle>
                     <xsl:apply-templates mode="content" select="soustitre"/>
                 </db:subtitle>

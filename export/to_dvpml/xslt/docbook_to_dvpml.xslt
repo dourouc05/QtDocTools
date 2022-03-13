@@ -84,8 +84,22 @@
           </meta>
           
           <titre>
-            <page><xsl:value-of select="db:info/db:title"/></page>
-            <article><xsl:value-of select="db:info/db:title"/></article>
+            <page>
+              <xsl:variable name="titleAbbrev">
+                <xsl:apply-templates mode="titleabbrev"/>
+              </xsl:variable>
+              <xsl:choose>
+                <xsl:when test="$titleAbbrev">
+                  <xsl:value-of select="$titleAbbrev"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:apply-templates mode="title"/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </page>
+            <article>
+              <xsl:apply-templates mode="title"/>
+            </article>
           </titre>
           <date><xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/></date>
           <miseajour><xsl:value-of select="tc:format-date(db:info/date, 'date')"/></miseajour>
@@ -932,6 +946,36 @@
         <linkedin><xsl:value-of select="db:uri[@type='linkedin']"/></linkedin>
       </xsl:if>
     </authorDescription>
+  </xsl:template>
+  
+  <xsl:template match="*" mode="title"/>
+  
+  <xsl:template match="db:info" mode="title">
+    <xsl:apply-templates/>
+  </xsl:template>
+  
+  <xsl:template match="db:title" mode="title">
+    <xsl:apply-templates mode="content_para"/>
+  </xsl:template>
+  
+  <xsl:template match="*" mode="subtitle"/>
+  
+  <xsl:template match="db:info" mode="subtitle">
+    <xsl:apply-templates/>
+  </xsl:template>
+  
+  <xsl:template match="db:subtitle" mode="subtitle">
+    <xsl:apply-templates mode="content_para"/>
+  </xsl:template>
+  
+  <xsl:template match="*" mode="titleabbrev"/>
+  
+  <xsl:template match="db:info" mode="titleabbrev">
+    <xsl:apply-templates/>
+  </xsl:template>
+  
+  <xsl:template match="db:titleabbrev" mode="titleabbrev">
+    <xsl:apply-templates mode="content_para"/>
   </xsl:template>
   
   <!-- Catch-all block for the remaining content that has not been handled with. -->
