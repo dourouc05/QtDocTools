@@ -160,8 +160,11 @@
             <xsl:if test="lecteur">
                 <xsl:message>WARNING: tag lecteur is not handled. Please propose a way to encode it in DocBook.</xsl:message>
             </xsl:if>
-            <xsl:if test="soustitre">
-                <xsl:message>WARNING: tag soustitre is not handled. Please propose a way to encode it in DocBook.</xsl:message>
+            <xsl:if test="cssperso">
+                <xsl:message>WARNING: tag cssperso is not handled. Please propose a way to encode it in DocBook.</xsl:message>
+            </xsl:if>
+            <xsl:if test="extratag">
+                <xsl:message>WARNING: tag extratag is not handled. Please propose a way to encode it in DocBook.</xsl:message>
             </xsl:if>
             
             <!-- Main content of the article. -->
