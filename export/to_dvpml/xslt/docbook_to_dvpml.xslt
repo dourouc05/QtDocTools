@@ -73,11 +73,11 @@
                     </xsl:if>
                   </xsl:for-each>
                 </xsl:when>
-                <xsl:when test="db:info/db:title">
-                  <xsl:value-of select="translate(translate(db:info/db:title, ',', ''), ' ', ',')"/>
-                </xsl:when>
                 <xsl:otherwise>
-                  <xsl:value-of select="translate(translate(db:title, ',', ''), ' ', ',')"/>
+                  <xsl:variable name="title">
+                    <xsl:apply-templates mode="title"/>
+                  </xsl:variable>
+                  <xsl:value-of select="translate(translate($title, ',', ''), ' ', ',')"/>
                 </xsl:otherwise>
               </xsl:choose>
             </keywords>
