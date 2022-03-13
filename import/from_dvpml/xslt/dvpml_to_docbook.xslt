@@ -39,7 +39,12 @@
             <xsl:attribute name="version" select="'5.2'"/>
             
             <db:info>
-                <db:title><xsl:value-of select="entete/titre/article"/></db:title>
+                <db:title>
+                    <xsl:apply-templates mode="content" select="entete/titre/article"/>
+                </db:title>
+                <db:subtitle>
+                    <xsl:apply-templates mode="content" select="soustitre"/>
+                </db:subtitle>
                 
                 <db:abstract>
                     <xsl:apply-templates mode="content" select="synopsis"/>
