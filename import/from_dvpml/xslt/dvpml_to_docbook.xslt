@@ -35,6 +35,10 @@
             </xsl:choose>
         </xsl:variable>
         
+        <xsl:result-document method="json" href="{current-output-uri()}.json">
+            {}
+        </xsl:result-document>
+        
         <xsl:element name="{$maintag}" inherit-namespaces="yes">
             <xsl:attribute name="version" select="'5.2'"/>
             
