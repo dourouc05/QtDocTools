@@ -36,7 +36,12 @@
         </xsl:variable>
         
         <xsl:variable name="outputJson" as="xs:string" select="if (ends-with(current-output-uri(), '.xml')) then replace(current-output-uri(), '.xml', '.json') else concat(current-output-uri(), '.json')"/>
-        <xsl:result-document method="json" href="{$outputJson}"><xsl:value-of select="xml-to-json(document)"/></xsl:result-document>
+        <xsl:variable name="jsonDocument" as="node()">
+            <map xmlns="http://www.w3.org/2005/xpath-functions">
+                <string key='desc'>Distances between several cities, in kilometers.</string>
+            </map>
+        </xsl:variable>
+        <xsl:result-document method="text" href="{$outputJson}"><xsl:value-of select="xml-to-json($jsonDocument, map { 'indent': false() })"/></xsl:result-document>
         
         <xsl:element name="{$maintag}" inherit-namespaces="yes">
             <xsl:attribute name="version" select="'5.2'"/>
