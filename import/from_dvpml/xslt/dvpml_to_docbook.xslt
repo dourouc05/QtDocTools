@@ -42,12 +42,16 @@
                 <db:title>
                     <xsl:apply-templates mode="content" select="entete/titre/article"/>
                 </db:title>
-                <db:titleabbrev>
-                    <xsl:apply-templates mode="content" select="entete/titre/page"/>
-                </db:titleabbrev>
-                <db:subtitle>
-                    <xsl:apply-templates mode="content" select="soustitre"/>
-                </db:subtitle>
+                <xsl:if test="entete/titre/page">
+                    <db:titleabbrev>
+                        <xsl:apply-templates mode="content" select="entete/titre/page"/>
+                    </db:titleabbrev>
+                </xsl:if>
+                <xsl:if test="soustitre">
+                   <db:subtitle>
+                       <xsl:apply-templates mode="content" select="soustitre"/>
+                   </db:subtitle>
+                </xsl:if>
                 
                 <db:abstract>
                     <xsl:apply-templates mode="content" select="synopsis"/>
@@ -63,11 +67,29 @@
                     </xsl:if>
                 </db:abstract>
                 
+                <xsl:if test="entete/meta/description">
+                    <db:abstract role="description">
+                        <db:para>
+                            <xsl:value-of select="entete/meta/description"/>
+                        </db:para>
+                    </db:abstract>
+                </xsl:if>
+                
                 <xsl:if test="entete/date">
                     <db:pubdate><xsl:value-of select="tc:parse-date(entete/date/text())"/></db:pubdate>
                 </xsl:if>
                 <xsl:if test="entete/miseajour">
                     <db:date><xsl:value-of select="tc:parse-date(entete/miseajour/text())"/></db:date>
+                </xsl:if>
+                
+                <xsl:if test="entete/meta/keywords">
+                    <db:keywordset>
+                        <xsl:for-each select="tokenize(., ',')">
+                            <db:keyword>
+                                <xsl:value-of select="normalize-space(.)"/>
+                            </db:keyword>
+                        </xsl:for-each>
+                    </db:keywordset>
                 </xsl:if>
                 
                 <xsl:for-each select="authorDescriptions/authorDescription">

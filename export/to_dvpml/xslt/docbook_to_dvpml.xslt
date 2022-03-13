@@ -52,14 +52,14 @@
           <meta>
             <description>
               <xsl:choose>
+                <xsl:when test="db:info/db:abstract[@role='description']/db:para">
+                  <xsl:value-of select="db:info/db:abstract[@role='description']/db:para[1]/text()"/>
+                </xsl:when>
                 <xsl:when test="db:info/db:abstract/db:para">
                   <xsl:value-of select="db:info/db:abstract/db:para[1]/text()"/>
                 </xsl:when>
-                <xsl:when test="db:info/db:title">
-                  <xsl:value-of select="db:info/db:title"/>
-                </xsl:when>
                 <xsl:otherwise>
-                  <xsl:value-of select="db:title"/>
+                  <xsl:apply-templates mode="title"/>
                 </xsl:otherwise>
               </xsl:choose>
             </description>
