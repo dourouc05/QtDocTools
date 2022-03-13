@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:html="http://www.w3.org/1999/xhtml"
-  xmlns:db="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
-  xmlns:saxon="http://saxon.sf.net/" xmlns:tc="http://tcuvelier.be"
+  xmlns:xpath-file="http://expath.org/ns/file"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:html="http://www.w3.org/1999/xhtml"
+  xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:saxon="http://saxon.sf.net/"
+  xmlns:tc="http://tcuvelier.be"
   exclude-result-prefixes="xsl xs html saxon tc db xlink"
   version="3.0">
   
   <xsl:include href="docbook_to_dvpml_block.xslt"/>
   <xsl:include href="docbook_to_dvpml_inline.xslt"/>
   <xsl:include href="docbook_to_dvpml_biblio.xslt"/>
+  
+  <xsl:variable name="document" select="."/>
+  <xsl:variable name="jsonDocument">
+    <xsl:variable name="xmlUri" as="xs:string" select="base-uri()"/>
+    <xsl:variable name="jsonUriBase" as="xs:string" select="replace($xmlUri, '.xml', '.json')"/>
+    <xsl:variable name="jsonUriSuffix" as="xs:string" select="concat($xmlUri, '.json')"/>
+    <xsl:choose>
+      <xsl:when test="xpath-file:exists($jsonUriBase)"><xsl:value-of select="json-doc($jsonUriBase)"/></xsl:when>
+      <xsl:when test="xpath-file:exists($jsonUriSuffix)"><xsl:value-of select="json-doc($jsonUriSuffix)"/></xsl:when>
+      <xsl:otherwise><xsl:value-of select="json-doc('{}')"/></xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
   
   <xsl:output method="xml" indent="yes" suppress-indentation="inline link i b paragraph code"/>
   <xsl:import-schema schema-location="../../../schemas/dvpml/article.xsd" use-when="system-property('xsl:is-schema-aware')='yes'"/>
@@ -27,9 +43,7 @@
   <xsl:param name="ftp-folder" as="xs:string" select="''"/>
   <xsl:param name="google-analytics" as="xs:string" select="''"/>
   <xsl:param name="related" as="xs:string" select="''"/>
-  
-  <xsl:variable name="document" select="."/>
-  
+    
   <xsl:template name="tc:check-valid-document-file-name">
     <xsl:if test="string-length($document-file-name) = 0">
       <xsl:message>ERROR: Missing parameter document-file-name.</xsl:message>
