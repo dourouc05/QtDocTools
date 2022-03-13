@@ -38,7 +38,29 @@
         <xsl:variable name="outputJson" as="xs:string" select="if (ends-with(current-output-uri(), '.xml')) then replace(current-output-uri(), '.xml', '.json') else concat(current-output-uri(), '.json')"/>
         <xsl:variable name="jsonDocument" as="node()">
             <map xmlns="http://www.w3.org/2005/xpath-functions">
-                <string key='desc'>Distances between several cities, in kilometers.</string>
+                <number key="section">
+                    <xsl:value-of select="entete/rubrique"/>
+                </number>
+                <xsl:if test="entete/lictype">
+                    <number key="license-number">
+                        <xsl:value-of select="entete/lictype"/>
+                    </number>
+                </xsl:if>
+                <xsl:if test="entete/licannee">
+                    <number key="license-year">
+                        <xsl:value-of select="entete/licannee"/>
+                    </number>
+                </xsl:if>
+                <xsl:if test="entete/licauteur">
+                    <number key="license-author">
+                        <xsl:value-of select="entete/licauteur"/>
+                    </number>
+                </xsl:if>
+                <xsl:if test="entete/licence">
+                    <number key="license-raw">
+                        <xsl:value-of select="entete/licence"/>
+                    </number>
+                </xsl:if>
             </map>
         </xsl:variable>
         <xsl:result-document method="text" href="{$outputJson}"><xsl:value-of select="xml-to-json($jsonDocument, map { 'indent': false() })"/></xsl:result-document>
