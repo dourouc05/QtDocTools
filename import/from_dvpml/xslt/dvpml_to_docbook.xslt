@@ -61,6 +61,52 @@
                         <xsl:value-of select="entete/licence"/>
                     </number>
                 </xsl:if>
+                <xsl:if test="entete/cssperso">
+                    <string key="extra-css">
+                        <xsl:value-of select="entete/cssperso"/>
+                    </string>
+                </xsl:if>
+                <xsl:if test="entete/extratag">
+                    <string key="extra-php">
+                        <xsl:value-of select="entete/extratag"/>
+                    </string>
+                </xsl:if>
+                <xsl:if test="entete/serveur">
+                    <string key="ftp-server">
+                        <xsl:value-of select="entete/serveur"/>
+                    </string>
+                </xsl:if>
+                <xsl:if test="entete/chemin">
+                    <string key="ftp-folder">
+                        <xsl:value-of select="entete/chemin"/>
+                    </string>
+                </xsl:if>
+                <xsl:if test="entete/urlhttp">
+                    <string key="http-url">
+                        <xsl:value-of select="entete/urlhttp"/>
+                    </string>
+                </xsl:if>
+                <xsl:if test="lecteur/niveau">
+                    <number key="reader-level">
+                        <xsl:value-of select="lecteur/niveau/@type"/>
+                    </number>
+                </xsl:if>
+                <xsl:if test="lecteur/duree">
+                    <string key="reader-duration">
+                        <xsl:value-of select="lecteur/duree"/>
+                    </string>
+                </xsl:if>
+                <xsl:if test="//lien-forum">
+                    <string key="forum-topic">
+                        <xsl:value-of select="//lien-forum[1]/@id"/>
+                    </string>
+                </xsl:if>
+                <xsl:if test="//lien-forum[1]/@idpost">
+                    <!-- idpost is optional on a lien-forum, while id is not. -->
+                    <string key="forum-post">
+                        <xsl:value-of select="//lien-forum[1]/@idpost"/>
+                    </string>
+                </xsl:if>
             </map>
         </xsl:variable>
         <xsl:result-document method="text" href="{$outputJson}"><xsl:value-of select="xml-to-json($jsonDocument, map { 'indent': false() })"/></xsl:result-document>
@@ -183,16 +229,6 @@
                     </xsl:element>
                 </xsl:for-each>
             </db:info>
-            
-            <xsl:if test="lecteur">
-                <xsl:message>WARNING: tag lecteur is not handled. Please propose a way to encode it in DocBook.</xsl:message>
-            </xsl:if>
-            <xsl:if test="cssperso">
-                <xsl:message>WARNING: tag cssperso is not handled. Please propose a way to encode it in DocBook.</xsl:message>
-            </xsl:if>
-            <xsl:if test="extratag">
-                <xsl:message>WARNING: tag extratag is not handled. Please propose a way to encode it in DocBook.</xsl:message>
-            </xsl:if>
             
             <!-- Main content of the article. -->
             <xsl:choose>
