@@ -330,6 +330,47 @@
     </document>
   </xsl:template>
   
+  <xsl:template match="db:part" mode="part-root">
+    <document>
+      <xsl:call-template name="tc:document-entete"/>
+      <xsl:call-template name="tc:document-license"/>
+      <xsl:call-template name="tc:document-authors"/>
+      <xsl:call-template name="tc:document-related"/>
+      
+      <synopsis>
+        <xsl:variable name="abstractParagraphs" as="node()*">
+          <xsl:choose>
+            <xsl:when test="db:partintro">
+              <xsl:copy-of select="db:partintro"/>
+            </xsl:when>
+            <xsl:when test="db:info/following-sibling::*[1][self::db:para]">
+              <!-- Something resembling an abstract (paragraphs before the first section). -->
+              <xsl:variable name="tentative" select="db:info/following-sibling::*[not(preceding-sibling::db:section) and not(self::db:section)]"/>
+              <xsl:copy-of select="if (count($tentative) &lt; count(db:info/following-sibling::*)) then $tentative else $tentative[1]"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <!-- Nothing to do, sorry about that... -->
+              <db:para/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
+        
+        <xsl:for-each select="$abstractParagraphs">
+          <xsl:apply-templates mode="content" select="."/>
+        </xsl:for-each>
+        
+        <xsl:call-template name="tc:document-abstract-obsoleted-by">
+          <xsl:with-param name="info" select="db:info"/>
+        </xsl:call-template>
+        <xsl:call-template name="tc:document-abstract-forum-link"/>
+      </synopsis>
+      
+      <summary>
+        <xsl:apply-templates mode="content" select="./*"/>
+      </summary>
+    </document>
+  </xsl:template>
+  
   <xsl:template match="db:chapter | db:section | db:sect1 | db:sect2 | db:sect3 | db:sect4 | db:sect5 | db:sect6" mode="document-toc">
     <xsl:variable name="sectionId">
       <xsl:number level="multiple" format="1"/>
@@ -354,49 +395,6 @@
         </liste>
       </xsl:if>
     </element>
-  </xsl:template>
-  
-  <xsl:template match="db:part" mode="part-root">
-    <xsl:result-document validation="lax">
-      <document>
-        <xsl:call-template name="tc:document-entete"/>
-        <xsl:call-template name="tc:document-license"/>
-        <xsl:call-template name="tc:document-authors"/>
-        <xsl:call-template name="tc:document-related"/>
-        
-        <synopsis>
-          <xsl:variable name="abstractParagraphs" as="node()*">
-            <xsl:choose>
-              <xsl:when test="db:partintro">
-                <xsl:copy-of select="db:partintro"/>
-              </xsl:when>
-              <xsl:when test="db:info/following-sibling::*[1][self::db:para]">
-                <!-- Something resembling an abstract (paragraphs before the first section). -->
-                <xsl:variable name="tentative" select="db:info/following-sibling::*[not(preceding-sibling::db:section) and not(self::db:section)]"/>
-                <xsl:copy-of select="if (count($tentative) &lt; count(db:info/following-sibling::*)) then $tentative else $tentative[1]"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <!-- Nothing to do, sorry about that... -->
-                <db:para/>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:variable>
-          
-          <xsl:for-each select="$abstractParagraphs">
-            <xsl:apply-templates mode="content" select="."/>
-          </xsl:for-each>
-          
-          <xsl:call-template name="tc:document-abstract-obsoleted-by">
-            <xsl:with-param name="info" select="db:info"/>
-          </xsl:call-template>
-          <xsl:call-template name="tc:document-abstract-forum-link"/>
-        </synopsis>
-        
-        <summary>
-          <xsl:apply-templates mode="content" select="./*"/>
-        </summary>
-      </document>
-    </xsl:result-document>
   </xsl:template>
     
   <xsl:function name="tc:format-date">
