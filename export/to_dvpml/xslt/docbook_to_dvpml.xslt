@@ -69,30 +69,7 @@
     <xsl:call-template name="tc:check-valid-document-file-name"/>
     <xsl:result-document validation="lax" href="{$document-file-name}_dvp.xml">
       <document>
-        <entete>
-          <rubrique><xsl:value-of select="$section"/></rubrique>
-          <meta>
-            <description>
-              <xsl:value-of select="tc:document-description()"/>
-            </description>
-            <keywords>
-              <xsl:value-of select="tc:document-keywords()"/>
-            </keywords>
-          </meta>
-          
-          <titre>
-            <page>
-              <xsl:value-of select="tc:document-titleabbrev-or-title()"/>
-            </page>
-            <article>
-              <xsl:apply-templates mode="tc:document-title"/>
-            </article>
-          </titre>
-          <date><xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/></date>
-          <miseajour><xsl:value-of select="tc:format-date(db:info/date, 'date')"/></miseajour>
-          
-          <xsl:call-template name="tc:document-entete-from-parameters"/>
-        </entete>
+        <xsl:call-template name="tc:document-entete-from-parameters"/>
         
         <xsl:call-template name="tc:document-license-from-parameters"/>
         <xsl:call-template name="tc:document-see-also">
@@ -193,38 +170,14 @@
   <xsl:template match="db:book" mode="book-without-parts">
     <xsl:call-template name="tc:check-valid-document-file-name"/>
     <document>
-      <entete>
-        <rubrique><xsl:value-of select="$section"/></rubrique>
-        <meta>
-          <description>
-            <xsl:value-of select="tc:document-description()"/>
-          </description>
-          <keywords>
-            <xsl:value-of select="tc:document-keywords()"/>
-          </keywords>
-        </meta>
-        
-        <titre>
-          <page>
-            <xsl:value-of select="tc:document-titleabbrev-or-title()"/>
-          </page>
-          <article>
-            <xsl:value-of select="tc:document-title()"/>
-          </article>
-        </titre>
-        <date><xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/></date>
-        <miseajour><xsl:value-of select="tc:format-date(db:info/date, 'date')"/></miseajour>
-        
-        <xsl:call-template name="tc:document-entete-from-parameters"/>
-      </entete>
+      <xsl:call-template name="tc:document-entete-from-parameters"/>
       
       <xsl:call-template name="tc:document-license-from-parameters"/>
-      <xsl:call-template name="tc:document-see-also">
-        <xsl:with-param name="info" select="db:info"/>
-      </xsl:call-template>
-      <xsl:call-template name="tc:document-authors">
-        <xsl:with-param name="info" select="db:info"/>
-      </xsl:call-template>
+      <xsl:if test="db:info">
+        <xsl:call-template name="tc:document-authors">
+          <xsl:with-param name="info" select="db:info"/>
+        </xsl:call-template>
+      </xsl:if>
       <xsl:call-template name="tc:document-related-from-parameters"/>
       
       <synopsis>
@@ -295,38 +248,17 @@
   
   <xsl:template match="db:book" mode="book-with-parts">
     <document>
-      <entete>
-        <rubrique><xsl:value-of select="$section"/></rubrique>
-        <meta>
-          <description>
-            <xsl:value-of select="tc:document-description()"/>
-          </description>
-          <keywords>
-            <xsl:value-of select="tc:document-keywords()"/>
-          </keywords>
-        </meta>
-        
-        <titre>
-          <page>
-            <xsl:value-of select="tc:document-titleabbrev-or-title()"/>
-          </page>
-          <article>
-            <xsl:value-of select="tc:document-title()"/>
-          </article>
-        </titre>
-        <date><xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/></date>
-        <miseajour><xsl:value-of select="tc:format-date(db:info/date, 'date')"/></miseajour>
-        
-        <xsl:call-template name="tc:document-entete-from-parameters">
-          <!-- Avoid generating a table of contents, as this page only contains a table of contents for the whole book. -->
-          <xsl:with-param name="generate-summary" select="false()"/>
-        </xsl:call-template>
-      </entete>
+      <xsl:call-template name="tc:document-entete-from-parameters">
+        <!-- Avoid generating a table of contents, as this page only contains a table of contents for the whole book. -->
+        <xsl:with-param name="generate-summary" select="false()"/>
+      </xsl:call-template>
       
       <xsl:call-template name="tc:document-license-from-parameters"/>
-      <xsl:call-template name="tc:document-authors">
-        <xsl:with-param name="info" select="db:info"/>
-      </xsl:call-template>
+      <xsl:if test="db:info">
+        <xsl:call-template name="tc:document-authors">
+          <xsl:with-param name="info" select="db:info"/>
+        </xsl:call-template>
+      </xsl:if>
       <xsl:call-template name="tc:document-related-from-parameters"/>
       
       <xsl:if test="count(db:info/db:abstract/child::node()) &gt; 0 or tc:has-document-abstract-obsoleted-by(db:info) or tc:has-document-abstract-forum-link-from-parameters()">
@@ -444,38 +376,14 @@
     <!-- TODO: is this used? -->
     <xsl:result-document validation="lax">
       <document>
-        <entete>
-          <rubrique><xsl:value-of select="$section"/></rubrique>
-          <meta>
-            <description>
-              <xsl:value-of select="tc:document-description()"/>
-            </description>
-            <keywords>
-              <xsl:value-of select="tc:document-keywords()"/>
-            </keywords>
-          </meta>
-          
-          <titre>
-            <page>
-              <xsl:value-of select="tc:document-titleabbrev-or-title()"/>
-            </page>
-            <article>
-              <xsl:apply-templates mode="tc:document-title"/>
-            </article>
-          </titre>
-          <date><xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/></date>
-          <miseajour><xsl:value-of select="tc:format-date(db:info/date, 'date')"/></miseajour>
-          
-          <xsl:call-template name="tc:document-entete-from-parameters"/>
-        </entete>
+        <xsl:call-template name="tc:document-entete-from-parameters"/>
         
         <xsl:call-template name="tc:document-license-from-parameters"/>
-        <xsl:call-template name="tc:document-see-also">
-          <xsl:with-param name="info" select="db:info"/>
-        </xsl:call-template>
-        <xsl:call-template name="tc:document-authors">
-          <xsl:with-param name="info" select="db:info"/>
-        </xsl:call-template>
+        <xsl:if test="db:info">
+          <xsl:call-template name="tc:document-authors">
+            <xsl:with-param name="info" select="db:info"/>
+          </xsl:call-template>
+        </xsl:if>
         <xsl:call-template name="tc:document-related-from-parameters"/>
         
         <synopsis>
@@ -533,37 +441,10 @@
   <xsl:template match="db:part" mode="part-root">
     <xsl:result-document validation="lax">
       <document>
-        <entete>
-          <rubrique><xsl:value-of select="$section"/></rubrique>
-          <meta>
-            <description>
-              <xsl:value-of select="tc:document-description()"/>
-            </description>
-            <keywords>
-              <xsl:value-of select="tc:document-keywords()"/>
-            </keywords>
-          </meta>
-          
-          <titre>
-            <!-- TODO: introduce a template to gather this information. I'm getting fed up with copying the same code over and over again. -->
-            <page>
-              <xsl:value-of select="tc:document-titleabbrev-or-title()"/>
-            </page>
-            <article>
-              <xsl:apply-templates mode="title"/>
-            </article>
-          </titre>
-          <date><xsl:value-of select="tc:format-date($document/db:info/pubdate, 'pubdate')"/></date>
-          <miseajour><xsl:value-of select="tc:format-date($document/db:info/date, 'date')"/></miseajour>
-          
-          <xsl:call-template name="tc:document-entete-from-parameters"/>
-        </entete>
+        <xsl:call-template name="tc:document-entete-from-parameters"/>
         
         <xsl:call-template name="tc:document-license-from-parameters"/>
         <xsl:if test="$document/db:info">
-          <xsl:call-template name="tc:document-see-also">
-            <xsl:with-param name="info" select="$document/db:info"/>
-          </xsl:call-template>
           <xsl:call-template name="tc:document-authors">
             <xsl:with-param name="info" select="$document/db:info"/>
           </xsl:call-template>
@@ -623,56 +504,80 @@
   <xsl:template name="tc:document-entete-from-parameters">
     <xsl:param name="generate-summary" as="xs:boolean" select="true()"/>
     
-    <xsl:if test="$doc-qt">
-      <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php'); include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
-    </xsl:if>
-    
-    <xsl:if test="string-length($google-analytics) > 0">
-      <google-analytics><xsl:value-of select="$google-analytics"/></google-analytics>
-    </xsl:if>
-    
-    <xsl:choose>
-      <xsl:when test="string-length($license-author) > 0 and $license-number > 0 and $license-year > 0">
-        <licauteur><xsl:value-of select="$license-author"/></licauteur>
-        <lictype><xsl:value-of select="$license-number"/></lictype>
-        <licannee><xsl:value-of select="$license-year"/></licannee>
-      </xsl:when>
-      <xsl:when test="string-length($license-author) > 0 or $license-number > 0 or $license-year > 0">
-        <xsl:message>WARNING: Global license parameters not consistent: either the three parameters license-author, license-number, and license-year must be set, or only license-text.</xsl:message>
-      </xsl:when>
-    </xsl:choose>
-    
-    <xsl:choose>
-      <xsl:when test="$doc-qt">
-        <!-- TODO: generate all this in the configuration file? -->
-        <serveur>Qt</serveur>
-        <xsl:variable name="url">
-          <xsl:variable name="documentQdt" select="tokenize(base-uri(), '/')[last()]"/>
-          <xsl:variable name="document" select="tokenize($documentQdt, '\.')[1]"/>
-          <xsl:value-of select="concat(lower-case(db:info/db:productname), '/', db:info/db:productnumber, '/', $document)"/>
-        </xsl:variable>
-        <chemin>/doc/<xsl:value-of select="$url"/></chemin>
-        <urlhttp>http://qt.developpez.com/doc/<xsl:value-of select="$url"/></urlhttp>
-      </xsl:when>
-      <xsl:when test="string-length($ftp-user) > 0 and string-length($ftp-folder) > 0">
-        <serveur><xsl:value-of select="$ftp-user"/></serveur>
-        <chemin><xsl:value-of select="$ftp-folder"/></chemin>
-        <urlhttp>http://<xsl:value-of select="$ftp-user"/>.developpez.com/<xsl:value-of select="$ftp-folder"/></urlhttp>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:message>WARNING: FTP information missing.</xsl:message>
-      </xsl:otherwise>
-    </xsl:choose>
-    
-    <xsl:if test="$generate-summary">
-      <nosummary/>
-      <nosummarypage/>
-    </xsl:if>
-    
-    <nopdf/>
-    <nozip/>
-    <nodownload/>
-    <noebook/>
+    <entete>
+      <rubrique><xsl:value-of select="$section"/></rubrique>
+      <meta>
+        <description>
+          <xsl:value-of select="tc:document-description()"/>
+        </description>
+        <keywords>
+          <xsl:value-of select="tc:document-keywords()"/>
+        </keywords>
+      </meta>
+      
+      <titre>
+        <page>
+          <xsl:value-of select="tc:document-titleabbrev-or-title()"/>
+        </page>
+        <article>
+          <xsl:value-of select="tc:document-title()"/>
+        </article>
+      </titre>
+      <date><xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/></date>
+      <miseajour><xsl:value-of select="tc:format-date(db:info/date, 'date')"/></miseajour>
+      
+      
+      <xsl:if test="$doc-qt">
+        <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php'); include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
+      </xsl:if>
+      
+      <xsl:if test="string-length($google-analytics) > 0">
+        <google-analytics><xsl:value-of select="$google-analytics"/></google-analytics>
+      </xsl:if>
+      
+      <xsl:choose>
+        <xsl:when test="string-length($license-author) > 0 and $license-number > 0 and $license-year > 0">
+          <licauteur><xsl:value-of select="$license-author"/></licauteur>
+          <lictype><xsl:value-of select="$license-number"/></lictype>
+          <licannee><xsl:value-of select="$license-year"/></licannee>
+        </xsl:when>
+        <xsl:when test="string-length($license-author) > 0 or $license-number > 0 or $license-year > 0">
+          <xsl:message>WARNING: Global license parameters not consistent: either the three parameters license-author, license-number, and license-year must be set, or only license-text.</xsl:message>
+        </xsl:when>
+      </xsl:choose>
+      
+      <xsl:choose>
+        <xsl:when test="$doc-qt">
+          <!-- TODO: generate all this in the configuration file? -->
+          <serveur>Qt</serveur>
+          <xsl:variable name="url">
+            <xsl:variable name="documentQdt" select="tokenize(base-uri(), '/')[last()]"/>
+            <xsl:variable name="document" select="tokenize($documentQdt, '\.')[1]"/>
+            <xsl:value-of select="concat(lower-case(db:info/db:productname), '/', db:info/db:productnumber, '/', $document)"/>
+          </xsl:variable>
+          <chemin>/doc/<xsl:value-of select="$url"/></chemin>
+          <urlhttp>http://qt.developpez.com/doc/<xsl:value-of select="$url"/></urlhttp>
+        </xsl:when>
+        <xsl:when test="string-length($ftp-user) > 0 and string-length($ftp-folder) > 0">
+          <serveur><xsl:value-of select="$ftp-user"/></serveur>
+          <chemin><xsl:value-of select="$ftp-folder"/></chemin>
+          <urlhttp>http://<xsl:value-of select="$ftp-user"/>.developpez.com/<xsl:value-of select="$ftp-folder"/></urlhttp>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:message>WARNING: FTP information missing.</xsl:message>
+        </xsl:otherwise>
+      </xsl:choose>
+      
+      <xsl:if test="$generate-summary">
+        <nosummary/>
+        <nosummarypage/>
+      </xsl:if>
+      
+      <nopdf/>
+      <nozip/>
+      <nodownload/>
+      <noebook/>
+    </entete>
   </xsl:template>
   
   <xsl:template name="tc:document-authors">
