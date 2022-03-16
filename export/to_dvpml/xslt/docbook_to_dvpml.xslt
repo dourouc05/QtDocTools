@@ -69,11 +69,11 @@
     <xsl:call-template name="tc:check-valid-document-file-name"/>
     <xsl:result-document validation="lax" href="{$document-file-name}_dvp.xml">
       <document>
-        <xsl:call-template name="tc:document-entete-from-parameters"/>
-        <xsl:call-template name="tc:document-license-from-parameters"/>
+        <xsl:call-template name="tc:document-entete"/>
+        <xsl:call-template name="tc:document-license"/>
         <xsl:call-template name="tc:document-see-also"/>
         <xsl:call-template name="tc:document-authors"/>
-        <xsl:call-template name="tc:document-related-from-parameters"/>
+        <xsl:call-template name="tc:document-related"/>
         
         <synopsis>
           <xsl:variable name="abstractParagraphs" as="node()*">
@@ -106,7 +106,7 @@
           <xsl:call-template name="tc:document-abstract-obsoleted-by">
             <xsl:with-param name="info" select="db:info"/>
           </xsl:call-template>
-          <xsl:call-template name="tc:document-abstract-forum-link-from-parameters"/>
+          <xsl:call-template name="tc:document-abstract-forum-link"/>
         </synopsis>
         
         <summary>
@@ -165,10 +165,10 @@
   <xsl:template match="db:book" mode="book-without-parts">
     <xsl:call-template name="tc:check-valid-document-file-name"/>
     <document>
-      <xsl:call-template name="tc:document-entete-from-parameters"/>
-      <xsl:call-template name="tc:document-license-from-parameters"/>
+      <xsl:call-template name="tc:document-entete"/>
+      <xsl:call-template name="tc:document-license"/>
       <xsl:call-template name="tc:document-authors"/>
-      <xsl:call-template name="tc:document-related-from-parameters"/>
+      <xsl:call-template name="tc:document-related"/>
       
       <synopsis>
         <xsl:variable name="abstractParagraphs" as="node()+">
@@ -201,7 +201,7 @@
           <xsl:apply-templates mode="content" select="."/>
         </xsl:for-each>
         
-        <xsl:call-template name="tc:document-abstract-forum-link-from-parameters"/>
+        <xsl:call-template name="tc:document-abstract-forum-link"/>
       </synopsis>
       
       <multi-page>
@@ -238,15 +238,15 @@
   
   <xsl:template match="db:book" mode="book-with-parts">
     <document>
-      <xsl:call-template name="tc:document-entete-from-parameters">
+      <xsl:call-template name="tc:document-entete">
         <!-- Avoid generating a table of contents, as this page only contains a table of contents for the whole book. -->
         <xsl:with-param name="generate-summary" select="false()"/>
       </xsl:call-template>
-      <xsl:call-template name="tc:document-license-from-parameters"/>
+      <xsl:call-template name="tc:document-license"/>
       <xsl:call-template name="tc:document-authors"/>
-      <xsl:call-template name="tc:document-related-from-parameters"/>
+      <xsl:call-template name="tc:document-related"/>
       
-      <xsl:if test="count(db:info/db:abstract/child::node()) &gt; 0 or tc:has-document-abstract-obsoleted-by(db:info) or tc:has-document-abstract-forum-link-from-parameters()">
+      <xsl:if test="count(db:info/db:abstract/child::node()) &gt; 0 or tc:has-document-abstract-obsoleted-by(db:info) or tc:has-document-abstract-forum-link()">
         <synopsis>
           <!-- voiraussi is not implemented (book is not used for Qt's documentation). -->
           <!-- This simplifies a lot this code. -->
@@ -257,7 +257,7 @@
           <xsl:call-template name="tc:document-abstract-obsoleted-by">
             <xsl:with-param name="info" select="db:info"/>
           </xsl:call-template>
-          <xsl:call-template name="tc:document-abstract-forum-link-from-parameters"/>
+          <xsl:call-template name="tc:document-abstract-forum-link"/>
         </synopsis>
       </xsl:if>
       
@@ -361,10 +361,10 @@
     <!-- TODO: is this used? -->
     <xsl:result-document validation="lax">
       <document>
-        <xsl:call-template name="tc:document-entete-from-parameters"/>
-        <xsl:call-template name="tc:document-license-from-parameters"/>
+        <xsl:call-template name="tc:document-entete"/>
+        <xsl:call-template name="tc:document-license"/>
         <xsl:call-template name="tc:document-authors"/>
-        <xsl:call-template name="tc:document-related-from-parameters"/>
+        <xsl:call-template name="tc:document-related"/>
         
         <synopsis>
           <xsl:variable name="abstractParagraphs" as="node()*">
@@ -396,7 +396,7 @@
           <xsl:call-template name="tc:document-abstract-obsoleted-by">
             <xsl:with-param name="info" select="db:info"/>
           </xsl:call-template>
-          <xsl:call-template name="tc:document-abstract-forum-link-from-parameters"/>
+          <xsl:call-template name="tc:document-abstract-forum-link"/>
         </synopsis>
         
         <summary>
@@ -421,10 +421,10 @@
   <xsl:template match="db:part" mode="part-root">
     <xsl:result-document validation="lax">
       <document>
-        <xsl:call-template name="tc:document-entete-from-parameters"/>
-        <xsl:call-template name="tc:document-license-from-parameters"/>
+        <xsl:call-template name="tc:document-entete"/>
+        <xsl:call-template name="tc:document-license"/>
         <xsl:call-template name="tc:document-authors"/>
-        <xsl:call-template name="tc:document-related-from-parameters"/>
+        <xsl:call-template name="tc:document-related"/>
         
         <synopsis>
           <xsl:variable name="abstractParagraphs" as="node()*">
@@ -451,7 +451,7 @@
           <xsl:call-template name="tc:document-abstract-obsoleted-by">
             <xsl:with-param name="info" select="db:info"/>
           </xsl:call-template>
-          <xsl:call-template name="tc:document-abstract-forum-link-from-parameters"/>
+          <xsl:call-template name="tc:document-abstract-forum-link"/>
         </synopsis>
         
         <summary>
@@ -476,7 +476,7 @@
     </xsl:choose>
   </xsl:function>
   
-  <xsl:template name="tc:document-entete-from-parameters">
+  <xsl:template name="tc:document-entete">
     <xsl:param name="generate-summary" as="xs:boolean" select="true()"/>
     
     <entete>
@@ -573,7 +573,7 @@
     </authorDescriptions>
   </xsl:template>
   
-  <xsl:template name="tc:document-license-from-parameters">
+  <xsl:template name="tc:document-license">
     <xsl:if test="string-length($license-author) = 0 and $license-number &lt; 0 and $license-year &lt; 0">
       <xsl:choose>
         <xsl:when test="string-length($license-text) > 0">
@@ -608,7 +608,7 @@
     </xsl:if>
   </xsl:template>
   
-  <xsl:template name="tc:document-related-from-parameters">
+  <xsl:template name="tc:document-related">
     <xsl:if test="string-length($related) > 0">
       <reference><xsl:value-of select="$related"/></reference>
     </xsl:if>
@@ -634,11 +634,11 @@
     </xsl:if>
   </xsl:template>
   
-  <xsl:function name="tc:has-document-abstract-forum-link-from-parameters" as="xs:boolean">
+  <xsl:function name="tc:has-document-abstract-forum-link" as="xs:boolean">
     <xsl:sequence select="$forum-topic > 0"/>
   </xsl:function>
   
-  <xsl:template name="tc:document-abstract-forum-link-from-parameters">
+  <xsl:template name="tc:document-abstract-forum-link">
     <xsl:choose>
       <xsl:when test="$forum-topic > 0">
         <paragraph>
