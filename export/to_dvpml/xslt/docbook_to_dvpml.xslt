@@ -452,6 +452,7 @@
           <lictype><xsl:value-of select="$license-number"/></lictype>
           <licannee><xsl:value-of select="$license-year"/></licannee>
         </xsl:when>
+        <!-- When $license-text is set, the license is output just after the <entete> tag. -->
         <xsl:when test="string-length($license-author) > 0 or $license-number > 0 or $license-year > 0">
           <xsl:message>WARNING: Global license parameters not consistent: either the three parameters license-author, license-number, and license-year must be set, or only license-text.</xsl:message>
         </xsl:when>
@@ -512,6 +513,7 @@
   <xsl:template name="tc:document-license">
     <xsl:if test="string-length($license-author) = 0 and $license-number &lt; 0 and $license-year &lt; 0">
       <xsl:choose>
+        <!-- When license-author and the others are set, the license information is within the <entete> tag. -->
         <xsl:when test="string-length($license-text) > 0">
           <licence>
             <xsl:value-of select="$license-text"/>
