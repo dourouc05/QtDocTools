@@ -167,7 +167,7 @@
             <xsl:when test="not(child::*[2][self::db:section])">
               <!-- A document must have a section in DvpML, not necessarily in DocBook. -->
               <section id="I" noNumber="1">
-                <title><xsl:value-of select="db:info/db:title"/></title>
+                <title><xsl:value-of select="if (db:info/db:title) then db:info/db:title else db:title"/></title>
                 
                 <xsl:apply-templates mode="content" select="./*"/>
               </section>
@@ -223,8 +223,11 @@
         <meta>
           <description>
             <xsl:choose>
-              <xsl:when test="db:info/db:abstract/db:para">
-                <xsl:value-of select="db:info/db:abstract/db:para[1]/text()"/>
+              <xsl:when test="db:info/db:abstract[@role='description']">
+                <xsl:value-of select="db:info/db:abstract[@role='description']/db:para[1]/text()"/>
+              </xsl:when>
+              <xsl:when test="db:info/db:abstract[not(@role='description')]/db:para">
+                <xsl:value-of select="db:info/db:abstract[not(@role='description')]/db:para[1]/text()"/>
               </xsl:when>
               <xsl:when test="db:info/db:title">
                 <xsl:value-of select="db:info/db:title"/>
