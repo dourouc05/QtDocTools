@@ -258,8 +258,12 @@
         </meta>
         
         <titre>
-          <page><xsl:value-of select="db:info/db:title"/></page>
-          <article><xsl:value-of select="db:info/db:title"/></article>
+          <page>
+            <xsl:call-template name="tc:titleabbrev-or-title"/>
+          </page>
+          <article>
+            <xsl:apply-templates mode="title"/>
+          </article>
         </titre>
         <date><xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/></date>
         <miseajour><xsl:value-of select="tc:format-date(db:info/date, 'date')"/></miseajour>
