@@ -70,14 +70,9 @@
     <xsl:result-document validation="lax" href="{$document-file-name}_dvp.xml">
       <document>
         <xsl:call-template name="tc:document-entete-from-parameters"/>
-        
         <xsl:call-template name="tc:document-license-from-parameters"/>
-        <xsl:call-template name="tc:document-see-also">
-          <xsl:with-param name="info" select="db:info"/>
-        </xsl:call-template>
-        <xsl:call-template name="tc:document-authors">
-          <xsl:with-param name="info" select="db:info"/>
-        </xsl:call-template>
+        <xsl:call-template name="tc:document-see-also"/>
+        <xsl:call-template name="tc:document-authors"/>
         <xsl:call-template name="tc:document-related-from-parameters"/>
         
         <synopsis>
@@ -171,13 +166,8 @@
     <xsl:call-template name="tc:check-valid-document-file-name"/>
     <document>
       <xsl:call-template name="tc:document-entete-from-parameters"/>
-      
       <xsl:call-template name="tc:document-license-from-parameters"/>
-      <xsl:if test="db:info">
-        <xsl:call-template name="tc:document-authors">
-          <xsl:with-param name="info" select="db:info"/>
-        </xsl:call-template>
-      </xsl:if>
+      <xsl:call-template name="tc:document-authors"/>
       <xsl:call-template name="tc:document-related-from-parameters"/>
       
       <synopsis>
@@ -252,13 +242,8 @@
         <!-- Avoid generating a table of contents, as this page only contains a table of contents for the whole book. -->
         <xsl:with-param name="generate-summary" select="false()"/>
       </xsl:call-template>
-      
       <xsl:call-template name="tc:document-license-from-parameters"/>
-      <xsl:if test="db:info">
-        <xsl:call-template name="tc:document-authors">
-          <xsl:with-param name="info" select="db:info"/>
-        </xsl:call-template>
-      </xsl:if>
+      <xsl:call-template name="tc:document-authors"/>
       <xsl:call-template name="tc:document-related-from-parameters"/>
       
       <xsl:if test="count(db:info/db:abstract/child::node()) &gt; 0 or tc:has-document-abstract-obsoleted-by(db:info) or tc:has-document-abstract-forum-link-from-parameters()">
@@ -377,13 +362,8 @@
     <xsl:result-document validation="lax">
       <document>
         <xsl:call-template name="tc:document-entete-from-parameters"/>
-        
         <xsl:call-template name="tc:document-license-from-parameters"/>
-        <xsl:if test="db:info">
-          <xsl:call-template name="tc:document-authors">
-            <xsl:with-param name="info" select="db:info"/>
-          </xsl:call-template>
-        </xsl:if>
+        <xsl:call-template name="tc:document-authors"/>
         <xsl:call-template name="tc:document-related-from-parameters"/>
         
         <synopsis>
@@ -442,13 +422,8 @@
     <xsl:result-document validation="lax">
       <document>
         <xsl:call-template name="tc:document-entete-from-parameters"/>
-        
         <xsl:call-template name="tc:document-license-from-parameters"/>
-        <xsl:if test="$document/db:info">
-          <xsl:call-template name="tc:document-authors">
-            <xsl:with-param name="info" select="$document/db:info"/>
-          </xsl:call-template>
-        </xsl:if>
+        <xsl:call-template name="tc:document-authors"/>
         <xsl:call-template name="tc:document-related-from-parameters"/>
         
         <synopsis>
@@ -581,12 +556,10 @@
   </xsl:template>
   
   <xsl:template name="tc:document-authors">
-    <xsl:param name="info" as="element(db:info)"/>
-    
     <authorDescriptions>
       <xsl:choose>
-        <xsl:when test="$info/(db:authorgroup | db:author | db:editor | db:othercredit)">
-          <xsl:for-each select="$info//(db:author | db:editor | db:othercredit)">
+        <xsl:when test="$document/db:info/(db:authorgroup | db:author | db:editor | db:othercredit)">
+          <xsl:for-each select="$document/db:info//(db:author | db:editor | db:othercredit)">
             <xsl:apply-templates mode="header_author" select="."/>
           </xsl:for-each>
         </xsl:when>
@@ -616,14 +589,12 @@
   </xsl:template>
   
   <xsl:template name="tc:document-see-also">
-    <xsl:param name="info" as="element(db:info)"/>
-    
     <!-- If the synopsis has a specific form (last paragraph has only one children, a simple list), -->
     <!-- consider this list has links to linked documents. -->
-    <xsl:if test="$doc-qt and $info/db:abstract/db:para[last()]/child::*[1][self::db:simplelist and @role='see-also']">
+    <xsl:if test="$doc-qt and $document/db:info/db:abstract/db:para[last()]/child::*[1][self::db:simplelist and @role='see-also']">
       <voiraussi>
         <!-- First, the linked documents (previous/next). -->
-        <xsl:for-each select="$info/db:abstract/db:para[last()]/db:simplelist/db:member">
+        <xsl:for-each select="$document/db:info/db:abstract/db:para[last()]/db:simplelist/db:member">
           <lien>
             <texte><xsl:value-of select="db:link/text()"/></texte>
             <url>
