@@ -330,8 +330,7 @@
     </document>
   </xsl:template>
   
-  <xsl:template match="db:chapter | db:section" mode="document-toc">
-    <!-- TODO: does not work with sect1/sect6. -->
+  <xsl:template match="db:chapter | db:section | db:sect1 | db:sect2 | db:sect3 | db:sect4 | db:sect5 | db:sect6" mode="document-toc">
     <xsl:variable name="sectionId">
       <xsl:number level="multiple" format="1"/>
     </xsl:variable>
