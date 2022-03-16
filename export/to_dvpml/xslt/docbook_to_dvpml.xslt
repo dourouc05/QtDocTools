@@ -801,9 +801,8 @@
       <xsl:when test="$document/db:info/following-sibling::*[1][self::db:para]">
         <!-- Just links in the DocBook abstract, but something resembling an abstract -->
         <!-- (paragraphs before the first section). -->
-        <!-- This code will fail if sect* tags are used instead of sections. -->
         <xsl:variable name="tentative"
-          select="$document/db:info/following-sibling::*[not(preceding-sibling::db:section) and not(self::db:section)]"/>
+          select="$document/db:info/following-sibling::*[not(preceding-sibling::db:section) and not(self::db:section) and not(preceding-sibling::db:sect1) and not(self::db:sect1)]"/>
         <xsl:copy-of select="
             if (count($tentative) &lt; count($document/db:info/following-sibling::*)) then
               $tentative
