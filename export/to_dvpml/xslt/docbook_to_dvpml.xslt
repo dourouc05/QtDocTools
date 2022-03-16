@@ -73,44 +73,19 @@
           <rubrique><xsl:value-of select="$section"/></rubrique>
           <meta>
             <description>
-              <xsl:choose>
-                <xsl:when test="db:info/db:abstract[@role='description']/db:para">
-                  <xsl:value-of select="db:info/db:abstract[@role='description']/db:para[1]/text()"/>
-                </xsl:when>
-                <xsl:when test="db:info/db:abstract/db:para">
-                  <xsl:value-of select="db:info/db:abstract/db:para[1]/text()"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:apply-templates mode="title"/>
-                </xsl:otherwise>
-              </xsl:choose>
+              <xsl:call-template name="tc:document-description"/>
             </description>
             <keywords>
-              <xsl:choose>
-                <xsl:when test="db:info/db:keywordset">
-                  <xsl:for-each select="db:info/db:keywordset/db:keyword">
-                    <xsl:value-of select="."/>
-                    <xsl:if test="position() &lt; last()">
-                      <xsl:value-of select="','"/>
-                    </xsl:if>
-                  </xsl:for-each>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:variable name="title">
-                    <xsl:apply-templates mode="title"/>
-                  </xsl:variable>
-                  <xsl:value-of select="translate(translate($title, ',', ''), ' ', ',')"/>
-                </xsl:otherwise>
-              </xsl:choose>
+              <xsl:call-template name="tc:document-keywords"/>
             </keywords>
           </meta>
           
           <titre>
             <page>
-              <xsl:call-template name="tc:titleabbrev-or-title"/>
+              <xsl:call-template name="tc:document-titleabbrev-or-title"/>
             </page>
             <article>
-              <xsl:apply-templates mode="title"/>
+              <xsl:apply-templates mode="tc:document-title"/>
             </article>
           </titre>
           <date><xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/></date>
@@ -222,47 +197,19 @@
         <rubrique><xsl:value-of select="$section"/></rubrique>
         <meta>
           <description>
-            <xsl:choose>
-              <xsl:when test="db:info/db:abstract[@role='description']">
-                <xsl:value-of select="db:info/db:abstract[@role='description']/db:para[1]/text()"/>
-              </xsl:when>
-              <xsl:when test="db:info/db:abstract[not(@role='description')]/db:para">
-                <xsl:value-of select="db:info/db:abstract[not(@role='description')]/db:para[1]/text()"/>
-              </xsl:when>
-              <xsl:when test="db:info/db:title">
-                <xsl:value-of select="db:info/db:title"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="db:title"/>
-              </xsl:otherwise>
-            </xsl:choose>
+            <xsl:call-template name="tc:document-description"/>
           </description>
           <keywords>
-            <xsl:choose>
-              <xsl:when test="db:info/db:keywordset">
-                <xsl:for-each select="db:info/db:keywordset/db:keyword">
-                  <xsl:value-of select="."/>
-                  <xsl:if test="position() &lt; last()">
-                    <xsl:value-of select="','"/>
-                  </xsl:if>
-                </xsl:for-each>
-              </xsl:when>
-              <xsl:when test="db:info/db:title">
-                <xsl:value-of select="translate(translate(db:info/db:title, ',', ''), ' ', ',')"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="translate(translate(db:title, ',', ''), ' ', ',')"/>
-              </xsl:otherwise>
-            </xsl:choose>
+            <xsl:call-template name="tc:document-keywords"/>
           </keywords>
         </meta>
         
         <titre>
           <page>
-            <xsl:call-template name="tc:titleabbrev-or-title"/>
+            <xsl:call-template name="tc:document-titleabbrev-or-title"/>
           </page>
           <article>
-            <xsl:apply-templates mode="title"/>
+            <xsl:call-template name="tc:document-title"/>
           </article>
         </titre>
         <date><xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/></date>
@@ -352,41 +299,20 @@
         <rubrique><xsl:value-of select="$section"/></rubrique>
         <meta>
           <description>
-            <xsl:choose>
-              <xsl:when test="db:info/db:abstract/db:para">
-                <xsl:value-of select="db:info/db:abstract/db:para[1]/text()"/>
-              </xsl:when>
-              <xsl:when test="db:info/db:title">
-                <xsl:value-of select="db:info/db:title"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="db:title"/>
-              </xsl:otherwise>
-            </xsl:choose>
+            <xsl:call-template name="tc:document-description"/>
           </description>
           <keywords>
-            <xsl:choose>
-              <xsl:when test="db:info/db:keywordset">
-                <xsl:for-each select="db:info/db:keywordset/db:keyword">
-                  <xsl:value-of select="."/>
-                  <xsl:if test="position() &lt; last()">
-                    <xsl:value-of select="','"/>
-                  </xsl:if>
-                </xsl:for-each>
-              </xsl:when>
-              <xsl:when test="db:info/db:title">
-                <xsl:value-of select="translate(translate(db:info/db:title, ',', ''), ' ', ',')"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <xsl:value-of select="translate(translate(db:title, ',', ''), ' ', ',')"/>
-              </xsl:otherwise>
-            </xsl:choose>
+            <xsl:call-template name="tc:document-keywords"/>
           </keywords>
         </meta>
         
         <titre>
-          <page><xsl:value-of select="db:info/db:title"/></page>
-          <article><xsl:value-of select="db:info/db:title"/></article>
+          <page>
+            <xsl:call-template name="tc:document-titleabbrev-or-title"/>
+          </page>
+          <article>
+            <xsl:call-template name="tc:document-title"/>
+          </article>
         </titre>
         <date><xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/></date>
         <miseajour><xsl:value-of select="tc:format-date(db:info/date, 'date')"/></miseajour>
@@ -522,41 +448,20 @@
           <rubrique><xsl:value-of select="$section"/></rubrique>
           <meta>
             <description>
-              <xsl:choose>
-                <xsl:when test="db:info/db:abstract/db:para">
-                  <xsl:value-of select="db:info/db:abstract/db:para[1]/text()"/>
-                </xsl:when>
-                <xsl:when test="db:info/db:title">
-                  <xsl:value-of select="db:info/db:title"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="db:title"/>
-                </xsl:otherwise>
-              </xsl:choose>
+              <xsl:call-template name="tc:document-description"/>
             </description>
             <keywords>
-              <xsl:choose>
-                <xsl:when test="db:info/db:keywordset">
-                  <xsl:for-each select="db:info/db:keywordset/db:keyword">
-                    <xsl:value-of select="."/>
-                    <xsl:if test="position() &lt; last()">
-                      <xsl:value-of select="','"/>
-                    </xsl:if>
-                  </xsl:for-each>
-                </xsl:when>
-                <xsl:when test="db:info/db:title">
-                  <xsl:value-of select="translate(translate(db:info/db:title, ',', ''), ' ', ',')"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="translate(translate(db:title, ',', ''), ' ', ',')"/>
-                </xsl:otherwise>
-              </xsl:choose>
+              <xsl:call-template name="tc:document-keywords"/>
             </keywords>
           </meta>
           
           <titre>
-            <page><xsl:value-of select="db:info/db:title"/></page>
-            <article><xsl:value-of select="db:info/db:title"/></article>
+            <page>
+              <xsl:call-template name="tc:document-titleabbrev-or-title"/>
+            </page>
+            <article>
+              <xsl:apply-templates mode="tc:document-title"/>
+            </article>
           </titre>
           <date><xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/></date>
           <miseajour><xsl:value-of select="tc:format-date(db:info/date, 'date')"/></miseajour>
@@ -632,42 +537,17 @@
           <rubrique><xsl:value-of select="$section"/></rubrique>
           <meta>
             <description>
-              <xsl:choose>
-                <xsl:when test="$document/db:info/db:abstract/db:para">
-                  <xsl:value-of select="$document/db:info/db:abstract/db:para[1]/text()"/>
-                </xsl:when>
-                <xsl:when test="$document/db:info/db:title">
-                  <xsl:value-of select="$document/db:info/db:title"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="$document/db:title"/>
-                </xsl:otherwise>
-              </xsl:choose>
+              <xsl:call-template name="tc:document-description"/>
             </description>
             <keywords>
-              <xsl:choose>
-                <xsl:when test="$document/db:info/db:keywordset">
-                  <xsl:for-each select="$document/db:info/db:keywordset/db:keyword">
-                    <xsl:value-of select="."/>
-                    <xsl:if test="position() &lt; last()">
-                      <xsl:value-of select="','"/>
-                    </xsl:if>
-                  </xsl:for-each>
-                </xsl:when>
-                <xsl:when test="$document/db:info/db:title">
-                  <xsl:value-of select="translate(translate($document/db:info/db:title, ',', ''), ' ', ',')"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="translate(translate($document/db:title, ',', ''), ' ', ',')"/>
-                </xsl:otherwise>
-              </xsl:choose>
+              <xsl:call-template name="tc:document-keywords"/>
             </keywords>
           </meta>
           
           <titre>
             <!-- TODO: introduce a template to gather this information. I'm getting fed up with copying the same code over and over again. -->
             <page>
-              <xsl:call-template name="tc:titleabbrev-or-title"/>
+              <xsl:call-template name="tc:document-titleabbrev-or-title"/>
             </page>
             <article>
               <xsl:apply-templates mode="title"/>
@@ -973,50 +853,97 @@
     </authorDescription>
   </xsl:template>
   
-  <xsl:template match="*" mode="title"/>
+  <xsl:template match="*" mode="tc:private-title"/>
   
-  <xsl:template match="db:info" mode="title">
+  <xsl:template match="db:info" mode="tc:private-title">
     <xsl:apply-templates/>
   </xsl:template>
   
-  <xsl:template match="db:title" mode="title">
+  <xsl:template match="db:title" mode="tc:private-title">
     <xsl:apply-templates mode="content_para"/>
   </xsl:template>
   
-  <xsl:template match="*" mode="subtitle"/>
+  <xsl:template match="*" mode="tc:private-subtitle"/>
   
-  <xsl:template match="db:info" mode="subtitle">
+  <xsl:template match="db:info" mode="tc:private-subtitle">
     <xsl:apply-templates/>
   </xsl:template>
   
-  <xsl:template match="db:subtitle" mode="subtitle">
+  <xsl:template match="db:subtitle" mode="tc:private-subtitle">
     <xsl:apply-templates mode="content_para"/>
   </xsl:template>
   
-  <xsl:template match="*" mode="titleabbrev"/>
+  <xsl:template match="*" mode="tc:private-titleabbrev"/>
   
-  <xsl:template match="db:info" mode="titleabbrev">
+  <xsl:template match="db:info" mode="tc:private-titleabbrev">
     <xsl:apply-templates/>
   </xsl:template>
   
-  <xsl:template match="db:titleabbrev" mode="titleabbrev">
+  <xsl:template match="db:titleabbrev" mode="tc:private-titleabbrev">
     <xsl:apply-templates mode="content_para"/>
   </xsl:template>
   
-  <xsl:template name="tc:titleabbrev-or-title">
+  <xsl:template name="tc:document-title">
+    <xsl:apply-templates mode="tc:private-title" select="$document"/>
+  </xsl:template>
+
+  <xsl:template name="tc:document-subtitle">
+    <xsl:apply-templates mode="tc:private-subtitle" select="$document"/>
+  </xsl:template>
+
+  <xsl:template name="tc:document-titleabbrev">
+    <xsl:apply-templates mode="tc:private-titleabbrev" select="$document"/>
+  </xsl:template>
+  
+  <xsl:template name="tc:document-titleabbrev-or-title">
     <xsl:variable name="titleAbbrev">
-      <xsl:apply-templates mode="titleabbrev" select="$document"/>
+      <xsl:call-template name="tc:document-titleabbrev"/>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="$titleAbbrev">
         <xsl:value-of select="$titleAbbrev"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:apply-templates mode="title" select="$document"/>
+        <xsl:call-template name="tc:document-title"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   
+  <xsl:template name="tc:document-description">
+    <xsl:choose>
+      <xsl:when test="$document/db:info/db:abstract[@role='description']">
+        <xsl:value-of select="$document/db:info/db:abstract[@role='description']/db:para[1]/text()"/>
+      </xsl:when>
+      <xsl:when test="$document/db:info/db:abstract[not(@role='description')]/db:para">
+        <xsl:value-of select="$document/db:info/db:abstract[not(@role='description')]/db:para[1]/text()"/>
+      </xsl:when>
+      <xsl:when test="$document/db:info/db:title">
+        <xsl:value-of select="$document/db:info/db:title"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$document/db:title"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
+  <xsl:template name="tc:document-keywords">
+    <xsl:choose>
+      <xsl:when test="$document/db:info/db:keywordset">
+        <xsl:for-each select="$document/db:info/db:keywordset/db:keyword">
+          <xsl:value-of select="."/>
+          <xsl:if test="position() &lt; last()">
+            <xsl:value-of select="','"/>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:variable name="title">
+          <xsl:call-template name="tc:document-title"/>
+        </xsl:variable>
+        <xsl:value-of select="translate(translate($title, ',', ''), ' ', ',')"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
   
   <!-- Catch-all block for the remaining content that has not been handled with. -->
   <xsl:template match="*" mode="#all">
