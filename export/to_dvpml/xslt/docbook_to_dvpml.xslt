@@ -192,7 +192,7 @@
       </multi-page>
 
       <summary>
-        <xsl:apply-templates mode="content" select="./*[self::db:chapter or self::db:section]"/>
+        <xsl:apply-templates mode="content" select="./*[self::db:chapter or self::db:section or self::db:sect1]"/>
 
         <xsl:if test="db:bibliography">
           <xsl:apply-templates select="db:bibliography"/>

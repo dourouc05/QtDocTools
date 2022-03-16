@@ -8,9 +8,9 @@
     <xsl:apply-templates mode="content"/>
   </xsl:template>
 
-  <xsl:template mode="content" match="db:section | db:chapter">
+  <xsl:template mode="content" match="db:section | db:sect1 | db:sect2 | db:sect3 | db:sect4 | db:sect5 | db:sect6 | db:chapter">
     <xsl:variable name="sectionId">
-      <xsl:number level="multiple" count="db:section | db:chapter" format="I.1"/>
+      <xsl:number level="multiple" count="db:section | db:sect1 | db:sect2 | db:sect3 | db:sect4 | db:sect5 | db:sect6 | db:chapter" format="I.1"/>
     </xsl:variable>
 
     <section id="{$sectionId}">
@@ -127,7 +127,7 @@
   <xsl:template mode="content" match="db:para">
     <!-- The synopsis is done in <db:article>. -->
     <xsl:if
-      test="..[self::db:section] or ..[self::db:listitem] or ..[self::db:blockquote] or ..[self::db:th] or ..[self::db:td] or ..[self::db:footnote] or ..[self::db:note] or ..[self::db:article] or string-length(name(preceding-sibling::*[1])) = 0">
+      test="..[self::db:section] or ..[self::db:sect1] or ..[self::db:listitem] or ..[self::db:blockquote] or ..[self::db:th] or ..[self::db:td] or ..[self::db:footnote] or ..[self::db:note] or ..[self::db:article] or string-length(name(preceding-sibling::*[1])) = 0">
       <xsl:choose>
         <xsl:when test="db:informaltable | db:note | db:programlisting | db:screen">
           <!-- Some content must be moved outside the paragraph (DocBook's model is really flexible). -->
