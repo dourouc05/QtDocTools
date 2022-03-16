@@ -83,40 +83,7 @@
         <xsl:call-template name="tc:document-related"/>
 
         <synopsis>
-          <xsl:variable name="abstractParagraphs" as="node()*">
-            <xsl:choose>
-              <xsl:when test="not($doc-qt) and db:info/db:abstract">
-                <!-- Most normal case for generic DocBook documents. -->
-                <xsl:copy-of select="db:info/db:abstract/*"/>
-              </xsl:when>
-              <xsl:when test="$doc-qt and (db:info/db:abstract/node()[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and string-length(text()[1]) > 0])">
-                <!-- The abstract has paragraphs with something else than links to -->
-                <!-- linked documents, great! -->
-                <!-- (Linked documents are only available for Qt documentation.) -->
-                <!-- Most normal case for Qt documentation. -->
-                
-                <!-- <db:simplelist> is already eaten for <voiraussi>. -->
-                <xsl:copy-of select="db:info/db:abstract/node()[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and text()]"/>
-              </xsl:when>
-              <xsl:when test="db:info/following-sibling::*[1][self::db:para]">
-                <!-- Just links in the DocBook abstract, but something resembling an abstract -->
-                <!-- (paragraphs before the first section). -->
-                <!-- This code will fail if sect* tags are used instead of sections. -->
-                <xsl:variable name="tentative" select="db:info/following-sibling::*[not(preceding-sibling::db:section) and not(self::db:section)]"/>
-                <xsl:copy-of select="
-                    if (count($tentative) &lt; count(db:info/following-sibling::*)) then
-                      $tentative
-                    else
-                      $tentative[1]"/>
-              </xsl:when>
-              <xsl:otherwise>
-                <!-- Nothing to do, sorry about that... -->
-                <db:para/>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:variable>
-          
-          <xsl:for-each select="$abstractParagraphs">
+          <xsl:for-each select="tc:document-abstract()">
             <xsl:apply-templates mode="content" select="."/>
           </xsl:for-each>
           
@@ -194,38 +161,8 @@
       <xsl:call-template name="tc:document-authors"/>
       <xsl:call-template name="tc:document-related"/>
 
-      <synopsis>
-        <xsl:variable name="abstractParagraphs" as="node()+">
-          <xsl:choose>
-            <xsl:when test="db:info/db:abstract and db:info/db:abstract/db:para[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and string-length(text()[1]) > 0]">
-              <!-- The abstract has paragraphs with something else than links to linked documents, great! -->
-              <!-- (Linked documents are only available for Qt documentation.) -->
-              <!-- Most normal case. -->
-              
-              <!-- <db:simplelist> is already eaten for <voiraussi>. -->
-              <xsl:copy-of select="db:info/db:abstract/db:para[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and text()]"/>
-            </xsl:when>
-            <xsl:when test="db:info/following-sibling::*[1][self::db:para]">
-              <!-- Just links in the DocBook abstract, but something resembling an abstract -->
-              <!-- (paragraphs before the first section). -->
-              <xsl:variable name="tentative" select="db:info/following-sibling::*[not(preceding-sibling::db:section) and not(self::db:section)]"/>
-              <xsl:copy-of select="
-                  if (count($tentative) &lt; count(db:info/following-sibling::*)) then
-                    $tentative
-                  else
-                    $tentative[1]"/>
-            </xsl:when>
-            <xsl:when test="db:preface">
-              <xsl:copy-of select="db:preface/node()[not(self::db:title)]"/>
-            </xsl:when>
-            <xsl:otherwise>
-              <!-- Nothing to do, sorry about that... -->
-              <db:para> </db:para>
-            </xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
-        
-        <xsl:for-each select="$abstractParagraphs">
+      <synopsis>        
+        <xsl:for-each select="tc:document-abstract()">
           <xsl:apply-templates mode="content" select="."/>
         </xsl:for-each>
         
@@ -274,18 +211,13 @@
       <xsl:call-template name="tc:document-authors"/>
       <xsl:call-template name="tc:document-related"/>
 
-      <xsl:if
-        test="count(db:info/db:abstract/child::node()) &gt; 0 or tc:has-document-abstract-forum-link()">
-        <synopsis>
-          <!-- voiraussi is not implemented (book is not used for Qt's documentation). -->
-          <!-- This simplifies a lot this code. -->
-          <xsl:for-each select="db:info/db:abstract/child::node()">
-            <xsl:apply-templates mode="content" select="."/>
-          </xsl:for-each>
-            
-          <xsl:call-template name="tc:document-abstract-forum-link"/>
-        </synopsis>
-      </xsl:if>
+      <synopsis>
+        <xsl:for-each select="tc:document-abstract()">
+          <xsl:apply-templates mode="content" select="."/>
+        </xsl:for-each>
+        
+        <xsl:call-template name="tc:document-abstract-forum-link"/>
+      </synopsis>
 
       <summary>
         <!-- Generate the table of contents: first, solo chapters; then, parts (as subsections, one subsection per part). -->
@@ -838,6 +770,48 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="translate(translate(tc:document-title(), ',', ''), ' ', ',')"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
+  <xsl:function name="tc:document-abstract" as="node()*">
+    <xsl:choose>
+      <xsl:when test="not($doc-qt) and $document/db:info/db:abstract">
+        <!-- Most normal case for generic DocBook documents. -->
+        <xsl:copy-of select="$document/db:info/db:abstract/*"/>
+      </xsl:when>
+      <xsl:when
+        test="$doc-qt and ($document/db:info/db:abstract/node()[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and string-length(text()[1]) > 0])">
+        <!-- The abstract has paragraphs with something else than links to -->
+        <!-- linked documents, great! -->
+        <!-- (Linked documents are only available for Qt documentation.) -->
+        <!-- Most normal case for Qt documentation. -->
+
+        <xsl:if test="not($document/self::db:article)">
+          <xsl:message>WARNING: entering a code path that is supposed to be specific for Qt
+            documentation, but the document type is not article.</xsl:message>
+        </xsl:if>
+
+        <!-- <db:simplelist> is already eaten for <voiraussi>. -->
+        <xsl:copy-of
+          select="$document/db:info/db:abstract/node()[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and text()]"
+        />
+      </xsl:when>
+      <xsl:when test="$document/db:info/following-sibling::*[1][self::db:para]">
+        <!-- Just links in the DocBook abstract, but something resembling an abstract -->
+        <!-- (paragraphs before the first section). -->
+        <!-- This code will fail if sect* tags are used instead of sections. -->
+        <xsl:variable name="tentative"
+          select="$document/db:info/following-sibling::*[not(preceding-sibling::db:section) and not(self::db:section)]"/>
+        <xsl:copy-of select="
+            if (count($tentative) &lt; count($document/db:info/following-sibling::*)) then
+              $tentative
+            else
+              $tentative[1]"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <!-- Nothing to do, sorry about that... -->
+        <db:para/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
