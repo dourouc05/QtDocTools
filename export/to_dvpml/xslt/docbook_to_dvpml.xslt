@@ -85,17 +85,23 @@
         <synopsis>
           <xsl:variable name="abstractParagraphs" as="node()*">
             <xsl:choose>
-              <xsl:when test="not($doc-qt) or (db:info/db:abstract/db:para[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and string-length(text()[1]) > 0])">
-                <!-- The abstract has paragraphs with something else than links to linked documents, great! -->
+              <xsl:when test="not($doc-qt) and db:info/db:abstract">
+                <!-- Most normal case for generic DocBook documents. -->
+                <xsl:copy-of select="db:info/db:abstract/*"/>
+              </xsl:when>
+              <xsl:when test="$doc-qt and (db:info/db:abstract/node()[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and string-length(text()[1]) > 0])">
+                <!-- The abstract has paragraphs with something else than links to -->
+                <!-- linked documents, great! -->
                 <!-- (Linked documents are only available for Qt documentation.) -->
-                <!-- Most normal case. -->
+                <!-- Most normal case for Qt documentation. -->
                 
                 <!-- <db:simplelist> is already eaten for <voiraussi>. -->
-                <xsl:copy-of select="db:info/db:abstract/db:para[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and text()]"/>
+                <xsl:copy-of select="db:info/db:abstract/node()[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and text()]"/>
               </xsl:when>
               <xsl:when test="db:info/following-sibling::*[1][self::db:para]">
                 <!-- Just links in the DocBook abstract, but something resembling an abstract -->
                 <!-- (paragraphs before the first section). -->
+                <!-- This code will fail if sect* tags are used instead of sections. -->
                 <xsl:variable name="tentative" select="db:info/following-sibling::*[not(preceding-sibling::db:section) and not(self::db:section)]"/>
                 <xsl:copy-of select="
                     if (count($tentative) &lt; count(db:info/following-sibling::*)) then
@@ -269,7 +275,7 @@
       <xsl:call-template name="tc:document-related"/>
 
       <xsl:if
-        test="count(db:info/db:abstract/child::node()) &gt; 0 or tc:has-document-abstract-obsoleted-by(db:info) or tc:has-document-abstract-forum-link()">
+        test="count(db:info/db:abstract/child::node()) &gt; 0 or tc:has-document-abstract-forum-link()">
         <synopsis>
           <!-- voiraussi is not implemented (book is not used for Qt's documentation). -->
           <!-- This simplifies a lot this code. -->
@@ -277,9 +283,6 @@
             <xsl:apply-templates mode="content" select="."/>
           </xsl:for-each>
             
-          <xsl:call-template name="tc:document-abstract-obsoleted-by">
-            <xsl:with-param name="info" select="db:info"/>
-          </xsl:call-template>
           <xsl:call-template name="tc:document-abstract-forum-link"/>
         </synopsis>
       </xsl:if>
@@ -368,6 +371,8 @@
       <xsl:call-template name="tc:document-related"/>
 
       <synopsis>
+        <!-- Synopses for parts are more specific, because they do not use the standard -->
+        <!-- abstract tag in info. -->
         <xsl:variable name="abstractParagraphs" as="node()*">
           <xsl:choose>
             <xsl:when test="db:partintro">
@@ -393,9 +398,6 @@
           <xsl:apply-templates mode="content" select="."/>
         </xsl:for-each>
         
-        <xsl:call-template name="tc:document-abstract-obsoleted-by">
-          <xsl:with-param name="info" select="db:info"/>
-        </xsl:call-template>
         <xsl:call-template name="tc:document-abstract-forum-link"/>
       </synopsis>
 
