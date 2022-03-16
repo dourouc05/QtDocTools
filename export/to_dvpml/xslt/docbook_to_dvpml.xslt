@@ -56,6 +56,7 @@
   <!-- Import other modules. -->
   <xsl:include href="docbook_to_dvpml_block.xslt"/>
   <xsl:include href="docbook_to_dvpml_inline.xslt"/>
+  <xsl:include href="docbook_to_dvpml_inlinenoformatting.xslt"/>
   <xsl:include href="docbook_to_dvpml_biblio.xslt"/>
 
   <xsl:template name="tc:check-valid-document-file-name">
@@ -697,7 +698,7 @@
   </xsl:template>
 
   <xsl:template match="db:title" mode="tc:private-title">
-    <xsl:apply-templates mode="content_para"/>
+    <xsl:apply-templates mode="content_para_no_formatting"/>
   </xsl:template>
 
   <xsl:template match="*" mode="tc:private-subtitle"/>
@@ -707,7 +708,7 @@
   </xsl:template>
 
   <xsl:template match="db:subtitle" mode="tc:private-subtitle">
-    <xsl:apply-templates mode="content_para"/>
+    <xsl:apply-templates mode="content_para_no_formatting"/>
   </xsl:template>
 
   <xsl:template match="*" mode="tc:private-titleabbrev"/>
@@ -717,7 +718,7 @@
   </xsl:template>
 
   <xsl:template match="db:titleabbrev" mode="tc:private-titleabbrev">
-    <xsl:apply-templates mode="content_para"/>
+    <xsl:apply-templates mode="content_para_no_formatting"/>
   </xsl:template>
 
   <xsl:function name="tc:document-title" as="xs:string">

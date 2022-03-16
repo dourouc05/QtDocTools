@@ -33,9 +33,8 @@
   </xsl:template>
 
   <xsl:template mode="content" match="db:title">
-    <!-- TODO: add a mode inline_noformatting? -->
     <title>
-      <xsl:value-of select="text()"/>
+      <xsl:apply-templates mode="content_para_no_formatting"/>
     </title>
 
     <!-- Index elements are only allowed within the text. -->
