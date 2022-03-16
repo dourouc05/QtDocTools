@@ -902,6 +902,7 @@
   
   <xsl:function name="tc:document-description" as="xs:string">
     <xsl:choose>
+      <!-- If available, use the version of the abstract that is tailored for the description. Otherwise, use the standard abstract. -->
       <xsl:when test="$document/db:info/db:abstract[@role='description']">
         <xsl:value-of select="$document/db:info/db:abstract[@role='description']/db:para[1]/text()"/>
       </xsl:when>
