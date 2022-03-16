@@ -480,7 +480,6 @@
         <xsl:value-of select="tc:format-date(db:info/date, 'date')"/>
       </miseajour>
 
-
       <xsl:if test="$doc-qt">
         <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php');
           include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
