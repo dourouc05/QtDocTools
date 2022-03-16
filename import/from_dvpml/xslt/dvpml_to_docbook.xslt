@@ -35,6 +35,14 @@
             </xsl:choose>
         </xsl:variable>
         
+        <!-- Hypothesis about HTTP URLs: they are related to the FTP user and folder. -->
+        <xsl:if test="entete/urlhttp and entete/serveur and entete/chemin">
+            <xsl:variable name="guessed-http-url" select="concat('https://', entete/serveur, '.developpez.com/', entete/chemin)"/>
+            <xsl:if test="not(entete/urlhttp = $guessed-http-url)">
+                <xsl:message>WARNING: urlhttp is supposed to be the concatenation of serveur and chemin, i.e. <xsl:value-of select="$guessed-http-url"/></xsl:message>
+            </xsl:if>
+        </xsl:if>
+        
         <xsl:variable name="outputJson" as="xs:string" select="if (ends-with(current-output-uri(), '.xml')) then replace(current-output-uri(), '.xml', '.json') else concat(current-output-uri(), '.json')"/>
         <xsl:variable name="jsonDocument" as="node()">
             <map xmlns="http://www.w3.org/2005/xpath-functions">
@@ -81,11 +89,7 @@
                         <xsl:value-of select="entete/chemin"/>
                     </string>
                 </xsl:if>
-                <xsl:if test="entete/urlhttp">
-                    <string key="http-url">
-                        <xsl:value-of select="entete/urlhttp"/>
-                    </string>
-                </xsl:if>
+                <!-- Don't encode entete/urlhttp: its value is guessed from ftp-server and ftp-folder. -->
                 <xsl:if test="lecteur/niveau">
                     <number key="reader-level">
                         <xsl:value-of select="lecteur/niveau/@type"/>

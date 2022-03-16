@@ -473,7 +473,7 @@
         <xsl:when test="string-length($ftp-user) > 0 and string-length($ftp-folder) > 0">
           <serveur><xsl:value-of select="$ftp-user"/></serveur>
           <chemin><xsl:value-of select="$ftp-folder"/></chemin>
-          <urlhttp>http://<xsl:value-of select="$ftp-user"/>.developpez.com/<xsl:value-of select="$ftp-folder"/></urlhttp>
+          <urlhttp>https://<xsl:value-of select="$ftp-user"/>.developpez.com/<xsl:value-of select="$ftp-folder"/></urlhttp>
         </xsl:when>
         <xsl:otherwise>
           <xsl:message>WARNING: FTP information missing.</xsl:message>
