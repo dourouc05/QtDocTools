@@ -25,7 +25,7 @@
     <xsl:variable name="jsonUriBase" as="xs:string" select="replace($xmlUri, '.xml', '.json')"/>
     <xsl:variable name="jsonUriSuffix" as="xs:string" select="concat($xmlUri, '.json')"/>
     <xsl:choose>
-      <xsl:when test="xpath-file:exists($configuration-file-name)"><xsl:value-of select="json-doc($configuration-file-name)"/></xsl:when>
+      <xsl:when test="$configuration-file-name and xpath-file:exists($configuration-file-name)"><xsl:value-of select="json-doc($configuration-file-name)"/></xsl:when>
       <xsl:when test="xpath-file:exists($jsonUriBase)"><xsl:value-of select="json-doc($jsonUriBase)"/></xsl:when>
       <xsl:when test="xpath-file:exists($jsonUriSuffix)"><xsl:value-of select="json-doc($jsonUriSuffix)"/></xsl:when>
       <xsl:otherwise><xsl:value-of select="json-doc('{}')"/></xsl:otherwise>
@@ -33,6 +33,7 @@
   </xsl:variable>
   
   <!-- Global sheet parameters with default values from the JSON file. -->
+  <!-- TODO: think about storing these values within the XML file as processing instructions. -->
   <xsl:param name="section" as="xs:integer" select="if ($jsonDocument) then $jsonDocument else 1"/>
   <xsl:param name="license-number" as="xs:integer" select="-1"/>
   <xsl:param name="license-year" as="xs:integer" select="-1"/>
