@@ -673,12 +673,14 @@
         </entete>
         
         <xsl:call-template name="tc:document-license-from-parameters"/>
-        <xsl:call-template name="tc:document-see-also">
-          <xsl:with-param name="info" select="$document/db:info"/>
-        </xsl:call-template>
-        <xsl:call-template name="tc:document-authors">
-          <xsl:with-param name="info" select="$document/db:info"/>
-        </xsl:call-template>
+        <xsl:if test="$document/db:info">
+          <xsl:call-template name="tc:document-see-also">
+            <xsl:with-param name="info" select="$document/db:info"/>
+          </xsl:call-template>
+          <xsl:call-template name="tc:document-authors">
+            <xsl:with-param name="info" select="$document/db:info"/>
+          </xsl:call-template>
+        </xsl:if>
         <xsl:call-template name="tc:document-related-from-parameters"/>
         
         <synopsis>
