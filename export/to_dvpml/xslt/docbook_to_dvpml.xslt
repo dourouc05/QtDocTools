@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xpath-file="http://expath.org/ns/file"
+  xmlns:xpath-map="http://www.w3.org/2005/xpath-functions/map"
   xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:db="http://docbook.org/ns/docbook"
@@ -34,7 +35,7 @@
   
   <!-- Global sheet parameters with default values from the JSON file. -->
   <!-- TODO: think about storing these values within the XML file as processing instructions. -->
-  <xsl:param name="section" as="xs:integer" select="if ($jsonDocument) then $jsonDocument else 1"/>
+  <xsl:param name="section" as="xs:integer" select="1"/><!-- select="if (xpath-map:contains($jsonDocument, 'section')) then xpath-map:get($jsonDocument, 'section') else 1" -->
   <xsl:param name="license-number" as="xs:integer" select="-1"/>
   <xsl:param name="license-year" as="xs:integer" select="-1"/>
   <xsl:param name="license-author" as="xs:string" select="''"/>
@@ -106,17 +107,7 @@
           
           <titre>
             <page>
-              <xsl:variable name="titleAbbrev">
-                <xsl:apply-templates mode="titleabbrev"/>
-              </xsl:variable>
-              <xsl:choose>
-                <xsl:when test="$titleAbbrev">
-                  <xsl:value-of select="$titleAbbrev"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:apply-templates mode="title"/>
-                </xsl:otherwise>
-              </xsl:choose>
+              <xsl:call-template name="tc:titleabbrev-or-title"/>
             </page>
             <article>
               <xsl:apply-templates mode="title"/>
@@ -668,8 +659,12 @@
           
           <titre>
             <!-- TODO: introduce a template to gather this information. I'm getting fed up with copying the same code over and over again. -->
-            <page><xsl:value-of select="$document/db:info/db:title"/></page>
-            <article><xsl:value-of select="$document/db:info/db:title"/></article>
+            <page>
+              <xsl:call-template name="tc:titleabbrev-or-title"/>
+            </page>
+            <article>
+              <xsl:apply-templates mode="title"/>
+            </article>
           </titre>
           <date><xsl:value-of select="tc:format-date($document/db:info/pubdate, 'pubdate')"/></date>
           <miseajour><xsl:value-of select="tc:format-date($document/db:info/date, 'date')"/></miseajour>
@@ -998,6 +993,21 @@
   <xsl:template match="db:titleabbrev" mode="titleabbrev">
     <xsl:apply-templates mode="content_para"/>
   </xsl:template>
+  
+  <xsl:template name="tc:titleabbrev-or-title">
+    <xsl:variable name="titleAbbrev">
+      <xsl:apply-templates mode="titleabbrev" select="$document"/>
+    </xsl:variable>
+    <xsl:choose>
+      <xsl:when test="$titleAbbrev">
+        <xsl:value-of select="$titleAbbrev"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:apply-templates mode="title" select="$document"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
   
   <!-- Catch-all block for the remaining content that has not been handled with. -->
   <xsl:template match="*" mode="#all">
