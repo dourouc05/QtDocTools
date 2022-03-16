@@ -782,17 +782,18 @@
       </xsl:when>
       <xsl:when
         test="$doc-qt and ($document/db:info/db:abstract/node()[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and string-length(text()[1]) > 0])">
-        <!-- The abstract has paragraphs with something else than links to -->
-        <!-- linked documents, great! -->
+        <!-- For Qt documentation, there is an (unfortunately typical) case -->
+        <!-- where the abstract only contains a see-also list of links -->
+        <!-- (<simplelist>). It should be handled in a specific way, because -->
+        <!-- there are more specific tags for this (<voiraussi>). -->
+        <!-- This condition checks whether the abstract has paragraphs with -->
+        <!-- something else than links to linked documents! -->
         <!-- (Linked documents are only available for Qt documentation.) -->
         <!-- Most normal case for Qt documentation. -->
-
         <xsl:if test="not($document/self::db:article)">
           <xsl:message>WARNING: entering a code path that is supposed to be specific for Qt
             documentation, but the document type is not article.</xsl:message>
         </xsl:if>
-
-        <!-- <db:simplelist> is already eaten for <voiraussi>. -->
         <xsl:copy-of
           select="$document/db:info/db:abstract/node()[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and text()]"
         />
