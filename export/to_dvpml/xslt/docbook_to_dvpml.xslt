@@ -73,16 +73,16 @@
           <rubrique><xsl:value-of select="$section"/></rubrique>
           <meta>
             <description>
-              <xsl:call-template name="tc:document-description"/>
+              <xsl:value-of select="tc:document-description()"/>
             </description>
             <keywords>
-              <xsl:call-template name="tc:document-keywords"/>
+              <xsl:value-of select="tc:document-keywords()"/>
             </keywords>
           </meta>
           
           <titre>
             <page>
-              <xsl:call-template name="tc:document-titleabbrev-or-title"/>
+              <xsl:value-of select="tc:document-titleabbrev-or-title()"/>
             </page>
             <article>
               <xsl:apply-templates mode="tc:document-title"/>
@@ -197,19 +197,19 @@
         <rubrique><xsl:value-of select="$section"/></rubrique>
         <meta>
           <description>
-            <xsl:call-template name="tc:document-description"/>
+            <xsl:value-of select="tc:document-description()"/>
           </description>
           <keywords>
-            <xsl:call-template name="tc:document-keywords"/>
+            <xsl:value-of select="tc:document-keywords()"/>
           </keywords>
         </meta>
         
         <titre>
           <page>
-            <xsl:call-template name="tc:document-titleabbrev-or-title"/>
+            <xsl:value-of select="tc:document-titleabbrev-or-title()"/>
           </page>
           <article>
-            <xsl:call-template name="tc:document-title"/>
+            <xsl:value-of select="tc:document-title()"/>
           </article>
         </titre>
         <date><xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/></date>
@@ -299,19 +299,19 @@
         <rubrique><xsl:value-of select="$section"/></rubrique>
         <meta>
           <description>
-            <xsl:call-template name="tc:document-description"/>
+            <xsl:value-of select="tc:document-description()"/>
           </description>
           <keywords>
-            <xsl:call-template name="tc:document-keywords"/>
+            <xsl:value-of select="tc:document-keywords()"/>
           </keywords>
         </meta>
         
         <titre>
           <page>
-            <xsl:call-template name="tc:document-titleabbrev-or-title"/>
+            <xsl:value-of select="tc:document-titleabbrev-or-title()"/>
           </page>
           <article>
-            <xsl:call-template name="tc:document-title"/>
+            <xsl:value-of select="tc:document-title()"/>
           </article>
         </titre>
         <date><xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/></date>
@@ -448,16 +448,16 @@
           <rubrique><xsl:value-of select="$section"/></rubrique>
           <meta>
             <description>
-              <xsl:call-template name="tc:document-description"/>
+              <xsl:value-of select="tc:document-description()"/>
             </description>
             <keywords>
-              <xsl:call-template name="tc:document-keywords"/>
+              <xsl:value-of select="tc:document-keywords()"/>
             </keywords>
           </meta>
           
           <titre>
             <page>
-              <xsl:call-template name="tc:document-titleabbrev-or-title"/>
+              <xsl:value-of select="tc:document-titleabbrev-or-title()"/>
             </page>
             <article>
               <xsl:apply-templates mode="tc:document-title"/>
@@ -537,17 +537,17 @@
           <rubrique><xsl:value-of select="$section"/></rubrique>
           <meta>
             <description>
-              <xsl:call-template name="tc:document-description"/>
+              <xsl:value-of select="tc:document-description()"/>
             </description>
             <keywords>
-              <xsl:call-template name="tc:document-keywords"/>
+              <xsl:value-of select="tc:document-keywords()"/>
             </keywords>
           </meta>
           
           <titre>
             <!-- TODO: introduce a template to gather this information. I'm getting fed up with copying the same code over and over again. -->
             <page>
-              <xsl:call-template name="tc:document-titleabbrev-or-title"/>
+              <xsl:value-of select="tc:document-titleabbrev-or-title()"/>
             </page>
             <article>
               <xsl:apply-templates mode="title"/>
@@ -883,33 +883,24 @@
     <xsl:apply-templates mode="content_para"/>
   </xsl:template>
   
-  <xsl:template name="tc:document-title">
+  <xsl:function name="tc:document-title" as="xs:string">
     <xsl:apply-templates mode="tc:private-title" select="$document"/>
-  </xsl:template>
+  </xsl:function>
 
-  <xsl:template name="tc:document-subtitle">
+  <xsl:function name="tc:document-subtitle" as="xs:string">
     <xsl:apply-templates mode="tc:private-subtitle" select="$document"/>
-  </xsl:template>
+  </xsl:function>
 
-  <xsl:template name="tc:document-titleabbrev">
+  <xsl:function name="tc:document-titleabbrev" as="xs:string">
     <xsl:apply-templates mode="tc:private-titleabbrev" select="$document"/>
-  </xsl:template>
+  </xsl:function>
   
-  <xsl:template name="tc:document-titleabbrev-or-title">
-    <xsl:variable name="titleAbbrev">
-      <xsl:call-template name="tc:document-titleabbrev"/>
-    </xsl:variable>
-    <xsl:choose>
-      <xsl:when test="$titleAbbrev">
-        <xsl:value-of select="$titleAbbrev"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="tc:document-title"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:template>
+  <xsl:function name="tc:document-titleabbrev-or-title" as="xs:string">
+    <xsl:variable name="titleAbbrev" select="tc:document-titleabbrev()"/>
+    <xsl:value-of select="if ($titleAbbrev) then $titleAbbrev else tc:document-title()"/>
+  </xsl:function>
   
-  <xsl:template name="tc:document-description">
+  <xsl:function name="tc:document-description" as="xs:string">
     <xsl:choose>
       <xsl:when test="$document/db:info/db:abstract[@role='description']">
         <xsl:value-of select="$document/db:info/db:abstract[@role='description']/db:para[1]/text()"/>
@@ -917,16 +908,13 @@
       <xsl:when test="$document/db:info/db:abstract[not(@role='description')]/db:para">
         <xsl:value-of select="$document/db:info/db:abstract[not(@role='description')]/db:para[1]/text()"/>
       </xsl:when>
-      <xsl:when test="$document/db:info/db:title">
-        <xsl:value-of select="$document/db:info/db:title"/>
-      </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="$document/db:title"/>
+        <xsl:value-of select="tc:document-title()"/>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
+  </xsl:function>
   
-  <xsl:template name="tc:document-keywords">
+  <xsl:function name="tc:document-keywords" as="xs:string">
     <xsl:choose>
       <xsl:when test="$document/db:info/db:keywordset">
         <xsl:for-each select="$document/db:info/db:keywordset/db:keyword">
@@ -937,13 +925,10 @@
         </xsl:for-each>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:variable name="title">
-          <xsl:call-template name="tc:document-title"/>
-        </xsl:variable>
-        <xsl:value-of select="translate(translate($title, ',', ''), ' ', ',')"/>
+        <xsl:value-of select="translate(translate(tc:document-title(), ',', ''), ' ', ',')"/>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
+  </xsl:function>
   
   <!-- Catch-all block for the remaining content that has not been handled with. -->
   <xsl:template match="*" mode="#all">
