@@ -148,7 +148,7 @@
         
         <!-- Iterate over parts, each in its own file. -->
         <xsl:for-each select="db:part">
-          <xsl:result-document validation="lax" href="{$document-file-name}_part_{position() + 1}_dvp.xml">
+          <xsl:result-document validation="lax" href="{$document-file-name}_dvp_part_{position() + 1}_dvp.xml">
             <xsl:apply-templates mode="part-root" select="."/>
           </xsl:result-document>
         </xsl:for-each>
