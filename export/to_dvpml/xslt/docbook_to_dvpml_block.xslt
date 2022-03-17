@@ -8,9 +8,12 @@
     <xsl:apply-templates mode="content"/>
   </xsl:template>
 
-  <xsl:template mode="content" match="db:section | db:sect1 | db:sect2 | db:sect3 | db:sect4 | db:sect5 | db:sect6 | db:chapter">
+  <xsl:template mode="content"
+    match="db:section | db:sect1 | db:sect2 | db:sect3 | db:sect4 | db:sect5 | db:sect6 | db:chapter">
     <xsl:variable name="sectionId">
-      <xsl:number level="multiple" count="db:section | db:sect1 | db:sect2 | db:sect3 | db:sect4 | db:sect5 | db:sect6 | db:chapter" format="I.1"/>
+      <xsl:number level="multiple"
+        count="db:section | db:sect1 | db:sect2 | db:sect3 | db:sect4 | db:sect5 | db:sect6 | db:chapter"
+        format="I.1"/>
     </xsl:variable>
 
     <section id="{$sectionId}">
