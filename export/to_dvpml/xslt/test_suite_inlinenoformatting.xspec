@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<x:description 
+    xmlns:x="http://www.jenitennison.com/xslt/xspec"
+    xmlns:db="http://docbook.org/ns/docbook"
+    stylesheet="docbook_to_dvpml_inlinenoformatting.xslt">
+  <x:scenario label="Empty text">
+    <x:context mode="content_para_no_formatting">
+      Text
+    </x:context>
+    <x:expect label="Kept with spacing">
+      Text
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Person name">
+    <x:context mode="content_para_no_formatting">
+      <db:personname>Title</db:personname>
+    </x:context>
+    <x:expect label="Kept">Title</x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Emphasis">
+    <x:context mode="content_para_no_formatting">
+      <db:emphasis>with</db:emphasis>
+    </x:context>
+    <x:expect label="Kept">with</x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Code">
+    <x:context mode="content_para_no_formatting">
+      <db:code>Code</db:code>
+    </x:context>
+    <x:expect label="Kept">Code</x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Superscript">
+    <x:context mode="content_para_no_formatting">
+      <db:superscript>superscript</db:superscript>
+    </x:context>
+    <x:expect label="Kept">superscript</x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Subscript">
+    <x:context mode="content_para_no_formatting">
+      <db:subscript>subscript</db:subscript>
+    </x:context>
+    <x:expect label="Kept">subscript</x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Phrase">
+    <x:context mode="content_para_no_formatting">
+      <db:phrase>PHRASE</db:phrase>
+    </x:context>
+    <x:expect label="Kept">PHRASE</x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Term">
+    <x:context mode="content_para_no_formatting">
+      <db:term>TERM</db:term>
+    </x:context>
+    <x:expect label="Kept">TERM</x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Footnote">
+    <x:context mode="content_para_no_formatting">
+      <db:footnote><db:para>A footnote is ignored.</db:para></db:footnote>
+    </x:context>
+    <x:expect label="Ignored"></x:expect>
+  </x:scenario>
+</x:description>
