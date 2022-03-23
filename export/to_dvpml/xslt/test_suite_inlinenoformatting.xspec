@@ -67,4 +67,9 @@
     </x:context>
     <x:expect label="Ignored"></x:expect>
   </x:scenario>
+  
+  <x:scenario label="Mixed content">
+    <x:context mode="content_para_no_formatting">Some text, <db:emphasis>then emphasis</db:emphasis></x:context>
+    <x:expect label="Kept with space">Some text, then emphasis</x:expect>
+  </x:scenario>
 </x:description>
