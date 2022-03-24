@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<x:description 
+    xmlns:x="http://www.jenitennison.com/xslt/xspec"
+    xmlns:db="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    stylesheet="docbook_to_dvpml.xslt">
+  <x:scenario label="Emphasis: no role">
+    <x:context mode="content_para">
+      Text <db:emphasis>with emphasis</db:emphasis>
+    </x:context>
+    <x:expect label="Italics">
+      Text <i>with emphasis</i>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Emphasis: bold role">
+    <x:context mode="content_para">
+      Text <db:emphasis role='bold'>with bold</db:emphasis> and <db:emphasis role='strong'>with bold</db:emphasis>
+    </x:context>
+    <x:expect label="Bold">
+      Text <b>with bold</b> and <b>with bold</b>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Emphasis: underline role">
+    <x:context mode="content_para">
+      Text <db:emphasis role='underline'>with underline</db:emphasis>
+    </x:context>
+    <x:expect label="Underline">
+      Text <u>with underline</u>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Emphasis: strike role">
+    <x:context mode="content_para">
+      Text <db:emphasis role='strike'>with strike</db:emphasis>
+    </x:context>
+    <x:expect label="Strike">
+      Text <s>with strike</s>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Emphasis: nested in code">
+    <x:context mode="content_para">
+      <db:code>Code <db:emphasis>with emphasis</db:emphasis></db:code>
+    </x:context>
+    <x:expect label="No emphasis in code">
+      <inline>Code with emphasis</inline>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Code: raw">
+    <x:context mode="content_para">
+      <db:code>Code</db:code>
+    </x:context>
+    <x:expect label="Code">
+      <inline>Code</inline>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Code: with language">
+    <x:context mode="content_para">
+      <db:code language="cpp">Code</db:code>
+    </x:context>
+    <x:expect label="Code with language">
+      <inline langage="cpp">Code</inline>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Code: with link">
+    <x:context mode="content_para">
+      <db:code language="cpp">Code <db:link xlink:href="http://blah">with link</db:link></db:code>
+    </x:context>
+    <x:expect label="Code without link">
+      <inline langage="cpp">Code </inline>
+    </x:expect>
+  </x:scenario>
+</x:description>
