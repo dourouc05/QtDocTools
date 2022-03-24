@@ -8,7 +8,7 @@
   <xsl:template mode="content_para" match="db:emphasis">
     <xsl:choose>
       <xsl:when test="not(parent::node()[self::db:code])">
-        <!-- Nesting tags this way is not allowed (just text within <inline>).  -->
+        <!-- Nesting tags this way is not allowed (just text within <inline>). -->
         <xsl:choose>
           <xsl:when test="@role = 'bold' or @role = 'strong'">
             <b>
@@ -48,6 +48,10 @@
       </xsl:when>
       <xsl:otherwise>
         <inline>
+          <xsl:if test="@language">
+            <xsl:attribute name="langage" select="@language"/>
+          </xsl:if>
+          
           <xsl:apply-templates mode="content_para"/>
         </inline>
       </xsl:otherwise>
