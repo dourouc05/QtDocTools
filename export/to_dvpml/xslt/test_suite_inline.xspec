@@ -38,34 +38,36 @@
   </x:scenario>
   <x:scenario label="Emphasis: nested in code">
     <x:context mode="content_para">
-      <db:code>Code <db:emphasis>with emphasis</db:emphasis></db:code>
+      Text then <db:code>code <db:emphasis>with emphasis</db:emphasis></db:code>
     </x:context>
     <x:expect label="No emphasis in code">
-      <inline>Code with emphasis</inline>
+      Text then <inline>code with emphasis</inline>
     </x:expect>
   </x:scenario>
   
   <x:scenario label="Code: raw">
     <x:context mode="content_para">
-      <db:code>Code</db:code>
+      Text then <db:code>code</db:code>
     </x:context>
     <x:expect label="Code">
-      <inline>Code</inline>
+      Text then <inline>code</inline>
     </x:expect>
   </x:scenario>
   <x:scenario label="Code: with language">
     <x:context mode="content_para">
-      <db:code language="cpp">Code</db:code>
+      Text then <db:code language="cpp">code</db:code>
     </x:context>
     <x:expect label="Code with language">
-      <inline langage="cpp">Code</inline>
+      Text then <inline langage="cpp">code</inline>
     </x:expect>
   </x:scenario>
   <x:scenario label="Code: with link">
     <x:context mode="content_para">
-      <db:code language="cpp">Code <db:link xlink:href="http://blah">with link</db:link></db:code>
+      Text then <db:code language="cpp">code <db:link xlink:href="http://blah">with link</db:link></db:code>
     </x:context>
-    <x:expect label="Link without code">Code <i><link href="http://blah">with link</link></i></x:expect>
+    <x:expect label="Link without code">
+      Text then code <i><link href="http://blah">with link</link></i>
+    </x:expect>
   </x:scenario>
   
   <x:scenario label="Superscript">
@@ -82,6 +84,24 @@
     </x:context>
     <x:expect label="Subscript without space">
       Text<sub>sub</sub>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Colour">
+    <x:context mode="content_para">
+      Text <db:phrase role="color:black">with colour</db:phrase>
+    </x:context>
+    <x:expect label="Subscript without space">
+      Text <font color="black">with colour</font>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Link">
+    <x:context mode="content_para">
+      Text <db:link xlink:href="http://blah">with link</db:link>
+    </x:context>
+    <x:expect label="Link without code" select="/">
+      Text <link href="http://blah">with link</link>
     </x:expect>
   </x:scenario>
 </x:description>
