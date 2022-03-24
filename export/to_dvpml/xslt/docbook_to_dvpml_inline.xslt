@@ -11,24 +11,16 @@
         <!-- Nesting tags this way is not allowed (just text within <inline>). -->
         <xsl:choose>
           <xsl:when test="@role = 'bold' or @role = 'strong'">
-            <b>
-              <xsl:apply-templates mode="content_para"/>
-            </b>
+            <b><xsl:apply-templates mode="content_para"/></b>
           </xsl:when>
           <xsl:when test="@role = 'underline'">
-            <u>
-              <xsl:apply-templates mode="content_para"/>
-            </u>
+            <u><xsl:apply-templates mode="content_para"/></u>
           </xsl:when>
           <xsl:when test="@role = 'strike'">
-            <s>
-              <xsl:apply-templates mode="content_para"/>
-            </s>
+            <s><xsl:apply-templates mode="content_para"/></s>
           </xsl:when>
           <xsl:otherwise>
-            <i>
-              <xsl:apply-templates mode="content_para"/>
-            </i>
+            <i><xsl:apply-templates mode="content_para"/></i>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:when>
@@ -94,9 +86,7 @@
 
     <!-- Generate the link. -->
     <xsl:variable name="generatedLink">
-      <link href="{$translatedLink}">
-        <xsl:apply-templates mode="content_para"/>
-      </link>
+      <link href="{$translatedLink}"><xsl:apply-templates mode="content_para"/></link>
     </xsl:variable>
 
     <!-- Depending on the parent node, in order to fulfill the XSD's insane requirements,  -->
@@ -104,9 +94,7 @@
     <xsl:choose>
       <xsl:when test="parent::node()[self::db:code]">
         <!-- No, this piece of "software" won't allow <inline><link>, that would be useful. -->
-        <i>
-          <xsl:copy-of select="$generatedLink"/>
-        </i>
+        <i><xsl:copy-of select="$generatedLink"/></i>
       </xsl:when>
       <xsl:otherwise>
         <xsl:copy-of select="$generatedLink"/>

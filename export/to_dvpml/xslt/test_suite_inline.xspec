@@ -65,8 +65,23 @@
     <x:context mode="content_para">
       <db:code language="cpp">Code <db:link xlink:href="http://blah">with link</db:link></db:code>
     </x:context>
-    <x:expect label="Code without link">
-      <inline langage="cpp">Code </inline>
+    <x:expect label="Link without code">Code <i><link href="http://blah">with link</link></i></x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Superscript">
+    <x:context mode="content_para">
+      Text<db:superscript>sup</db:superscript>
+    </x:context>
+    <x:expect label="Superscript without space">
+      Text<sup>sup</sup>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Subscript">
+    <x:context mode="content_para">
+      Text<db:subscript>sub</db:subscript>
+    </x:context>
+    <x:expect label="Subscript without space">
+      Text<sub>sub</sub>
     </x:expect>
   </x:scenario>
 </x:description>
