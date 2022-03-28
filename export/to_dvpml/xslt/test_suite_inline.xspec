@@ -169,4 +169,21 @@
       Text<noteBasPage>Footnote 1<br/>Footnote 2</noteBasPage>
     </x:expect>
   </x:scenario>
+  
+  <x:scenario label="Index term: only primarys">
+    <x:context mode="content_para">
+      Text<db:indexterm><db:primary>Primary</db:primary></db:indexterm>
+    </x:context>
+    <x:expect label="Index with text content" select="/">
+      Text<index>Primary</index>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Index term: only primarys">
+    <x:context mode="content_para">
+      Text<db:indexterm><db:primary>Primary</db:primary><db:secondary>Secondary</db:secondary></db:indexterm>
+    </x:context>
+    <x:expect label="Index with attributes" select="/">
+      Text<index id1="Primary" id2="Secondary"/>
+    </x:expect>
+  </x:scenario>
 </x:description>
