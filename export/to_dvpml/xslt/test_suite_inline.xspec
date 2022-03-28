@@ -152,4 +152,21 @@
       Text <lien-forum id="1" idpost="11826606" avecnote="1"/>
     </x:expect>
   </x:scenario>
+  
+  <x:scenario label="Footnote with a single paragraph">
+    <x:context mode="content_para">
+      Text<db:footnote><db:para>Footnote</db:para></db:footnote>
+    </x:context>
+    <x:expect label="Footnote" select="/">
+      Text<noteBasPage>Footnote</noteBasPage>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Footnote with a several paragraphs">
+    <x:context mode="content_para">
+      Text<db:footnote><db:para>Footnote 1</db:para><db:para>Footnote 2</db:para></db:footnote>
+    </x:context>
+    <x:expect label="Footnote" select="/">
+      Text<noteBasPage>Footnote 1<br/>Footnote 2</noteBasPage>
+    </x:expect>
+  </x:scenario>
 </x:description>
