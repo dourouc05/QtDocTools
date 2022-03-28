@@ -176,7 +176,7 @@
 
   <xsl:template mode="content_para" match="db:inlinemediaobject">
     <image>
-      <xsl:attribute name="src" select="db:imageobject/db:imagedata/@fileref"/>
+      <xsl:attribute name="src" select="db:imageobject[1]/db:imagedata/@fileref"/>
 
       <xsl:if test="db:alt">
         <xsl:attribute name="alt" select="db:alt"/>
@@ -188,9 +188,6 @@
         <xsl:choose>
           <xsl:when test="@xlink:href">
             <xsl:value-of select="@xlink:href"/>
-          </xsl:when>
-          <xsl:when test="db:imageobject/@xlink:href">
-            <xsl:value-of select="db:imageobject/@xlink:href"/>
           </xsl:when>
           <xsl:when test="db:imageobject/@xlink:href">
             <xsl:value-of select="db:imageobject/@xlink:href"/>
