@@ -77,7 +77,7 @@
   </xsl:template>
 
   <xsl:template mode="content_para"
-    match="db:link[not(starts-with(@role, 'lien-forum') or @linkend)]">
+    match="db:link[not(starts-with(@role, 'lien-forum')) and not(@linkend)]">
     <xsl:variable name="translatedLink" as="xs:string">
       <xsl:choose>
         <xsl:when test="ends-with(string(@xlink:href), '.webxml')">

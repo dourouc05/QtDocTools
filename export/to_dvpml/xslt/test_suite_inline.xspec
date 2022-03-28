@@ -96,7 +96,7 @@
     </x:expect>
   </x:scenario>
   
-  <x:scenario label="Link">
+  <x:scenario label="Link with XLink">
     <x:context mode="content_para">
       Text <db:link xlink:href="http://blah">with link</db:link>
     </x:context>
@@ -104,7 +104,15 @@
       Text <link href="http://blah">with link</link>
     </x:expect>
   </x:scenario>
-  <x:scenario label="Link lien-forum SEO">
+  <x:scenario label="Link with linkend">
+    <x:context mode="content_para">
+      Text <db:link linkend="section4">with internal link</db:link>
+    </x:context>
+    <x:expect label="Link" select="/">
+      Text <renvoi id="section4">with internal link</renvoi>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Link with XLink, lien-forum, SEO">
     <x:context mode="content_para">
       Text <db:link xlink:href="https://www.developpez.net/forums/d1/club-professionnels-informatique/mode-d-emploi-aide-aux-nouveaux/grand-mode-d-emploi-forum-lire-souhaitez-savoir/" role="lien-forum">with forum link</db:link>
     </x:context>
@@ -112,7 +120,7 @@
       Text <lien-forum id="1"/>
     </x:expect>
   </x:scenario>
-  <x:scenario label="Link lien-forum SEO with post ID">
+  <x:scenario label="Link with XLink, lien-forum, SEO, with post ID">
     <x:context mode="content_para">
       Text <db:link xlink:href="https://www.developpez.net/forums/d1/club-professionnels-informatique/mode-d-emploi-aide-aux-nouveaux/grand-mode-d-emploi-forum-lire-souhaitez-savoir/#post11826606" role="lien-forum">with forum link</db:link>
     </x:context>
@@ -120,7 +128,7 @@
       Text <lien-forum id="1" idpost="11826606"/>
     </x:expect>
   </x:scenario>
-  <x:scenario label="Link lien-forum vBulletin native">
+  <x:scenario label="Link with XLink, lien-forum, vBulletin native">
     <x:context mode="content_para">
       Text <db:link xlink:href="https://www.developpez.net/forums/showthread.php?t=1" role="lien-forum">with forum link</db:link>
     </x:context>
@@ -128,7 +136,7 @@
       Text <lien-forum id="1"/>
     </x:expect>
   </x:scenario>
-  <x:scenario label="Link lien-forum vBulletin native with post ID">
+  <x:scenario label="Link with XLink, lien-forum, vBulletin native, with post ID">
     <x:context mode="content_para">
       Text <db:link xlink:href="https://www.developpez.net/forums/showthread.php?t=1#post11826606" role="lien-forum">with forum link</db:link>
     </x:context>
@@ -136,7 +144,7 @@
       Text <lien-forum id="1" idpost="11826606"/>
     </x:expect>
   </x:scenario>
-  <x:scenario label="Link lien-forum vBulletin native with post ID and note">
+  <x:scenario label="Link with XLink, lien-forum, vBulletin native, with post ID and note">
     <x:context mode="content_para">
       Text <db:link xlink:href="https://www.developpez.net/forums/showthread.php?t=1#post11826606" role="lien-forum-avec-note">with forum link</db:link>
     </x:context>
