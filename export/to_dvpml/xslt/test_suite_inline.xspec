@@ -324,4 +324,15 @@
       </animation>
     </x:expect>
   </x:scenario>
+  
+  <x:scenario label="Anchor">
+    <x:context mode="content_para">
+      Text<db:anchor xml:id="someID"/>
+    </x:context>
+    <x:expect label="Anchor" select="/">
+      Text<signet id="someID"/>
+    </x:expect>
+  </x:scenario>
+  
+  <!-- TODO: testing these require a global document: biblioref, xref -->
 </x:description>
