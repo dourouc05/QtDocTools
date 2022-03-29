@@ -334,5 +334,10 @@
     </x:expect>
   </x:scenario>
   
+  <x:scenario label="Person name">
+    <x:context mode="content_para">Name: <db:personname>Someone</db:personname></x:context>
+    <x:expect label="No specific mark up" select="/">Name: Someone</x:expect>
+  </x:scenario>
+  
   <!-- TODO: testing these require a global document: biblioref, xref -->
 </x:description>
