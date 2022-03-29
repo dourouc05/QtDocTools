@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<x:description 
+    xmlns:x="http://www.jenitennison.com/xslt/xspec"
+    xmlns:db="http://docbook.org/ns/docbook"
+    stylesheet="docbook_to_dvpml_block.xslt">
+  <x:scenario label="Sections">
+    <x:context mode="content">
+      <db:section>
+        <db:title>Main section</db:title>
+        <db:section>
+          <db:title>Subsection</db:title>
+        </db:section>
+      </db:section>
+    </x:context>
+    <x:expect label="Numbering">
+      <section id="I">
+        <title>Main section</title>
+        <section id="I.1">
+          <title>Subsection</title>
+        </section>
+      </section>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Sections with titles in info">
+    <x:context mode="content">
+      <db:section>
+        <db:info>
+          <db:title>Main section</db:title>
+        </db:info>
+        <db:section>
+          <db:info>
+            <db:title>Subsection</db:title>
+          </db:info>
+        </db:section>
+      </db:section>
+    </x:context>
+    <x:expect label="Numbering">
+      <section id="I">
+        <title>Main section</title>
+        <section id="I.1">
+          <title>Subsection</title>
+        </section>
+      </section>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Sections with numbered tags">
+    <x:context mode="content">
+      <db:sect1>
+        <db:title>Main section</db:title>
+        <db:sect2>
+          <db:title>Subsection</db:title>
+        </db:sect2>
+      </db:sect1>
+    </x:context>
+    <x:expect label="Numbering">
+      <section id="I">
+        <title>Main section</title>
+        <section id="I.1">
+          <title>Subsection</title>
+        </section>
+      </section>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Sections with IDs">
+    <x:context mode="content">
+      <db:section xml:id="main-section">
+        <db:title>Main section</db:title>
+        <db:section xml:id="subsection">
+          <db:title>Subsection</db:title>
+        </db:section>
+      </db:section>
+    </x:context>
+    <x:expect label="Numbering">
+      <section id="I">
+        <title>Main section</title>
+        <signet id="main-section"/>
+        <section id="I.1">
+          <title>Subsection</title>
+          <signet id="subsection"/>
+        </section>
+      </section>
+    </x:expect>
+  </x:scenario>
+</x:description>
