@@ -247,4 +247,81 @@
       Text: <image src="figs/print/db5d_refeqn03.pdf" href="http://blah"/>
     </x:expect>
   </x:scenario>
+  
+  <x:scenario label="Inline video">
+    <!-- Excerpt from https://tdg.docbook.org/tdg/5.2/videoobject.html -->
+    <x:context mode="content_para">
+      Text: <db:inlinemediaobject>
+        <db:videoobject>
+          <db:videodata fileref='movie.avi'/>
+        </db:videoobject>
+        <db:imageobject>
+          <db:imagedata fileref='movie-frame.gif'/>
+        </db:imageobject>
+        <db:textobject>
+          <db:para>This video illustrates the proper way to assemble an inverting time distortion device.</db:para>
+        </db:textobject>
+      </db:inlinemediaobject>
+    </x:context>
+    <x:expect label="Animation" select="/">
+      Text: <animation type="avi">
+        <param-movie>movie.avi</param-movie>
+      </animation>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Inline video with size">
+    <!-- Excerpt from https://tdg.docbook.org/tdg/5.2/audioobject.html -->
+    <x:context mode="content_para">
+      Text: <db:inlinemediaobject>
+        <db:videoobject>
+          <db:videodata fileref='movie.avi' width='40' depth='60'/>
+        </db:videoobject>
+      </db:inlinemediaobject>
+    </x:context>
+    <x:expect label="Animation" select="/">
+      Text: <animation type="avi">
+        <width>40</width>
+        <height>60</height>
+        <param-movie>movie.avi</param-movie>
+      </animation>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Inline audio">
+    <!-- Excerpt from https://tdg.docbook.org/tdg/5.2/audioobject.html -->
+    <x:context mode="content_para">
+      Text: <db:inlinemediaobject>
+        <db:audioobject>
+          <db:audiodata fileref="phaser.wav"/>
+        </db:audioobject>
+        <db:textobject>
+          <db:phrase>A <db:trademark>Star Trek</db:trademark> phaser sound effect</db:phrase>
+        </db:textobject>
+      </db:inlinemediaobject>
+    </x:context>
+    <x:expect label="Animation" select="/">
+      Text: <animation type="wav">
+        <param-movie>phaser.wav</param-movie>
+      </animation>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Inline audio with title">
+    <!-- Excerpt from https://tdg.docbook.org/tdg/5.2/audioobject.html -->
+    <x:context mode="content_para">
+      Text: <db:inlinemediaobject>
+        <db:title>Audio title</db:title>
+        <db:audioobject>
+          <db:audiodata fileref="phaser.wav"/>
+        </db:audioobject>
+        <db:textobject>
+          <db:phrase>A <db:trademark>Star Trek</db:trademark> phaser sound effect</db:phrase>
+        </db:textobject>
+      </db:inlinemediaobject>
+    </x:context>
+    <x:expect label="Animation" select="/">
+      Text: <animation type="wav">
+        <title>Audio title</title>
+        <param-movie>phaser.wav</param-movie>
+      </animation>
+    </x:expect>
+  </x:scenario>
 </x:description>
