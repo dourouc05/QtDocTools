@@ -84,7 +84,7 @@
   
   <x:scenario label="Informal CALS table">
     <x:context mode="content">
-      <db:informaltable frame="all">
+      <db:informaltable>
         <db:tgroup cols="2">
           <db:colspec colname="c1" colnum="1" colwidth="1*"/>
           <db:colspec colname="c2" colnum="2" colwidth="1*"/>
@@ -137,9 +137,9 @@
     </x:expect>
   </x:scenario>
   
-  <x:scenario label="Informal CALS table with width in pixels">
+  <x:scenario label="Informal CALS table with width in pixels and border">
     <x:context mode="content">
-      <db:informaltable width="500">
+      <db:informaltable width="500" border="5">
         <db:tgroup cols="2">
           <db:colspec colname="c1" colnum="1" colwidth="1*"/>
           <db:colspec colname="c2" colnum="2" colwidth="1*"/>
@@ -153,7 +153,36 @@
       </db:informaltable>
     </x:context>
     <x:expect label="Table">
-      <tableau width="500px" border="1" sautDePagePdf="0">
+      <tableau width="500px" border="5" sautDePagePdf="0">
+        <ligne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+        </ligne>
+      </tableau>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Informal CALS table with width in percents">
+    <x:context mode="content">
+      <db:informaltable width="500%">
+        <db:tgroup cols="2">
+          <db:colspec colname="c1" colnum="1" colwidth="1*"/>
+          <db:colspec colname="c2" colnum="2" colwidth="1*"/>
+          <db:tbody>
+            <db:row>
+              <db:entry/>
+              <db:entry/>
+            </db:row>
+          </db:tbody>
+        </db:tgroup>
+      </db:informaltable>
+    </x:context>
+    <x:expect label="Table">
+      <tableau width="500%" border="1" sautDePagePdf="0">
         <ligne>
           <colonne useText="0">
             <paragraph/>
@@ -168,7 +197,7 @@
   
   <x:scenario label="Informal HTML table">
     <x:context mode="content">
-      <db:informaltable frame="void">
+      <db:informaltable>
         <db:col width="50%"/>
         <db:col width="50%"/>
         <db:thead>
@@ -177,12 +206,6 @@
             <db:th/>
           </db:tr>
         </db:thead>
-        <db:tfoot>
-          <db:tr>
-            <db:th/>
-            <db:th/>
-          </db:tr>
-        </db:tfoot>
         <db:tbody>
           <db:tr>
             <db:td/>
@@ -219,6 +242,60 @@
           </colonne>
           <colonne useText="0">
             <paragraph/>
+          </colonne>
+        </ligne>
+      </tableau>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Formal HTML table">
+    <x:context mode="content">
+      <db:table>
+        <db:title>Table title</db:title>
+        <db:col width="50%"/>
+        <db:col width="50%"/>
+        <db:thead>
+          <db:tr>
+            <db:th>H1</db:th>
+            <db:th>H2</db:th>
+          </db:tr>
+        </db:thead>
+        <db:tbody>
+          <db:tr>
+            <db:td>R11</db:td>
+            <db:td>R12</db:td>
+          </db:tr>
+          <db:tr>
+            <db:td>R21</db:td>
+            <db:td>R22</db:td>
+          </db:tr>
+        </db:tbody>
+      </db:table>
+    </x:context>
+    <x:expect label="Table">
+      <tableau width="80%" border="1" sautDePagePdf="0" legende="Table title">
+        <entete>
+          <colonne useText="0">
+            <paragraph>H1</paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph>H2</paragraph>
+          </colonne>
+        </entete>
+        <ligne>
+          <colonne useText="0">
+            <paragraph>R11</paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph>R12</paragraph>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph>R21</paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph>R22</paragraph>
           </colonne>
         </ligne>
       </tableau>

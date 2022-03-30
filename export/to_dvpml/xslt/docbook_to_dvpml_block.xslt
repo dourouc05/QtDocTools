@@ -69,8 +69,22 @@
     </xsl:choose>
   </xsl:function>
 
+  <xsl:function name="tc:table-border">
+    <xsl:param name="table"/><!-- as="element(db:table | db:informaltable)" -->
+    <xsl:param name="default-border"/>
+    
+    <xsl:choose>
+      <xsl:when test="$table/@border">
+        <xsl:value-of select="$table/@border"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$default-border"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
   <xsl:template mode="content" match="db:informaltable">
-    <tableau width="{tc:table-width(., '80%')}" border="1" sautDePagePdf="0">
+    <tableau width="{tc:table-width(., '80%')}" border="{tc:table-border(., 1)}" sautDePagePdf="0">
       <xsl:apply-templates mode="content"/>
     </tableau>
   </xsl:template>
@@ -90,7 +104,7 @@
       </xsl:choose>
     </xsl:variable>
 
-    <tableau width="80%" border="1">
+    <tableau width="{tc:table-width(., '80%')}" border="{tc:table-border(., 1)}" sautDePagePdf="0">
       <xsl:if test="$caption">
         <xsl:attribute name="legende" select="$caption"/>
       </xsl:if>
