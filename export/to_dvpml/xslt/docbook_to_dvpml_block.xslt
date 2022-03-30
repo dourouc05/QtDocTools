@@ -48,8 +48,29 @@
     </xsl:if>
   </xsl:template>
 
+  <xsl:function name="tc:table-width">
+    <xsl:param name="table"/><!-- as="element(db:table | db:informaltable)" -->
+    <xsl:param name="default-width"/>
+    
+    <xsl:choose>
+      <xsl:when test="$table/@width">
+        <xsl:choose>
+          <xsl:when test="$table/@width castable as xs:integer">
+            <xsl:value-of select="concat($table/@width, 'px')"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$table/@width"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$default-width"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+
   <xsl:template mode="content" match="db:informaltable">
-    <tableau width="80%" border="1" sautDePagePdf="0">
+    <tableau width="{tc:table-width(., '80%')}" border="1" sautDePagePdf="0">
       <xsl:apply-templates mode="content"/>
     </tableau>
   </xsl:template>
@@ -78,18 +99,22 @@
         select="child::node()/*[not(db:title) and not(db:info) and not(db:caption)]"/>
     </tableau>
   </xsl:template>
+  
+  <xsl:template mode="content" match="db:tfoot">
+    <xsl:message>WARNING: Table footers are not supported in the destination format.</xsl:message>
+  </xsl:template>
 
-  <xsl:template mode="content" match="db:thead | db:tbody">
+  <xsl:template mode="content" match="db:thead | db:tbody | db:tgroup">
     <xsl:apply-templates mode="content"/>
   </xsl:template>
 
-  <xsl:template mode="content" match="db:tr">
+  <xsl:template mode="content" match="db:tr | db:row">
     <xsl:element name="{if (ancestor::db:thead or db:th) then 'entete' else 'ligne'}">
       <xsl:apply-templates mode="content"/>
     </xsl:element>
   </xsl:template>
 
-  <xsl:template mode="content" match="db:th | db:td">
+  <xsl:template mode="content" match="db:th | db:td | db:entry">
     <colonne useText="0">
       <xsl:choose>
         <xsl:when

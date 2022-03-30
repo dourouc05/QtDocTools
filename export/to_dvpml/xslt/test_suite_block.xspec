@@ -81,4 +81,147 @@
       </section>
     </x:expect>
   </x:scenario>
+  
+  <x:scenario label="Informal CALS table">
+    <x:context mode="content">
+      <db:informaltable frame="all">
+        <db:tgroup cols="2">
+          <db:colspec colname="c1" colnum="1" colwidth="1*"/>
+          <db:colspec colname="c2" colnum="2" colwidth="1*"/>
+          <db:thead>
+            <db:row>
+              <db:entry/>
+              <db:entry/>
+            </db:row>
+          </db:thead>
+          <db:tbody>
+            <db:row>
+              <db:entry/>
+              <db:entry/>
+            </db:row>
+            <db:row>
+              <db:entry/>
+              <db:entry/>
+            </db:row>
+          </db:tbody>
+        </db:tgroup>
+      </db:informaltable>
+    </x:context>
+    <x:expect label="Table">
+      <tableau width="80%" border="1" sautDePagePdf="0">
+        <entete>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+        </entete>
+        <ligne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+        </ligne>
+      </tableau>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Informal CALS table with width in pixels">
+    <x:context mode="content">
+      <db:informaltable width="500">
+        <db:tgroup cols="2">
+          <db:colspec colname="c1" colnum="1" colwidth="1*"/>
+          <db:colspec colname="c2" colnum="2" colwidth="1*"/>
+          <db:tbody>
+            <db:row>
+              <db:entry/>
+              <db:entry/>
+            </db:row>
+          </db:tbody>
+        </db:tgroup>
+      </db:informaltable>
+    </x:context>
+    <x:expect label="Table">
+      <tableau width="500px" border="1" sautDePagePdf="0">
+        <ligne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+        </ligne>
+      </tableau>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Informal HTML table">
+    <x:context mode="content">
+      <db:informaltable frame="void">
+        <db:col width="50%"/>
+        <db:col width="50%"/>
+        <db:thead>
+          <db:tr>
+            <db:th/>
+            <db:th/>
+          </db:tr>
+        </db:thead>
+        <db:tfoot>
+          <db:tr>
+            <db:th/>
+            <db:th/>
+          </db:tr>
+        </db:tfoot>
+        <db:tbody>
+          <db:tr>
+            <db:td/>
+            <db:td/>
+          </db:tr>
+          <db:tr>
+            <db:td/>
+            <db:td/>
+          </db:tr>
+        </db:tbody>
+      </db:informaltable>
+    </x:context>
+    <x:expect label="Table">
+      <tableau width="80%" border="1" sautDePagePdf="0">
+        <entete>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+        </entete>
+        <ligne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+        </ligne>
+      </tableau>
+    </x:expect>
+  </x:scenario>
 </x:description>
