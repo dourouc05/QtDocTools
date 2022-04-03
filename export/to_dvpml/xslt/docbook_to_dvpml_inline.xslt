@@ -290,6 +290,9 @@
   </xsl:template>
   
   <xsl:template mode="content_para" match="db:simplelist">
+    <xsl:message>WARNING: the current simplelist encoding implies losses in the target format,
+      i.e. round tripping will not be exact.</xsl:message>
+    
     <xsl:for-each select="db:member">
       <xsl:variable name="test">
         <xsl:apply-templates mode="content_para"/>

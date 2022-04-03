@@ -617,4 +617,66 @@
       <paragraph>One, Two</paragraph>
     </x:expect>
   </x:scenario>
+  <!-- Excerpt from https://tdg.docbook.org/tdg/5.2/variablelist.html -->
+  <x:scenario label="Variable list with title">
+    <x:context mode="content">
+      <db:variablelist>
+        <db:title>Font Filename Extensions</db:title>
+        <db:varlistentry>
+          <db:term>TTF</db:term>
+          <db:listitem>
+            <db:para>TrueType fonts.</db:para>
+          </db:listitem>
+        </db:varlistentry>
+        <db:varlistentry>
+          <db:term>PFA</db:term>
+          <db:term>PFB</db:term>
+          <db:listitem>
+            <db:para>PostScript fonts.</db:para>
+          </db:listitem>
+        </db:varlistentry>
+      </db:variablelist>
+    </x:context>
+    <x:expect label="Paragraph without list" select="/*">
+      <liste titre="Font Filename Extensions">
+        <element><b>TTF</b>&#0160;: TrueType fonts.</element>
+        <element><b>PFA</b>, <b>PFB</b>&#0160;: PostScript fonts.</element>
+      </liste>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Variable list with complex item content">
+    <x:context mode="content">
+      <db:variablelist>
+        <db:varlistentry>
+          <db:term>TTF</db:term>
+          <db:listitem>
+            <db:para>TrueType.</db:para>
+            <db:para>fonts.</db:para>
+          </db:listitem>
+        </db:varlistentry>
+        <db:varlistentry>
+          <db:term>PFA</db:term>
+          <db:term>PFB</db:term>
+          <db:listitem>
+            <db:para>PostScript.</db:para>
+            <db:para>fonts.</db:para>
+          </db:listitem>
+        </db:varlistentry>
+      </db:variablelist>
+    </x:context>
+    <x:expect label="Paragraph without list" select="/*">
+      <liste>
+        <element useText="0">
+          <paragraph><b>TTF</b>&#0160;: </paragraph>
+          <paragraph>TrueType.</paragraph>
+          <paragraph>fonts.</paragraph>
+        </element>
+        <element useText="0">
+          <paragraph><b>PFA</b>, <b>PFB</b>&#0160;: </paragraph>
+          <paragraph>PostScript.</paragraph>
+          <paragraph>fonts.</paragraph>
+        </element>
+      </liste>
+    </x:expect>
+  </x:scenario>
 </x:description>

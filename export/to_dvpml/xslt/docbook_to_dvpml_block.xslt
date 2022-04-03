@@ -246,17 +246,28 @@
 
   <xsl:template mode="content" match="db:itemizedlist">
     <liste>
-      <xsl:apply-templates mode="content"/>
+      <xsl:if test="db:title">
+        <xsl:attribute name="titre" select="db:title"/>
+      </xsl:if>
+      
+      <xsl:apply-templates mode="content" select="db:listitem"/>
     </liste>
   </xsl:template>
 
   <xsl:template mode="content" match="db:orderedlist">
     <liste type="1">
-      <xsl:apply-templates mode="content"/>
+      <xsl:if test="db:title">
+        <xsl:attribute name="titre" select="db:title"/>
+      </xsl:if>
+      
+      <xsl:apply-templates mode="content" select="db:listitem"/>
     </liste>
   </xsl:template>
 
   <xsl:template mode="content" match="db:simplelist">
+    <xsl:message>WARNING: the current simplelist encoding implies losses in the target format,
+      i.e. round tripping will not be exact.</xsl:message>
+    
     <paragraph>
       <xsl:for-each select="db:member">
         <xsl:variable name="test">
@@ -286,8 +297,15 @@
   </xsl:template>
 
   <xsl:template mode="content" match="db:variablelist">
+    <xsl:message>WARNING: the current variablelist encoding implies losses in the target format,
+      i.e. round tripping will not be exact.</xsl:message>
+    
     <liste>
-      <xsl:apply-templates mode="content"/>
+      <xsl:if test="db:title">
+        <xsl:attribute name="titre" select="db:title"/>
+      </xsl:if>
+      
+      <xsl:apply-templates mode="content" select="db:varlistentry"/>
     </liste>
   </xsl:template>
 
@@ -297,9 +315,14 @@
         <!-- Complex case: several paragraphs in the listitem. Output several paragraphs. -->
         <element useText="0">
           <paragraph>
-            <b>
-              <xsl:apply-templates mode="content_para" select="db:term"/>
-            </b>
+            <xsl:for-each select="db:term">
+              <b>
+                <xsl:apply-templates mode="content_para" select="."/>
+              </b>
+              <xsl:if test="position() != last()">
+                <xsl:text>, </xsl:text>
+              </xsl:if>
+            </xsl:for-each>
             <xsl:text>&#0160;: </xsl:text>
           </paragraph>
 
@@ -309,11 +332,16 @@
       <xsl:otherwise>
         <!-- Simple case: only one paragraph in the listitem. -->
         <element>
-          <b>
-            <xsl:apply-templates mode="content_para" select="db:term"/>
-          </b>
+          <xsl:for-each select="db:term">
+            <b>
+              <xsl:apply-templates mode="content_para" select="."/>
+            </b>
+            <xsl:if test="position() != last()">
+              <xsl:text>, </xsl:text>
+            </xsl:if>
+          </xsl:for-each>
           <xsl:text>&#0160;: </xsl:text>
-          <xsl:apply-templates mode="content_para" select="db:listitem/db:para/*"/>
+          <xsl:apply-templates mode="content_para" select="db:listitem/db:para"/>
         </element>
       </xsl:otherwise>
     </xsl:choose>
