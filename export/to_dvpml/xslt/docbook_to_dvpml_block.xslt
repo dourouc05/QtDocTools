@@ -148,7 +148,7 @@
     </xsl:if>
 
     <image>
-      <xsl:attribute name="src" select="db:mediaobject/db:imageobject/db:imagedata/@fileref"/>
+      <xsl:attribute name="src" select="db:mediaobject[1]/db:imageobject[1]/db:imagedata[1]/@fileref"/>
 
       <xsl:if test="db:alt">
         <xsl:attribute name="alt" select="db:alt"/>

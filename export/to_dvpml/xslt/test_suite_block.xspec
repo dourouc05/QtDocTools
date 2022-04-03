@@ -412,4 +412,69 @@
       </tableau>
     </x:expect>
   </x:scenario>
+  
+  <!-- Excerpt from https://tdg.docbook.org/tdg/5.2/informalfigure.html -->
+  <x:scenario label="Informal figure">
+    <x:context mode="content">
+      <db:informalfigure>
+        <db:mediaobject>
+          <db:imageobject condition="print">
+            <db:info>
+              <db:author>
+                <db:personname>
+                  <db:firstname>Norman</db:firstname>
+                  <db:surname>Walsh</db:surname>
+                </db:personname>
+              </db:author>
+              <db:pubdate>1998</db:pubdate>
+            </db:info>
+            <db:imagedata fileref="figs/print/db5d_ref10.pdf" format="PDF" role="keep-together"/>
+          </db:imageobject>
+          <db:imageobject condition="web">
+            <db:imagedata fileref="figs/web/db5d_ref10.png" format="PNG"/>
+          </db:imageobject>
+          <db:textobject>
+            <db:phrase>Wat Arun</db:phrase>
+          </db:textobject>
+          <db:caption><db:para>Wat Arun.</db:para></db:caption>
+        </db:mediaobject>
+      </db:informalfigure>
+    </x:context>
+    <x:expect label="Figure">
+      <image src="figs/print/db5d_ref10.pdf"/>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Formal figure with ID">
+    <x:context mode="content">
+      <db:figure xml:id="test-id">
+        <db:title>Wat Arun</db:title>
+        <db:mediaobject>
+          <db:imageobject condition="print">
+            <db:info>
+              <db:author>
+                <db:personname>
+                  <db:firstname>Norman</db:firstname>
+                  <db:surname>Walsh</db:surname>
+                </db:personname>
+              </db:author>
+              <db:pubdate>1998</db:pubdate>
+            </db:info>
+            <db:imagedata fileref="figs/print/db5d_ref10.pdf" format="PDF" role="keep-together"/>
+          </db:imageobject>
+          <db:imageobject condition="web">
+            <db:imagedata fileref="figs/web/db5d_ref10.png" format="PNG"/>
+          </db:imageobject>
+          <db:textobject>
+            <db:phrase>Wat Arun</db:phrase>
+          </db:textobject>
+          <db:caption><db:para>Wat Arun.</db:para></db:caption>
+        </db:mediaobject>
+      </db:figure>
+    </x:context>
+    <x:expect label="Figure">
+      <signet id="test-id"/>
+      <image src="figs/print/db5d_ref10.pdf" legende="Wat Arun"/>
+    </x:expect>
+  </x:scenario>
 </x:description>
