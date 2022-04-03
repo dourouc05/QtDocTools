@@ -569,4 +569,52 @@
       <code langage="cpp">Wat Arun.</code>
     </x:expect>
   </x:scenario>
+  
+  <x:scenario label="Itemized list">
+    <x:context mode="content">
+      <db:itemizedlist>
+        <db:listitem>
+          <db:para>One</db:para>
+        </db:listitem>
+        <db:listitem>
+          <db:para>Two</db:para>
+        </db:listitem>
+      </db:itemizedlist>
+    </x:context>
+    <x:expect label="Raw HTML tag" select="/*">
+      <liste>
+        <element useText="0"><paragraph>One</paragraph></element>
+        <element useText="0"><paragraph>Two</paragraph></element>
+      </liste>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Ordered list">
+    <x:context mode="content">
+      <db:orderedlist>
+        <db:listitem>
+          <db:para>One</db:para>
+        </db:listitem>
+        <db:listitem>
+          <db:para>Two</db:para>
+        </db:listitem>
+      </db:orderedlist>
+    </x:context>
+    <x:expect label="Raw HTML tag" select="/*">
+      <liste type="1">
+        <element useText="0"><paragraph>One</paragraph></element>
+        <element useText="0"><paragraph>Two</paragraph></element>
+      </liste>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Simple list">
+    <x:context mode="content">
+      <db:simplelist>
+        <db:member>One</db:member>
+        <db:member>Two</db:member>
+      </db:simplelist>
+    </x:context>
+    <x:expect label="Raw HTML tag" select="/*">
+      <paragraph>One, Two</paragraph>
+    </x:expect>
+  </x:scenario>
 </x:description>
