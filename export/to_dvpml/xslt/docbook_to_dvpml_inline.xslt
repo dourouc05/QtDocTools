@@ -175,6 +175,28 @@
   </xsl:template>
 
   <xsl:template mode="content_para" match="db:inlinemediaobject">
+    <xsl:if test="count(//db:imageobject) &gt; 1">
+      <xsl:message>WARNING: Multiple imageobject within an inlinemediaobject: only the first one is considered.</xsl:message>
+    </xsl:if>
+    <xsl:if test="count(//db:imagedata) &gt; 1">
+      <xsl:message>WARNING: Multiple imagedata within a imageobject of an inlinemediaobject: only the first one is considered.</xsl:message>
+    </xsl:if>
+    <xsl:if test="count(//db:imageobject) &gt; 1 and (count(//db:videoobject) &gt; 1 or count(//db:audioobject) &gt; 1)">
+      <xsl:message>WARNING: Multiple objects in a figure mediaobject, including an imageobject that is ignored.</xsl:message>
+    </xsl:if>
+    <xsl:if test="count(//db:videoobject) &gt; 1">
+      <xsl:message>WARNING: Multiple videoobject within an inlinemediaobject: only the first one is considered.</xsl:message>
+    </xsl:if>
+    <xsl:if test="count(//db:videodata) &gt; 1">
+      <xsl:message>WARNING: Multiple videodata within a imageobject of an inlinemediaobject: only the first one is considered.</xsl:message>
+    </xsl:if>
+    <xsl:if test="count(//db:audioobject) &gt; 1">
+      <xsl:message>WARNING: Multiple audioobject within an inlinemediaobject: only the first one is considered.</xsl:message>
+    </xsl:if>
+    <xsl:if test="count(//db:audiodata) &gt; 1">
+      <xsl:message>WARNING: Multiple audiodata within a imageobject of an inlinemediaobject: only the first one is considered.</xsl:message>
+    </xsl:if>
+    
     <xsl:choose>
       <xsl:when test="db:imageobject and not(db:videoobject) and not(db:audioobject)">
         <xsl:variable name="link" as="xs:string?">
