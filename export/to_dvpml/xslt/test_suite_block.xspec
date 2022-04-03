@@ -581,7 +581,7 @@
         </db:listitem>
       </db:itemizedlist>
     </x:context>
-    <x:expect label="Raw HTML tag" select="/*">
+    <x:expect label="List with no type" select="/*">
       <liste>
         <element useText="0"><paragraph>One</paragraph></element>
         <element useText="0"><paragraph>Two</paragraph></element>
@@ -599,7 +599,7 @@
         </db:listitem>
       </db:orderedlist>
     </x:context>
-    <x:expect label="Raw HTML tag" select="/*">
+    <x:expect label="List with type" select="/*">
       <liste type="1">
         <element useText="0"><paragraph>One</paragraph></element>
         <element useText="0"><paragraph>Two</paragraph></element>
@@ -613,7 +613,7 @@
         <db:member>Two</db:member>
       </db:simplelist>
     </x:context>
-    <x:expect label="Raw HTML tag" select="/*">
+    <x:expect label="Paragraph without list" select="/*">
       <paragraph>One, Two</paragraph>
     </x:expect>
   </x:scenario>

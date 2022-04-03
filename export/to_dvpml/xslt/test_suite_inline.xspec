@@ -339,6 +339,16 @@
     <x:expect label="No specific mark up" select="/">Name: Someone</x:expect>
   </x:scenario>
   
+  <x:scenario label="Simple list">
+    <x:context mode="content_para">
+      <db:simplelist>
+        <db:member>One</db:member>
+        <db:member>Two</db:member>
+      </db:simplelist>
+    </x:context>
+    <x:expect label="No list">One, Two</x:expect>
+  </x:scenario>
+  
   <x:scenario label="Inline equation">
     <!-- Excerpt from https://tdg.docbook.org/tdg/5.2/inlineequation.html -->
     <x:context mode="content_para">

@@ -288,6 +288,27 @@
     <!-- Allow recursion within variablelist entries. -->
     <xsl:apply-templates mode="content_para"/>
   </xsl:template>
+  
+  <xsl:template mode="content_para" match="db:simplelist">
+    <xsl:for-each select="db:member">
+      <xsl:variable name="test">
+        <xsl:apply-templates mode="content_para"/>
+      </xsl:variable>
+      <xsl:for-each select="$test/child::node()">
+        <xsl:choose>
+          <xsl:when test=". instance of text()">
+            <xsl:value-of select="normalize-space(.)"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:copy-of select="."/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:for-each>
+      <xsl:if test="position() != last()">
+        <xsl:text>, </xsl:text>
+      </xsl:if>
+    </xsl:for-each>
+  </xsl:template>
 
   <xsl:template mode="content_para" match="db:inlineequation">
     <xsl:if test="not(db:alt[@role = 'tex' or @role = 'latex'])">

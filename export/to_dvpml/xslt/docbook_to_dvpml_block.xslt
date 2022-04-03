@@ -256,7 +256,7 @@
     </liste>
   </xsl:template>
 
-  <xsl:template mode="content content_para" match="db:simplelist">
+  <xsl:template mode="content" match="db:simplelist">
     <paragraph>
       <xsl:for-each select="db:member">
         <xsl:variable name="test">
