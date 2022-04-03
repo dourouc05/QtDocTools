@@ -248,6 +248,117 @@
     </x:expect>
   </x:scenario>
   
+  <x:scenario label="Informal HTML table with ID">
+    <x:context mode="content">
+      <db:informaltable xml:id="test-id">
+        <db:col width="50%"/>
+        <db:col width="50%"/>
+        <db:thead>
+          <db:tr>
+            <db:th/>
+            <db:th/>
+          </db:tr>
+        </db:thead>
+        <db:tbody>
+          <db:tr>
+            <db:td/>
+            <db:td/>
+          </db:tr>
+          <db:tr>
+            <db:td/>
+            <db:td/>
+          </db:tr>
+        </db:tbody>
+      </db:informaltable>
+    </x:context>
+    <x:expect label="Table">
+      <renvoi id="test-id"/>
+      <tableau width="80%" border="1" sautDePagePdf="0">
+        <entete>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+        </entete>
+        <ligne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+        </ligne>
+      </tableau>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Formal CALS table with ID">
+    <x:context mode="content">
+      <db:table xml:id="test-ID">
+        <db:title>Table title</db:title>
+        <db:tgroup cols="2">
+          <db:colspec colname="c1" colnum="1" colwidth="1*"/>
+          <db:colspec colname="c2" colnum="2" colwidth="1*"/>
+          <db:thead>
+            <db:row>
+              <db:entry>H1</db:entry>
+              <db:entry>H2</db:entry>
+            </db:row>
+          </db:thead>
+          <db:tbody>
+            <db:row>
+              <db:entry>R11</db:entry>
+              <db:entry>R12</db:entry>
+            </db:row>
+            <db:row>
+              <db:entry>R21</db:entry>
+              <db:entry>R22</db:entry>
+            </db:row>
+          </db:tbody>
+        </db:tgroup>
+      </db:table>
+    </x:context>
+    <x:expect label="Table">
+      <renvoi id="test-ID"/>
+      <tableau width="80%" border="1" sautDePagePdf="0" legende="Table title">
+        <entete>
+          <colonne useText="0">
+            <paragraph>H1</paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph>H2</paragraph>
+          </colonne>
+        </entete>
+        <ligne>
+          <colonne useText="0">
+            <paragraph>R11</paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph>R12</paragraph>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph>R21</paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph>R22</paragraph>
+          </colonne>
+        </ligne>
+      </tableau>
+    </x:expect>
+  </x:scenario>
+  
   <x:scenario label="Formal HTML table">
     <x:context mode="content">
       <db:table>

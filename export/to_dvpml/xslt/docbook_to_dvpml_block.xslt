@@ -84,6 +84,10 @@
   </xsl:function>
 
   <xsl:template mode="content" match="db:informaltable">
+    <xsl:if test="@xml:id">
+      <renvoi id="{@xml:id}"/>
+    </xsl:if>
+    
     <tableau width="{tc:table-width(., '80%')}" border="{tc:table-border(., 1)}" sautDePagePdf="0">
       <xsl:apply-templates mode="content"/>
     </tableau>
@@ -103,7 +107,11 @@
         </xsl:when>
       </xsl:choose>
     </xsl:variable>
-
+    
+    <xsl:if test="@xml:id">
+      <renvoi id="{@xml:id}"/>
+    </xsl:if>
+    
     <tableau width="{tc:table-width(., '80%')}" border="{tc:table-border(., 1)}" sautDePagePdf="0">
       <xsl:if test="$caption">
         <xsl:attribute name="legende" select="$caption"/>
