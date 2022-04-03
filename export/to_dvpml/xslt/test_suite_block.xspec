@@ -544,4 +544,29 @@
   </x:scenario>
   
   <!-- No test for blockquote, no decent implementation. -->
+  
+  <x:scenario label="Programlisting with raw HTML">
+    <x:context mode="content">
+      <db:programlisting role='raw-html'>Wat Arun.</db:programlisting>
+    </x:context>
+    <x:expect label="Raw HTML tag" select="/*">
+      <html-brut>Wat Arun.</html-brut>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Programlisting with no language">
+    <x:context mode="content">
+      <db:programlisting>Wat Arun.</db:programlisting>
+    </x:context>
+    <x:expect label="Raw HTML tag" select="/*">
+      <code langage="other">Wat Arun.</code>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Programlisting with language">
+    <x:context mode="content">
+      <db:programlisting language="cpp">Wat Arun.</db:programlisting>
+    </x:context>
+    <x:expect label="Raw HTML tag" select="/*">
+      <code langage="cpp">Wat Arun.</code>
+    </x:expect>
+  </x:scenario>
 </x:description>
