@@ -477,4 +477,71 @@
       <image src="figs/print/db5d_ref10.pdf" legende="Wat Arun"/>
     </x:expect>
   </x:scenario>
+  
+  <x:scenario label="Simple paragraph">
+    <x:context mode="content">
+      <db:para>Wat Arun.</db:para>
+    </x:context>
+    <x:expect label="Paragraph">
+      <paragraph>Wat Arun.</paragraph>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Paragraph with a table">
+    <x:context mode="content">
+      <db:para>Wat Arun.<db:informaltable>
+        <db:tgroup cols="2">
+          <db:colspec colname="c1" colnum="1" colwidth="1*"/>
+          <db:colspec colname="c2" colnum="2" colwidth="1*"/>
+          <db:thead>
+            <db:row>
+              <db:entry/>
+              <db:entry/>
+            </db:row>
+          </db:thead>
+          <db:tbody>
+            <db:row>
+              <db:entry/>
+              <db:entry/>
+            </db:row>
+            <db:row>
+              <db:entry/>
+              <db:entry/>
+            </db:row>
+          </db:tbody>
+        </db:tgroup>
+      </db:informaltable></db:para>
+    </x:context>
+    <x:expect label="Paragraph with table afterwards" select="/*">
+      <paragraph>Wat Arun.</paragraph>
+      <tableau width="80%" border="1" sautDePagePdf="0">
+        <entete>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+        </entete>
+        <ligne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+        </ligne>
+      </tableau>
+    </x:expect>
+  </x:scenario>
+  
+  <!-- No test for blockquote, no decent implementation. -->
 </x:description>
