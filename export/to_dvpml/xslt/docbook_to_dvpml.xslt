@@ -107,7 +107,7 @@
                         db:title"/>
                 </title>
 
-                <xsl:apply-templates mode="content" select="./*"/>
+                <xsl:apply-templates mode="content" select="./*[not(self::db:info) and not(self::db:title)]"/>
               </section>
             </xsl:when>
             <xsl:otherwise>

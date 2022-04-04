@@ -6,7 +6,7 @@
   xmlns:map="http://www.w3.org/2005/xpath-functions/map"
   exclude-result-prefixes="xsl xs html saxon tc db xlink map" version="3.0">
   <xsl:template mode="content_para_no_formatting"
-    match="db:emphasis | db:code | db:superscript | db:subscript | db:phrase | db:link | db:personname | db:term">
+    match="db:emphasis | db:code | db:superscript | db:subscript | db:phrase | db:link | db:personname | db:term | db:title">
     <xsl:apply-templates mode="content_para_no_formatting"/>
   </xsl:template>
 
