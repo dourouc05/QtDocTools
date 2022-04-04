@@ -7,7 +7,7 @@
   xmlns:saxon="http://saxon.sf.net/" xmlns:tc="http://tcuvelier.be"
   exclude-result-prefixes="xsl xs html saxon tc db xlink" version="3.0">
 
-  <xsl:output method="xml" indent="yes" suppress-indentation="inline link i b paragraph code"/>
+  <xsl:output method="xml" indent="yes" suppress-indentation="inline link i b u paragraph code"/>
   <xsl:import-schema schema-location="../../../schemas/dvpml/article.xsd"
     use-when="system-property('xsl:is-schema-aware') = 'yes'"/>
 
@@ -690,17 +690,26 @@
 
   <xsl:template match="*" mode="tc:private-title"/>
 
-  <xsl:template match="db:info" mode="tc:private-title">
-    <xsl:apply-templates/>
+  <xsl:template match="db:info | db:article | db:book | db:chapter" mode="tc:private-title">
+    <xsl:variable name="title" as="xs:string">
+      <xsl:apply-templates mode="tc:private-title"/>
+    </xsl:variable>
+    <xsl:value-of select="normalize-space($title)"/>
   </xsl:template>
 
   <xsl:template match="db:title" mode="tc:private-title">
-    <xsl:apply-templates mode="content_para_no_formatting"/>
+    <xsl:message>
+      <xsl:apply-templates mode="content_para_no_formatting"/>
+    </xsl:message>
+    <xsl:variable name="title" as="xs:string">
+      <xsl:apply-templates mode="content_para_no_formatting"/>
+    </xsl:variable>
+    <xsl:value-of select="normalize-space($title)"/>
   </xsl:template>
 
   <xsl:template match="*" mode="tc:private-subtitle"/>
 
-  <xsl:template match="db:info" mode="tc:private-subtitle">
+  <xsl:template match="db:info | db:article | db:book | db:chapter" mode="tc:private-subtitle">
     <xsl:apply-templates/>
   </xsl:template>
 
@@ -710,7 +719,7 @@
 
   <xsl:template match="*" mode="tc:private-titleabbrev"/>
 
-  <xsl:template match="db:info" mode="tc:private-titleabbrev">
+  <xsl:template match="db:info | db:article | db:book | db:chapter" mode="tc:private-titleabbrev">
     <xsl:apply-templates/>
   </xsl:template>
 
@@ -815,7 +824,7 @@
   </xsl:function>
 
   <!-- Catch-all block for the remaining content that has not been handled with. -->
-  <xsl:template match="*" mode="#all">
+  <xsl:template match="*" mode="#all" priority="-1">
     <xsl:choose>
       <xsl:when test="db:guilabel | db:accel | db:prompt | db:keysym">
         <xsl:message>WARNING: Tag <xsl:value-of select="name(.)"/> has no matching construct in the
