@@ -764,4 +764,43 @@
       <signet id="xml-id"/>
     </x:expect>
   </x:scenario>
+  
+  <x:scenario label="Formal group of figures">
+    <x:context mode="content">
+      <db:formalgroup>
+        <db:title>Group of two figures</db:title>
+        <db:figure xml:id="test-id">
+          <db:title>Wat Arun</db:title>
+          <db:mediaobject>
+            <db:imageobject>
+              <db:imagedata fileref="figs/print/db5d_ref10.pdf"/>
+            </db:imageobject>
+          </db:mediaobject>
+        </db:figure>
+        <db:figure>
+          <db:title>Arun Wat</db:title>
+          <db:mediaobject>
+            <db:imageobject>
+              <db:imagedata fileref="figs/print/db5d_ref10.pdf"/>
+            </db:imageobject>
+          </db:mediaobject>
+        </db:figure>
+      </db:formalgroup>
+    </x:context>
+    <x:expect label="Table of figures" select="/*">
+      <tableau width="80%" border="0" legende="Group of two figures">
+        <ligne>
+          <colonne useText="0">
+            <signet id="test-id"/>
+            <image src="figs/print/db5d_ref10.pdf" legende="Wat Arun"/>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <image src="figs/print/db5d_ref10.pdf" legende="Arun Wat"/>
+          </colonne>
+        </ligne>
+      </tableau>
+    </x:expect>
+  </x:scenario>
 </x:description>
