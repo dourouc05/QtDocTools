@@ -751,4 +751,17 @@
       <latex id="...">\blah</latex>
     </x:expect>
   </x:scenario>
+  
+  <!-- Don't test bridgehead or address, no good mapping -->
+  
+  <x:scenario label="Anchor">
+    <x:context mode="content">
+      <db:para>Text.</db:para>
+      <db:anchor xml:id="xml-id"/>
+    </x:context>
+    <x:expect label="Anchor" select="/">
+      <paragraph>Text.</paragraph>
+      <signet id="xml-id"/>
+    </x:expect>
+  </x:scenario>
 </x:description>
