@@ -687,55 +687,34 @@
     </authorDescription>
   </xsl:template>
 
-  <xsl:template match="*" mode="tc:private-title"/>
-
-  <xsl:template match="db:info | db:article | db:book | db:chapter" mode="tc:private-title">
-    <xsl:variable name="title" as="xs:string">
-      <xsl:apply-templates mode="tc:private-title"/>
-    </xsl:variable>
-    <xsl:value-of select="normalize-space($title)"/>
-  </xsl:template>
-
-  <xsl:template match="db:title" mode="tc:private-title">
-    <xsl:message>
-      <xsl:apply-templates mode="content_para_no_formatting"/>
-    </xsl:message>
-    <xsl:variable name="title" as="xs:string">
-      <xsl:apply-templates mode="content_para_no_formatting"/>
-    </xsl:variable>
-    <xsl:value-of select="normalize-space($title)"/>
-  </xsl:template>
-
-  <xsl:template match="*" mode="tc:private-subtitle"/>
-
-  <xsl:template match="db:info | db:article | db:book | db:chapter" mode="tc:private-subtitle">
-    <xsl:apply-templates/>
-  </xsl:template>
-
-  <xsl:template match="db:subtitle" mode="tc:private-subtitle">
-    <xsl:apply-templates mode="content_para_no_formatting"/>
-  </xsl:template>
-
-  <xsl:template match="*" mode="tc:private-titleabbrev"/>
-
-  <xsl:template match="db:info | db:article | db:book | db:chapter" mode="tc:private-titleabbrev">
-    <xsl:apply-templates/>
-  </xsl:template>
-
-  <xsl:template match="db:titleabbrev" mode="tc:private-titleabbrev">
-    <xsl:apply-templates mode="content_para_no_formatting"/>
-  </xsl:template>
-
   <xsl:function name="tc:document-title" as="xs:string">
-    <xsl:apply-templates mode="tc:private-title" select="$document"/>
+    <xsl:variable name="title" as="xs:string?">
+      <xsl:variable name="raw" as="xs:string*">
+        <xsl:apply-templates mode="content_para_no_formatting" select="$document//db:title[1]"/>
+      </xsl:variable>
+      <xsl:value-of select="$raw[string-length(.) &gt; 0][1]"/>
+    </xsl:variable>
+    <xsl:value-of select="normalize-space($title)"/>
   </xsl:function>
 
   <xsl:function name="tc:document-subtitle" as="xs:string">
-    <xsl:apply-templates mode="tc:private-subtitle" select="$document"/>
+    <xsl:variable name="title" as="xs:string?">
+      <xsl:variable name="raw" as="xs:string*">
+        <xsl:apply-templates mode="content_para_no_formatting" select="$document//db:title[1]/ancestor::node()[1]/db:subtitle"/>
+      </xsl:variable>
+      <xsl:value-of select="$raw[string-length(.) &gt; 0][1]"/>
+    </xsl:variable>
+    <xsl:value-of select="normalize-space($title)"/>
   </xsl:function>
 
   <xsl:function name="tc:document-titleabbrev" as="xs:string">
-    <xsl:apply-templates mode="tc:private-titleabbrev" select="$document"/>
+    <xsl:variable name="title" as="xs:string?">
+      <xsl:variable name="raw" as="xs:string*">
+        <xsl:apply-templates mode="content_para_no_formatting" select="$document//db:title[1]/ancestor::node()[1]/db:titleabbrev"/>
+      </xsl:variable>
+      <xsl:value-of select="$raw[string-length(.) &gt; 0][1]"/>
+    </xsl:variable>
+    <xsl:value-of select="normalize-space($title)"/>
   </xsl:function>
 
   <xsl:function name="tc:document-titleabbrev-or-title" as="xs:string">
@@ -751,12 +730,7 @@
     <xsl:choose>
       <!-- If available, use the version of the abstract that is tailored for the description. Otherwise, use the standard abstract. -->
       <xsl:when test="$document/db:info/db:abstract[@role = 'description']">
-        <xsl:value-of
-          select="$document/db:info/db:abstract[@role = 'description']/db:para[1]/text()"/>
-      </xsl:when>
-      <xsl:when test="$document/db:info/db:abstract[not(@role = 'description')]/db:para">
-        <xsl:value-of
-          select="$document/db:info/db:abstract[not(@role = 'description')]/db:para[1]/text()"/>
+        <xsl:apply-templates mode="content_para_no_formatting" select="$document/db:info/db:abstract[not(@role = 'description')]"></xsl:apply-templates>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="tc:document-title()"/>
@@ -831,22 +805,13 @@
   </xsl:function>
 
   <!-- Catch-all block for the remaining content that has not been handled with. -->
-  <xsl:template match="*" mode="content_para_no_formatting" priority="-1">
+  <xsl:template match="*" mode="book-with-parts" priority="-1">
     <xsl:message>WARNING: Unhandled content with tag <xsl:value-of select="name(.)"
-      /> in mode "content_para_no_formatting".</xsl:message>
+    /> in mode "book-with-parts".</xsl:message>
   </xsl:template>
-  <xsl:template match="*" mode="content_para" priority="-1">
-    <xsl:choose>
-      <xsl:when test="db:guilabel | db:accel | db:prompt | db:keysym">
-        <xsl:message>WARNING: Tag <xsl:value-of select="name(.)"/> has no matching construct in the
-          target format. Content is not lost, but is not marked either.</xsl:message>
-        <xsl:apply-templates/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:message>WARNING: Unhandled content with tag <xsl:value-of select="name(.)"
-          /> in mode "content_para".</xsl:message>
-      </xsl:otherwise>
-    </xsl:choose>
+  <xsl:template match="*" mode="book-without-parts" priority="-1">
+    <xsl:message>WARNING: Unhandled content with tag <xsl:value-of select="name(.)"
+    /> in mode "book-without-parts".</xsl:message>
   </xsl:template>
   <xsl:template match="*" mode="content" priority="-1">
     <xsl:choose>
@@ -861,7 +826,52 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  <xsl:template match="*" mode="#all" priority="-1">
+  <xsl:template match="*" mode="content_bibliography" priority="-1">
+    <xsl:message>WARNING: Unhandled content with tag <xsl:value-of select="name(.)"
+      /> in mode "content_bibliography".</xsl:message>
+  </xsl:template>
+  <xsl:template match="*" mode="content_bibliography_author" priority="-1">
+    <xsl:message>WARNING: Unhandled content with tag <xsl:value-of select="name(.)"
+      /> in mode "content_bibliography_author".</xsl:message>
+  </xsl:template>
+  <xsl:template match="*" mode="content_bibliography_title" priority="-1">
+    <xsl:message>WARNING: Unhandled content with tag <xsl:value-of select="name(.)"
+      /> in mode "content_bibliography_title".</xsl:message>
+  </xsl:template>
+  <xsl:template match="*" mode="content_para" priority="-1">
+    <xsl:choose>
+      <xsl:when test="db:guilabel | db:accel | db:prompt | db:keysym">
+        <xsl:message>WARNING: Tag <xsl:value-of select="name(.)"/> has no matching construct in the
+          target format. Content is not lost, but is not marked either.</xsl:message>
+        <xsl:apply-templates/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:message>WARNING: Unhandled content with tag <xsl:value-of select="name(.)"
+          /> in mode "content_para".</xsl:message>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  <xsl:template match="*" mode="content_para_no_formatting" priority="-1">
+    <xsl:message>WARNING: Unhandled content with tag <xsl:value-of select="name(.)"
+      /> in mode "content_para_no_formatting".</xsl:message>
+  </xsl:template>
+  <xsl:template match="*" mode="document-toc" priority="-1">
+    <xsl:message>WARNING: Unhandled content with tag <xsl:value-of select="name(.)"
+    /> in mode "document-toc".</xsl:message>
+  </xsl:template>
+  <xsl:template match="*" mode="header_author" priority="-1">
+    <xsl:message>WARNING: Unhandled content with tag <xsl:value-of select="name(.)"
+      /> in mode "header_author".</xsl:message>
+  </xsl:template>
+  <xsl:template match="*" mode="part-root" priority="-1">
+    <xsl:message>WARNING: Unhandled content with tag <xsl:value-of select="name(.)"
+     /> in mode "part-root".</xsl:message>
+  </xsl:template>
+  <xsl:template match="*" priority="-1">
+    <xsl:message>WARNING: Unhandled content with tag <xsl:value-of select="name(.)"
+      /> without mode.</xsl:message>
+  </xsl:template>
+  <xsl:template match="*" mode="#all" priority="-10">
     <xsl:message>WARNING: Unhandled content with tag <xsl:value-of select="name(.)"
       /> in unknown mode.</xsl:message>
   </xsl:template>
