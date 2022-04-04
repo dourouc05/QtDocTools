@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:xpath-file="http://expath.org/ns/file"
   xmlns:xpath-map="http://www.w3.org/2005/xpath-functions/map"
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:db="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -23,13 +22,13 @@
     <xsl:variable name="jsonUriBase" as="xs:string" select="replace($xmlUri, '.xml', '.json')"/>
     <xsl:variable name="jsonUriSuffix" as="xs:string" select="concat($xmlUri, '.json')"/>
     <xsl:choose>
-      <xsl:when test="$configuration-file-name and xpath-file:exists($configuration-file-name)">
+      <xsl:when test="$configuration-file-name and tc:file-exists($configuration-file-name)">
         <xsl:value-of select="json-doc($configuration-file-name)"/>
       </xsl:when>
-      <xsl:when test="xpath-file:exists($jsonUriBase)">
+      <xsl:when test="tc:file-exists($jsonUriBase)">
         <xsl:value-of select="json-doc($jsonUriBase)"/>
       </xsl:when>
-      <xsl:when test="xpath-file:exists($jsonUriSuffix)">
+      <xsl:when test="tc:file-exists($jsonUriSuffix)">
         <xsl:value-of select="json-doc($jsonUriSuffix)"/>
       </xsl:when>
       <xsl:otherwise>
@@ -821,6 +820,14 @@
         <db:para/>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:function>
+  
+  <xsl:function name="tc:file-exists">
+    <xsl:param name="filename" as="xs:string"/>
+    <xsl:value-of select="doc-available($filename) != false()"/>
+    <!-- Only in Saxon EE: -->
+    <!-- xmlns:xpath-file="http://expath.org/ns/file" -->
+    <!-- xpath-file:exists(filename) -->
   </xsl:function>
 
   <!-- Catch-all block for the remaining content that has not been handled with. -->
