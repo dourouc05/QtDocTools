@@ -7,3 +7,6 @@ main_script/target/classes/*
 *_catalog.xml
 *-compiled.xsl
 *-result.xml
+# Files that should not be committed.
+export/to_dvpml/xslt/*.jar
+export/to_dvpml/xslt/*/*.jar
