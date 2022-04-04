@@ -422,7 +422,7 @@
     </xsl:choose>
   </xsl:template>
 
-  <xsl:template mode="content_para content" match="db:equation">
+  <xsl:template mode="content" match="db:equation | db:informalequation">
     <xsl:if test="not(db:alt[@role = 'tex' or @role = 'latex'])">
       <xsl:message terminate="yes">ERROR: informalequation with no TeX or LaTeX encoding. MathML is
         not supported.</xsl:message>
@@ -459,22 +459,6 @@
 
   <xsl:template mode="content" match="db:anchor">
     <signet id="{@xml:id}"/>
-  </xsl:template>
-
-  <xsl:template mode="content" match="db:informalequation">
-    <xsl:if test="not(db:alt[@role = 'tex' or @role = 'latex'])">
-      <xsl:message terminate="yes">ERROR: informalequation with no TeX or LaTeX encoding. MathML is
-        not supported.</xsl:message>
-    </xsl:if>
-
-    <xsl:variable name="index" select="
-        if (@xml:id) then
-          @xml:id
-        else
-          generate-id()"/>
-    <latex id="{$index}">
-      <xsl:value-of select="db:alt[@role = 'tex' or @role = 'latex']/text()"/>
-    </latex>
   </xsl:template>
 
   <xsl:template mode="content" match="db:formalgroup">

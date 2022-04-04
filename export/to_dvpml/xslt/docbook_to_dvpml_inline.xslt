@@ -313,7 +313,7 @@
     </xsl:for-each>
   </xsl:template>
 
-  <xsl:template mode="content_para" match="db:inlineequation">
+  <xsl:template mode="content_para" match="db:equation | db:inlineequation">
     <xsl:if test="not(db:alt[@role = 'tex' or @role = 'latex'])">
       <xsl:message terminate="yes">ERROR: informalequation with no TeX or LaTeX encoding. MathML is
         not supported.</xsl:message>
