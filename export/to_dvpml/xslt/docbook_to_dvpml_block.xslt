@@ -421,6 +421,9 @@
       </xsl:when>
     </xsl:choose>
   </xsl:template>
+  
+  <xsl:template match="*[preceding-sibling::*[1][self::db:mediaobject]]" mode="content"
+    priority="-1"> </xsl:template>
 
   <xsl:template mode="content" match="db:equation | db:informalequation">
     <xsl:if test="not(db:alt[@role = 'tex' or @role = 'latex'])">
@@ -437,9 +440,6 @@
       <xsl:value-of select="db:alt[@role = 'tex' or @role = 'latex']/text()"/>
     </latex>
   </xsl:template>
-
-  <xsl:template match="*[preceding-sibling::*[1][self::db:mediaobject]]" mode="content"
-    priority="-1"> </xsl:template>
 
   <xsl:template mode="content" match="db:bridgehead">
     <!-- Due to poor formatting possibilities in the output format (like font size), just do the text in bold. -->
@@ -466,6 +466,7 @@
       <signet id="{@xml:id}"/>
     </xsl:if>
 
+    <!-- No formatting options in a formal group: put every float one under the other. -->
     <tableau width="80%" border="0" legende="{if (db:title) then db:title else db:info/db:title}">
       <xsl:for-each select="*[not(self::db:title) and not(self::db:info)]">
         <ligne>
