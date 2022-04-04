@@ -142,90 +142,20 @@
     </colonne>
   </xsl:template>
 
-  <xsl:template mode="content" match="db:figure | db:informalfigure">
+  <xsl:template mode="content" match="db:figure | db:informalfigure | db:mediaobject | db:inlinemediaobject">
+    <xsl:if test="count(db:mediaobject) &gt; 1">
+      <xsl:message>WARNING: Multiple mediaobject: only the first one is considered.</xsl:message>
+    </xsl:if>
+    
     <xsl:if test="@xml:id">
       <signet id="{@xml:id}"/>
     </xsl:if>
-    
-    <xsl:if test="count(db:mediaobject) &gt; 1">
-      <xsl:message>WARNING: Multiple mediaobject within a figure: only the first one is considered.</xsl:message>
-    </xsl:if>
-    <xsl:if test="count(//db:imageobject) &gt; 1">
-      <xsl:message>WARNING: Multiple imageobject within a mediaobject of a figure: only the first one is considered.</xsl:message>
-    </xsl:if>
-    <xsl:if test="count(//db:imagedata) &gt; 1">
-      <xsl:message>WARNING: Multiple imagedata within a imageobject in a mediaobject of a figure: only the first one is considered.</xsl:message>
-    </xsl:if>
-    <xsl:if test="count(//db:imageobject) &gt; 1 and (count(//db:videoobject) &gt; 1 or count(//db:audioobject) &gt; 1)">
-      <xsl:message>WARNING: Multiple objects in a figure mediaobject, including an imageobject that is ignored.</xsl:message>
-    </xsl:if>
-    <xsl:if test="count(//db:videoobject) &gt; 1">
-      <xsl:message>WARNING: Multiple videoobject within an inlinemediaobject: only the first one is considered.</xsl:message>
-    </xsl:if>
-    <xsl:if test="count(//db:videodata) &gt; 1">
-      <xsl:message>WARNING: Multiple videodata within a imageobject of an inlinemediaobject: only the first one is considered.</xsl:message>
-    </xsl:if>
-    <xsl:if test="count(//db:audioobject) &gt; 1">
-      <xsl:message>WARNING: Multiple audioobject within an inlinemediaobject: only the first one is considered.</xsl:message>
-    </xsl:if>
-    <xsl:if test="count(//db:audiodata) &gt; 1">
-      <xsl:message>WARNING: Multiple audiodata within a imageobject of an inlinemediaobject: only the first one is considered.</xsl:message>
-    </xsl:if>
-
-    <image>
-      <xsl:attribute name="src" select="db:mediaobject[1]/db:imageobject[1]/db:imagedata[1]/@fileref"/>
-
-      <xsl:if test="db:alt">
-        <xsl:attribute name="alt" select="db:alt"/>
-      </xsl:if>
-      <!-- A figure must have a title, unlike an informalfigure. -->
-      <xsl:if test="db:title">
-        <xsl:attribute name="legende" select="db:title"/>
-      </xsl:if>
-    </image>
-  </xsl:template>
-  
-  <xsl:template mode="content" match="db:mediaobject | db:inlinemediaobject">
-    <xsl:choose>
-      <!-- First child is an image? You've got an image! -->
-      <xsl:when test="child::node()[1][self::db:imageobject]">
-        <image src="{db:imageobject[1]/db:imagedata[1]/@fileref}">
-          <xsl:if test="db:textobject">
-            <xsl:attribute name="alt" select="normalize-space(db:textobject)"/>
-          </xsl:if>
-          
-          <xsl:if test="db:caption">
-            <xsl:attribute name="legende" select="normalize-space(db:caption)"/>
-          </xsl:if>
-        </image>
-      </xsl:when>
-      <!-- First child is a video? You've got a video! If there is an image, it is alternate content. -->
-      <xsl:when test="child::node()[1][self::db:videoobject]">
-        <animation>
-          <xsl:if test="@role">
-            <xsl:attribute name="type" select="@role"/>
-          </xsl:if>
-          
-          <xsl:if test="@width">
-            <width>
-              <xsl:value-of select="@width"/>
-            </width>
-          </xsl:if>
-          
-          <xsl:if test="@height">
-            <height>
-              <xsl:value-of select="@height"/>
-            </height>
-          </xsl:if>
-          
-          <xsl:for-each select="multimediaparam">
-            <xsl:element name="{@name}">
-              <xsl:value-of select="@value"/>
-            </xsl:element>
-          </xsl:for-each>
-        </animation>
-      </xsl:when>
-    </xsl:choose>
+    <xsl:call-template name="tc:generate-media">
+      <xsl:with-param name="mediaobject" select="if (db:mediaobject | db:inlinemediaobject) then (db:mediaobject | db:inlinemediaobject)[1] else ."/>
+      <xsl:with-param name="alt" select="db:alt"/>
+      <xsl:with-param name="link" select="@xlink:href"/>
+      <xsl:with-param name="title" select="db:title"/>
+    </xsl:call-template>
   </xsl:template>
   
   <xsl:template match="*[preceding-sibling::*[1][self::db:mediaobject]]" mode="content"

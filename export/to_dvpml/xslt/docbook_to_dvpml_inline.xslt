@@ -175,80 +175,15 @@
   </xsl:template>
 
   <xsl:template mode="content_para" match="db:inlinemediaobject">
-    <xsl:if test="count(//db:imageobject) &gt; 1">
-      <xsl:message>WARNING: Multiple imageobject within an inlinemediaobject: only the first one is considered.</xsl:message>
+    <xsl:if test="@xml:id">
+      <signet id="{@xml:id}"/>
     </xsl:if>
-    <xsl:if test="count(//db:imagedata) &gt; 1">
-      <xsl:message>WARNING: Multiple imagedata within a imageobject of an inlinemediaobject: only the first one is considered.</xsl:message>
-    </xsl:if>
-    <xsl:if test="count(//db:imageobject) &gt; 1 and (count(//db:videoobject) &gt; 1 or count(//db:audioobject) &gt; 1)">
-      <xsl:message>WARNING: Multiple objects in a figure mediaobject, including an imageobject that is ignored.</xsl:message>
-    </xsl:if>
-    <xsl:if test="count(//db:videoobject) &gt; 1">
-      <xsl:message>WARNING: Multiple videoobject within an inlinemediaobject: only the first one is considered.</xsl:message>
-    </xsl:if>
-    <xsl:if test="count(//db:videodata) &gt; 1">
-      <xsl:message>WARNING: Multiple videodata within a imageobject of an inlinemediaobject: only the first one is considered.</xsl:message>
-    </xsl:if>
-    <xsl:if test="count(//db:audioobject) &gt; 1">
-      <xsl:message>WARNING: Multiple audioobject within an inlinemediaobject: only the first one is considered.</xsl:message>
-    </xsl:if>
-    <xsl:if test="count(//db:audiodata) &gt; 1">
-      <xsl:message>WARNING: Multiple audiodata within a imageobject of an inlinemediaobject: only the first one is considered.</xsl:message>
-    </xsl:if>
-    
-    <xsl:choose>
-      <xsl:when test="db:imageobject and not(db:videoobject) and not(db:audioobject)">
-        <xsl:variable name="link" as="xs:string?">
-          <xsl:choose>
-            <xsl:when test="@xlink:href">
-              <xsl:value-of select="@xlink:href"/>
-            </xsl:when>
-            <xsl:when test="db:imageobject/@xlink:href">
-              <xsl:value-of select="db:imageobject/@xlink:href"/>
-            </xsl:when>
-            <!-- db:imagedata does not have linking attributes. -->
-          </xsl:choose>
-        </xsl:variable>
-        
-        <image>
-          <xsl:attribute name="src" select="db:imageobject[1]/db:imagedata[1]/@fileref"/>
-          
-          <xsl:if test="db:alt">
-            <xsl:attribute name="alt" select="db:alt"/>
-          </xsl:if>
-          <xsl:if test="db:title">
-            <xsl:attribute name="titre" select="db:title"/>
-          </xsl:if>
-          <xsl:if test="string-length($link) &gt; 0">
-            <xsl:attribute name="href" select="$link"/>
-          </xsl:if>
-        </image>
-      </xsl:when>
-      <xsl:when test="db:videoobject or db:audioobject">
-        <xsl:variable name="filename" select="if (db:videoobject) then db:videoobject[1]/db:videodata[1]/@fileref else db:audioobject[1]/db:audiodata[1]/@fileref"/>
-        <xsl:variable name="extension" select="tokenize($filename, '\.')[last()]"/>
-        <xsl:variable name="width" select="if (db:videoobject[1]/db:videodata[1]/@width) then db:videoobject[1]/db:videodata[1]/@width else if (db:videoobject[1]/db:videodata[1]/@width) then db:videoobject[1]/db:videodata[1]/@contentwidth else -1"/>
-        <xsl:variable name="height" select="if (db:videoobject[1]/db:videodata[1]/@depth) then db:videoobject[1]/db:videodata[1]/@depth else if (db:videoobject[1]/db:videodata[1]/@contentdepth) then db:videoobject[1]/db:videodata[1]/@contentdepth else -1"/>
-        
-        <animation type="{$extension}">
-          <xsl:if test="db:videoobject">
-            <xsl:if test="$width &gt; 0">
-              <width><xsl:value-of select="$width"/></width>
-            </xsl:if>
-            <xsl:if test="$height &gt; 0">
-              <height><xsl:value-of select="$height"/></height>
-            </xsl:if>
-          </xsl:if>
-          
-          <xsl:if test="db:title">
-            <title><xsl:value-of select="db:title"></xsl:value-of></title>
-          </xsl:if>
-          
-          <param-movie><xsl:value-of select="$filename"/></param-movie>
-        </animation>
-      </xsl:when>
-    </xsl:choose>
+    <xsl:call-template name="tc:generate-media">
+      <xsl:with-param name="mediaobject" select="."/>
+      <xsl:with-param name="alt" select="db:alt"/>
+      <xsl:with-param name="link" select="@xlink:href"/>
+      <xsl:with-param name="title" select="db:title"/>
+    </xsl:call-template>
   </xsl:template>
 
   <xsl:template mode="content_para" match="db:xref">

@@ -54,6 +54,7 @@
   <xsl:param name="related" as="xs:string" select="''"/>
 
   <!-- Import other modules. -->
+  <xsl:include href="docbook_to_dvpml_media.xslt"/>
   <xsl:include href="docbook_to_dvpml_block.xslt"/>
   <xsl:include href="docbook_to_dvpml_inline.xslt"/>
   <xsl:include href="docbook_to_dvpml_inlinenoformatting.xslt"/>
