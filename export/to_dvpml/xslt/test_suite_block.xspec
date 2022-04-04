@@ -679,4 +679,54 @@
       </liste>
     </x:expect>
   </x:scenario>
+  
+  <x:scenario label="Note">
+    <x:context mode="content">
+      <db:note>
+        <db:para>Admonition.</db:para>
+      </db:note>
+    </x:context>
+    <x:expect label="Info" select="/*">
+      <rich-imgtext type="info">
+        <paragraph>Admonition.</paragraph>
+      </rich-imgtext>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Tip">
+    <x:context mode="content">
+      <db:tip>
+        <db:para>Admonition.</db:para>
+      </db:tip>
+    </x:context>
+    <x:expect label="Idea" select="/*">
+      <rich-imgtext type="idea">
+        <paragraph>Admonition.</paragraph>
+      </rich-imgtext>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Warning">
+    <x:context mode="content">
+      <db:warning>
+        <db:para>Admonition.</db:para>
+      </db:warning>
+    </x:context>
+    <x:expect label="Warning" select="/*">
+      <rich-imgtext type="warning">
+        <paragraph>Admonition.</paragraph>
+      </rich-imgtext>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Caution">
+    <x:context mode="content">
+      <db:caution>
+        <db:para>Admonition.</db:para>
+      </db:caution>
+    </x:context>
+    <x:expect label="Error" select="/*">
+      <rich-imgtext type="error">
+        <paragraph>Admonition.</paragraph>
+      </rich-imgtext>
+    </x:expect>
+  </x:scenario>
+  <!-- Don't test important, no good mapping -->
 </x:description>
