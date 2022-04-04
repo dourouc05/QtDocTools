@@ -729,4 +729,26 @@
     </x:expect>
   </x:scenario>
   <!-- Don't test important, no good mapping -->
+  
+  <x:scenario label="Block equation">
+    <!-- Excerpt from https://tdg.docbook.org/tdg/5.2/inlineequation.html -->
+    <x:context mode="content">
+      <db:para>Text:</db:para>
+      <db:equation>
+        <db:alt role='tex'>\blah</db:alt>
+        <db:mediaobject>
+          <db:imageobject condition="print">
+            <db:imagedata fileref="figs/print/db5d_refeqn03.pdf"/>
+          </db:imageobject>
+          <db:imageobject condition="web">
+            <db:imagedata fileref="figs/web/db5d_refeqn03.png"/>
+          </db:imageobject>
+        </db:mediaobject>
+      </db:equation>
+    </x:context>
+    <x:expect label="LaTeX equation" select="/">
+      <paragraph>Text:</paragraph>
+      <latex id="...">\blah</latex>
+    </x:expect>
+  </x:scenario>
 </x:description>
