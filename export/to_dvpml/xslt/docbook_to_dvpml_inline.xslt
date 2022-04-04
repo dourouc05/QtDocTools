@@ -5,6 +5,10 @@
   xmlns:saxon="http://saxon.sf.net/" xmlns:tc="http://tcuvelier.be"
   xmlns:map="http://www.w3.org/2005/xpath-functions/map"
   exclude-result-prefixes="xsl xs html saxon tc db xlink map" version="3.0">
+  <xsl:template mode="content_para" match="db:para">
+    <xsl:apply-templates mode="content_para"/>
+  </xsl:template>
+  
   <xsl:template mode="content_para" match="db:emphasis">
     <xsl:choose>
       <xsl:when test="not(parent::node()[self::db:code])">
