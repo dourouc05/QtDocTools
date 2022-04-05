@@ -2,6 +2,7 @@
 <x:description 
     xmlns:x="http://www.jenitennison.com/xslt/xspec"
     xmlns:db="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
     stylesheet="docbook_to_dvpml.xslt">
   <x:scenario label="Sections">
     <x:context mode="content">
@@ -242,6 +243,45 @@
           </colonne>
           <colonne useText="0">
             <paragraph/>
+          </colonne>
+        </ligne>
+      </tableau>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Informal HTML table that caused troubles">
+    <x:context mode="content">
+      <db:informaltable>
+        <db:tr>
+          <db:td>
+            <db:mediaobject>
+              <db:imageobject>
+                <db:imagedata fileref="images/windowsvista-pushbutton.png"/>
+              </db:imageobject>
+            </db:mediaobject>
+            <db:para>The <db:code><db:link xlink:href="qpushbutton.html" xrefstyle="class" annotations="QPushButton">QPushButton</db:link></db:code> widget provides a command button.</db:para>
+          </db:td>
+          <db:td>
+            <db:mediaobject>
+              <db:imageobject>
+                <db:imagedata fileref=""/>
+              </db:imageobject>
+            </db:mediaobject>
+            <db:para>The <db:code><db:link xlink:href="qtoolbutton.html" xrefstyle="class" annotations="QToolButton">QToolButton</db:link></db:code> class provides a quick-access button to commands or options, usually used inside a <db:code><db:link xlink:href="qtoolbar.html" xrefstyle="class" annotations="QToolBar">QToolBar</db:link></db:code>.</db:para>
+          </db:td>
+        </db:tr>
+      </db:informaltable>
+    </x:context>
+    <x:expect label="Table; lines are not lost">
+      <tableau width="80%" border="1" sautDePagePdf="0">
+        <ligne>
+          <colonne useText="0">
+            <image src="images/windowsvista-pushbutton.png"/>
+            <paragraph>The <i><link href="qpushbutton.html">QPushButton</link></i> widget provides a command button.</paragraph>
+          </colonne>
+          <colonne useText="0">
+            <image src=""/>
+            <paragraph>The <i><link href="qtoolbutton.html">QToolButton</link></i> class provides a quick-access button to commands or options, usually used inside a <i><link href="qtoolbar.html">QToolBar</link></i>.</paragraph>
           </colonne>
         </ligne>
       </tableau>

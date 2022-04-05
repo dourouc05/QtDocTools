@@ -108,7 +108,7 @@
       </xsl:if>
 
       <xsl:apply-templates mode="content"
-        select="child::node()/*[not(db:title) and not(db:info) and not(db:caption)]"/>
+        select="child::node()[not(self::db:title) and not(self::db:info) and not(self::db:caption)]"/>
     </tableau>
   </xsl:template>
   
