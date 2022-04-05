@@ -12,7 +12,8 @@
     </titre>
     <date>2018-09-09</date>
     <miseajour>2018-09-09</miseajour>
-    <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php');include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
+    <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php');
+         include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
     <serveur>Qt</serveur>
     <chemin>/doc/qt/5.11/qlogvalueaxis</chemin>
     <urlhttp>http://qt.developpez.com//doc/qt/5.11/qlogvalueaxis</urlhttp>
@@ -24,17 +25,17 @@
     </authorDescription>
   </authorDescriptions>
   <synopsis>
-      <paragraph type="important" sautDePagePdf="0">Adds a logarithmic scale to a chart's axis</paragraph>
+      <paragraph>Adds a logarithmic scale to a chart's axis</paragraph>
    </synopsis>
   <summary>
     <section id="1" noNumber="0" sautDePagePdf="0">
       <title>Detailed Description</title>
-      <paragraph type="important" sautDePagePdf="0">The <inline>
+      <paragraph>The <inline>
         <link href="qlogvalueaxis.html">QLogValueAxis</link>
       </inline> class adds a logarithmic scale to a chart's axis.</paragraph>
-      <paragraph type="important" sautDePagePdf="0">A logarithmic scale is a nonlinear scale that is based on orders of magnitude, so that each tick mark on the axis is the previous tick mark multiplied by a value.</paragraph>
+      <paragraph>A logarithmic scale is a nonlinear scale that is based on orders of magnitude, so that each tick mark on the axis is the previous tick mark multiplied by a value.</paragraph>
       <rich-imgtext type="info">
-        <paragraph type="important" sautDePagePdf="0"> If <inline>
+        <paragraph> If <inline>
           <link href="qlogvalueaxis.html">QLogValueAxis</link>
         </inline> is attached to a series with one or more points with negative or zero values on the associated dimension, the series will not be plotted at all. This is particularly relevant when XYModelMappers are used, since empty cells in models typically contain zero values.</paragraph>
       </rich-imgtext>
@@ -43,9 +44,9 @@
       <title>Properties</title>
       <section id="2.1" noNumber="0" sautDePagePdf="0">
         <title>min : qreal</title>
-        <paragraph type="important" sautDePagePdf="0">This property holds The minimum value on the axis..</paragraph>
-        <paragraph type="important" sautDePagePdf="0">When setting this property, the maximum value is adjusted if necessary, to ensure that the range remains valid. The value has to be greater than 0.</paragraph>
-        <paragraph type="important" sautDePagePdf="0">
+        <paragraph>This property holds The minimum value on the axis..</paragraph>
+        <paragraph>When setting this property, the maximum value is adjusted if necessary, to ensure that the range remains valid. The value has to be greater than 0.</paragraph>
+        <paragraph>
           <b>Access Functions:</b>
         </paragraph>
         <tableau width="80%" border="1" sautDePagePdf="0">
@@ -65,9 +66,9 @@
       </section>
       <section id="2.2" noNumber="0" sautDePagePdf="0">
         <title>max : qreal</title>
-        <paragraph type="important" sautDePagePdf="0">This property holds The maximum value on the axis..</paragraph>
-        <paragraph type="important" sautDePagePdf="0">When setting this property, the minimum value is adjusted if necessary, to ensure that the range remains valid. The value has to be greater than 0.</paragraph>
-        <paragraph type="important" sautDePagePdf="0">
+        <paragraph>This property holds The maximum value on the axis..</paragraph>
+        <paragraph>When setting this property, the minimum value is adjusted if necessary, to ensure that the range remains valid. The value has to be greater than 0.</paragraph>
+        <paragraph>
           <b>Access Functions:</b>
         </paragraph>
         <tableau width="80%" border="1" sautDePagePdf="0">
@@ -87,20 +88,20 @@
       </section>
       <section id="2.3" noNumber="0" sautDePagePdf="0">
         <title>labelFormat : QString</title>
-        <paragraph type="important" sautDePagePdf="0">This property holds The label format of the axis..</paragraph>
-        <paragraph type="important" sautDePagePdf="0">The format string supports the following conversion specifiers, length modifiers, and flags provided by <inline>printf()</inline> in the standard C++ library: d, i, o, x, X, f, F, e, E, g, G, c.</paragraph>
-        <paragraph type="important" sautDePagePdf="0">If <inline>
+        <paragraph>This property holds The label format of the axis..</paragraph>
+        <paragraph>The format string supports the following conversion specifiers, length modifiers, and flags provided by <inline>printf()</inline> in the standard C++ library: d, i, o, x, X, f, F, e, E, g, G, c.</paragraph>
+        <paragraph>If <inline>
           <link href="qchart.html#localizeNumbers-prop">QChart::localizeNumbers</link>
         </inline> is <inline>true</inline>, the supported specifiers are limited to: d, e, E, f, g, G, and i. Also, only the precision modifier is supported. The rest of the formatting comes from the default <inline>
           <link href="qlocale.html">QLocale</link>
         </inline> of the application.</paragraph>
-        <paragraph type="important" sautDePagePdf="0">
+        <paragraph>
           <b>See Also:</b>
           <inline>
             <link href="qstring.html#asprintf">QString::asprintf()</link>
           </inline>
         </paragraph>
-        <paragraph type="important" sautDePagePdf="0">
+        <paragraph>
           <b>Access Functions:</b>
         </paragraph>
         <tableau width="80%" border="1" sautDePagePdf="0">
@@ -120,9 +121,9 @@
       </section>
       <section id="2.4" noNumber="0" sautDePagePdf="0">
         <title>base : qreal</title>
-        <paragraph type="important" sautDePagePdf="0">This property holds The base of the logarithm..</paragraph>
-        <paragraph type="important" sautDePagePdf="0">The value has to be greater than 0 and cannot equal 1.</paragraph>
-        <paragraph type="important" sautDePagePdf="0">
+        <paragraph>This property holds The base of the logarithm..</paragraph>
+        <paragraph>The value has to be greater than 0 and cannot equal 1.</paragraph>
+        <paragraph>
           <b>Access Functions:</b>
         </paragraph>
         <tableau width="80%" border="1" sautDePagePdf="0">
@@ -142,8 +143,8 @@
       </section>
       <section id="2.5" noNumber="0" sautDePagePdf="0">
         <title>tickCount : int</title>
-        <paragraph type="important" sautDePagePdf="0">This property holds The number of tick marks on the axis. This indicates how many grid lines are drawn on the chart. This value is read-only..</paragraph>
-        <paragraph type="important" sautDePagePdf="0">
+        <paragraph>This property holds The number of tick marks on the axis. This indicates how many grid lines are drawn on the chart. This value is read-only..</paragraph>
+        <paragraph>
           <b>Access Functions:</b>
         </paragraph>
         <tableau width="80%" border="1" sautDePagePdf="0">
@@ -156,8 +157,8 @@
       </section>
       <section id="2.6" noNumber="0" sautDePagePdf="0">
         <title>minorTickCount : int</title>
-        <paragraph type="important" sautDePagePdf="0">This property holds The number of minor tick marks on the axis. This indicates how many grid lines are drawn between major ticks on the chart. Labels are not drawn for minor ticks. The default value is 0. Set the value to -1 and the number of grid lines between major ticks will be calculated automatically..</paragraph>
-        <paragraph type="important" sautDePagePdf="0">
+        <paragraph>This property holds The number of minor tick marks on the axis. This indicates how many grid lines are drawn between major ticks on the chart. Labels are not drawn for minor ticks. The default value is 0. Set the value to -1 and the number of grid lines between major ticks will be calculated automatically..</paragraph>
+        <paragraph>
           <b>Access Functions:</b>
         </paragraph>
         <tableau width="80%" border="1" sautDePagePdf="0">
@@ -180,61 +181,61 @@
       <title>Member Function Documentation</title>
       <section id="3.1" noNumber="0" sautDePagePdf="0">
         <title>QString QLogValueAxis::labelFormat() const</title>
-        <paragraph type="important" sautDePagePdf="0">
+        <paragraph>
           <b>See Also:</b>
         </paragraph>
       </section>
       <section id="3.2" noNumber="0" sautDePagePdf="0">
         <title>int QLogValueAxis::minorTickCount() const</title>
-        <paragraph type="important" sautDePagePdf="0">
+        <paragraph>
           <b>See Also:</b>
         </paragraph>
       </section>
       <section id="3.3" noNumber="0" sautDePagePdf="0">
         <title>qreal QLogValueAxis::base() const</title>
-        <paragraph type="important" sautDePagePdf="0">
+        <paragraph>
           <b>See Also:</b>
         </paragraph>
       </section>
       <section id="3.4" noNumber="0" sautDePagePdf="0">
         <title>qreal QLogValueAxis::max() const</title>
-        <paragraph type="important" sautDePagePdf="0">
+        <paragraph>
           <b>See Also:</b>
         </paragraph>
       </section>
       <section id="3.5" noNumber="0" sautDePagePdf="0">
         <title>qreal QLogValueAxis::min() const</title>
-        <paragraph type="important" sautDePagePdf="0">
+        <paragraph>
           <b>See Also:</b>
         </paragraph>
       </section>
       <section id="3.6" noNumber="0" sautDePagePdf="0">
         <title>void QLogValueAxis::setBase(qreal base)</title>
-        <paragraph type="important" sautDePagePdf="0">
+        <paragraph>
           <b>See Also:</b>
         </paragraph>
       </section>
       <section id="3.7" noNumber="0" sautDePagePdf="0">
         <title>void QLogValueAxis::setLabelFormat(const QString &amp;format)</title>
-        <paragraph type="important" sautDePagePdf="0">
+        <paragraph>
           <b>See Also:</b>
         </paragraph>
       </section>
       <section id="3.8" noNumber="0" sautDePagePdf="0">
         <title>void QLogValueAxis::setMax(qreal max)</title>
-        <paragraph type="important" sautDePagePdf="0">
+        <paragraph>
           <b>See Also:</b>
         </paragraph>
       </section>
       <section id="3.9" noNumber="0" sautDePagePdf="0">
         <title>void QLogValueAxis::setMin(qreal min)</title>
-        <paragraph type="important" sautDePagePdf="0">
+        <paragraph>
           <b>See Also:</b>
         </paragraph>
       </section>
       <section id="3.10" noNumber="0" sautDePagePdf="0">
         <title>void QLogValueAxis::setMinorTickCount(int minorTickCount)</title>
-        <paragraph type="important" sautDePagePdf="0">
+        <paragraph>
           <b>See Also:</b>
         </paragraph>
       </section>

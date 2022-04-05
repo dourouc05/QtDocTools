@@ -3,8 +3,8 @@
    <entete>
       <rubrique>65</rubrique>
       <meta>
-         <description/>
-         <keywords>documentation, qt, français</keywords>
+         <description>Markup Commands</description>
+         <keywords>Markup,Commands</keywords>
       </meta>
       <titre>
          <page>Markup Commands</page>
@@ -12,23 +12,30 @@
       </titre>
       <date>2018-10-06</date>
       <miseajour>2018-10-06</miseajour>
-      <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php');include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
+      <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php');
+         include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
       <serveur>Qt</serveur>
       <chemin>/doc/qt/5.11/03-qdoc-commands-markup</chemin>
       <urlhttp>http://qt.developpez.com/doc/qt/5.11/03-qdoc-commands-markup</urlhttp>
+      <nosummary/>
+      <nosummarypage/>
+      <nopdf/>
+      <nozip/>
+      <nodownload/>
+      <noebook/>
    </entete>
    <voiraussi>
       <lien>
-         <texte>Text Markup &gt;</texte>
-         <url/>
+         <texte>Text Markup</texte>
+         <url>http://qt.developpez.com/doc/qt/5.11/04-qdoc-commands-textmarkup</url>
       </lien>
       <lien>
-         <texte>&lt; Naming Things</texte>
-         <url/>
+         <texte>Naming Things</texte>
+         <url>http://qt.developpez.com/doc/qt/5.11/20-qdoc-commands-namingthings</url>
       </lien>
       <lien>
-         <texte>^ QDoc Manual ^</texte>
-         <url/>
+         <texte>QDoc Manual</texte>
+         <url>http://qt.developpez.com/doc/qt/5.11/qdoc-index</url>
       </lien>
    </voiraussi>
    <authorDescriptions>
@@ -38,336 +45,336 @@
       </authorDescription>
    </authorDescriptions>
    <synopsis>
-      <paragraph type="important" sautDePagePdf="0"/>
+      <paragraph/>
    </synopsis>
    <summary>
       <section id="I" noNumber="1" sautDePagePdf="0">
          <title>Markup Commands</title>
-         <liste sautDePagePdf="0">
+         <liste>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="04-qdoc-commands-textmarkup.html#a-command">\a</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="12-0-qdoc-commands-miscellaneous.html#annotatedlist-command">\annotatedlist</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="04-qdoc-commands-textmarkup.html#b-command">\b</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="06-qdoc-commands-includecodeinline.html#badcode-command">\badcode</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="04-qdoc-commands-textmarkup.html#b-command">\bold</link> (deprecated, use \b)</paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="11-qdoc-commands-specialcontent.html#brief-command">\brief</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="04-qdoc-commands-textmarkup.html#c-command">\c</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="09-qdoc-commands-includingimages.html#caption-command">\caption</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="06-qdoc-commands-includecodeinline.html#code-command">\code</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="07-0-qdoc-commands-includingexternalcode.html#codeline-command">\codeline</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="04-qdoc-commands-textmarkup.html#div-command">\div</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="07-0-qdoc-commands-includingexternalcode.html#dots-command">\dots</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="04-qdoc-commands-textmarkup.html#e-command">\e</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="12-0-qdoc-commands-miscellaneous.html#else-command">\else</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="12-0-qdoc-commands-miscellaneous.html#endif-command">\endif</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="11-qdoc-commands-specialcontent.html#footnote-command">\footnote</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="12-0-qdoc-commands-miscellaneous.html#generatelist-command">\generatelist</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="10-qdoc-commands-tablesandlists.html#header-command">\header</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="04-qdoc-commands-textmarkup.html#e-command">\i</link> (deprecated, use \e)</paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="12-0-qdoc-commands-miscellaneous.html#if-command">\if</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="09-qdoc-commands-includingimages.html#image-command">\image</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="12-0-qdoc-commands-miscellaneous.html#include-command">\include</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="12-0-qdoc-commands-miscellaneous.html#include-command">\input</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="09-qdoc-commands-includingimages.html#inlineimage-command">\inlineimage</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="08-qdoc-commands-creatinglinks.html#keyword-command">\keyword</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="08-qdoc-commands-creatinglinks.html#l-command">\l</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="11-qdoc-commands-specialcontent.html#legalese-command">\legalese</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="10-qdoc-commands-tablesandlists.html#li-command">\li</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="10-qdoc-commands-tablesandlists.html#list-command">\list</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="12-0-qdoc-commands-miscellaneous.html#meta-command">\meta</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="12-0-qdoc-commands-miscellaneous.html#noautolist-command">\noautolist</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="06-qdoc-commands-includecodeinline.html#newcode-command">\newcode</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="10-qdoc-commands-tablesandlists.html#li-command">\o</link> (deprecated, use \li)</paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="11-qdoc-commands-specialcontent.html#note-command">\note</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="06-qdoc-commands-includecodeinline.html#oldcode-command">\oldcode</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="12-0-qdoc-commands-miscellaneous.html#omit-command">\omit</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="07-0-qdoc-commands-includingexternalcode.html#printline-command">\printline</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="07-0-qdoc-commands-includingexternalcode.html#printto-command">\printto</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="07-0-qdoc-commands-includingexternalcode.html#printuntil-command">\printuntil</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="06-qdoc-commands-includecodeinline.html#qml-command">\qml</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="11-qdoc-commands-specialcontent.html#quotation-command">\quotation</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="07-0-qdoc-commands-includingexternalcode.html#quotefile-command">\quotefile</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command">\quotefromfile</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="12-0-qdoc-commands-miscellaneous.html#raw-command">\raw</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="10-qdoc-commands-tablesandlists.html#row-command">\row</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="08-qdoc-commands-creatinglinks.html#sa-command">\sa</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="05-qdoc-commands-documentstructure.html#sectionone-command">\section1</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="05-qdoc-commands-documentstructure.html#sectiontwo-command">\section2</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="05-qdoc-commands-documentstructure.html#sectionthree-command">\section3</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="05-qdoc-commands-documentstructure.html#sectionfour-command">\section4</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="07-0-qdoc-commands-includingexternalcode.html#skipline-command">\skipline</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="07-0-qdoc-commands-includingexternalcode.html#skipto-command">\skipto</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="07-0-qdoc-commands-includingexternalcode.html#skipuntil-command">\skipuntil</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="07-0-qdoc-commands-includingexternalcode.html#snippet-command">\snippet</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="04-qdoc-commands-textmarkup.html#span-command">\span</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="04-qdoc-commands-textmarkup.html#sub-command">\sub</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="04-qdoc-commands-textmarkup.html#sup-command">\sup</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="10-qdoc-commands-tablesandlists.html#table-command">\table</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="11-qdoc-commands-specialcontent.html#tableofcontents-command">\tableofcontents</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="08-qdoc-commands-creatinglinks.html#target-command">\target</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="04-qdoc-commands-textmarkup.html#tt-command">\tt</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="04-qdoc-commands-textmarkup.html#uicontrol-command">\uicontrol</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="04-qdoc-commands-textmarkup.html#underline-command">\underline</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="12-0-qdoc-commands-miscellaneous.html#raw-command">\unicode</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="11-qdoc-commands-specialcontent.html#warning-command">\warning</link>
                </paragraph>
             </element>
             <element useText="0">
-               <paragraph type="important" sautDePagePdf="0">
+               <paragraph>
                   <link href="04-qdoc-commands-textmarkup.html#backslash-command">\\</link>
                </paragraph>
             </element>

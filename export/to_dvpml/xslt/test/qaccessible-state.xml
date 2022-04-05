@@ -12,7 +12,8 @@
     </titre>
     <date>2018-09-11</date>
     <miseajour>2018-09-11</miseajour>
-    <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php');include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
+    <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php');
+         include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
     <serveur>Qt</serveur>
     <chemin>/doc/qt/5.11/qaccessible-state</chemin>
     <urlhttp>http://qt.developpez.com//doc/qt/5.11/qaccessible-state</urlhttp>
@@ -24,12 +25,12 @@
     </authorDescription>
   </authorDescriptions>
   <synopsis>
-      <paragraph type="important" sautDePagePdf="0"/>
+      <paragraph/>
    </synopsis>
   <summary>
     <section id="1" noNumber="0" sautDePagePdf="0">
       <title>Detailed Description</title>
-      <paragraph type="important" sautDePagePdf="0">This structure defines bit flags that indicate the state of an accessible object. The values are:</paragraph>
+      <paragraph>This structure defines bit flags that indicate the state of an accessible object. The values are:</paragraph>
       <liste sautDePagePdf="0">
         <element useText="0">
           <b/> : </element>
@@ -118,7 +119,7 @@
         <element useText="0">
           <b/> : </element>
       </liste>
-      <paragraph type="important" sautDePagePdf="0">Implementations of <inline>
+      <paragraph>Implementations of <inline>
         <link href="qaccessibleinterface.html#state">QAccessibleInterface::state()</link>
       </inline> return a combination of these flags.</paragraph>
     </section>

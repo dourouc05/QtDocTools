@@ -12,7 +12,8 @@
       </titre>
       <date>2018-09-11</date>
       <miseajour>2018-09-11</miseajour>
-      <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php');include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
+      <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php');
+         include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
       <serveur>Qt</serveur>
       <chemin>/doc/qt/5.11/stylesheet-syntax</chemin>
       <urlhttp>http://qt.developpez.com//doc/qt/5.11/stylesheet-syntax</urlhttp>
@@ -38,42 +39,42 @@
       </authorDescription>
    </authorDescriptions>
    <synopsis>
-      <paragraph type="important" sautDePagePdf="0"/>
+      <paragraph/>
    </synopsis>
    <summary>
       <section id="1" noNumber="0" sautDePagePdf="0">
          <title>Style Rules</title>
-         <paragraph type="important" sautDePagePdf="0">Style sheets consist of a sequence of style rules. A <i>style rule</i> is made up of a selector and a declaration. The <i>selector</i> specifies which widgets are affected by the rule; the <i>declaration</i> specifies which properties should be set on the widget. For example:</paragraph>
+         <paragraph>Style sheets consist of a sequence of style rules. A <i>style rule</i> is made up of a selector and a declaration. The <i>selector</i> specifies which widgets are affected by the rule; the <i>declaration</i> specifies which properties should be set on the widget. For example:</paragraph>
          <code langage="other">
 QPushButton { color: red }
 </code>
-         <paragraph type="important" sautDePagePdf="0">In the above style rule, <inline>QPushButton</inline> is the selector and <inline>{ color: red }</inline> is the declaration. The rule specifies that <inline>
+         <paragraph>In the above style rule, <inline>QPushButton</inline> is the selector and <inline>{ color: red }</inline> is the declaration. The rule specifies that <inline>
                <link href="qpushbutton.html">QPushButton</link>
             </inline> and its subclasses (e.g., <inline>MyPushButton</inline>) should use red as their foreground color.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">Qt Style Sheet is generally case insensitive (i.e., <inline>color</inline>, <inline>Color</inline>, <inline>COLOR</inline>, and <inline>cOloR</inline> refer to the same property). The only exceptions are class names, <inline>
+         <paragraph>Qt Style Sheet is generally case insensitive (i.e., <inline>color</inline>, <inline>Color</inline>, <inline>COLOR</inline>, and <inline>cOloR</inline> refer to the same property). The only exceptions are class names, <inline>
                <link href="qobject.html#objectName-prop">object names</link>
             </inline>, and Qt property names, which are case sensitive.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">Several selectors can be specified for the same declaration, using commas (<inline>,</inline>) to separate the selectors. For example, the rule</paragraph>
+         <paragraph>Several selectors can be specified for the same declaration, using commas (<inline>,</inline>) to separate the selectors. For example, the rule</paragraph>
          <code langage="other">
 QPushButton, QLineEdit, QComboBox { color: red }
 </code>
-         <paragraph type="important" sautDePagePdf="0">is equivalent to this sequence of three rules:</paragraph>
+         <paragraph>is equivalent to this sequence of three rules:</paragraph>
          <code langage="other">
 QPushButton { color: red }
 QLineEdit { color: red }
 QComboBox { color: red }
 </code>
-         <paragraph type="important" sautDePagePdf="0">The declaration part of a style rule is a list of <inline>
+         <paragraph>The declaration part of a style rule is a list of <inline>
                <i>property</i>: <i>value</i>
             </inline> pairs, enclosed in braces (<inline>{}</inline>) and separated with semicolons. For example:</paragraph>
          <code langage="other">
 QPushButton { color: red; background-color: white }
 </code>
-         <paragraph type="important" sautDePagePdf="0">See the <link href="stylesheet-reference.html#list-of-properties">List of Properties</link> section below for the list of properties provided by Qt widgets.</paragraph>
+         <paragraph>See the <link href="stylesheet-reference.html#list-of-properties">List of Properties</link> section below for the list of properties provided by Qt widgets.</paragraph>
       </section>
       <section id="2" noNumber="0" sautDePagePdf="0">
          <title>Selector Types</title>
-         <paragraph type="important" sautDePagePdf="0">All the examples so far used the simplest type of selector, the Type Selector. Qt Style Sheets support all the selectors defined in CSS2. The table below summarizes the most useful types of selectors.</paragraph>
+         <paragraph>All the examples so far used the simplest type of selector, the Type Selector. Qt Style Sheets support all the selectors defined in CSS2. The table below summarizes the most useful types of selectors.</paragraph>
          <tableau width="80%" border="1" sautDePagePdf="0">
             <entete>
                <colonne useText="0"/>
@@ -119,7 +120,7 @@ QPushButton { color: red; background-color: white }
       </section>
       <section id="3" noNumber="0" sautDePagePdf="0">
          <title>Sub-Controls</title>
-         <paragraph type="important" sautDePagePdf="0">For styling complex widgets, it is necessary to access subcontrols of the widget, such as the drop-down button of a <inline>
+         <paragraph>For styling complex widgets, it is necessary to access subcontrols of the widget, such as the drop-down button of a <inline>
                <link href="qcombobox.html">QComboBox</link>
             </inline> or the up and down arrows of a <inline>
                <link href="qspinbox.html">QSpinBox</link>
@@ -127,15 +128,15 @@ QPushButton { color: red; background-color: white }
          <code langage="other">
 QComboBox::drop-down { image: url(dropdown.png) }
 </code>
-         <paragraph type="important" sautDePagePdf="0">The above rule styles the drop-down button of all <inline>
+         <paragraph>The above rule styles the drop-down button of all <inline>
                <link href="qcombobox.html">QComboBox</link>
             </inline>es. Although the double-colon (<inline>::</inline>) syntax is reminiscent of CSS3 Pseudo-Elements, Qt Sub-Controls differ conceptually from these and have different cascading semantics.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">Sub-controls are always positioned with respect to another element - a reference element. This reference element could be the widget or another Sub-control. For example, the <link href="stylesheet-reference.html#drop-down-sub">::drop-down</link> of a <inline>
+         <paragraph>Sub-controls are always positioned with respect to another element - a reference element. This reference element could be the widget or another Sub-control. For example, the <link href="stylesheet-reference.html#drop-down-sub">::drop-down</link> of a <inline>
                <link href="qcombobox.html">QComboBox</link>
             </inline> is placed, by default, in the top right corner of the Padding rectangle of the <inline>
                <link href="qcombobox.html">QComboBox</link>
             </inline>. The <link href="stylesheet-reference.html#drop-down-sub">::drop-down</link> is placed, by default, in the Center of the Contents rectangle of the <link href="stylesheet-reference.html#drop-down-sub">::drop-down</link> Sub-control. See the <link href="stylesheet-reference.html#list-of-stylable-widgets">List of Stylable Widgets</link> below for the Sub-controls to use to style a widget and their default positions.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">The origin rectangle to be used can be changed using the <link href="stylesheet-reference.html#subcontrol-origin-prop">subcontrol-origin</link> property. For example, if we want to place the drop-down in the margin rectangle of the <inline>
+         <paragraph>The origin rectangle to be used can be changed using the <link href="stylesheet-reference.html#subcontrol-origin-prop">subcontrol-origin</link> property. For example, if we want to place the drop-down in the margin rectangle of the <inline>
                <link href="qcombobox.html">QComboBox</link>
             </inline> instead of the default Padding rectangle, we can specify:</paragraph>
          <code langage="other">
@@ -146,9 +147,9 @@ QComboBox::drop-down {
     subcontrol-origin: margin;
 }
 </code>
-         <paragraph type="important" sautDePagePdf="0">The alignment of the drop-down within the Margin rectangle is changed using <link href="stylesheet-reference.html#subcontrol-position-prop">subcontrol-position</link> property.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">The <link href="stylesheet-reference.html#width-prop">width</link> and <link href="stylesheet-reference.html#height-prop">height</link> properties can be used to control the size of the Sub-control. Note that setting a <link href="stylesheet-reference.html#image-prop">image</link> implicitly sets the size of a Sub-control.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">The relative positioning scheme (<link href="stylesheet-reference.html#position-prop">position</link> : relative), allows the position of the Sub-Control to be offset from its initial position. For example, when the <inline>
+         <paragraph>The alignment of the drop-down within the Margin rectangle is changed using <link href="stylesheet-reference.html#subcontrol-position-prop">subcontrol-position</link> property.</paragraph>
+         <paragraph>The <link href="stylesheet-reference.html#width-prop">width</link> and <link href="stylesheet-reference.html#height-prop">height</link> properties can be used to control the size of the Sub-control. Note that setting a <link href="stylesheet-reference.html#image-prop">image</link> implicitly sets the size of a Sub-control.</paragraph>
+         <paragraph>The relative positioning scheme (<link href="stylesheet-reference.html#position-prop">position</link> : relative), allows the position of the Sub-Control to be offset from its initial position. For example, when the <inline>
                <link href="qcombobox.html">QComboBox</link>
             </inline>'s drop-down button is pressed, we might like the arrow inside to be offset to give a "pressed" effect. To achieve this, we can specify:</paragraph>
          <code langage="other">
@@ -160,85 +161,85 @@ QComboBox::down-arrow:pressed {
     top: 1px; left: 1px;
 }
 </code>
-         <paragraph type="important" sautDePagePdf="0">The absolute positioning scheme (<link href="stylesheet-reference.html#position-prop">position</link> : absolute), allows the position and size of the Sub-control to be changed with respect to the reference element.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">Once positioned, they are treated the same as widgets and can be styled using the <link href="stylesheet-customizing.html#box-model">box model</link>.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">See the <link href="stylesheet-reference.html#list-of-sub-controls">List of Sub-Controls</link> below for a list of supported sub-controls, and <link href="stylesheet-examples.html#customizing-the-qpushbutton-s-menu-indicator-sub-control">Customizing the QPushButton's Menu Indicator Sub-Control</link> for a realistic example.</paragraph>
+         <paragraph>The absolute positioning scheme (<link href="stylesheet-reference.html#position-prop">position</link> : absolute), allows the position and size of the Sub-control to be changed with respect to the reference element.</paragraph>
+         <paragraph>Once positioned, they are treated the same as widgets and can be styled using the <link href="stylesheet-customizing.html#box-model">box model</link>.</paragraph>
+         <paragraph>See the <link href="stylesheet-reference.html#list-of-sub-controls">List of Sub-Controls</link> below for a list of supported sub-controls, and <link href="stylesheet-examples.html#customizing-the-qpushbutton-s-menu-indicator-sub-control">Customizing the QPushButton's Menu Indicator Sub-Control</link> for a realistic example.</paragraph>
          <rich-imgtext type="info"/>
       </section>
       <section id="4" noNumber="0" sautDePagePdf="0">
          <title>Pseudo-States</title>
-         <paragraph type="important" sautDePagePdf="0">Selectors may contain <i>pseudo-states</i> that denote that restrict the application of the rule based on the widget's state. Pseudo-states appear at the end of the selector, with a colon (<inline>:</inline>) in between. For example, the following rule applies when the mouse hovers over a <inline>
+         <paragraph>Selectors may contain <i>pseudo-states</i> that denote that restrict the application of the rule based on the widget's state. Pseudo-states appear at the end of the selector, with a colon (<inline>:</inline>) in between. For example, the following rule applies when the mouse hovers over a <inline>
                <link href="qpushbutton.html">QPushButton</link>
             </inline>:</paragraph>
          <code langage="other">
 QPushButton:hover { color: white }
 </code>
-         <paragraph type="important" sautDePagePdf="0">Pseudo-states can be negated using the exclamation operator. For example, the following rule applies when the mouse does not hover over a <inline>
+         <paragraph>Pseudo-states can be negated using the exclamation operator. For example, the following rule applies when the mouse does not hover over a <inline>
                <link href="qradiobutton.html">QRadioButton</link>
             </inline>:</paragraph>
          <code langage="other">
 QRadioButton:!hover { color: red }
 </code>
-         <paragraph type="important" sautDePagePdf="0">Pseudo-states can be chained, in which case a logical AND is implied. For example, the following rule applies to when the mouse hovers over a checked <inline>
+         <paragraph>Pseudo-states can be chained, in which case a logical AND is implied. For example, the following rule applies to when the mouse hovers over a checked <inline>
                <link href="qcheckbox.html">QCheckBox</link>
             </inline>:</paragraph>
          <code langage="other">
 QCheckBox:hover:checked { color: white }
 </code>
-         <paragraph type="important" sautDePagePdf="0">Negated Pseudo-states may appear in Pseudo-state chains. For example, the following rule applies when the mouse hovers over a <inline>
+         <paragraph>Negated Pseudo-states may appear in Pseudo-state chains. For example, the following rule applies when the mouse hovers over a <inline>
                <link href="qpushbutton.html">QPushButton</link>
             </inline> that is not pressed:</paragraph>
          <code langage="other">
 QPushButton:hover:!pressed { color: blue; }
 </code>
-         <paragraph type="important" sautDePagePdf="0">If needed, logical OR can be expressed using the comma operator:</paragraph>
+         <paragraph>If needed, logical OR can be expressed using the comma operator:</paragraph>
          <code langage="other">
 QCheckBox:hover, QCheckBox:checked { color: white }
 </code>
-         <paragraph type="important" sautDePagePdf="0">Pseudo-states can appear in combination with subcontrols. For example:</paragraph>
+         <paragraph>Pseudo-states can appear in combination with subcontrols. For example:</paragraph>
          <code langage="other">
 QComboBox::drop-down:hover { image: url(dropdown_bright.png) }
 </code>
-         <paragraph type="important" sautDePagePdf="0">See the <link href="stylesheet-reference.html#list-of-pseudo-states">List of Pseudo-States</link> section below for the list of pseudo-states provided by Qt widgets.</paragraph>
+         <paragraph>See the <link href="stylesheet-reference.html#list-of-pseudo-states">List of Pseudo-States</link> section below for the list of pseudo-states provided by Qt widgets.</paragraph>
       </section>
       <section id="5" noNumber="0" sautDePagePdf="0">
          <title>Conflict Resolution</title>
-         <paragraph type="important" sautDePagePdf="0">Conflicts arise when several style rules specify the same properties with different values. Consider the following style sheet:</paragraph>
+         <paragraph>Conflicts arise when several style rules specify the same properties with different values. Consider the following style sheet:</paragraph>
          <code langage="other">
 QPushButton#okButton { color: gray }
 QPushButton { color: red }
 </code>
-         <paragraph type="important" sautDePagePdf="0">Both rules match <inline>
+         <paragraph>Both rules match <inline>
                <link href="qpushbutton.html">QPushButton</link>
             </inline> instances called <inline>okButton</inline> and there is a conflict for the <inline>color</inline> property. To resolve this conflict, we must take into account the <i>specificity</i> of the selectors. In the above example, <inline>QPushButton#okButton</inline> is considered more specific than <inline>QPushButton</inline>, because it (usually) refers to a single object, not to all instances of a class.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">Similarly, selectors with pseudo-states are more specific than ones that do not specify pseudo-states. Thus, the following style sheet specifies that a <inline>
+         <paragraph>Similarly, selectors with pseudo-states are more specific than ones that do not specify pseudo-states. Thus, the following style sheet specifies that a <inline>
                <link href="qpushbutton.html">QPushButton</link>
             </inline> should have white text when the mouse is hovering over it, otherwise red text:</paragraph>
          <code langage="other">
 QPushButton:hover { color: white }
 QPushButton { color: red }
 </code>
-         <paragraph type="important" sautDePagePdf="0">Here's a tricky one:</paragraph>
+         <paragraph>Here's a tricky one:</paragraph>
          <code langage="other">
 QPushButton:hover { color: white }
 QPushButton:enabled { color: red }
 </code>
-         <paragraph type="important" sautDePagePdf="0">Here, both selectors have the same specificity, so if the mouse hovers over the button while it is enabled, the second rule takes precedence. If we want the text to be white in that case, we can reorder the rules like this:</paragraph>
+         <paragraph>Here, both selectors have the same specificity, so if the mouse hovers over the button while it is enabled, the second rule takes precedence. If we want the text to be white in that case, we can reorder the rules like this:</paragraph>
          <code langage="other">
 QPushButton:enabled { color: red }
 QPushButton:hover { color: white }
 </code>
-         <paragraph type="important" sautDePagePdf="0">Alternatively, we can make the first rule more specific:</paragraph>
+         <paragraph>Alternatively, we can make the first rule more specific:</paragraph>
          <code langage="other">
 QPushButton:hover:enabled { color: white }
 QPushButton:enabled { color: red }
 </code>
-         <paragraph type="important" sautDePagePdf="0">A similar issue arises in conjunction with Type Selectors. Consider the following example:</paragraph>
+         <paragraph>A similar issue arises in conjunction with Type Selectors. Consider the following example:</paragraph>
          <code langage="other">
 QPushButton { color: red }
 QAbstractButton { color: gray }
 </code>
-         <paragraph type="important" sautDePagePdf="0">Both rules apply to <inline>
+         <paragraph>Both rules apply to <inline>
                <link href="qpushbutton.html">QPushButton</link>
             </inline> instances (since <inline>
                <link href="qpushbutton.html">QPushButton</link>
@@ -255,8 +256,8 @@ QAbstractButton { color: gray }
             </inline>s. If we really want <inline>
                <link href="qpushbutton.html">QPushButton</link>
             </inline>s to have red text, we can always reorder the rules.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">For determining the specificity of a rule, Qt Style Sheets follow the CSS2 Specification:</paragraph>
-         <citation type="important" sautDePagePdf="0">
+         <paragraph>For determining the specificity of a rule, Qt Style Sheets follow the CSS2 Specification:</paragraph>
+         <citation>
             <liste>
                <element useText="0"/>
                <element useText="0"/>
@@ -277,13 +278,13 @@ LI.red.level  {}  /* a=0 b=2 c=1 -&gt; specificity =  21 */
       </section>
       <section id="6" noNumber="0" sautDePagePdf="0">
          <title>Cascading</title>
-         <paragraph type="important" sautDePagePdf="0">Style sheets can be set on the <inline>
+         <paragraph>Style sheets can be set on the <inline>
                <link href="qapplication.html">QApplication</link>
             </inline>, on parent widgets, and on child widgets. An arbitrary widget's effective style sheet is obtained by merging the style sheets set on the widget's ancestors (parent, grandparent, etc.), as well as any style sheet set on the <inline>
                <link href="qapplication.html">QApplication</link>
             </inline>.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">When conflicts arise, the widget's own style sheet is always preferred to any inherited style sheet, irrespective of the specificity of the conflicting rules. Likewise, the parent widget's style sheet is preferred to the grandparent's, etc.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">One consequence of this is that setting a style rule on a widget automatically gives it precedence over other rules specified in the ancestor widgets' style sheets or the <inline>
+         <paragraph>When conflicts arise, the widget's own style sheet is always preferred to any inherited style sheet, irrespective of the specificity of the conflicting rules. Likewise, the parent widget's style sheet is preferred to the grandparent's, etc.</paragraph>
+         <paragraph>One consequence of this is that setting a style rule on a widget automatically gives it precedence over other rules specified in the ancestor widgets' style sheets or the <inline>
                <link href="qapplication.html">QApplication</link>
             </inline> style sheet. Consider the following example. First, we set a style sheet on the <inline>
                <link href="qapplication.html">QApplication</link>
@@ -291,30 +292,30 @@ LI.red.level  {}  /* a=0 b=2 c=1 -&gt; specificity =  21 */
          <code langage="other">
 qApp-&gt;setStyleSheet("QPushButton { color: white }");
 </code>
-         <paragraph type="important" sautDePagePdf="0">Then we set a style sheet on a <inline>
+         <paragraph>Then we set a style sheet on a <inline>
                <link href="qpushbutton.html">QPushButton</link>
             </inline> object:</paragraph>
          <code langage="other">
 myPushButton-&gt;setStyleSheet("* { color: blue }");
 </code>
-         <paragraph type="important" sautDePagePdf="0">The style sheet on the <inline>
+         <paragraph>The style sheet on the <inline>
                <link href="qpushbutton.html">QPushButton</link>
             </inline> forces the <inline>
                <link href="qpushbutton.html">QPushButton</link>
             </inline> (and any child widget) to have blue text, in spite of the more specific rule set provided by the application-wide style sheet.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">The result would have been the same if we had written</paragraph>
+         <paragraph>The result would have been the same if we had written</paragraph>
          <code langage="other">
 myPushButton-&gt;setStyleSheet("color: blue");
 </code>
-         <paragraph type="important" sautDePagePdf="0">except that if the <inline>
+         <paragraph>except that if the <inline>
                <link href="qpushbutton.html">QPushButton</link>
             </inline> had children (which is unlikely), the style sheet would have no impact on them.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">Style sheet cascading is a complex topic. Refer to the CSS2 Specification for the gory details. Be aware that Qt currently doesn't implement <inline>!important</inline>.</paragraph>
+         <paragraph>Style sheet cascading is a complex topic. Refer to the CSS2 Specification for the gory details. Be aware that Qt currently doesn't implement <inline>!important</inline>.</paragraph>
       </section>
       <section id="7" noNumber="0" sautDePagePdf="0">
          <title>Inheritance</title>
-         <paragraph type="important" sautDePagePdf="0">In classic CSS, when font and color of an item is not explicitly set, it gets automatically inherited from the parent. By default, when using Qt Style Sheets, a widget does <b>not</b> automatically inherit its font and color setting from its parent widget.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">For example, consider a <inline>
+         <paragraph>In classic CSS, when font and color of an item is not explicitly set, it gets automatically inherited from the parent. By default, when using Qt Style Sheets, a widget does <b>not</b> automatically inherit its font and color setting from its parent widget.</paragraph>
+         <paragraph>For example, consider a <inline>
                <link href="qpushbutton.html">QPushButton</link>
             </inline> inside a <inline>
                <link href="qgroupbox.html">QGroupBox</link>
@@ -322,7 +323,7 @@ myPushButton-&gt;setStyleSheet("color: blue");
          <code langage="other">
 qApp-&gt;setStyleSheet("QGroupBox { color: red; } ");
 </code>
-         <paragraph type="important" sautDePagePdf="0">The <inline>
+         <paragraph>The <inline>
                <link href="qpushbutton.html">QPushButton</link>
             </inline> does not have an explicit color set. Hence, instead of inheriting color of its parent <inline>
                <link href="qgroupbox.html">QGroupBox</link>
@@ -332,19 +333,19 @@ qApp-&gt;setStyleSheet("QGroupBox { color: red; } ");
          <code langage="other">
 qApp-&gt;setStyleSheet("QGroupBox, QGroupBox * { color: red; }");
 </code>
-         <paragraph type="important" sautDePagePdf="0">In contrast, setting a font and palette using <inline>
+         <paragraph>In contrast, setting a font and palette using <inline>
                <link href="qwidget.html#font-prop">QWidget::setFont()</link>
             </inline> and <inline>
                <link href="qwidget.html#palette-prop">QWidget::setPalette()</link>
             </inline> propagates to child widgets.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">If you would prefer that the font and palette propagate to child widgets, you can set the <inline>
+         <paragraph>If you would prefer that the font and palette propagate to child widgets, you can set the <inline>
                <link href="qt.html#ApplicationAttribute-enum">Qt::AA_UseStyleSheetPropagationInWidgetStyles</link>
             </inline> flag, like this:</paragraph>
-         <paragraph type="important" sautDePagePdf="0">Usage:</paragraph>
+         <paragraph>Usage:</paragraph>
          <code langage="other">
 QCoreApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles, true);
 </code>
-         <paragraph type="important" sautDePagePdf="0">When the widget-style font and palette propagation is enabled, font and palette changes made through Qt Style Sheets will behave as though the user had manually called the corresponding <inline>
+         <paragraph>When the widget-style font and palette propagation is enabled, font and palette changes made through Qt Style Sheets will behave as though the user had manually called the corresponding <inline>
                <link href="qwidget.html#palette-prop">QWidget::setPalette()</link>
             </inline> and <inline>
                <link href="qwidget.html#font-prop">QWidget::setFont()</link>
@@ -352,7 +353,7 @@ QCoreApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles, tr
       </section>
       <section id="8" noNumber="0" sautDePagePdf="0">
          <title>Widgets Inside C++ Namespaces</title>
-         <paragraph type="important" sautDePagePdf="0">The Type Selector can be used to style widgets of a particular type. For example,</paragraph>
+         <paragraph>The Type Selector can be used to style widgets of a particular type. For example,</paragraph>
          <code langage="other">
 class MyPushButton : public QPushButton {
     // ...
@@ -361,7 +362,7 @@ class MyPushButton : public QPushButton {
 // ...
 qApp-&gt;setStyleSheet("MyPushButton { background: yellow; }");
 </code>
-         <paragraph type="important" sautDePagePdf="0">Qt Style Sheet uses QObject::className() of the widget to determine when to apply the Type Selector. When custom widgets are inside namespaces, the QObject::className() returns &lt;namespace&gt;::&lt;classname&gt;. This conflicts with the syntax for <link href="stylesheet-syntax.html#sub-controls">Sub-Controls</link>. To overcome this problem, when using the Type Selector for widgets inside namespaces, we must replace the "::" with "--". For example,</paragraph>
+         <paragraph>Qt Style Sheet uses QObject::className() of the widget to determine when to apply the Type Selector. When custom widgets are inside namespaces, the QObject::className() returns &lt;namespace&gt;::&lt;classname&gt;. This conflicts with the syntax for <link href="stylesheet-syntax.html#sub-controls">Sub-Controls</link>. To overcome this problem, when using the Type Selector for widgets inside namespaces, we must replace the "::" with "--". For example,</paragraph>
          <code langage="other">
 namespace ns {
     class MyPushButton : public QPushButton {
@@ -375,16 +376,16 @@ qApp-&gt;setStyleSheet("ns--MyPushButton { background: yellow; }");
       </section>
       <section id="9" noNumber="0" sautDePagePdf="0">
          <title>Setting QObject Properties</title>
-         <paragraph type="important" sautDePagePdf="0">From 4.3 and above, any designable <inline>
+         <paragraph>From 4.3 and above, any designable <inline>
                <link href="qobject.html#Q_PROPERTY">Q_PROPERTY</link>
             </inline> can be set using the qproperty-&lt;property name&gt; syntax.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">For example,</paragraph>
+         <paragraph>For example,</paragraph>
          <code langage="other">
 MyLabel { qproperty-pixmap: url(pixmap.png); }
 MyGroupBox { qproperty-titleColor: rgb(100, 200, 100); }
 QPushButton { qproperty-iconSize: 20px 20px; }
 </code>
-         <paragraph type="important" sautDePagePdf="0">If the property references an enum declared with <inline>
+         <paragraph>If the property references an enum declared with <inline>
                <link href="qobject-obsolete.html#Q_ENUMS">Q_ENUMS</link>
             </inline>, you should reference its constants by name, i.e., not their numeric value.</paragraph>
       </section>

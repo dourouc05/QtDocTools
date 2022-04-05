@@ -12,7 +12,8 @@
     </titre>
     <date>2018-09-11</date>
     <miseajour>2018-09-11</miseajour>
-    <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php');include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
+    <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php');
+         include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
     <serveur>Qt</serveur>
     <chemin>/doc/qt/1.2/09-qdoc-commands-includingimages</chemin>
     <urlhttp>http://qt.developpez.com//doc/qt/1.2/09-qdoc-commands-includingimages</urlhttp>
@@ -38,14 +39,14 @@
     </authorDescription>
   </authorDescriptions>
   <synopsis>
-      <paragraph type="important" sautDePagePdf="0"/>
+      <paragraph/>
    </synopsis>
   <summary>
     <section id="1" noNumber="0" sautDePagePdf="0">
       <title>\image</title>
-      <paragraph type="important" sautDePagePdf="0">The \image command expands to the image specified by its first argument, and renders it centered as a separate paragraph.</paragraph>
-      <paragraph type="important" sautDePagePdf="0">The command takes two arguments. The first argument is the name of the image file. The second argument is optional and is a simple description of the image, equivalent to the HTML alt="" in an image tag. The description is used for tooltips and for browsers that don't support images, like the Lynx text browser.</paragraph>
-      <paragraph type="important" sautDePagePdf="0">The remaining text <i>after</i> the file name is the optional, description argument. Be sure to follow the file name or the description with a line break. Curly brackets are required if the description argument spans multiple lines.</paragraph>
+      <paragraph>The \image command expands to the image specified by its first argument, and renders it centered as a separate paragraph.</paragraph>
+      <paragraph>The command takes two arguments. The first argument is the name of the image file. The second argument is optional and is a simple description of the image, equivalent to the HTML alt="" in an image tag. The description is used for tooltips and for browsers that don't support images, like the Lynx text browser.</paragraph>
+      <paragraph>The remaining text <i>after</i> the file name is the optional, description argument. Be sure to follow the file name or the description with a line break. Curly brackets are required if the description argument spans multiple lines.</paragraph>
       <code langage="other">/ *!
         Qt is a C++ toolkit for cross-platform GUI application development.
         
@@ -55,17 +56,17 @@
         Windows, macOS, Linux, and all major commercial Unix
         variants. It is also available for embedded devices.
         * /</code>
-      <paragraph type="important" sautDePagePdf="0">QDoc renders this as:</paragraph>
-      <citation type="important" sautDePagePdf="0">
+      <paragraph>QDoc renders this as:</paragraph>
+      <citation>
         <image src="images/happyguy.jpg"/>
       </citation>
-      <paragraph type="important" sautDePagePdf="0">See also <link href="09-qdoc-commands-includingimages.html#inlineimage-command">\inlineimage</link> and <link href="09-qdoc-commands-includingimages.html#caption-command">\caption</link>.</paragraph>
+      <paragraph>See also <link href="09-qdoc-commands-includingimages.html#inlineimage-command">\inlineimage</link> and <link href="09-qdoc-commands-includingimages.html#caption-command">\caption</link>.</paragraph>
     </section>
     <section id="2" noNumber="0" sautDePagePdf="0">
       <title>\inlineimage</title>
-      <paragraph type="important" sautDePagePdf="0">The \inlineimage command expands to the image specified by its argument. The image is rendered inline with the rest of the text.</paragraph>
-      <paragraph type="important" sautDePagePdf="0">The command takes two arguments. The first argument is the name of the image file. The second argument is optional and is a simple description of the image, equivalent to the HTML alt="" in an image tag. The description is used for tooltips, and for when a browser doesn't support images, like the Lynx text browser.</paragraph>
-      <paragraph type="important" sautDePagePdf="0">The most common use of the \inlineimage command is in lists and tables. Here is an example of including inline images in a list:</paragraph>
+      <paragraph>The \inlineimage command expands to the image specified by its argument. The image is rendered inline with the rest of the text.</paragraph>
+      <paragraph>The command takes two arguments. The first argument is the name of the image file. The second argument is optional and is a simple description of the image, equivalent to the HTML alt="" in an image tag. The description is used for tooltips, and for when a browser doesn't support images, like the Lynx text browser.</paragraph>
+      <paragraph>The most common use of the \inlineimage command is in lists and tables. Here is an example of including inline images in a list:</paragraph>
       <code langage="other">/ *!
         \list 1
         \li \inlineimage happy.gif Oh so happy!
@@ -73,13 +74,13 @@
         \li \inlineimage happy.gif Oh so happy!
         \endlist
         * /</code>
-      <paragraph type="important" sautDePagePdf="0">QDoc renders this as:</paragraph>
+      <paragraph>QDoc renders this as:</paragraph>
       <liste type="1" sautDePagePdf="0">
         <element useText="0"/>
         <element useText="0"/>
         <element useText="0"/>
       </liste>
-      <paragraph type="important" sautDePagePdf="0">Here is an example of including inline images in a table:</paragraph>
+      <paragraph>Here is an example of including inline images in a table:</paragraph>
       <code langage="other">/ *!
         \table
         \header
@@ -93,8 +94,8 @@
         \li \inlineimage happy.gif Oh so happy!
         \endtable
         * /</code>
-      <paragraph type="important" sautDePagePdf="0">QDoc renders this as:</paragraph>
-      <paragraph type="important" sautDePagePdf="0">The command can also be used to insert an image inline with the text.</paragraph>
+      <paragraph>QDoc renders this as:</paragraph>
+      <paragraph>The command can also be used to insert an image inline with the text.</paragraph>
       <code langage="other">/ *!
         \inlineimage training.jpg Qt Training
         The Qt Programming course is offered as a
@@ -104,14 +105,14 @@
         have significant experience in C++ development
         to derive maximum benefit from the course.
         * /</code>
-      <paragraph type="important" sautDePagePdf="0">QDoc renders this as:</paragraph>
-      <citation type="important" sautDePagePdf="0"/>
-      <paragraph type="important" sautDePagePdf="0">See also <link href="09-qdoc-commands-includingimages.html#image-command">\image</link> and <link href="09-qdoc-commands-includingimages.html#caption-command">\caption</link>.</paragraph>
+      <paragraph>QDoc renders this as:</paragraph>
+      <citation/>
+      <paragraph>See also <link href="09-qdoc-commands-includingimages.html#image-command">\image</link> and <link href="09-qdoc-commands-includingimages.html#caption-command">\caption</link>.</paragraph>
     </section>
     <section id="3" noNumber="0" sautDePagePdf="0">
       <title>\caption</title>
-      <paragraph type="important" sautDePagePdf="0">The \caption command provides a caption for an image.</paragraph>
-      <paragraph type="important" sautDePagePdf="0">The command takes all the text up to the end of the paragraph to be the caption. Experiment until you get the effect you want.</paragraph>
+      <paragraph>The \caption command provides a caption for an image.</paragraph>
+      <paragraph>The command takes all the text up to the end of the paragraph to be the caption. Experiment until you get the effect you want.</paragraph>
       <code langage="other">/ *!
         \table 100%
         \row
@@ -122,7 +123,7 @@
         or options, usually used inside a QToolBar.
         \endtable
         * /</code>
-      <paragraph type="important" sautDePagePdf="0">QDoc renders this as:</paragraph>
+      <paragraph>QDoc renders this as:</paragraph>
       <tableau width="80%" border="1" sautDePagePdf="0">
         <ligne>
           <colonne useText="0">
@@ -133,7 +134,7 @@
           </colonne>
         </ligne>
       </tableau>
-      <paragraph type="important" sautDePagePdf="0">See also <link href="09-qdoc-commands-includingimages.html#image-command">\image</link> and <link href="09-qdoc-commands-includingimages.html#inlineimage-command">\inlineimage</link>
+      <paragraph>See also <link href="09-qdoc-commands-includingimages.html#image-command">\image</link> and <link href="09-qdoc-commands-includingimages.html#inlineimage-command">\inlineimage</link>
       </paragraph>
     </section>
   </summary>

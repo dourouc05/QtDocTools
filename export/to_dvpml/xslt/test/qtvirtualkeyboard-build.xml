@@ -12,7 +12,8 @@
       </titre>
       <date>2018-09-12</date>
       <miseajour>2018-09-12</miseajour>
-      <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php');include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
+      <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php');
+         include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
       <serveur>Qt</serveur>
       <chemin>/doc/qt/5.11/qtvirtualkeyboard-build</chemin>
       <urlhttp>http://qt.developpez.com/doc/qt/5.11/qtvirtualkeyboard-build</urlhttp>
@@ -30,13 +31,13 @@
       </authorDescription>
    </authorDescriptions>
    <synopsis>
-      <paragraph type="important" sautDePagePdf="0"/>
+      <paragraph/>
    </synopsis>
    <summary>
       <section id="1" noNumber="0" sautDePagePdf="0">
          <title>Overview</title>
-         <paragraph type="important" sautDePagePdf="0">This document describes how to build the Qt Virtual Keyboard plugin.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">The project is split into the following subprojects:</paragraph>
+         <paragraph>This document describes how to build the Qt Virtual Keyboard plugin.</paragraph>
+         <paragraph>The project is split into the following subprojects:</paragraph>
          <tableau width="80%" border="1" sautDePagePdf="0">
             <ligne>
                <colonne useText="0"/>
@@ -77,16 +78,16 @@
                <colonne useText="0"/>
             </ligne>
          </tableau>
-         <paragraph type="important" sautDePagePdf="0">The input methods are implemented either in C++ or QML. Qt Virtual Keyboard provides implementations of <i>PlainInputMethod</i>, <i>MultitapInputMethod</i> and <i>HunspellInputMethod</i>. The <i>MultitapInputMethod</i> is implemented in QML while the others are implemented in C++.</paragraph>
+         <paragraph>The input methods are implemented either in C++ or QML. Qt Virtual Keyboard provides implementations of <i>PlainInputMethod</i>, <i>MultitapInputMethod</i> and <i>HunspellInputMethod</i>. The <i>MultitapInputMethod</i> is implemented in QML while the others are implemented in C++.</paragraph>
       </section>
       <section id="2" noNumber="0" sautDePagePdf="0">
          <title>Build Instructions</title>
-         <paragraph type="important" sautDePagePdf="0">The Qt Virtual Keyboard can be built for Linux Desktop/X11, Windows Desktop or <link href="http://doc.qt.io/QtForDeviceCreation/qtee-about-b2qt.html">Boot2Qt</link> targets. The target is automatically detected by QMAKE and requires no special configuration parameters.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">Qt Creator is the preferred build environment for Qt Virtual Keyboard as you can then leverage the shadow build functionality and rapidly switch between build targets.</paragraph>
+         <paragraph>The Qt Virtual Keyboard can be built for Linux Desktop/X11, Windows Desktop or <link href="http://doc.qt.io/QtForDeviceCreation/qtee-about-b2qt.html">Boot2Qt</link> targets. The target is automatically detected by QMAKE and requires no special configuration parameters.</paragraph>
+         <paragraph>Qt Creator is the preferred build environment for Qt Virtual Keyboard as you can then leverage the shadow build functionality and rapidly switch between build targets.</paragraph>
       </section>
       <section id="3" noNumber="0" sautDePagePdf="0">
          <title>Configuration Options</title>
-         <paragraph type="important" sautDePagePdf="0">The table below contains the top-level options for configuring the virtual keyboard features.</paragraph>
+         <paragraph>The table below contains the top-level options for configuring the virtual keyboard features.</paragraph>
          <tableau width="80%" border="1" sautDePagePdf="0">
             <entete>
                <colonne useText="0"/>
@@ -122,8 +123,8 @@
       </section>
       <section id="4" noNumber="0" sautDePagePdf="0">
          <title>Advanced Configuration Options</title>
-         <paragraph type="important" sautDePagePdf="0">The table below shows the advanced configuration options that will be applied automatically when activating a certain top-level feature. The options can also be used for enabling or disabling a specific feature.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">In most cases, these options are not needed, but there are also cases where their use is justified. For example, the Traditional Chinese language (CONFIG=lang-zh_TW) will include both Zhuyin and Cangjie input methods by default. This behavior can be changed by adding the preferred input method to the configuration, e.g., <inline>CONFIG+="lang-zh_TW</inline> zhuyin".</paragraph>
+         <paragraph>The table below shows the advanced configuration options that will be applied automatically when activating a certain top-level feature. The options can also be used for enabling or disabling a specific feature.</paragraph>
+         <paragraph>In most cases, these options are not needed, but there are also cases where their use is justified. For example, the Traditional Chinese language (CONFIG=lang-zh_TW) will include both Zhuyin and Cangjie input methods by default. This behavior can be changed by adding the preferred input method to the configuration, e.g., <inline>CONFIG+="lang-zh_TW</inline> zhuyin".</paragraph>
          <tableau width="80%" border="1" sautDePagePdf="0">
             <entete>
                <colonne useText="0"/>
@@ -233,8 +234,8 @@
       </section>
       <section id="6" noNumber="0" sautDePagePdf="0">
          <title>Hunspell Integration</title>
-         <paragraph type="important" sautDePagePdf="0">By default, <i>HunspellInputMethod</i> will not be available unless the Hunspell library and development headers are found. For Linux/X11 targets, the Hunspell library can be provided by installing the libhunspell-dev package. Alternatively, the Hunspell sources can be extracted into the <i>src/virtualkeyboard/3rdparty/hunspell</i> directory. If Hunspell sources are used, then the dictionary files must also be copied into the <i>src/virtualkeyboard/3rdparty/hunspell/data</i> directory. Furthermore, if Hunspell sources are used, <i>hunspell.pro</i> will be used for all targets.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">An example of how the directory structure should look after copying in the Hunspell sources and dictionary files is listed below:</paragraph>
+         <paragraph>By default, <i>HunspellInputMethod</i> will not be available unless the Hunspell library and development headers are found. For Linux/X11 targets, the Hunspell library can be provided by installing the libhunspell-dev package. Alternatively, the Hunspell sources can be extracted into the <i>src/virtualkeyboard/3rdparty/hunspell</i> directory. If Hunspell sources are used, then the dictionary files must also be copied into the <i>src/virtualkeyboard/3rdparty/hunspell/data</i> directory. Furthermore, if Hunspell sources are used, <i>hunspell.pro</i> will be used for all targets.</paragraph>
+         <paragraph>An example of how the directory structure should look after copying in the Hunspell sources and dictionary files is listed below:</paragraph>
          <code langage="other">3rdparty
 └── hunspell
     ├── data
@@ -249,17 +250,17 @@
       </section>
       <section id="7" noNumber="0" sautDePagePdf="0">
          <title>T9 Write Integration</title>
-         <paragraph type="important" sautDePagePdf="0">T9 Write integration supports the T9 Write Alphabetic and T9 Write CJK engines. Both engines are integrated via T9WriteInputMethod. The input method can be initialized with either of the engines at runtime. The engine selection happens automatically based on input locale and input mode from the keyboard.</paragraph>
+         <paragraph>T9 Write integration supports the T9 Write Alphabetic and T9 Write CJK engines. Both engines are integrated via T9WriteInputMethod. The input method can be initialized with either of the engines at runtime. The engine selection happens automatically based on input locale and input mode from the keyboard.</paragraph>
       </section>
       <section id="8" noNumber="0" sautDePagePdf="0">
          <title>T9 Write Compatibility</title>
-         <paragraph type="important" sautDePagePdf="0">Qt Virtual Keyboard is compatible with T9 Write v7.5.0 onward.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">The latest tested version is v7.8.1.</paragraph>
+         <paragraph>Qt Virtual Keyboard is compatible with T9 Write v7.5.0 onward.</paragraph>
+         <paragraph>The latest tested version is v7.8.1.</paragraph>
       </section>
       <section id="9" noNumber="0" sautDePagePdf="0">
          <title>T9 Write Build Preparations</title>
-         <paragraph type="important" sautDePagePdf="0">The contents of the SDK must be either manually copied to the directory structure described below, or by using the <i>unpack.py</i> script found in the t9write directory.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">To unpack the SDK using the script:</paragraph>
+         <paragraph>The contents of the SDK must be either manually copied to the directory structure described below, or by using the <i>unpack.py</i> script found in the t9write directory.</paragraph>
+         <paragraph>To unpack the SDK using the script:</paragraph>
          <code langage="other">$ cd src/virtualkeyboard/3rdparty/t9write/
 $ python unpack.py T9Write_Alpha_v7-8-0_SDK.zip .</code>
          <code langage="other">3rdparty
@@ -314,7 +315,7 @@ $ python unpack.py T9Write_Alpha_v7-8-0_SDK.zip .</code>
                 └─── cjk
                     └─── *.lib / *.obj</code>
          <rich-imgtext type="info"/>
-         <paragraph type="important" sautDePagePdf="0">Where the contents of each directory are:</paragraph>
+         <paragraph>Where the contents of each directory are:</paragraph>
          <tableau width="80%" border="1" sautDePagePdf="0">
             <entete>
                <colonne useText="0"/>
@@ -351,35 +352,35 @@ $ python unpack.py T9Write_Alpha_v7-8-0_SDK.zip .</code>
                <colonne useText="0"/>
             </ligne>
          </tableau>
-         <paragraph type="important" sautDePagePdf="0">Finally, the SDK is included in the build by adding CONFIG+=t9write to the qmake command line.</paragraph>
+         <paragraph>Finally, the SDK is included in the build by adding CONFIG+=t9write to the qmake command line.</paragraph>
       </section>
       <section id="10" noNumber="0" sautDePagePdf="0">
          <title>Static builds</title>
-         <paragraph type="important" sautDePagePdf="0">The virtual keyboard can be built and linked statically against the application. This implies that Qt is also built statically (using the -static option in the configure command line).</paragraph>
-         <paragraph type="important" sautDePagePdf="0">Static builds of the virtual keyboard are enabled by adding <inline>CONFIG+=static</inline> to the qmake command line and then rebuilding.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">Some third party modules used by the virtual keyboard are always built as shared libraries. These modules are Hunspell and Lipi Toolkit.</paragraph>
+         <paragraph>The virtual keyboard can be built and linked statically against the application. This implies that Qt is also built statically (using the -static option in the configure command line).</paragraph>
+         <paragraph>Static builds of the virtual keyboard are enabled by adding <inline>CONFIG+=static</inline> to the qmake command line and then rebuilding.</paragraph>
+         <paragraph>Some third party modules used by the virtual keyboard are always built as shared libraries. These modules are Hunspell and Lipi Toolkit.</paragraph>
       </section>
       <section id="11" noNumber="0" sautDePagePdf="0">
          <title>Using the static plugin</title>
-         <paragraph type="important" sautDePagePdf="0">The following section should be added to the application project file that uses the statically built virtual keyboard.</paragraph>
+         <paragraph>The following section should be added to the application project file that uses the statically built virtual keyboard.</paragraph>
          <code langage="other">static {
     QTPLUGIN += qtvirtualkeyboardplugin
     QT += svg
 }</code>
-         <paragraph type="important" sautDePagePdf="0">
+         <paragraph>
             <inline>QTPLUGIN</inline> causes qmake to pull linker dependencies for the virtual keyboard plugin. The SVG module is required as an extra dependency for Qt, since the SVG format is required by the default styles.</paragraph>
-         <paragraph type="important" sautDePagePdf="0">From here on, using a statically built virtual keyboard is no different from the normal case.</paragraph>
+         <paragraph>From here on, using a statically built virtual keyboard is no different from the normal case.</paragraph>
       </section>
       <section id="12" noNumber="0" sautDePagePdf="0">
          <title>Deployment</title>
       </section>
       <section id="13" noNumber="0" sautDePagePdf="0">
          <title>Desktop Targets</title>
-         <paragraph type="important" sautDePagePdf="0">Add a Deploy Step that executes the <i>make install</i> command, then deploy using the <i>Deploy All</i> command.</paragraph>
+         <paragraph>Add a Deploy Step that executes the <i>make install</i> command, then deploy using the <i>Deploy All</i> command.</paragraph>
       </section>
       <section id="14" noNumber="0" sautDePagePdf="0">
          <title>Boot2Qt Targets</title>
-         <paragraph type="important" sautDePagePdf="0">The installation is done by copying the necessary files to the memory card, or by using the adb push command.</paragraph>
+         <paragraph>The installation is done by copying the necessary files to the memory card, or by using the adb push command.</paragraph>
       </section>
    </summary>
 </document>
