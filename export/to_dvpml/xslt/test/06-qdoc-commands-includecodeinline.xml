@@ -3,8 +3,8 @@
     <entete>
         <rubrique>65</rubrique>
         <meta>
-            <description/>
-            <keywords>documentation, qt, français</keywords>
+            <description>Including Code Inline</description>
+            <keywords>Including,Code,Inline</keywords>
         </meta>
         <titre>
             <page>Including Code Inline</page>
@@ -20,16 +20,16 @@
     </entete>
     <voiraussi>
         <lien>
-            <texte>Including External Code &gt;</texte>
-            <url/>
+            <texte>Including External Code</texte>
+            <url>http://qt.developpez.com/doc/qt/5.11/07-0-qdoc-commands-includingexternalcode</url>
         </lien>
         <lien>
-            <texte>&lt; Document Structure</texte>
-            <url/>
+            <texte>Document Structure</texte>
+            <url>http://qt.developpez.com/doc/qt/5.11/05-qdoc-commands-documentstructure</url>
         </lien>
         <lien>
-            <texte>^ QDoc Manual ^</texte>
-            <url/>
+            <texte>QDoc Manual</texte>
+            <url>http://qt.developpez.com/doc/qt/5.11/qdoc-index</url>
         </lien>
     </voiraussi>
     <authorDescriptions>
@@ -39,7 +39,7 @@
         </authorDescription>
     </authorDescriptions>
     <synopsis>
-      <paragraph sautDePagePdf="0" type="important"/>
+      <paragraph/>
    </synopsis>
     <summary>
         <section id="I" noNumber="1" sautDePagePdf="0">
@@ -47,10 +47,10 @@
             <rich-imgtext type="info"/>
             <section id="1" sautDePagePdf="0" noNumber="0">
                 <title>\code</title>
-                <paragraph sautDePagePdf="0" type="important">The \code and \endcode commands enclose a snippet of source code.</paragraph>
+                <paragraph>The \code and \endcode commands enclose a snippet of source code.</paragraph>
                 <rich-imgtext type="info"/>
-                <paragraph sautDePagePdf="0" type="important">For documenting command-line instructions, shell scripts, or any content that is not in a Qt language recognized by QDoc, use <link href="06-qdoc-commands-includecodeinline.html#badcode-command">\badcode</link> instead.</paragraph>
-                <paragraph sautDePagePdf="0" type="important">When processing any of the \code, <link href="06-qdoc-commands-includecodeinline.html#newcode-command">\newcode</link> or <link href="06-qdoc-commands-includecodeinline.html#oldcode-command">\oldcode</link> commands, QDoc removes all indentation that is common for the verbatim code blocks within a <inline>/</inline>
+                <paragraph>For documenting command-line instructions, shell scripts, or any content that is not in a Qt language recognized by QDoc, use <link href="06-qdoc-commands-includecodeinline.html#badcode-command">\badcode</link> instead.</paragraph>
+                <paragraph>When processing any of the \code, <link href="06-qdoc-commands-includecodeinline.html#newcode-command">\newcode</link> or <link href="06-qdoc-commands-includecodeinline.html#oldcode-command">\oldcode</link> commands, QDoc removes all indentation that is common for the verbatim code blocks within a <inline>/</inline>
                     <inline>*!</inline> ... <inline>*</inline>
                     <inline>/</inline> comment before it adds the standard indentation.</paragraph>
                 <rich-imgtext type="info"/>
@@ -65,7 +65,7 @@
                     }
                     \ endcode
                     * /</code>
-                <paragraph sautDePagePdf="0" type="important">QDoc renders this as:</paragraph>
+                <paragraph>QDoc renders this as:</paragraph>
                 <code langage="other">#include &lt;QApplication&gt;
                     #include &lt;QPushButton&gt;
                     
@@ -73,21 +73,21 @@
                     {
                     ...
                     }</code>
-                <paragraph sautDePagePdf="0" type="important">Other QDoc commands are disabled within \code... \endcode, and the special character '\' is accepted and rendered like the rest of the code.</paragraph>
-                <paragraph sautDePagePdf="0" type="important">To include code snippets from an external file, use the <link href="07-0-qdoc-commands-includingexternalcode.html#snippet-command">\snippet</link> and <link href="07-0-qdoc-commands-includingexternalcode.html#codeline-command">\codeline</link> commands.</paragraph>
-                <paragraph sautDePagePdf="0" type="important">See also <link href="04-qdoc-commands-textmarkup.html#c-command">\c</link>, <link href="06-qdoc-commands-includecodeinline.html#badcode-command">\badcode</link>, <link href="07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command">\quotefromfile</link>, <link href="06-qdoc-commands-includecodeinline.html#newcode-command">\newcode</link>, and <link href="06-qdoc-commands-includecodeinline.html#oldcode-command">\oldcode</link>.</paragraph>
+                <paragraph>Other QDoc commands are disabled within \code... \endcode, and the special character '\' is accepted and rendered like the rest of the code.</paragraph>
+                <paragraph>To include code snippets from an external file, use the <link href="07-0-qdoc-commands-includingexternalcode.html#snippet-command">\snippet</link> and <link href="07-0-qdoc-commands-includingexternalcode.html#codeline-command">\codeline</link> commands.</paragraph>
+                <paragraph>See also <link href="04-qdoc-commands-textmarkup.html#c-command">\c</link>, <link href="06-qdoc-commands-includecodeinline.html#badcode-command">\badcode</link>, <link href="07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command">\quotefromfile</link>, <link href="06-qdoc-commands-includecodeinline.html#newcode-command">\newcode</link>, and <link href="06-qdoc-commands-includecodeinline.html#oldcode-command">\oldcode</link>.</paragraph>
             </section>
             <section id="2" sautDePagePdf="0" noNumber="0">
                 <title>\badcode</title>
-                <paragraph sautDePagePdf="0" type="important">Similar to <link href="06-qdoc-commands-includecodeinline.html#code-command">\code</link>, \badcode and \endcode commands enclose content that is rendered verbatim in a separate paragraph, but no parsing or automatic link creation is performed. Instead, the content is treated as plain text.</paragraph>
-                <paragraph sautDePagePdf="0" type="important">Substitute \code with this command when documenting command-line instructions, shell scripts or any other content that is not in a Qt language, but should still be styled similarly to a \code paragraph.</paragraph>
+                <paragraph>Similar to <link href="06-qdoc-commands-includecodeinline.html#code-command">\code</link>, \badcode and \endcode commands enclose content that is rendered verbatim in a separate paragraph, but no parsing or automatic link creation is performed. Instead, the content is treated as plain text.</paragraph>
+                <paragraph>Substitute \code with this command when documenting command-line instructions, shell scripts or any other content that is not in a Qt language, but should still be styled similarly to a \code paragraph.</paragraph>
             </section>
             <section id="3" sautDePagePdf="0" noNumber="0">
                 <title>\newcode</title>
-                <paragraph sautDePagePdf="0" type="important">The \newcode, \oldcode, and \endcode commands enable you to show how to port a snippet of code to a new version of an API.</paragraph>
-                <paragraph sautDePagePdf="0" type="important">The \newcode command and its companion the \oldcode command are a convenience combination of the <link href="06-qdoc-commands-includecodeinline.html#code-command">\code</link> commands: this combination provides a text relating the two code snippets to each other.</paragraph>
-                <paragraph sautDePagePdf="0" type="important">The \newcode command requires a preceding \oldcode statement.</paragraph>
-                <paragraph sautDePagePdf="0" type="important">Like the <link href="06-qdoc-commands-includecodeinline.html#code-command">\code</link> command, the \newcode command renders its code on a new line in the documentation using a monospace font and the standard indentation.</paragraph>
+                <paragraph>The \newcode, \oldcode, and \endcode commands enable you to show how to port a snippet of code to a new version of an API.</paragraph>
+                <paragraph>The \newcode command and its companion the \oldcode command are a convenience combination of the <link href="06-qdoc-commands-includecodeinline.html#code-command">\code</link> commands: this combination provides a text relating the two code snippets to each other.</paragraph>
+                <paragraph>The \newcode command requires a preceding \oldcode statement.</paragraph>
+                <paragraph>Like the <link href="06-qdoc-commands-includecodeinline.html#code-command">\code</link> command, the \newcode command renders its code on a new line in the documentation using a monospace font and the standard indentation.</paragraph>
                 <code langage="other">/ *!
                     \oldcode
                     if (printer-&gt;setup(parent))
@@ -98,30 +98,30 @@
                     ...
                     \ endcode
                     * /</code>
-                <paragraph sautDePagePdf="0" type="important">QDoc renders this as:</paragraph>
+                <paragraph>QDoc renders this as:</paragraph>
                 <tableau width="95%" border="3" sautDePagePdf="0">
                     <ligne>
                         <colonne useText="0">
-                            <paragraph sautDePagePdf="0" type="important">For example, if you have code like</paragraph>
+                            <paragraph>For example, if you have code like</paragraph>
                             <code langage="other">if (printer-&gt;setup(parent))
                                 ...</code>
-                            <paragraph sautDePagePdf="0" type="important">you can rewrite it as</paragraph>
+                            <paragraph>you can rewrite it as</paragraph>
                             <code langage="other">QPrintDialog dialog(printer, parent);
                                 if (dialog.exec())
                                 ...</code>
                         </colonne>
                     </ligne>
                 </tableau>
-                <paragraph sautDePagePdf="0" type="important">Other QDoc commands are disabled within \oldcode ... \endcode, and the '\' character doesn't need to be escaped.</paragraph>
+                <paragraph>Other QDoc commands are disabled within \oldcode ... \endcode, and the '\' character doesn't need to be escaped.</paragraph>
             </section>
             <section id="4" sautDePagePdf="0" noNumber="0">
                 <title>\oldcode</title>
-                <paragraph sautDePagePdf="0" type="important">The \oldcode command requires a corresponding \newcode statement; otherwise QDoc fails to parse the command and emits a warning.</paragraph>
-                <paragraph sautDePagePdf="0" type="important">See also <link href="06-qdoc-commands-includecodeinline.html#newcode-command">\newcode</link>.</paragraph>
+                <paragraph>The \oldcode command requires a corresponding \newcode statement; otherwise QDoc fails to parse the command and emits a warning.</paragraph>
+                <paragraph>See also <link href="06-qdoc-commands-includecodeinline.html#newcode-command">\newcode</link>.</paragraph>
             </section>
             <section id="5" sautDePagePdf="0" noNumber="0">
                 <title>\qml</title>
-                <paragraph sautDePagePdf="0" type="important">The \qml and \endqml commands enclose a snippet of QML source code.</paragraph>
+                <paragraph>The \qml and \endqml commands enclose a snippet of QML source code.</paragraph>
                 <code langage="other">/ *!
                     \qml
                     import QtQuick 2.0
@@ -140,7 +140,7 @@
                     }
                     \endqml
                     * /</code>
-                <paragraph sautDePagePdf="0" type="important">QDoc renders this as:</paragraph>
+                <paragraph>QDoc renders this as:</paragraph>
             </section>
         </section>
     </summary>
