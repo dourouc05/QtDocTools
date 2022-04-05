@@ -382,6 +382,13 @@
 
   <xsl:template name="tc:document-entete">
     <xsl:param name="generate-summary" as="xs:boolean" select="true()"/>
+    
+    <xsl:if
+      test="string-length($license-author) > 0 or $license-number > 0 or $license-year > 0">
+      <xsl:message>WARNING: Global license parameters not consistent: either the three
+        parameters license-author, license-number, and license-year must be set, or only
+        license-text.</xsl:message>
+    </xsl:if>
 
     <entete>
       <rubrique>
@@ -422,27 +429,18 @@
         </google-analytics>
       </xsl:if>
 
-      <xsl:choose>
-        <xsl:when
-          test="string-length($license-author) > 0 and $license-number > 0 and $license-year > 0">
-          <licauteur>
-            <xsl:value-of select="$license-author"/>
-          </licauteur>
-          <lictype>
-            <xsl:value-of select="$license-number"/>
-          </lictype>
-          <licannee>
-            <xsl:value-of select="$license-year"/>
-          </licannee>
-        </xsl:when>
+      <xsl:if test="string-length($license-author) > 0 and $license-number > 0 and $license-year > 0">
+        <licauteur>
+          <xsl:value-of select="$license-author"/>
+        </licauteur>
+        <lictype>
+          <xsl:value-of select="$license-number"/>
+        </lictype>
+        <licannee>
+          <xsl:value-of select="$license-year"/>
+        </licannee>
         <!-- When $license-text is set, the license is output just after the <entete> tag. -->
-        <xsl:when
-          test="string-length($license-author) > 0 or $license-number > 0 or $license-year > 0">
-          <xsl:message>WARNING: Global license parameters not consistent: either the three
-            parameters license-author, license-number, and license-year must be set, or only
-            license-text.</xsl:message>
-        </xsl:when>
-      </xsl:choose>
+      </xsl:if>
 
       <xsl:choose>
         <xsl:when test="$doc-qt">
