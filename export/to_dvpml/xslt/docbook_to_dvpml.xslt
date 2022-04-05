@@ -488,8 +488,8 @@
   <xsl:template name="tc:document-authors">
     <authorDescriptions>
       <xsl:choose>
-        <xsl:when test="$document/db:info/(db:authorgroup | db:author | db:editor | db:othercredit)">
-          <xsl:for-each select="$document/db:info//(db:author | db:editor | db:othercredit)">
+        <xsl:when test="$document//db:info/(db:authorgroup | db:author | db:editor | db:othercredit)">
+          <xsl:for-each select="$document//db:info//(db:author | db:editor | db:othercredit)">
             <xsl:apply-templates mode="header_author" select="."/>
           </xsl:for-each>
         </xsl:when>
@@ -738,8 +738,8 @@
   <xsl:function name="tc:document-description" as="xs:string">
     <xsl:choose>
       <!-- If available, use the version of the abstract that is tailored for the description. Otherwise, use the standard abstract. -->
-      <xsl:when test="$document/db:info/db:abstract[@role = 'description']">
-        <xsl:apply-templates mode="content_para_no_formatting" select="$document/db:info/db:abstract[not(@role = 'description')]"></xsl:apply-templates>
+      <xsl:when test="$document//db:info/db:abstract[@role = 'description']">
+        <xsl:apply-templates mode="content_para_no_formatting" select="$document//db:info/db:abstract[not(@role = 'description')]"></xsl:apply-templates>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="tc:document-title()"/>
@@ -749,8 +749,8 @@
 
   <xsl:function name="tc:document-keywords" as="xs:string">
     <xsl:choose>
-      <xsl:when test="$document/db:info/db:keywordset">
-        <xsl:for-each select="$document/db:info/db:keywordset/db:keyword">
+      <xsl:when test="$document//db:info/db:keywordset">
+        <xsl:for-each select="$document//db:info/db:keywordset/db:keyword">
           <xsl:value-of select="."/>
           <xsl:if test="position() &lt; last()">
             <xsl:value-of select="','"/>
@@ -765,12 +765,12 @@
 
   <xsl:function name="tc:document-abstract" as="node()*">
     <xsl:choose>
-      <xsl:when test="not($doc-qt) and $document/db:info/db:abstract">
+      <xsl:when test="not($doc-qt) and $document//db:info/db:abstract">
         <!-- Most normal case for generic DocBook documents. -->
-        <xsl:copy-of select="$document/db:info/db:abstract/*"/>
+        <xsl:copy-of select="$document//db:info/db:abstract/*"/>
       </xsl:when>
       <xsl:when
-        test="$doc-qt and ($document/db:info/db:abstract/node()[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and string-length(text()[1]) > 0])">
+        test="$doc-qt and ($document//db:info/db:abstract/node()[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and string-length(text()[1]) > 0])">
         <!-- For Qt documentation, there is an (unfortunately typical) case -->
         <!-- where the abstract only contains a see-also list of links -->
         <!-- (<simplelist>). It should be handled in a specific way, because -->
@@ -779,21 +779,21 @@
         <!-- something else than links to linked documents! -->
         <!-- (Linked documents are only available for Qt documentation.) -->
         <!-- Most normal case for Qt documentation. -->
-        <xsl:if test="not($document/self::db:article)">
+        <xsl:if test="not($document//self::db:article)">
           <xsl:message>WARNING: entering a code path that is supposed to be specific for Qt
             documentation, but the document type is not article.</xsl:message>
         </xsl:if>
         <xsl:copy-of
-          select="$document/db:info/db:abstract/node()[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and text()]"
+          select="$document//db:info/db:abstract/node()[not(child::*[1][self::db:simplelist] and count(child::*) = 1) and text()]"
         />
       </xsl:when>
-      <xsl:when test="$document/db:info/following-sibling::*[1][self::db:para]">
+      <xsl:when test="$document//db:info/following-sibling::*[1][self::db:para]">
         <!-- Just links in the DocBook abstract, but something resembling an abstract -->
         <!-- (paragraphs before the first section). -->
         <xsl:variable name="tentative"
-          select="$document/db:info/following-sibling::*[not(preceding-sibling::db:section) and not(self::db:section) and not(preceding-sibling::db:sect1) and not(self::db:sect1)]"/>
+          select="$document//db:info/following-sibling::*[not(preceding-sibling::db:section) and not(self::db:section) and not(preceding-sibling::db:sect1) and not(self::db:sect1)]"/>
         <xsl:copy-of select="
-            if (count($tentative) &lt; count($document/db:info/following-sibling::*)) then
+            if (count($tentative) &lt; count($document//db:info/following-sibling::*)) then
               $tentative
             else
               $tentative[1]"/>
