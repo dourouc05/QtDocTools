@@ -4,6 +4,27 @@ QtDocTools release notes
 There are currently no compatibility guarantees between versions, especially 
 for DOCX format. Incompatibilities should remaing minor, though.
 
+
+Version 0.3.0 (2022)
+----------------------------
+
+Importing Qt documentation: 
+
+* Improved test suite.
+
+Exporting to DvpML: 
+
+* Support for CALS tables.
+* Support for xml:id in many places.
+* Many fixes. Better error messages.
+* Added a unit-test suite in XSpec.
+
+Oxygen XML framework, based on its native DocBook 5 support:
+
+* Access to the provided transformations from DocBook (not yet to DocBook).
+* Template documents.
+
+
 Version 0.2.1 (2 March 2020)
 ----------------------------
 
@@ -12,6 +33,7 @@ Round-tripping between DocBook and DOCX:
 * More comprehensive system to encode authors and contributions, allowing 
   contributions to be added in DOCX and retrieved in DocBook.
 * Translated generated text (only French and Englih for now). 
+
 
 Version 0.2.0 (29 February 2020)
 --------------------------------
