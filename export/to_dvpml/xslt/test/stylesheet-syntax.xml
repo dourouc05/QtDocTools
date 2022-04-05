@@ -42,7 +42,7 @@
       <paragraph/>
    </synopsis>
    <summary>
-      <section id="1" noNumber="0" sautDePagePdf="0">
+      <section id="1">
          <title>Style Rules</title>
          <paragraph>Style sheets consist of a sequence of style rules. A <i>style rule</i> is made up of a selector and a declaration. The <i>selector</i> specifies which widgets are affected by the rule; the <i>declaration</i> specifies which properties should be set on the widget. For example:</paragraph>
          <code langage="other">
@@ -72,7 +72,7 @@ QPushButton { color: red; background-color: white }
 </code>
          <paragraph>See the <link href="stylesheet-reference.html#list-of-properties">List of Properties</link> section below for the list of properties provided by Qt widgets.</paragraph>
       </section>
-      <section id="2" noNumber="0" sautDePagePdf="0">
+      <section id="2">
          <title>Selector Types</title>
          <paragraph>All the examples so far used the simplest type of selector, the Type Selector. Qt Style Sheets support all the selectors defined in CSS2. The table below summarizes the most useful types of selectors.</paragraph>
          <tableau width="80%" border="1" sautDePagePdf="0">
@@ -118,7 +118,7 @@ QPushButton { color: red; background-color: white }
             </ligne>
          </tableau>
       </section>
-      <section id="3" noNumber="0" sautDePagePdf="0">
+      <section id="3">
          <title>Sub-Controls</title>
          <paragraph>For styling complex widgets, it is necessary to access subcontrols of the widget, such as the drop-down button of a <inline>
                <link href="qcombobox.html">QComboBox</link>
@@ -166,7 +166,7 @@ QComboBox::down-arrow:pressed {
          <paragraph>See the <link href="stylesheet-reference.html#list-of-sub-controls">List of Sub-Controls</link> below for a list of supported sub-controls, and <link href="stylesheet-examples.html#customizing-the-qpushbutton-s-menu-indicator-sub-control">Customizing the QPushButton's Menu Indicator Sub-Control</link> for a realistic example.</paragraph>
          <rich-imgtext type="info"/>
       </section>
-      <section id="4" noNumber="0" sautDePagePdf="0">
+      <section id="4">
          <title>Pseudo-States</title>
          <paragraph>Selectors may contain <i>pseudo-states</i> that denote that restrict the application of the rule based on the widget's state. Pseudo-states appear at the end of the selector, with a colon (<inline>:</inline>) in between. For example, the following rule applies when the mouse hovers over a <inline>
                <link href="qpushbutton.html">QPushButton</link>
@@ -202,7 +202,7 @@ QComboBox::drop-down:hover { image: url(dropdown_bright.png) }
 </code>
          <paragraph>See the <link href="stylesheet-reference.html#list-of-pseudo-states">List of Pseudo-States</link> section below for the list of pseudo-states provided by Qt widgets.</paragraph>
       </section>
-      <section id="5" noNumber="0" sautDePagePdf="0">
+      <section id="5">
          <title>Conflict Resolution</title>
          <paragraph>Conflicts arise when several style rules specify the same properties with different values. Consider the following style sheet:</paragraph>
          <code langage="other">
@@ -276,7 +276,7 @@ LI.red.level  {}  /* a=0 b=2 c=1 -&gt; specificity =  21 */
 </code>
          </citation>
       </section>
-      <section id="6" noNumber="0" sautDePagePdf="0">
+      <section id="6">
          <title>Cascading</title>
          <paragraph>Style sheets can be set on the <inline>
                <link href="qapplication.html">QApplication</link>
@@ -312,7 +312,7 @@ myPushButton-&gt;setStyleSheet("color: blue");
             </inline> had children (which is unlikely), the style sheet would have no impact on them.</paragraph>
          <paragraph>Style sheet cascading is a complex topic. Refer to the CSS2 Specification for the gory details. Be aware that Qt currently doesn't implement <inline>!important</inline>.</paragraph>
       </section>
-      <section id="7" noNumber="0" sautDePagePdf="0">
+      <section id="7">
          <title>Inheritance</title>
          <paragraph>In classic CSS, when font and color of an item is not explicitly set, it gets automatically inherited from the parent. By default, when using Qt Style Sheets, a widget does <b>not</b> automatically inherit its font and color setting from its parent widget.</paragraph>
          <paragraph>For example, consider a <inline>
@@ -351,7 +351,7 @@ QCoreApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles, tr
                <link href="qwidget.html#font-prop">QWidget::setFont()</link>
             </inline> methods on all of the QWidgets targeted by the style sheet. If this would have caused propagation in C++, it will cause propagation in style sheets and visa versa.</paragraph>
       </section>
-      <section id="8" noNumber="0" sautDePagePdf="0">
+      <section id="8">
          <title>Widgets Inside C++ Namespaces</title>
          <paragraph>The Type Selector can be used to style widgets of a particular type. For example,</paragraph>
          <code langage="other">
@@ -374,7 +374,7 @@ namespace ns {
 qApp-&gt;setStyleSheet("ns--MyPushButton { background: yellow; }");
 </code>
       </section>
-      <section id="9" noNumber="0" sautDePagePdf="0">
+      <section id="9">
          <title>Setting QObject Properties</title>
          <paragraph>From 4.3 and above, any designable <inline>
                <link href="qobject.html#Q_PROPERTY">Q_PROPERTY</link>

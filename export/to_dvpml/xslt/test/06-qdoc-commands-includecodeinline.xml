@@ -17,6 +17,12 @@
         <serveur>Qt</serveur>
         <chemin>/doc/qt/5.11/06-qdoc-commands-includecodeinline</chemin>
         <urlhttp>http://qt.developpez.com/doc/qt/5.11/06-qdoc-commands-includecodeinline</urlhttp>
+        <nosummary/>
+        <nosummarypage/>
+        <nopdf/>
+        <nozip/>
+        <nodownload/>
+        <noebook/>
     </entete>
     <voiraussi>
         <lien>
@@ -39,21 +45,32 @@
         </authorDescription>
     </authorDescriptions>
     <synopsis>
-      <paragraph/>
+      <paragraph>The following commands are used to render source code without formatting. The source code begins on a new line, rendered in the code.</paragraph>
+      <rich-imgtext type="info">
+         <paragraph> Although most of these commands are for rendering C++ code, the <link href="07-0-qdoc-commands-includingexternalcode.html#snippet-command">\snippet</link> and <link href="07-0-qdoc-commands-includingexternalcode.html#codeline-command">\codeline</link> commands are preferred over the others. These commands allow equivalent code snippets for other Qt language bindings to be substituted for the C++ snippets in the documentation.</paragraph>
+      </rich-imgtext>
    </synopsis>
     <summary>
-        <section id="I" noNumber="1" sautDePagePdf="0">
+        <section id="I" noNumber="1">
             <title>Including Code Inline</title>
-            <rich-imgtext type="info"/>
-            <section id="1" sautDePagePdf="0" noNumber="0">
+            <paragraph>The following commands are used to render source code without formatting. The source code begins on a new line, rendered in the code.</paragraph>
+            <rich-imgtext type="info">
+                <paragraph> Although most of these commands are for rendering C++ code, the <link href="07-0-qdoc-commands-includingexternalcode.html#snippet-command">\snippet</link> and <link href="07-0-qdoc-commands-includingexternalcode.html#codeline-command">\codeline</link> commands are preferred over the others. These commands allow equivalent code snippets for other Qt language bindings to be substituted for the C++ snippets in the documentation.</paragraph>
+            </rich-imgtext>
+            <section id="I">
                 <title>\code</title>
+                <signet id="code"/>
                 <paragraph>The \code and \endcode commands enclose a snippet of source code.</paragraph>
-                <rich-imgtext type="info"/>
+                <rich-imgtext type="info">
+                    <paragraph> The <link href="04-qdoc-commands-textmarkup.html#c-command">\c</link> command can be used for short code fragments within a sentence. The \code command is for longer code snippets. It renders the code verbatim in a separate paragraph in a html &lt;pre&gt; element, and parses the enclosed snippet, creating links to any known types in the code.</paragraph>
+                </rich-imgtext>
                 <paragraph>For documenting command-line instructions, shell scripts, or any content that is not in a Qt language recognized by QDoc, use <link href="06-qdoc-commands-includecodeinline.html#badcode-command">\badcode</link> instead.</paragraph>
                 <paragraph>When processing any of the \code, <link href="06-qdoc-commands-includecodeinline.html#newcode-command">\newcode</link> or <link href="06-qdoc-commands-includecodeinline.html#oldcode-command">\oldcode</link> commands, QDoc removes all indentation that is common for the verbatim code blocks within a <inline>/</inline>
                     <inline>*!</inline> ... <inline>*</inline>
                     <inline>/</inline> comment before it adds the standard indentation.</paragraph>
-                <rich-imgtext type="info"/>
+                <rich-imgtext type="info">
+                    <paragraph> This doesn't apply to externally quoted code using the <link href="07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command">\quotefromfile</link> or <link href="07-0-qdoc-commands-includingexternalcode.html#quotefile-command">\quotefile</link> command.</paragraph>
+                </rich-imgtext>
                 <code langage="other">/ *!
                     \code
                     #include &lt;QApplication&gt;
@@ -77,12 +94,12 @@
                 <paragraph>To include code snippets from an external file, use the <link href="07-0-qdoc-commands-includingexternalcode.html#snippet-command">\snippet</link> and <link href="07-0-qdoc-commands-includingexternalcode.html#codeline-command">\codeline</link> commands.</paragraph>
                 <paragraph>See also <link href="04-qdoc-commands-textmarkup.html#c-command">\c</link>, <link href="06-qdoc-commands-includecodeinline.html#badcode-command">\badcode</link>, <link href="07-0-qdoc-commands-includingexternalcode.html#quotefromfile-command">\quotefromfile</link>, <link href="06-qdoc-commands-includecodeinline.html#newcode-command">\newcode</link>, and <link href="06-qdoc-commands-includecodeinline.html#oldcode-command">\oldcode</link>.</paragraph>
             </section>
-            <section id="2" sautDePagePdf="0" noNumber="0">
+            <section id="2">
                 <title>\badcode</title>
                 <paragraph>Similar to <link href="06-qdoc-commands-includecodeinline.html#code-command">\code</link>, \badcode and \endcode commands enclose content that is rendered verbatim in a separate paragraph, but no parsing or automatic link creation is performed. Instead, the content is treated as plain text.</paragraph>
                 <paragraph>Substitute \code with this command when documenting command-line instructions, shell scripts or any other content that is not in a Qt language, but should still be styled similarly to a \code paragraph.</paragraph>
             </section>
-            <section id="3" sautDePagePdf="0" noNumber="0">
+            <section id="3">
                 <title>\newcode</title>
                 <paragraph>The \newcode, \oldcode, and \endcode commands enable you to show how to port a snippet of code to a new version of an API.</paragraph>
                 <paragraph>The \newcode command and its companion the \oldcode command are a convenience combination of the <link href="06-qdoc-commands-includecodeinline.html#code-command">\code</link> commands: this combination provides a text relating the two code snippets to each other.</paragraph>
@@ -114,12 +131,12 @@
                 </tableau>
                 <paragraph>Other QDoc commands are disabled within \oldcode ... \endcode, and the '\' character doesn't need to be escaped.</paragraph>
             </section>
-            <section id="4" sautDePagePdf="0" noNumber="0">
+            <section id="4">
                 <title>\oldcode</title>
                 <paragraph>The \oldcode command requires a corresponding \newcode statement; otherwise QDoc fails to parse the command and emits a warning.</paragraph>
                 <paragraph>See also <link href="06-qdoc-commands-includecodeinline.html#newcode-command">\newcode</link>.</paragraph>
             </section>
-            <section id="5" sautDePagePdf="0" noNumber="0">
+            <section id="5">
                 <title>\qml</title>
                 <paragraph>The \qml and \endqml commands enclose a snippet of QML source code.</paragraph>
                 <code langage="other">/ *!

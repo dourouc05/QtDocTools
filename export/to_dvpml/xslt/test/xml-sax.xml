@@ -42,9 +42,9 @@
       <paragraph>Support for SAX2 filters and the reader factory are under development. The Qt implementation does not include the SAX1 compatibility classes present in the Java interface.</paragraph>
    </synopsis>
    <summary>
-      <section id="I" noNumber="1" sautDePagePdf="0">
+      <section id="I" noNumber="1">
          <title>The SAX interface</title>
-         <section id="1" sautDePagePdf="0" noNumber="0">
+         <section id="1">
             <title>Introduction to SAX2</title>
             <paragraph>The SAX2 interface is an event-driven mechanism to provide the user with document information. An "event" in this context means something reported by the parser, for example, it has encountered a start tag, or an end tag, etc.</paragraph>
             <paragraph>To make it less abstract consider the following example:</paragraph>
@@ -164,7 +164,7 @@
             </tableau>
             <paragraph>The <link href="qtxml-saxbookmarks-example.html">SAX Bookmarks example</link> illustrates how to subclass <i><link href="qxmldefaulthandler.html">QXmlDefaultHandler</link></i> to read an XML bookmark file (XBEL) and how to generate XML by hand.</paragraph>
          </section>
-         <section id="2" sautDePagePdf="0" noNumber="0">
+         <section id="2">
             <title>SAX2 Features</title>
             <paragraph>The behavior of an XML reader depends on its support for certain optional features. For example, a reader may have the feature "report attributes used for namespace declarations and prefixes along with the local name of a tag". Like every other feature this has a unique name represented by a URI: it is called <i>http://xml.org/sax/features/namespace-prefixes</i>.</paragraph>
             <paragraph>The Qt SAX2 implementation can report whether the reader has particular functionality using the <i><link href="qxmlreader.html#hasFeature">QXmlReader::hasFeature()</link></i> function. Available features can be tested with <i><link href="qxmlreader.html#feature">QXmlReader::feature()</link></i>, and switched on or off using <i><link href="qxmlreader.html#setFeature">QXmlReader::setFeature()</link></i>.</paragraph>
@@ -178,7 +178,7 @@
             <paragraph>Whilst SAX2 leaves it to the user to define and implement whatever features are required, support for <i>http://xml.org/sax/features/namespace</i> (and thus <i>http://xml.org/sax/features/namespace-prefixes</i>) is mandantory. The <i><link href="qxmlsimplereader.html">QXmlSimpleReader</link></i> implementation of <i><link href="qxmlreader.html">QXmlReader</link></i>, supports them, and can do namespace processing.</paragraph>
             <paragraph><i><link href="qxmlsimplereader.html">QXmlSimpleReader</link></i> is not validating, so it does not support <i>http://xml.org/sax/features/validation</i>.</paragraph>
          </section>
-         <section id="3" sautDePagePdf="0" noNumber="0">
+         <section id="3">
             <title>Namespace Support via Features</title>
             <paragraph>As we have seen in the previous section, we can configure the behavior of the reader when it comes to namespace processing. This is done by setting and unsetting the <i>http://xml.org/sax/features/namespaces</i> and <i>http://xml.org/sax/features/namespace-prefixes</i> features.</paragraph>
             <paragraph>They influence the reporting behavior in the following way:</paragraph>
@@ -209,7 +209,7 @@
             <paragraph>This might be changed in the future following the W3C suggestion http://www.w3.org/2000/xmlns/ to associate <i>xmlns</i> with the namespace <i>http://www.w3.org/2000/xmlns</i>.</paragraph>
             <paragraph>As the SAX2 standard suggests, <i><link href="qxmlsimplereader.html">QXmlSimpleReader</link></i> defaults to having <i>http://xml.org/sax/features/namespaces</i> set to true and <i>http://xml.org/sax/features/namespace-prefixes</i> set to false. When changing this behavior using <i><link href="qxmlsimplereader.html#setFeature">QXmlSimpleReader::setFeature()</link></i> note that the combination of both features set to false is illegal.</paragraph>
          </section>
-         <section id="4" sautDePagePdf="0" noNumber="0">
+         <section id="4">
             <title>Summary</title>
             <paragraph><i><link href="qxmlsimplereader.html">QXmlSimpleReader</link></i> implements the following behavior:</paragraph>
             <tableau width="80%" border="1" sautDePagePdf="0">
@@ -292,7 +292,7 @@
             </tableau>
             <paragraph>The behavior of the entries marked with an asterisk (*) is not specified by SAX.</paragraph>
          </section>
-         <section id="5" sautDePagePdf="0" noNumber="0">
+         <section id="5">
             <title>Properties</title>
             <paragraph>Properties are a more general concept. They have a unique name, represented as an URI, but their value is <inline>void*</inline>. Thus nearly anything can be used as a property value. This concept involves some danger, though: there is no means of ensuring type-safety; the user must take care that they pass the right type. Properties are useful if a reader supports special handler classes.</paragraph>
             <paragraph>The URIs used for features and properties often look like URLs, e.g. <inline>http://xml.org/sax/features/namespace</inline>. This does not mean that the data required is at this address. It is simply a way of defining unique names.</paragraph>

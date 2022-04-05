@@ -42,7 +42,7 @@
       <paragraph/>
    </synopsis>
   <summary>
-    <section id="1" noNumber="0" sautDePagePdf="0">
+    <section id="1">
       <title>\image</title>
       <paragraph>The \image command expands to the image specified by its first argument, and renders it centered as a separate paragraph.</paragraph>
       <paragraph>The command takes two arguments. The first argument is the name of the image file. The second argument is optional and is a simple description of the image, equivalent to the HTML alt="" in an image tag. The description is used for tooltips and for browsers that don't support images, like the Lynx text browser.</paragraph>
@@ -62,7 +62,7 @@
       </citation>
       <paragraph>See also <link href="09-qdoc-commands-includingimages.html#inlineimage-command">\inlineimage</link> and <link href="09-qdoc-commands-includingimages.html#caption-command">\caption</link>.</paragraph>
     </section>
-    <section id="2" noNumber="0" sautDePagePdf="0">
+    <section id="2">
       <title>\inlineimage</title>
       <paragraph>The \inlineimage command expands to the image specified by its argument. The image is rendered inline with the rest of the text.</paragraph>
       <paragraph>The command takes two arguments. The first argument is the name of the image file. The second argument is optional and is a simple description of the image, equivalent to the HTML alt="" in an image tag. The description is used for tooltips, and for when a browser doesn't support images, like the Lynx text browser.</paragraph>
@@ -109,7 +109,7 @@
       <citation/>
       <paragraph>See also <link href="09-qdoc-commands-includingimages.html#image-command">\image</link> and <link href="09-qdoc-commands-includingimages.html#caption-command">\caption</link>.</paragraph>
     </section>
-    <section id="3" noNumber="0" sautDePagePdf="0">
+    <section id="3">
       <title>\caption</title>
       <paragraph>The \caption command provides a caption for an image.</paragraph>
       <paragraph>The command takes all the text up to the end of the paragraph to be the caption. Experiment until you get the effect you want.</paragraph>
