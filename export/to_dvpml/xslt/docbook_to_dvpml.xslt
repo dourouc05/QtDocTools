@@ -526,10 +526,10 @@
     <!-- If the synopsis has a specific form (last paragraph has only one children, a simple list), -->
     <!-- consider this list has links to linked documents. -->
     <xsl:if
-      test="$doc-qt and $document/db:info/db:abstract/db:para[last()]/child::*[1][self::db:simplelist and @role = 'see-also']">
+      test="$doc-qt and $document//db:info/db:abstract/db:para[last()]/child::*[1][self::db:simplelist]">
       <voiraussi>
         <!-- First, the linked documents (previous/next). -->
-        <xsl:for-each select="$document/db:info/db:abstract/db:para[last()]/db:simplelist/db:member">
+        <xsl:for-each select="$document//db:info/db:abstract/db:para[last()]/db:simplelist/db:member">
           <lien>
             <texte>
               <xsl:value-of select="db:link/text()"/>
