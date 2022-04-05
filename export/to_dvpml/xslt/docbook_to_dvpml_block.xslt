@@ -212,7 +212,7 @@
 
   <xsl:template mode="content" match="db:programlisting[@role = 'raw-html']">
     <html-brut>
-      <xsl:apply-templates mode="content_para"/>
+      <xsl:apply-templates mode="content_para" xml:space="preserve"/>
     </html-brut>
   </xsl:template>
 
