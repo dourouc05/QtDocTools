@@ -4,7 +4,7 @@
   xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:db="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:saxon="http://saxon.sf.net/" xmlns:tc="http://tcuvelier.be"
-  exclude-result-prefixes="xsl xs html saxon tc db xlink" version="3.0">
+  exclude-result-prefixes="xsl xpath-map xs html db xlink saxon tc" version="3.0">
 
   <xsl:output method="xml" indent="yes" suppress-indentation="inline link i b u paragraph code"/>
   <xsl:import-schema schema-location="../../../schemas/dvpml/article.xsd"
