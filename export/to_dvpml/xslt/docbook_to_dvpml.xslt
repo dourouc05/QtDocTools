@@ -412,10 +412,10 @@
         </article>
       </titre>
       <date>
-        <xsl:value-of select="tc:format-date(db:info/pubdate, 'pubdate')"/>
+        <xsl:value-of select="tc:format-date(db:info/db:pubdate, 'pubdate')"/>
       </date>
       <miseajour>
-        <xsl:value-of select="tc:format-date(db:info/date, 'date')"/>
+        <xsl:value-of select="tc:format-date(db:info/db:date, 'date')"/>
       </miseajour>
 
       <xsl:if test="$doc-qt">
