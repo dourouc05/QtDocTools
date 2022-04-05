@@ -95,8 +95,23 @@
         </synopsis>
 
         <summary>
+          <xsl:variable name="hasTextBeforeSection" as="xs:boolean">
+            <xsl:choose>
+              <!-- If the element just after <info> is a section -->
+              <xsl:when test="child::*[2][self::db:section]">
+                <xsl:value-of select="false()"/>
+              </xsl:when>
+              <!-- First a class synopsis, then a section -->
+              <xsl:when test="child::*[2][self::db:classsynopsis] and child::*[3][self::db:section]">
+                <xsl:value-of select="false()"/>
+              </xsl:when>
+              <!-- Other cases? -->
+              <xsl:otherwise><xsl:value-of select="true()"/></xsl:otherwise>
+            </xsl:choose>
+          </xsl:variable>
+          
           <xsl:choose>
-            <xsl:when test="not(child::*[2][self::db:section])">
+            <xsl:when test="$hasTextBeforeSection">
               <!-- A document must have a section in DvpML, not necessarily in DocBook. -->
               <section id="{generate-id()}" noNumber="1">
                 <title>
@@ -111,7 +126,7 @@
               </section>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:apply-templates mode="content" select="./*"/>
+              <xsl:apply-templates mode="content" select="./*[not(self::db:info) and not(self::db:title)]"/>
             </xsl:otherwise>
           </xsl:choose>
 
