@@ -4,7 +4,7 @@
       <rubrique>65</rubrique>
       <meta>
          <description>Big5-HKSCS Text Codec</description>
-         <keywords>documentation, qt, français</keywords>
+         <keywords>Big5-HKSCS,Text,Codec</keywords>
       </meta>
       <titre>
          <page>Big5-HKSCS Text Codec</page>
@@ -16,6 +16,12 @@
       <serveur>Qt</serveur>
       <chemin>/doc/qt/5.11/codec-big5hkscs</chemin>
       <urlhttp>http://qt.developpez.com/doc/qt/5.11/codec-big5hkscs</urlhttp>
+      <nosummary/>
+      <nosummarypage/>
+      <nopdf/>
+      <nozip/>
+      <nodownload/>
+      <noebook/>
    </entete>
    <authorDescriptions>
       <authorDescription name="Dummy" role="auteur">
@@ -34,7 +40,7 @@
          <paragraph>Wu Yi &lt;wuyi@hancom.com&gt; ported the HKSCS-1999 QBig5hkscsCodec to Qt-3.0.1 in March 2002.</paragraph>
          <paragraph>With the advent of the new HKSCS-2001 standard, James Su &lt;suzhe@turbolinux.com.cn&gt; &lt;suzhe@gnuchina.org&gt; generated the Big5-HKSCS&lt;-&gt;Unicode tables with a very space-efficient algorithm. He generously donated his code to glibc in May 2002. Subsequently, James has generously allowed Anthony Fok to adapt the code for Qt-3.0.5.</paragraph>
          <paragraph>Currently, the Big5-HKSCS tables are generated from the following sources, and with the Euro character added:</paragraph>
-         <liste type="1" sautDePagePdf="0">
+         <liste type="1">
             <element useText="0">
                <paragraph>http://www.microsoft.com/typography/unicode/950.txt</paragraph>
             </element>
