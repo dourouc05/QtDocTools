@@ -98,7 +98,7 @@
           <xsl:choose>
             <xsl:when test="not(child::*[2][self::db:section])">
               <!-- A document must have a section in DvpML, not necessarily in DocBook. -->
-              <section id="I" noNumber="1">
+              <section id="{generate-id()}" noNumber="1">
                 <title>
                   <xsl:value-of select="
                       if (db:info/db:title) then
