@@ -532,7 +532,16 @@
         <xsl:for-each select="$document//db:info/db:abstract/db:para[last()]/db:simplelist/db:member">
           <lien>
             <texte>
-              <xsl:value-of select="db:link/text()"/>
+              <xsl:choose>
+                <!-- Rewrite the names when there are chevrons indicating the previous (<) or next page (>), or the upper level (^). -->
+                <xsl:when test="ends-with(db:link/text(), ' &gt;')"><xsl:value-of select="substring(db:link/text(), 0, string-length(db:link/text()) - 1)"/></xsl:when>
+                <xsl:when test="starts-with(db:link/text(), '&lt; ')"><xsl:value-of select="substring(db:link/text(), 3, string-length(db:link/text()))"/></xsl:when>
+                <xsl:when test="starts-with(db:link/text(), '^ ') and ends-with(db:link/text(), ' ^')"><xsl:value-of select="substring(db:link/text(), 3, string-length(db:link/text()) - 4)"/></xsl:when>
+                <!-- Base case: don't do anything. -->
+                <xsl:otherwise>
+                  <xsl:value-of select="db:link/text()"/>
+                </xsl:otherwise>
+              </xsl:choose>
             </texte>
             <url>
               <xsl:variable name="filename"
