@@ -3,8 +3,8 @@
   <entete>
     <rubrique>65</rubrique>
     <meta>
-      <description>Primary elements for designing user interfaces in Qt</description>
-      <keywords>documentation, qt, français</keywords>
+      <description>Widgets Classes</description>
+      <keywords>Widgets,Classes</keywords>
     </meta>
     <titre>
       <page>Widgets Classes</page>
@@ -16,7 +16,13 @@
          include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
     <serveur>Qt</serveur>
     <chemin>/doc/qt/5.11/widget-classes</chemin>
-    <urlhttp>http://qt.developpez.com//doc/qt/5.11/widget-classes</urlhttp>
+    <urlhttp>http://qt.developpez.com/doc/qt/5.11/widget-classes</urlhttp>
+    <nosummary/>
+    <nosummarypage/>
+    <nopdf/>
+    <nozip/>
+    <nodownload/>
+    <noebook/>
   </entete>
   <authorDescriptions>
     <authorDescription name="Dummy" role="auteur">
@@ -28,13 +34,18 @@
       <paragraph>Primary elements for designing user interfaces in Qt</paragraph>
    </synopsis>
   <summary>
-    <section id="1">
+    <section id="d7e1" noNumber="1">
+         <title>Widgets Classes</title>
+         <paragraph>The primary elements for designing user interfaces in Qt.</paragraph>
+         <section id="I">
       <title>The Widget Classes</title>
-      <paragraph>The following sections list the widget classes. See the <link href="gallery.html">Qt Widget Gallery</link> for some examples.</paragraph>
+      <signet id="the-widget-classes"/>
+            <paragraph>The following sections list the widget classes. See the <link href="gallery.html">Qt Widget Gallery</link> for some examples.</paragraph>
     </section>
-    <section id="2">
+    <section id="II">
       <title>Basic Widget Classes</title>
-      <paragraph>These basic widgets (controls), e.g. buttons, comboboxes and scroll bars, are designed for direct use.</paragraph>
+      <signet id="basic-widget-classes"/>
+            <paragraph>These basic widgets (controls), e.g. buttons, comboboxes and scroll bars, are designed for direct use.</paragraph>
       <tableau width="80%" border="1" sautDePagePdf="0">
         <ligne>
           <colonne useText="0">
@@ -60,9 +71,10 @@
         </ligne>
       </tableau>
     </section>
-    <section id="3">
+    <section id="III">
       <title>Advanced Widget Classes</title>
-      <paragraph>Advanced GUI widgets, e.g. tab widgets and progress bars, provide more complex user interface controls.</paragraph>
+      <signet id="advanced-widget-classes"/>
+            <paragraph>Advanced GUI widgets, e.g. tab widgets and progress bars, provide more complex user interface controls.</paragraph>
       <tableau width="80%" border="1" sautDePagePdf="0">
         <ligne>
           <colonne useText="0">
@@ -73,33 +85,41 @@
           </colonne>
           <colonne useText="0">
             <image src="images/qundoview.png"/>
-          </colonne>
-        </ligne>
+        </colonne>
+       </ligne>
       </tableau>
     </section>
-    <section id="4">
+    <section id="IV">
       <title>Abstract Widget Classes</title>
-      <paragraph>The abstract widget classes are base classes. They are not usable as standalone classes but provide functionality when they are subclassed.</paragraph>
+      <signet id="abstract-widget-classes"/>
+            <paragraph>The abstract widget classes are base classes. They are not usable as standalone classes but provide functionality when they are subclassed.</paragraph>
     </section>
-    <section id="5">
+    <section id="V">
       <title>Organizer Widget Classes</title>
-      <paragraph>Classes like splitters, tab bars, button groups, etc are used for organizing and grouping GUI primitives into more complex applications and dialogs.</paragraph>
+      <signet id="organizer-widget-classes"/>
+            <paragraph>Classes like splitters, tab bars, button groups, etc are used for organizing and grouping GUI primitives into more complex applications and dialogs.</paragraph>
     </section>
-    <section id="6">
+    <section id="VI">
       <title>Graphics View Classes</title>
-    </section>
-    <section id="7">
+    <signet id="graphics-view-classes"/>
+         </section>
+    <section id="VII">
       <title>Model/View Classes</title>
-    </section>
-    <section id="8">
+    <signet id="model-view-classes"/>
+         </section>
+    <section id="VIII">
       <title>Main Window and Related Classes</title>
-    </section>
-    <section id="9">
+    <signet id="main-window-and-related-classes"/>
+         </section>
+    <section id="IX">
       <title>Widget Appearance and Style-Related Classes</title>
-      <paragraph>Classes used for customizing UI appearance and style.</paragraph>
+      <signet id="widget-appearance-and-style-related-classes"/>
+            <paragraph>Classes used for customizing UI appearance and style.</paragraph>
     </section>
-    <section id="10">
+    <section id="X">
       <title>Layout Classes</title>
-    </section>
-  </summary>
+    <signet id="layout-classes"/>
+         </section>
+  </section>
+   </summary>
 </document>

@@ -3,8 +3,8 @@
    <entete>
       <rubrique>65</rubrique>
       <meta>
-         <description/>
-         <keywords>documentation, qt, français</keywords>
+         <description>Building Qt Virtual Keyboard</description>
+         <keywords>Building,Qt,Virtual,Keyboard</keywords>
       </meta>
       <titre>
          <page>Building Qt Virtual Keyboard</page>
@@ -17,11 +17,17 @@
       <serveur>Qt</serveur>
       <chemin>/doc/qt/5.11/qtvirtualkeyboard-build</chemin>
       <urlhttp>http://qt.developpez.com/doc/qt/5.11/qtvirtualkeyboard-build</urlhttp>
+      <nosummary/>
+      <nosummarypage/>
+      <nopdf/>
+      <nozip/>
+      <nodownload/>
+      <noebook/>
    </entete>
    <voiraussi>
       <lien>
          <texte>{Building Qt Virtual Keyboard} {Contents}</texte>
-         <url/>
+         <url>http://qt.developpez.com/doc/qt/5.11/</url>
       </lien>
    </voiraussi>
    <authorDescriptions>
@@ -34,206 +40,499 @@
       <paragraph/>
    </synopsis>
    <summary>
-      <section id="1">
+      <section id="I">
          <title>Overview</title>
+         <signet id="overview"/>
          <paragraph>This document describes how to build the Qt Virtual Keyboard plugin.</paragraph>
          <paragraph>The project is split into the following subprojects:</paragraph>
          <tableau width="80%" border="1" sautDePagePdf="0">
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-            </ligne>
-            <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-            </ligne>
-            <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-            </ligne>
-            <ligne>
-               <colonne useText="0"/>
                <colonne useText="0">
-                  <rich-imgtext type="info"/>
+                  <paragraph>
+                     <i>examples/virtualkeyboard/basic/basic.pro</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Qt Virtual Keyboard Demo application</paragraph>
                </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>src/virtualkeyboard/virtualkeyboard.pro</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Qt Virtual Keyboard plugin</paragraph>
+               </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>src/virtualkeyboard/styles/styles.pro</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Qt Virtual Keyboard Style plugin that enables style decorations for the keyboard</paragraph>
+               </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>src/virtualkeyboard/3rdparty/hunspell/hunspell.pro</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>A project file for compiling the Hunspell library.</paragraph>
+                  <rich-imgtext type="info">
+                     <paragraph> This project is used if the Hunspell library is built from sources rather than depending on the system library. The project will be activated when the source code is extracted to this directory.</paragraph>
+                  </rich-imgtext>
+               </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>src/virtualkeyboard/3rdparty/lipi-toolkit/lipi-toolkit.pro</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>A project file for compiling the lipi-toolkit library.</paragraph>
+               </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>src/virtualkeyboard/3rdparty/openwnn/openwnn.pro</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>A project file for compiling the OpenWNN library.</paragraph>
+               </colonne>
+            </ligne>
+            <ligne>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>src/virtualkeyboard/3rdparty/pinyin/pinyin.pro</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>A project file for compiling the PinyinIME library.</paragraph>
+               </colonne>
+            </ligne>
+            <ligne>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>src/virtualkeyboard/3rdparty/t9write/t9write.pro</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>A project file for including T9 Write dictionaries as resources.</paragraph>
+               </colonne>
+            </ligne>
+            <ligne>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>src/virtualkeyboard/3rdparty/tcime/tcime.pro</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>A project file for compiling the TCIME library.</paragraph>
+               </colonne>
             </ligne>
          </tableau>
          <paragraph>The input methods are implemented either in C++ or QML. Qt Virtual Keyboard provides implementations of <i>PlainInputMethod</i>, <i>MultitapInputMethod</i> and <i>HunspellInputMethod</i>. The <i>MultitapInputMethod</i> is implemented in QML while the others are implemented in C++.</paragraph>
       </section>
-      <section id="2">
+      <section id="II">
          <title>Build Instructions</title>
+         <signet id="build-instructions"/>
          <paragraph>The Qt Virtual Keyboard can be built for Linux Desktop/X11, Windows Desktop or <link href="http://doc.qt.io/QtForDeviceCreation/qtee-about-b2qt.html">Boot2Qt</link> targets. The target is automatically detected by QMAKE and requires no special configuration parameters.</paragraph>
          <paragraph>Qt Creator is the preferred build environment for Qt Virtual Keyboard as you can then leverage the shadow build functionality and rapidly switch between build targets.</paragraph>
       </section>
-      <section id="3">
+      <section id="III">
          <title>Configuration Options</title>
+         <signet id="configuration-options"/>
          <paragraph>The table below contains the top-level options for configuring the virtual keyboard features.</paragraph>
          <tableau width="80%" border="1" sautDePagePdf="0">
             <entete>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>CONFIG</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Description</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Remarks</paragraph>
+               </colonne>
             </entete>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
                <colonne useText="0">
-                  <liste sautDePagePdf="0">
-                     <element useText="0"/>
-                     <element useText="0"/>
+                  <paragraph>
+                     <i>lang-&lt;code&gt;</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Enables the specified language</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>The specified language can be activated using <i>lang-&lt;code&gt;</i> option, which has the format "language[_country]", where:</paragraph>
+                  <liste>
+                     <element useText="0">
+                        <paragraph>language is a lowercase, two-letter, ISO 639 language code</paragraph>
+                     </element>
+                     <element useText="0">
+                        <paragraph>country is an uppercase, two-letter, ISO 3166 country code</paragraph>
+                     </element>
                   </liste>
+                  <paragraph>This option can be used to define the language support as required. The virtual keyboard can support one or more languages at a time.</paragraph>
+                  <paragraph>For example, <inline>CONFIG+=lang-fi_FI</inline> activates the Finnish language.</paragraph>
+                  <paragraph>The virtual keyboard automatically includes all languages if no other languages are specified.</paragraph>
                </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>lang-all</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Enables all the languages</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Enables all the languages supported by the virtual keyboard. This flag is essentially an alias for <inline>CONFIG+="lang-ar_AR lang-da_DK ..."</inline>
+                  </paragraph>
+                  <paragraph>This option is enabled by default. To build only a specific language, use the <inline>lang-&lt;code&gt;</inline> option above.</paragraph>
+               </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>handwriting</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Enables handwriting input</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>This flag enables handwriting input using the first engine available at build time in the following order: <inline>t9write</inline>, <inline>lipi-toolkit</inline>. To enable handwriting input using a specific engine, use the feature-specific configuration instead. For example, <inline>CONFIG+=lipi-toolkit</inline>.</paragraph>
+               </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>arrow-key-navigation</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Enables arrow key navigation for the keyboard</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Allows controlling the keyboard using the arrow and return keys.</paragraph>
+               </colonne>
             </ligne>
          </tableau>
       </section>
-      <section id="4">
+      <section id="IV">
          <title>Advanced Configuration Options</title>
+         <signet id="advanced-configuration-options"/>
          <paragraph>The table below shows the advanced configuration options that will be applied automatically when activating a certain top-level feature. The options can also be used for enabling or disabling a specific feature.</paragraph>
          <paragraph>In most cases, these options are not needed, but there are also cases where their use is justified. For example, the Traditional Chinese language (CONFIG=lang-zh_TW) will include both Zhuyin and Cangjie input methods by default. This behavior can be changed by adding the preferred input method to the configuration, e.g., <inline>CONFIG+="lang-zh_TW</inline> zhuyin".</paragraph>
          <tableau width="80%" border="1" sautDePagePdf="0">
             <entete>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>Advanced CONFIG</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Top-level CONFIG</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Description</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Remarks</paragraph>
+               </colonne>
             </entete>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
                <colonne useText="0">
-                  <rich-imgtext type="info"/>
+                  <paragraph>
+                     <i>disable-desktop</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>n/a</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Disables Desktop integration</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>By default, the desktop integration is enabled when the target environment is X11 or Windows desktop. With this option, the desktop integration can be disabled.</paragraph>
+                  <rich-imgtext type="info">
+                     <paragraph> For embedded integration, where the <link href="qml-qtquick-virtualkeyboard-inputpanel.html">InputPanel</link> is instantitated by the application, there is no need to use this option explicitly. The virtual keyboard will not create the desktop input panel if the application creates <link href="qml-qtquick-virtualkeyboard-inputpanel.html">InputPanel</link> before the focus is set to an input field.</paragraph>
+                  </rich-imgtext>
                </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
                <colonne useText="0">
-                  <rich-imgtext type="info"/>
+                  <paragraph>
+                     <i>disable-layouts</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>n/a</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Disables built-in layouts</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>By default, the virtual keyboard plugin contains the English keyboard layout. By specifiying the <i>disable-layouts</i> configuration flag, the built-in layout(s) are excluded from the virtual keyboard plugin.</paragraph>
+                  <rich-imgtext type="info">
+                     <paragraph> In this scenario, the <inline>QT_VIRTUALKEYBOARD_LAYOUT_PATH</inline> environment variable should be set to the file system directory containing the custom keyboard layouts before running the application.</paragraph>
+                  </rich-imgtext>
                </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
                <colonne useText="0">
-                  <rich-imgtext type="info"/>
+                  <paragraph>
+                     <i>disable-xcb</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>n/a</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Disables X11 integration</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <rich-imgtext type="info">
+                     <paragraph> Deprecated since 1.3. Use <i>disable-desktop</i> instead.</paragraph>
+                  </rich-imgtext>
                </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>disable-hunspell</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>n/a</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Disables Hunspell integration</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Hunspell integration is enabled if the Hunspell library is available on the system, or if it is built using the local project file. Integration can be disabled using this option.</paragraph>
+               </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>static</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Enables static builds of the virtual keyboard</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>This option enables <link href="qtvirtualkeyboard-build.html#static-builds">static builds</link>.</paragraph>
+               </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>retro-style</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>n/a</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Enables Retro style</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Changes the default keyboard style to the Retro style. Both styles are still included in the package, but this option allows you to change the built-in default style.</paragraph>
+               </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>pinyin</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>lang-zh_CN</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Enables the Pinyin input method for Simplified Chinese.</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>This option activates the Pinyin input method for the Simplified Chinese language.</paragraph>
+                  <paragraph>As this option activates a particular language, the <inline>lang-all</inline> option will not be enabled if this option is specified. To build all languages, use <inline>CONFIG+=lang-all</inline>.</paragraph>
+               </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>tcime</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>lang-zh_TW</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Enables the both Cangjie and Zhuyin input methods for Traditional Chinese.</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>This option activates the both Cangjie and Zhuyin input methods for the Traditional Chinese language.</paragraph>
+                  <paragraph>As this option activates a particular language, the <inline>lang-all</inline> option will not be enabled if this option is specified. To build all languages, use <inline>CONFIG+=lang-all</inline>.</paragraph>
+               </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>cangjie</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>lang-zh_TW</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Enables the Cangjie input method for Traditional Chinese.</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>This option activates the Cangjie input method for the Traditional Chinese language.</paragraph>
+                  <paragraph>As this option activates a particular language, the <inline>lang-all</inline> option will not be enabled if this option is specified. To build all languages, use <inline>CONFIG+=lang-all</inline>.</paragraph>
+               </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>zhuyin</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>lang-zh_TW</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Enables the Zhuyin input method for Traditional Chinese.</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>This option activates the Zhuyin input method for the Traditional Chinese language.</paragraph>
+                  <paragraph>As this option activates a particular language, the <inline>lang-all</inline> option will not be enabled if this option is specified. To build all languages, use <inline>CONFIG+=lang-all</inline>.</paragraph>
+               </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>hangul</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>lang-ko_KR</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Enables the Hangul input method for Korean.</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>This option activates the Hangul input method for the Korean language.</paragraph>
+                  <paragraph>As this option activates a particular language, the <inline>lang-all</inline> option will not be enabled if this option is specified. To build all languages, use <inline>CONFIG+=lang-all</inline>.</paragraph>
+               </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>openwnn</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>lang-ja_JP</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Enables the OpenWnn input method for Japanese.</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>This option activates the OpenWnn input method for the Japanese language.</paragraph>
+                  <paragraph>As this option activates a particular language, the <inline>lang-all</inline> option will not be enabled if this option is specified. To build all languages, use <inline>CONFIG+=lang-all</inline>.</paragraph>
+               </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>lipi-toolkit</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>handwriting</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Enables the handwriting input method using Lipi Toolkit.</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Handwriting recognition is based on the open source Lipi Toolkit.</paragraph>
+               </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>t9write</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>
+                     <i>handwriting</i>
+                  </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Enables the handwriting input method using T9 Write.</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Handwriting recognition is based on the commercial T9 Write product from Nuance Communications.</paragraph>
+               </colonne>
             </ligne>
          </tableau>
       </section>
-      <section id="5">
+      <section id="V">
          <title>Building Documentation</title>
+         <signet id="building-documentation"/>
          <tableau width="80%" border="1" sautDePagePdf="0">
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                  <i>make docs</i>
+               </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Generates documentation</paragraph>
+               </colonne>
             </ligne>
          </tableau>
       </section>
-      <section id="6">
+      <section id="VI">
          <title>Hunspell Integration</title>
+         <signet id="hunspell-integration"/>
          <paragraph>By default, <i>HunspellInputMethod</i> will not be available unless the Hunspell library and development headers are found. For Linux/X11 targets, the Hunspell library can be provided by installing the libhunspell-dev package. Alternatively, the Hunspell sources can be extracted into the <i>src/virtualkeyboard/3rdparty/hunspell</i> directory. If Hunspell sources are used, then the dictionary files must also be copied into the <i>src/virtualkeyboard/3rdparty/hunspell/data</i> directory. Furthermore, if Hunspell sources are used, <i>hunspell.pro</i> will be used for all targets.</paragraph>
          <paragraph>An example of how the directory structure should look after copying in the Hunspell sources and dictionary files is listed below:</paragraph>
          <code langage="other">3rdparty
@@ -248,17 +547,20 @@
             ├── affentry.hxx
             (etc.)</code>
       </section>
-      <section id="7">
+      <section id="VII">
          <title>T9 Write Integration</title>
+         <signet id="t9-write-integration"/>
          <paragraph>T9 Write integration supports the T9 Write Alphabetic and T9 Write CJK engines. Both engines are integrated via T9WriteInputMethod. The input method can be initialized with either of the engines at runtime. The engine selection happens automatically based on input locale and input mode from the keyboard.</paragraph>
       </section>
-      <section id="8">
+      <section id="VIII">
          <title>T9 Write Compatibility</title>
+         <signet id="t9-write-compatibility"/>
          <paragraph>Qt Virtual Keyboard is compatible with T9 Write v7.5.0 onward.</paragraph>
          <paragraph>The latest tested version is v7.8.1.</paragraph>
       </section>
-      <section id="9">
+      <section id="IX">
          <title>T9 Write Build Preparations</title>
+         <signet id="t9-write-build-preparations"/>
          <paragraph>The contents of the SDK must be either manually copied to the directory structure described below, or by using the <i>unpack.py</i> script found in the t9write directory.</paragraph>
          <paragraph>To unpack the SDK using the script:</paragraph>
          <code langage="other">$ cd src/virtualkeyboard/3rdparty/t9write/
@@ -314,54 +616,113 @@ $ python unpack.py T9Write_Alpha_v7-8-0_SDK.zip .</code>
                 │   └─── *.lib / *.obj
                 └─── cjk
                     └─── *.lib / *.obj</code>
-         <rich-imgtext type="info"/>
+         <rich-imgtext type="info">
+            <paragraph> The above files are from the T9 Write demo SDK for Windows; the contents may vary for other platforms.</paragraph>
+         </rich-imgtext>
          <paragraph>Where the contents of each directory are:</paragraph>
          <tableau width="80%" border="1" sautDePagePdf="0">
             <entete>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>Directory</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Description</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Remarks</paragraph>
+               </colonne>
             </entete>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                  <i>api</i>
+               </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>This directory should contain all of the API files</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>The API files usually located in the "api" and "public" directories of the SDK, but sometimes in the "demo" directory.</paragraph>
+                  <paragraph>When using both Alphabetic and CJK engines at the same time, any overlapping files can be copied from either SDK.</paragraph>
+               </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
                <colonne useText="0">
-                  <liste sautDePagePdf="0">
-                     <element useText="0"/>
+                  <paragraph>
+                  <i>data</i>
+               </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>This directory should contain all HWR databases and optionally XT9 databases.</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>HWR database for the T9 Write Alphabetic:</paragraph>
+                  <liste>
+                     <element useText="0">
+                        <paragraph>
+                        <i>_databas_le.bin</i>
+                     </paragraph>
+                     </element>
                   </liste>
-                  <liste sautDePagePdf="0">
-                     <element useText="0"/>
-                     <element useText="0"/>
-                     <element useText="0"/>
-                     <element useText="0"/>
-                     <element useText="0"/>
+                  <paragraph>HWR database for the T9 Write CJK:</paragraph>
+                  <liste>
+                     <element useText="0">
+                        <paragraph>
+                        <i>cjk_HK_std_le.hdb</i> HongKong Chinese</paragraph>
+                     </element>
+                     <element useText="0">
+                        <paragraph>
+                        <i>cjk_J_std_le.hdb</i> Japanese</paragraph>
+                     </element>
+                     <element useText="0">
+                        <paragraph>
+                        <i>cjk_K_mkt_le.hdb</i> Korean</paragraph>
+                     </element>
+                     <element useText="0">
+                        <paragraph>
+                        <i>cjk_S_gb18030_le.hdb</i> Simplified Chinese</paragraph>
+                     </element>
+                     <element useText="0">
+                        <paragraph>
+                        <i>cjk_T_std_le.hdb</i> Traditional Chinese</paragraph>
+                     </element>
                   </liste>
-                  <liste sautDePagePdf="0">
-                     <element useText="0"/>
+                  <paragraph>Language database:</paragraph>
+                  <liste>
+                     <element useText="0">
+                        <paragraph>File extension is either <i>.ldb</i> or <i>.phd</i>
+                     </paragraph>
+                     </element>
                   </liste>
                </colonne>
             </ligne>
             <ligne>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
-               <colonne useText="0"/>
+               <colonne useText="0">
+                  <paragraph>
+                  <i>lib/&lt;target&gt;/&lt;linkage&gt;/&lt;engine-variant&gt;</i>
+               </paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>Directory structure holding supported target builds.</paragraph>
+               </colonne>
+               <colonne useText="0">
+                  <paragraph>These directories should hold the desired target libraries. If both shared and static libraries are found, shared libraries are preferred.</paragraph>
+                  <paragraph>For example, to enable a static win32 build, copy <i>t9write_alphabetic_rel.obj</i> to <i>lib/win32/static/alphabetic</i> directory.</paragraph>
+               </colonne>
             </ligne>
          </tableau>
          <paragraph>Finally, the SDK is included in the build by adding CONFIG+=t9write to the qmake command line.</paragraph>
       </section>
-      <section id="10">
+      <section id="X">
          <title>Static builds</title>
+         <signet id="static-builds"/>
          <paragraph>The virtual keyboard can be built and linked statically against the application. This implies that Qt is also built statically (using the -static option in the configure command line).</paragraph>
          <paragraph>Static builds of the virtual keyboard are enabled by adding <inline>CONFIG+=static</inline> to the qmake command line and then rebuilding.</paragraph>
          <paragraph>Some third party modules used by the virtual keyboard are always built as shared libraries. These modules are Hunspell and Lipi Toolkit.</paragraph>
       </section>
-      <section id="11">
+      <section id="XI">
          <title>Using the static plugin</title>
+         <signet id="using-the-static-plugin"/>
          <paragraph>The following section should be added to the application project file that uses the statically built virtual keyboard.</paragraph>
          <code langage="other">static {
     QTPLUGIN += qtvirtualkeyboardplugin
@@ -371,15 +732,18 @@ $ python unpack.py T9Write_Alpha_v7-8-0_SDK.zip .</code>
             <inline>QTPLUGIN</inline> causes qmake to pull linker dependencies for the virtual keyboard plugin. The SVG module is required as an extra dependency for Qt, since the SVG format is required by the default styles.</paragraph>
          <paragraph>From here on, using a statically built virtual keyboard is no different from the normal case.</paragraph>
       </section>
-      <section id="12">
+      <section id="XII">
          <title>Deployment</title>
+      <signet id="deployment"/>
       </section>
-      <section id="13">
+      <section id="XIII">
          <title>Desktop Targets</title>
+         <signet id="desktop-targets"/>
          <paragraph>Add a Deploy Step that executes the <i>make install</i> command, then deploy using the <i>Deploy All</i> command.</paragraph>
       </section>
-      <section id="14">
+      <section id="XIV">
          <title>Boot2Qt Targets</title>
+         <signet id="boot2qt-targets"/>
          <paragraph>The installation is done by copying the necessary files to the memory card, or by using the adb push command.</paragraph>
       </section>
    </summary>
