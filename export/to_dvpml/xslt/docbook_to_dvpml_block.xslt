@@ -198,7 +198,9 @@
   </xsl:template>
 
   <xsl:template mode="content" match="db:blockquote">
-    <!-- Dirty hack, I know. -->
+    <!-- Dirty hack, I know, but <citation> doesn't have a content model that -->
+    <!-- fits DocBook (modelled as a single paragraph, not many things -->
+    <!-- allowed inside). -->
     <tableau width="95%" border="3">
       <ligne>
         <colonne useText="0">
