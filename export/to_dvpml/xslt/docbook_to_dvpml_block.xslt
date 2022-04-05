@@ -218,7 +218,7 @@
 
   <xsl:template mode="content" match="db:programlisting[not(@role = 'raw-html')] | db:screen">
     <code langage="{if (@language) then @language else 'other'}">
-      <xsl:apply-templates mode="content_para"/>
+      <xsl:apply-templates mode="content_para" xml:space="preserve"/>
     </code>
   </xsl:template>
 
