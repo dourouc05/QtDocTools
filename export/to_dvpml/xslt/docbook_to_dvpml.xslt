@@ -281,9 +281,8 @@
             <xsl:variable name="partIndex" as="xs:integer" select="position()"/>
 
             <section id="TOC.{$partIndex}" noNumber="1">
-              <!-- TODO: see TODO for document-toc -->
               <title>
-                <xsl:value-of select="(db:title | db:info/db:title)/text()"/>
+                <xsl:apply-templates select="db:title | db:info" mode="content_para_no_formatting"/>
               </title>
 
               <!-- TODO: generate the URL based on the configuration instead of bullshit. -->
@@ -291,8 +290,7 @@
                 <link href="http://bullshit#{position()}">
                   <xsl:value-of select="$partIndex"/>
                   <xsl:text>. </xsl:text>
-                  <!-- TODO: see TODO for document-toc -->
-                  <xsl:value-of select="(db:title | db:info/db:title)/text()"/>
+                  <xsl:apply-templates select="db:title | db:info" mode="content_para_no_formatting"/>
                 </link>
               </paragraph>
 
