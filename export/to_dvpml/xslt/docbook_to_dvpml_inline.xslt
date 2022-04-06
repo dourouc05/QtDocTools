@@ -84,7 +84,7 @@
     match="db:link[not(starts-with(@role, 'lien-forum')) and not(@linkend)]">
     <xsl:variable name="translatedLink" as="xs:string">
       <xsl:choose>
-        <xsl:when test="ends-with(string(@xlink:href), '.webxml')">
+        <xsl:when test="$doc-qt and ends-with(string(@xlink:href), '.webxml')">
           <xsl:variable name="filename" select="substring-before(string(@xlink:href), '.webxml')"/>
           <xsl:value-of
             select="concat('https://qt.developpez.com/doc/', lower-case(//db:info/db:productname), '/', //db:info/db:productnumber, '/', $filename)"

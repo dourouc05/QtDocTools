@@ -402,9 +402,7 @@
     </document>
   </xsl:template>
   
-  <xsl:template
-    match="db:preface"
-    mode="document-toc">
+  <xsl:template match="db:preface" mode="document-toc">
     <!-- No numbering for preface. -->
     <!-- TODO: generate the URL based on the configuration. -->
     <element useText="0">
