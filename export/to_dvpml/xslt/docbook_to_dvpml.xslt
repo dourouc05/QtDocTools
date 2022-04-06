@@ -58,6 +58,12 @@
   <xsl:include href="docbook_to_dvpml_inline.xslt"/>
   <xsl:include href="docbook_to_dvpml_inlinenoformatting.xslt"/>
   <xsl:include href="docbook_to_dvpml_biblio.xslt"/>
+  
+  <!-- Type of document, mostly to generate links. -->
+  <xsl:variable name="is-article" as="xs:boolean" select="boolean($document[self::db:article])"/>
+  <xsl:variable name="is-book" as="xs:boolean" select="boolean($document[self::db:book])"/>
+  <xsl:variable name="is-monopart-book" as="xs:boolean" select="$is-book and not($document/*[self::db:part])"/>
+  <xsl:variable name="is-multipart-book" as="xs:boolean" select="$is-book and boolean($document/*[self::db:part])"/>
 
   <xsl:template name="tc:check-valid-document-file-name">
     <xsl:if test="string-length($document-file-name) = 0">
@@ -74,6 +80,10 @@
   </xsl:template>
 
   <xsl:template match="db:article">
+    <xsl:if test="$is-article">
+      <xsl:message>ERROR: Document must be an article.</xsl:message>
+    </xsl:if>
+    
     <xsl:call-template name="tc:check-valid-document-file-name"/>
     <xsl:result-document validation="lax" href="{$document-file-name}_dvp.xml">
       <document>
@@ -139,6 +149,10 @@
   </xsl:template>
 
   <xsl:template match="db:book">
+    <xsl:if test="$is-book">
+      <xsl:message>ERROR: Document must be a book.</xsl:message>
+    </xsl:if>
+    
     <xsl:call-template name="tc:check-valid-document-file-name"/>
     <xsl:if test="$doc-qt">
       <xsl:message terminate="yes">Qt documentation is not supposed to contain books.</xsl:message>
@@ -147,6 +161,10 @@
     <xsl:choose>
       <!-- When there are parts, generate one article per part (the first chapters, not within any part, will be output in the first file, with the table of contents). -->
       <xsl:when test="db:part">
+        <xsl:if test="$is-multipart-book">
+          <xsl:message>ERROR: Document must be a book with at least one part.</xsl:message>
+        </xsl:if>
+        
         <!-- Main document: table of contents and first few chapters (outside parts). -->
         <xsl:result-document validation="lax" href="{$document-file-name}_dvp.xml">
           <xsl:apply-templates mode="book-with-parts" select="."/>
@@ -157,6 +175,7 @@
           <xsl:result-document validation="lax"
             href="{$document-file-name}_dvp_part_{position() + 1}_dvp.xml">
             <xsl:apply-templates mode="part-root" select=".">
+              <!-- Add the bibliography to the last part. -->
               <xsl:with-param name="bibliography" select="following-sibling::*[self::db:bibliography]"/>
             </xsl:apply-templates>
           </xsl:result-document>
@@ -164,6 +183,10 @@
       </xsl:when>
       <!-- When there are only chapters, use the default mechanisms. -->
       <xsl:otherwise>
+        <xsl:if test="$is-monopart-book">
+          <xsl:message>ERROR: Document must be a book without parts.</xsl:message>
+        </xsl:if>
+        
         <xsl:result-document validation="lax" href="{$document-file-name}_dvp.xml">
           <xsl:apply-templates mode="book-without-parts" select="."/>
         </xsl:result-document>
