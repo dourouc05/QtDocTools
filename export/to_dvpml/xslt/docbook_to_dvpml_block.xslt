@@ -99,7 +99,7 @@
     </xsl:variable>
     
     <xsl:if test="@xml:id">
-      <renvoi id="{@xml:id}"/>
+      <signet id="{@xml:id}"/>
     </xsl:if>
     
     <tableau width="{tc:table-width(., '80%')}" border="{tc:table-border(., 1)}" sautDePagePdf="0">
