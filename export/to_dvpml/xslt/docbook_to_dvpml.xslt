@@ -156,7 +156,9 @@
         <xsl:for-each select="db:part">
           <xsl:result-document validation="lax"
             href="{$document-file-name}_dvp_part_{position() + 1}_dvp.xml">
-            <xsl:apply-templates mode="part-root" select="."/>
+            <xsl:apply-templates mode="part-root" select=".">
+              <xsl:with-param name="bibliography" select="following-sibling::*[self::db:bibliography]"/>
+            </xsl:apply-templates>
           </xsl:result-document>
         </xsl:for-each>
       </xsl:when>
@@ -324,6 +326,8 @@
   </xsl:template>
 
   <xsl:template match="db:part" mode="part-root">
+    <xsl:param name="bibliography" as="element(db:bibliography)?"/>
+    
     <document>
       <xsl:call-template name="tc:document-entete"/>
       <xsl:call-template name="tc:document-license"/>
@@ -367,6 +371,10 @@
 
       <summary>
         <xsl:apply-templates mode="content" select="./*[not(self::db:title)]"/>
+        
+        <xsl:if test="$bibliography">
+          <xsl:apply-templates select="$bibliography"/>
+        </xsl:if>
       </summary>
     </document>
   </xsl:template>

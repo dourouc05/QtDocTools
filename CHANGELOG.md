@@ -50,10 +50,10 @@ Importing Qt documentation:
 Exporting to DvpML: 
 
 * More precise warning messages for unsupported tags.
-* Implement figures.
+* Implement figures, bibliographies, and list of references.
 * Keywords are taken from the keywordset of the document.
 * License information is taken from the article configuration. 
-* Implement list of references. 
+* Books with parts are split into multiple DvpML documents (one per part).
 
 Many code-quality improvements.
 
