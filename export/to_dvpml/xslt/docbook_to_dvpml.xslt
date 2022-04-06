@@ -175,6 +175,7 @@
           <xsl:result-document validation="lax"
             href="{$document-file-name}_dvp_part_{position() + 1}_dvp.xml">
             <xsl:apply-templates mode="part-root" select=".">
+              <xsl:with-param name="part-number" select="position()"/>
               <!-- Add the bibliography to the last part. -->
               <xsl:with-param name="bibliography" select="following-sibling::*[self::db:bibliography]"/>
             </xsl:apply-templates>
@@ -348,9 +349,12 @@
 
   <xsl:template match="db:part" mode="part-root">
     <xsl:param name="bibliography" as="element(db:bibliography)?"/>
+    <xsl:param name="part-number" as="xs:integer"/>
     
     <document>
-      <xsl:call-template name="tc:document-entete"/>
+      <xsl:call-template name="tc:document-entete">
+        <xsl:with-param name="part-number" select="$part-number"/>
+      </xsl:call-template>
       <xsl:call-template name="tc:document-license"/>
       <xsl:call-template name="tc:document-authors"/>
       <xsl:call-template name="tc:document-related"/>
@@ -466,6 +470,7 @@
 
   <xsl:template name="tc:document-entete">
     <xsl:param name="generate-summary" as="xs:boolean" select="true()"/>
+    <xsl:param name="part-number" as="xs:integer?"/>
     
     <xsl:if
       test="string-length($license-author) > 0 or $license-number > 0 or $license-year > 0">
@@ -541,14 +546,41 @@
           <urlhttp>https://qt.developpez.com/doc/<xsl:value-of select="$url"/></urlhttp>
         </xsl:when>
         <xsl:when test="string-length($ftp-user) > 0 and string-length($ftp-folder) > 0">
+          <xsl:variable name="url-suffix" as="xs:string">
+            <xsl:choose>
+              <xsl:when test="$part-number">
+                <xsl:variable name="part" as="element(db:part)" select="$document//db:part[$part-number]"/>
+                <xsl:variable name="part-title" as="xs:string">
+                  <xsl:apply-templates mode="content_para_no_formatting" select="$part/db:title | $part/db:info/db:title"/>
+                </xsl:variable>
+                <xsl:value-of select="concat($part-number, '-', translate(lower-case($part-title), ' ', '-'))"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:value-of select="''"/>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:variable>
+          
           <serveur>
             <xsl:value-of select="$ftp-user"/>
           </serveur>
           <chemin>
             <xsl:value-of select="$ftp-folder"/>
+            <xsl:if test="$url-suffix">
+              <xsl:text>/</xsl:text>
+              <xsl:value-of select="$url-suffix"/>
+            </xsl:if>
           </chemin>
-          <urlhttp>https://<xsl:value-of select="$ftp-user"/>.developpez.com/<xsl:value-of
-              select="$ftp-folder"/></urlhttp>
+          <urlhttp>
+            <xsl:text>https://</xsl:text>
+            <xsl:value-of select="$ftp-user"/>
+            <xsl:text>.developpez.com/</xsl:text>
+            <xsl:value-of select="$ftp-folder"/>
+            <xsl:if test="$url-suffix">
+              <xsl:text>/</xsl:text>
+              <xsl:value-of select="$url-suffix"/>
+            </xsl:if>
+          </urlhttp>
         </xsl:when>
         <xsl:otherwise>
           <xsl:message>WARNING: FTP information missing.</xsl:message>
