@@ -209,7 +209,7 @@
 
       <summary>
         <xsl:apply-templates mode="content"
-          select="./*[self::db:chapter or self::db:section or self::db:sect1]"/>
+          select="./*[self::db:preface or self::db:chapter or self::db:section or self::db:sect1]"/>
 
         <xsl:if test="db:bibliography">
           <xsl:apply-templates select="db:bibliography"/>
@@ -241,8 +241,11 @@
         <section id="TOC" noNumber="1">
           <title>Table des matières</title>
 
-          <xsl:if test="./db:chapter">
+          <xsl:if test="db:preface | db:chapter">
             <liste>
+              <xsl:for-each select="db:preface">
+                <xsl:apply-templates mode="document-toc" select="."/>
+              </xsl:for-each>
               <xsl:for-each select="db:chapter">
                 <xsl:apply-templates mode="document-toc" select="."/>
               </xsl:for-each>
@@ -290,6 +293,17 @@
         </section>
 
         <!-- Generate the chapters outside parts on this first page. -->
+        <xsl:for-each select="db:preface">
+          <section id="{generate-id()}" noNumber="1">
+            <!-- Do manually the title and the first few paragraphs. They -->
+            <!-- would otherwise be considered as synopsis (the title must be -->
+            <!-- put before the paragraphs, hence the special treatment). -->
+            <xsl:apply-templates mode="content" select="db:title | db:info"/>
+            <xsl:apply-templates mode="content"
+              select="./*[not(self::db:title) and not(self::db:info)]"/>
+          </section>
+        </xsl:for-each>
+        
         <xsl:for-each select="db:chapter">
           <xsl:variable name="sectionIndex" as="xs:string">
             <xsl:number format="I"/>
@@ -303,6 +317,8 @@
               select="./*[not(self::db:title) and not(self::db:info)]"/>
           </section>
         </xsl:for-each>
+        
+        <!-- If bibliography, put it on its own page, after the various parts. -->
       </summary>
     </document>
   </xsl:template>
@@ -349,6 +365,28 @@
         <xsl:apply-templates mode="content" select="./*"/>
       </summary>
     </document>
+  </xsl:template>
+  
+  <xsl:template
+    match="db:preface"
+    mode="document-toc">
+    <!-- No numbering for preface. -->
+    <!-- TODO: generate the URL based on the configuration. -->
+    <element useText="0">
+      <paragraph>
+        <link href="http://bullshit#{generate-id()}">
+          <xsl:value-of select="(db:title | db:info/db:title)/text()"/>
+        </link>
+      </paragraph>
+      
+      <xsl:if test="./db:section">
+        <liste>
+          <xsl:for-each select="./db:section">
+            <xsl:apply-templates select="." mode="document-toc"/>
+          </xsl:for-each>
+        </liste>
+      </xsl:if>
+    </element>
   </xsl:template>
 
   <xsl:template
