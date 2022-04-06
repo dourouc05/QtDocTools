@@ -360,6 +360,10 @@
         
         <xsl:call-template name="tc:document-abstract-forum-link"/>
       </synopsis>
+      
+      <soustitre>
+        <xsl:value-of select="db:title"/>
+      </soustitre>
 
       <summary>
         <xsl:apply-templates mode="content" select="./*[not(self::db:title)]"/>
