@@ -538,7 +538,7 @@
             />
           </xsl:variable>
           <chemin>/doc/<xsl:value-of select="$url"/></chemin>
-          <urlhttp>http://qt.developpez.com/doc/<xsl:value-of select="$url"/></urlhttp>
+          <urlhttp>https://qt.developpez.com/doc/<xsl:value-of select="$url"/></urlhttp>
         </xsl:when>
         <xsl:when test="string-length($ftp-user) > 0 and string-length($ftp-folder) > 0">
           <serveur>
