@@ -18,18 +18,18 @@
   <!-- Load the configuration file. -->
   <xsl:variable name="document" select="."/>
   <xsl:variable name="jsonDocument">
-    <xsl:variable name="xmlUri" as="xs:string" select="base-uri()"/>
-    <xsl:variable name="jsonUriBase" as="xs:string" select="replace($xmlUri, '.xml', '.json')"/>
-    <xsl:variable name="jsonUriSuffix" as="xs:string" select="concat($xmlUri, '.json')"/>
+    <xsl:variable name="xml-uri" as="xs:string" select="base-uri()"/>
+    <xsl:variable name="json-uri-base" as="xs:string" select="replace($xml-uri, '.xml', '.json')"/>
+    <xsl:variable name="json-uri-suffix" as="xs:string" select="concat($xml-uri, '.json')"/>
     <xsl:choose>
       <xsl:when test="$configuration-file-name and tc:file-exists($configuration-file-name)">
         <xsl:value-of select="json-doc($configuration-file-name)"/>
       </xsl:when>
-      <xsl:when test="tc:file-exists($jsonUriBase)">
-        <xsl:value-of select="json-doc($jsonUriBase)"/>
+      <xsl:when test="tc:file-exists($json-uri-base)">
+        <xsl:value-of select="json-doc($json-uri-base)"/>
       </xsl:when>
-      <xsl:when test="tc:file-exists($jsonUriSuffix)">
-        <xsl:value-of select="json-doc($jsonUriSuffix)"/>
+      <xsl:when test="tc:file-exists($json-uri-suffix)">
+        <xsl:value-of select="json-doc($json-uri-suffix)"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="json-doc('{}')"/>
