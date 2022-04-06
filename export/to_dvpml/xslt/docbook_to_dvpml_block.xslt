@@ -7,7 +7,7 @@
   <xsl:template mode="content" match="db:info">
     <xsl:apply-templates mode="content"/>
   </xsl:template>
-
+  
   <xsl:template mode="content"
     match="db:section | db:sect1 | db:sect2 | db:sect3 | db:sect4 | db:sect5 | db:sect6 | db:chapter">
     <xsl:variable name="sectionId">
@@ -15,7 +15,7 @@
         count="db:section | db:sect1 | db:sect2 | db:sect3 | db:sect4 | db:sect5 | db:sect6 | db:chapter"
         format="I.1"/>
     </xsl:variable>
-
+    
     <section id="{$sectionId}">
       <xsl:choose>
         <xsl:when test="@xml:id">
@@ -24,7 +24,7 @@
           <xsl:apply-templates mode="content" select="db:info"/>
           <xsl:apply-templates mode="content" select="db:title"/>
           <signet id="{@xml:id}"/>
-
+          
           <xsl:apply-templates mode="content"
             select="./*[not(self::db:title) and not(self::db:info)]"/>
         </xsl:when>
@@ -34,12 +34,12 @@
       </xsl:choose>
     </section>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:title">
     <title>
       <xsl:apply-templates mode="content_para_no_formatting"/>
     </title>
-
+    
     <!-- Index elements are only allowed within the text. -->
     <xsl:if test="db:indexterm">
       <paragraph>
@@ -47,7 +47,7 @@
       </paragraph>
     </xsl:if>
   </xsl:template>
-
+  
   <xsl:function name="tc:table-width">
     <xsl:param name="table"/><!-- as="element(db:table | db:informaltable)" -->
     <xsl:param name="default-width"/>
@@ -68,7 +68,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
-
+  
   <xsl:function name="tc:table-border">
     <xsl:param name="table"/><!-- as="element(db:table | db:informaltable)" -->
     <xsl:param name="default-border"/>
@@ -82,7 +82,7 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
-
+  
   <xsl:template mode="content" match="db:informaltable | db:table">
     <xsl:variable name="caption" as="xs:string?">
       <xsl:choose>
@@ -106,7 +106,7 @@
       <xsl:if test="$caption">
         <xsl:attribute name="legende" select="$caption"/>
       </xsl:if>
-
+      
       <xsl:apply-templates mode="content"
         select="child::node()[not(self::db:title) and not(self::db:info) and not(self::db:caption)]"/>
     </tableau>
@@ -115,17 +115,17 @@
   <xsl:template mode="content" match="db:tfoot">
     <xsl:message>WARNING: Table footers are not supported in the destination format.</xsl:message>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:thead | db:tbody | db:tgroup">
     <xsl:apply-templates mode="content"/>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:tr | db:row">
     <xsl:element name="{if (ancestor::db:thead or db:th) then 'entete' else 'ligne'}">
       <xsl:apply-templates mode="content"/>
     </xsl:element>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:th | db:td | db:entry">
     <colonne useText="0">
       <xsl:choose>
@@ -141,7 +141,7 @@
       </xsl:choose>
     </colonne>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:figure | db:informalfigure | db:mediaobject | db:inlinemediaobject">
     <xsl:if test="count(db:mediaobject) &gt; 1">
       <xsl:message>WARNING: Multiple mediaobject: only the first one is considered.</xsl:message>
@@ -160,10 +160,10 @@
   
   <xsl:template match="*[preceding-sibling::*[1][self::db:mediaobject]]" mode="content"
     priority="-1"> </xsl:template>
-
+  
   <xsl:template mode="content"
     match="db:constructorsynopsis | db:destructorsynopsis | db:enumsynopsis | db:typedefsynopsis | db:fieldsynopsis | db:methodsynopsis | db:classsynopsis | db:fieldsynopsis | db:namespacesynopsis"/>
-
+  
   <xsl:template mode="content" match="db:para">
     <!-- The synopsis is done in <db:article>. -->
     <xsl:if
@@ -174,12 +174,12 @@
           <xsl:variable name="children" select="child::node()" as="node()*"/>
           <xsl:variable name="firstTagOutsideParagraph" as="xs:integer">
             <xsl:variable name="isNotPara" select="
-                for $i in 1 to count($children)
-                return
-                  boolean($children[$i][self::db:informaltable | self::db:note | self::db:programlisting | self::db:screen]) or name($children[$i]) = 'db:informaltable' or name($children[$i]) = 'db:note' or name($children[$i]) = 'db:programlisting' or name($children[$i]) = 'db:screen'"/>
+              for $i in 1 to count($children)
+              return
+              boolean($children[$i][self::db:informaltable | self::db:note | self::db:programlisting | self::db:screen]) or name($children[$i]) = 'db:informaltable' or name($children[$i]) = 'db:note' or name($children[$i]) = 'db:programlisting' or name($children[$i]) = 'db:screen'"/>
             <xsl:value-of select="index-of($isNotPara, true())"/>
           </xsl:variable>
-
+          
           <paragraph>
             <xsl:apply-templates mode="content_para"
               select="node()[position() &lt; $firstTagOutsideParagraph]"/>
@@ -196,7 +196,7 @@
       </xsl:choose>
     </xsl:if>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:blockquote">
     <!-- Dirty hack, I know, but <citation> doesn't have a content model that -->
     <!-- fits DocBook (modelled as a single paragraph, not many things -->
@@ -209,19 +209,19 @@
       </ligne>
     </tableau>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:programlisting[@role = 'raw-html']">
     <html-brut>
       <xsl:apply-templates mode="content_para" xml:space="preserve"/>
     </html-brut>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:programlisting[not(@role = 'raw-html')] | db:screen">
     <code langage="{if (@language) then @language else 'other'}">
       <xsl:apply-templates mode="content_para" xml:space="preserve"/>
     </code>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:itemizedlist">
     <liste>
       <xsl:if test="db:title">
@@ -231,7 +231,7 @@
       <xsl:apply-templates mode="content" select="db:listitem"/>
     </liste>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:orderedlist">
     <liste type="1">
       <xsl:if test="db:title">
@@ -241,7 +241,7 @@
       <xsl:apply-templates mode="content" select="db:listitem"/>
     </liste>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:simplelist">
     <xsl:message>WARNING: the current simplelist encoding implies losses in the target format,
       i.e. round tripping will not be exact.</xsl:message>
@@ -267,13 +267,13 @@
       </xsl:for-each>
     </paragraph>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:listitem">
     <element useText="0">
       <xsl:apply-templates mode="content"/>
     </element>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:variablelist">
     <xsl:message>WARNING: the current variablelist encoding implies losses in the target format,
       i.e. round tripping will not be exact.</xsl:message>
@@ -286,69 +286,57 @@
       <xsl:apply-templates mode="content" select="db:varlistentry"/>
     </liste>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:varlistentry">
-    <xsl:choose>
-      <xsl:when test="count(db:listitem/node()[not(self::text())]) > 1">
-        <!-- Complex case: several paragraphs in the listitem. Output several paragraphs. -->
-        <element useText="0">
-          <paragraph>
-            <xsl:for-each select="db:term">
-              <b>
-                <xsl:apply-templates mode="content_para" select="."/>
-              </b>
-              <xsl:if test="position() != last()">
-                <xsl:text>, </xsl:text>
-              </xsl:if>
-            </xsl:for-each>
-            <xsl:text>&#0160;: </xsl:text>
-          </paragraph>
-
-          <xsl:apply-templates mode="content" select="db:listitem/*"/>
-        </element>
-      </xsl:when>
-      <xsl:otherwise>
-        <!-- Simple case: only one paragraph in the listitem. -->
-        <element>
-          <xsl:for-each select="db:term">
-            <b>
-              <xsl:apply-templates mode="content_para" select="."/>
-            </b>
-            <xsl:if test="position() != last()">
-              <xsl:text>, </xsl:text>
-            </xsl:if>
-          </xsl:for-each>
-          <xsl:text>&#0160;: </xsl:text>
+    <element useText="0">
+      <paragraph>
+        <xsl:for-each select="db:term">
+          <b>
+            <xsl:apply-templates mode="content_para" select="."/>
+          </b>
+          <xsl:if test="position() != last()">
+            <xsl:text>, </xsl:text>
+          </xsl:if>
+        </xsl:for-each>
+        <xsl:text>&#0160;: </xsl:text>
+        
+        <!-- Simple case: only one paragraph in the listitem, reuse the same paragraph. -->
+        <xsl:if test="count(db:listitem/node()[not(self::text())]) = 1">
           <xsl:apply-templates mode="content_para" select="db:listitem/db:para"/>
-        </element>
-      </xsl:otherwise>
-    </xsl:choose>
+        </xsl:if>
+      </paragraph>
+      
+      <!-- Complex case: several paragraphs in the listitem. Output several paragraphs. -->
+      <xsl:if test="count(db:listitem/node()[not(self::text())]) > 1">
+        <xsl:apply-templates mode="content" select="db:listitem/*"/>
+      </xsl:if>
+    </element>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:note">
     <rich-imgtext type="info">
       <xsl:apply-templates mode="content"/>
     </rich-imgtext>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:tip">
     <rich-imgtext type="idea">
       <xsl:apply-templates mode="content"/>
     </rich-imgtext>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:warning">
     <rich-imgtext type="warning">
       <xsl:apply-templates mode="content"/>
     </rich-imgtext>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:caution">
     <rich-imgtext type="error">
       <xsl:apply-templates mode="content"/>
     </rich-imgtext>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:important">
     <xsl:message>WARNING: Tag <xsl:value-of select="name(.)"/> has no matching construct in the
       target format. Content is output as a caution.</xsl:message>
@@ -356,23 +344,23 @@
       <xsl:apply-templates mode="content"/>
     </rich-imgtext>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:equation | db:informalequation">
     <xsl:if test="not(db:alt[@role = 'tex' or @role = 'latex'])">
       <xsl:message terminate="yes">ERROR: informalequation with no TeX or LaTeX encoding. MathML is
         not supported.</xsl:message>
     </xsl:if>
-
+    
     <xsl:variable name="index" select="
-        if (@xml:id) then
-          @xml:id
-        else
-          generate-id()"/>
+      if (@xml:id) then
+      @xml:id
+      else
+      generate-id()"/>
     <latex id="{$index}">
       <xsl:value-of select="db:alt[@role = 'tex' or @role = 'latex']/text()"/>
     </latex>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:bridgehead">
     <!-- Due to poor formatting possibilities in the output format (like font size), just do the text in bold. -->
     <paragraph>
@@ -381,23 +369,23 @@
       </b>
     </paragraph>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:address">
     <!-- Due to poor formatting possibilities in the output format (like alignment), just do a plain paragraph. -->
     <paragraph>
       <xsl:apply-templates mode="content_para"/>
     </paragraph>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:anchor">
     <signet id="{@xml:id}"/>
   </xsl:template>
-
+  
   <xsl:template mode="content" match="db:formalgroup">
     <xsl:if test="@xml:id">
       <signet id="{@xml:id}"/>
     </xsl:if>
-
+    
     <!-- No formatting options in a formal group: put every float one under the other. -->
     <tableau width="80%" border="0" legende="{if (db:title) then db:title else db:info/db:title}">
       <xsl:for-each select="*[not(self::db:title) and not(self::db:info)]">
