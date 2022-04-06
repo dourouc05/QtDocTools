@@ -362,7 +362,7 @@
       </synopsis>
 
       <summary>
-        <xsl:apply-templates mode="content" select="./*"/>
+        <xsl:apply-templates mode="content" select="./*[not(self::db:title)]"/>
       </summary>
     </document>
   </xsl:template>
