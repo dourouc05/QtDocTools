@@ -924,7 +924,8 @@
   
   <xsl:function name="tc:file-exists">
     <xsl:param name="filename" as="xs:string"/>
-    <xsl:value-of select="doc-available($filename) != false()"/>
+    <!-- doc-available is limited to XML, unlike unparsed-text-available. -->
+    <xsl:value-of select="unparsed-text-available($filename) != false()"/>
     <!-- Only in Saxon EE: -->
     <!-- xmlns:xpath-file="http://expath.org/ns/file" -->
     <!-- xpath-file:exists(filename) -->
