@@ -264,6 +264,26 @@
         
         <xsl:call-template name="tc:document-abstract-forum-link"/>
       </synopsis>
+      
+      <multi-page>
+        <page id="page_toc">
+          <title>Table des matières</title>
+          <link href="TOC"/>
+        </page>
+        
+        <xsl:for-each select="db:preface | db:chapter">
+          <page id="page_{position()}">
+            <title>
+              <xsl:apply-templates mode="content_para_no_formatting" select="db:title | db:info/db:title"></xsl:apply-templates>
+            </title>
+            <link>
+              <xsl:attribute name="href">
+                <xsl:number value="position()" format="I"/>
+              </xsl:attribute>
+            </link>
+          </page>
+        </xsl:for-each>
+      </multi-page>
 
       <summary>
         <!-- Generate the table of contents: first, solo chapters; then, parts (as subsections, one subsection per part). -->
@@ -404,6 +424,28 @@
       <soustitre>
         <xsl:value-of select="db:title"/>
       </soustitre>
+      
+      <multi-page>
+        <xsl:for-each select="db:preface | db:chapter">
+          <page id="page_{position()}">
+            <title>
+              <xsl:apply-templates mode="content_para_no_formatting" select="db:title | db:info/db:title"></xsl:apply-templates>
+            </title>
+            <link>
+              <xsl:attribute name="href">
+                <xsl:number value="position()" format="I"/>
+              </xsl:attribute>
+            </link>
+          </page>
+        </xsl:for-each>
+        
+        <xsl:if test="$bibliography">
+          <page id="page_toc">
+            <title>Bibliographie</title>
+            <link href="bibliography"/>
+          </page>
+        </xsl:if>
+      </multi-page>
 
       <summary>
         <xsl:apply-templates mode="content" select="./*[not(self::db:title)]"/>
