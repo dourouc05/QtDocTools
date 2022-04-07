@@ -17,40 +17,40 @@
 
   <!-- Load the configuration file. -->
   <xsl:variable name="document" select="."/>
-  <xsl:variable name="jsonDocument">
+  <xsl:variable name="json-document-uri">
     <xsl:variable name="xml-uri" as="xs:string" select="base-uri()"/>
     <xsl:variable name="json-uri-base" as="xs:string" select="replace($xml-uri, '.xml', '.json')"/>
     <xsl:variable name="json-uri-suffix" as="xs:string" select="concat($xml-uri, '.json')"/>
     <xsl:choose>
       <xsl:when test="$configuration-file-name and tc:file-exists($configuration-file-name)">
-        <xsl:value-of select="json-doc($configuration-file-name)"/>
+        <xsl:value-of select="$configuration-file-name"/>
       </xsl:when>
       <xsl:when test="tc:file-exists($json-uri-base)">
-        <xsl:value-of select="json-doc($json-uri-base)"/>
+        <xsl:value-of select="$json-uri-base"/>
       </xsl:when>
       <xsl:when test="tc:file-exists($json-uri-suffix)">
-        <xsl:value-of select="json-doc($json-uri-suffix)"/>
+        <xsl:value-of select="$json-uri-suffix"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:value-of select="json-doc('{}')"/>
+        <xsl:value-of select="'{}'"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
+  <xsl:variable name="json-document" select="json-doc($json-document-uri)"/>
 
   <!-- Global sheet parameters with default values from the JSON file. -->
   <!-- TODO: think about storing these values within the XML file as processing instructions. -->
-  <xsl:param name="section" as="xs:integer" select="1"/>
-  <!-- select="if (xpath-map:contains($jsonDocument, 'section')) then xpath-map:get($jsonDocument, 'section') else 1" -->
-  <xsl:param name="license-number" as="xs:integer" select="-1"/>
-  <xsl:param name="license-year" as="xs:integer" select="-1"/>
-  <xsl:param name="license-author" as="xs:string" select="''"/>
-  <xsl:param name="license-text" as="xs:string" select="''"/>
-  <xsl:param name="forum-topic" as="xs:integer" select="-1"/>
-  <xsl:param name="forum-post" as="xs:integer" select="-1"/>
-  <xsl:param name="ftp-user" as="xs:string" select="''"/>
-  <xsl:param name="ftp-folder" as="xs:string" select="''"/>
-  <xsl:param name="google-analytics" as="xs:string" select="''"/>
-  <xsl:param name="related" as="xs:string" select="''"/>
+  <xsl:param name="section" as="xs:integer" select="if ($json-document?section) then xs:integer($json-document?section) else 1"/>
+  <xsl:param name="license-number" as="xs:integer" select="if ($json-document?license-number) then xs:integer($json-document?license-number) else -1"/>
+  <xsl:param name="license-year" as="xs:integer" select="if ($json-document?license-year) then xs:integer($json-document?license-year) else -1"/>
+  <xsl:param name="license-author" as="xs:string" select="if ($json-document?license-author) then $json-document?license-author else ''"/>
+  <xsl:param name="license-text" as="xs:string" select="if ($json-document?license-text) then $json-document?license-text else ''"/>
+  <xsl:param name="forum-topic" as="xs:integer" select="if ($json-document?forum-topic) then xs:integer($json-document?forum-topic) else -1"/>
+  <xsl:param name="forum-post" as="xs:integer" select="if ($json-document?forum-post) then xs:integer($json-document?forum-post) else -1"/>
+  <xsl:param name="ftp-user" as="xs:string" select="if ($json-document?ftp-user) then $json-document?ftp-user else ''"/>
+  <xsl:param name="ftp-folder" as="xs:string" select="if ($json-document?ftp-folder) then $json-document?ftp-folder else ''"/>
+  <xsl:param name="google-analytics" as="xs:string" select="if ($json-document?google-analytics) then $json-document?google-analytics else ''"/>
+  <xsl:param name="related" as="xs:string" select="if ($json-document?related) then $json-document?related else ''"/>
 
   <!-- Import other modules. -->
   <xsl:include href="docbook_to_dvpml_media.xslt"/>
