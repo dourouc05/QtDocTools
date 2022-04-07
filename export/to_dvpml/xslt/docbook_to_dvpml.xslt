@@ -283,23 +283,27 @@
                 <xsl:apply-templates mode="document-toc" select="."/>
               </xsl:for-each>
               <xsl:for-each select="db:chapter">
-                <xsl:apply-templates mode="document-toc" select="."/>
+                <xsl:variable name="chapter-index" as="xs:integer" select="position()"/>
+                <xsl:apply-templates mode="document-toc" select=".">
+                  <xsl:with-param name="chapter-index" select="$chapter-index"/>
+                </xsl:apply-templates>
               </xsl:for-each>
             </liste>
           </xsl:if>
 
           <xsl:for-each select="db:part">
-            <xsl:variable name="partIndex" as="xs:integer" select="position()"/>
+            <xsl:variable name="part-index" as="xs:integer" select="position()"/>
 
-            <section id="TOC.{$partIndex}" noNumber="1">
+            <section id="TOC.{$part-index}" noNumber="1">
               <title>
                 <xsl:apply-templates select="db:title | db:info" mode="content_para_no_formatting"/>
               </title>
 
               <!-- TODO: generate the URL based on the configuration instead of bullshit. -->
               <paragraph>
-                <link href="http://bullshit#{position()}">
-                  <xsl:value-of select="$partIndex"/>
+                <link href="{tc:generate-url-for-part($part-index)}">
+                  <xsl:text>Partie </xsl:text>
+                  <xsl:value-of select="$part-index"/>
                   <xsl:text>. </xsl:text>
                   <xsl:apply-templates select="db:title | db:info" mode="content_para_no_formatting"/>
                 </link>
@@ -307,7 +311,11 @@
 
               <liste>
                 <xsl:for-each select="db:chapter">
-                  <xsl:apply-templates mode="document-toc" select="."/>
+                  <xsl:variable name="chapter-index" as="xs:integer" select="position()"/>
+                  <xsl:apply-templates mode="document-toc" select=".">
+                    <xsl:with-param name="part-index" select="$part-index"/>
+                    <xsl:with-param name="chapter-index" select="$chapter-index"/>
+                  </xsl:apply-templates>
                 </xsl:for-each>
               </liste>
             </section>
@@ -318,7 +326,7 @@
               <title>Bibliographie</title>
               <!-- TODO: generate a true URL. -->
               <paragraph>
-                <link href="http://bullshit#bibliography">
+                <link href="{tc:generate-url-for-part(count($document//db:part))}#bibliography">
                   <xsl:text>Bibliographie</xsl:text>
                 </link>
               </paragraph>
@@ -416,18 +424,19 @@
   
   <xsl:template match="db:preface" mode="document-toc">
     <!-- No numbering for preface. -->
-    <!-- TODO: generate the URL based on the configuration. -->
     <element useText="0">
       <paragraph>
-        <link href="http://bullshit#{generate-id()}">
-          <xsl:value-of select="(db:title | db:info/db:title)/text()"/>
+        <link href="{$http-url}#L{generate-id()}">
+          <xsl:apply-templates mode="content_para_no_formatting" select="db:title | db:info/db:title"/>
         </link>
       </paragraph>
       
-      <xsl:if test="./db:section">
+      <xsl:if test="db:section">
         <liste>
-          <xsl:for-each select="./db:section">
-            <xsl:apply-templates select="." mode="document-toc"/>
+          <xsl:for-each select="db:section">
+            <xsl:apply-templates select="." mode="document-toc">
+              <xsl:with-param name="section-index" select="generate-id()"/>
+            </xsl:apply-templates>
           </xsl:for-each>
         </liste>
       </xsl:if>
@@ -437,24 +446,39 @@
   <xsl:template
     match="db:chapter | db:section | db:sect1 | db:sect2 | db:sect3 | db:sect4 | db:sect5 | db:sect6"
     mode="document-toc">
+    <!-- Parent indices are valid XML indices, not necessarily integers. -->
+    <!-- The major case is integers, but sections with no number displayed -->
+    <!-- may have funky indices (like "d9e21"). -->
+    <xsl:param name="part-index"/>
+    <xsl:param name="section-index"/>
+    
     <xsl:variable name="sectionId">
-      <xsl:number level="multiple" format="1"/>
+      <xsl:number level="multiple" format="I.1.1"/>
+    </xsl:variable>
+    
+    <xsl:variable name="base-url">
+      <xsl:choose>
+        <xsl:when test="$part-index">
+          <xsl:value-of select="tc:generate-url-for-part($part-index)"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:value-of select="$http-url"/>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:variable>
 
-    <!-- TODO: generate the URL based on the configuration. -->
     <element useText="0">
       <paragraph>
-        <link href="http://bullshit#{$sectionId}">
+        <link href="{$base-url}#L{$sectionId}">
           <xsl:value-of select="$sectionId"/>
           <xsl:text>. </xsl:text>
-          <!-- TODO: text() allows to only select the true title when there are indexterm, but not for formatting. Formatting should be kept intact, while some tags like indexterm should be eliminated -->
-          <xsl:value-of select="(db:title | db:info/db:title)/text()"/>
+          <xsl:apply-templates mode="content_para_no_formatting" select="db:title | db:info/db:title"/>
         </link>
       </paragraph>
 
-      <xsl:if test="./db:section">
+      <xsl:if test="db:section">
         <liste>
-          <xsl:for-each select="./db:section">
+          <xsl:for-each select="db:section">
             <xsl:apply-templates select="." mode="document-toc"/>
           </xsl:for-each>
         </liste>
@@ -546,11 +570,7 @@
           <xsl:variable name="url-suffix" as="xs:string">
             <xsl:choose>
               <xsl:when test="not($doc-qt) and $part-number">
-                <xsl:variable name="part" as="element(db:part)" select="$document//db:part[$part-number]"/>
-                <xsl:variable name="part-title" as="xs:string">
-                  <xsl:apply-templates mode="content_para_no_formatting" select="$part/db:title | $part/db:info/db:title"/>
-                </xsl:variable>
-                <xsl:value-of select="concat($part-number, '-', translate(lower-case($part-title), ' ', '-'))"/>
+                <xsl:value-of select="tc:generate-url-suffix-for-part($part-number)"/>
               </xsl:when>
               <xsl:otherwise>
                 <xsl:value-of select="''"/>
@@ -923,6 +943,22 @@
     <!-- Only in Saxon EE: -->
     <!-- xmlns:xpath-file="http://expath.org/ns/file" -->
     <!-- xpath-file:exists(filename) -->
+  </xsl:function>
+
+  <xsl:function name="tc:generate-url-suffix-for-part" as="xs:string">
+    <xsl:param name="part-number" as="xs:integer"></xsl:param>
+    
+    <xsl:variable name="part" as="element(db:part)" select="$document//db:part[$part-number]"/>
+    <xsl:variable name="part-title" as="xs:string">
+      <xsl:apply-templates mode="content_para_no_formatting" select="$part/db:title | $part/db:info/db:title"/>
+    </xsl:variable>
+    
+    <xsl:value-of select="concat($part-number, '-', translate(lower-case($part-title), ' ', '-'))"/>
+  </xsl:function>
+  
+  <xsl:function name="tc:generate-url-for-part" as="xs:string">
+    <xsl:param name="part-number" as="xs:integer"/>
+    <xsl:value-of select="concat($http-url, '/', tc:generate-url-suffix-for-part($part-number))"/>
   </xsl:function>
 
   <!-- Catch-all block for the remaining content that has not been handled with. -->
