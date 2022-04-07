@@ -9,12 +9,7 @@
   <xsl:output method="xml" indent="yes" suppress-indentation="inline link i b u paragraph code"/>
   <xsl:import-schema schema-location="../../../schemas/dvpml/article.xsd"
     use-when="system-property('xsl:is-schema-aware') = 'yes'"/>
-
-  <!-- Global sheet parameters without document-specific defaults (e.g., from a configuration file). -->
-  <xsl:param name="configuration-file-name" as="xs:string" select="''"/>
-  <xsl:param name="document-file-name" as="xs:string" select="''"/>
-  <xsl:param name="doc-qt" as="xs:boolean" select="false()"/>
-
+  
   <!-- Load the configuration file. -->
   <xsl:variable name="document" select="."/>
   <xsl:variable name="json-document-uri">
@@ -38,8 +33,22 @@
   </xsl:variable>
   <xsl:variable name="json-document" select="json-doc($json-document-uri)"/>
 
+  <!-- Global sheet parameters without document-specific defaults (e.g., from a configuration file). -->
+  <xsl:param name="configuration-file-name" as="xs:string" select="''"/>
+  <xsl:param name="document-file-name" as="xs:string" select="''"/>
+  <xsl:param name="doc-qt" as="xs:boolean" select="false()"/>
+  
+  <xsl:variable name="qt-url">
+    <xsl:variable name="document-qdt-name" select="tokenize(base-uri(), '/')[last()]"/>
+    <xsl:variable name="document-url" select="tokenize($document-qdt-name, '\.')[1]"/>
+    <xsl:value-of
+      select="concat(lower-case($document/db:article/db:info/db:productname), '/', $document/db:article/db:info/db:productnumber, '/', $document-url)"
+    />
+  </xsl:variable>
+
   <!-- Global sheet parameters with default values from the JSON file. -->
   <!-- TODO: think about storing these values within the XML file as processing instructions. -->
+  <!-- TODO: for Qt doc, to remove the special case, think of creating JSON docs too. -->
   <xsl:param name="section" as="xs:integer" select="if ($json-document?section) then xs:integer($json-document?section) else 1"/>
   <xsl:param name="license-number" as="xs:integer" select="if ($json-document?license-number) then xs:integer($json-document?license-number) else -1"/>
   <xsl:param name="license-year" as="xs:integer" select="if ($json-document?license-year) then xs:integer($json-document?license-year) else -1"/>
@@ -47,8 +56,9 @@
   <xsl:param name="license-text" as="xs:string" select="if ($json-document?license-text) then $json-document?license-text else ''"/>
   <xsl:param name="forum-topic" as="xs:integer" select="if ($json-document?forum-topic) then xs:integer($json-document?forum-topic) else -1"/>
   <xsl:param name="forum-post" as="xs:integer" select="if ($json-document?forum-post) then xs:integer($json-document?forum-post) else -1"/>
-  <xsl:param name="ftp-user" as="xs:string" select="if ($json-document?ftp-user) then $json-document?ftp-user else ''"/>
-  <xsl:param name="ftp-folder" as="xs:string" select="if ($json-document?ftp-folder) then $json-document?ftp-folder else ''"/>
+  <xsl:param name="ftp-user" as="xs:string" select="if ($json-document?ftp-user) then $json-document?ftp-user else if ($doc-qt) then 'Qt' else ''"/>
+  <xsl:param name="ftp-folder" as="xs:string" select="if ($json-document?ftp-folder) then $json-document?ftp-folder else if ($qt-url) then 'Qt' else ''"/>
+  <xsl:param name="http-url" as="xs:string" select="concat('https://', $ftp-user, '.developpez.com/', $ftp-folder)"/>
   <xsl:param name="google-analytics" as="xs:string" select="if ($json-document?google-analytics) then $json-document?google-analytics else ''"/>
   <xsl:param name="related" as="xs:string" select="if ($json-document?related) then $json-document?related else ''"/>
 
@@ -532,23 +542,10 @@
       </xsl:if>
 
       <xsl:choose>
-        <xsl:when test="$doc-qt">
-          <!-- TODO: generate all this in the configuration file? -->
-          <serveur>Qt</serveur>
-          <xsl:variable name="url">
-            <xsl:variable name="documentQdt" select="tokenize(base-uri(), '/')[last()]"/>
-            <xsl:variable name="document" select="tokenize($documentQdt, '\.')[1]"/>
-            <xsl:value-of
-              select="concat(lower-case(db:info/db:productname), '/', db:info/db:productnumber, '/', $document)"
-            />
-          </xsl:variable>
-          <chemin>/doc/<xsl:value-of select="$url"/></chemin>
-          <urlhttp>https://qt.developpez.com/doc/<xsl:value-of select="$url"/></urlhttp>
-        </xsl:when>
         <xsl:when test="string-length($ftp-user) > 0 and string-length($ftp-folder) > 0">
           <xsl:variable name="url-suffix" as="xs:string">
             <xsl:choose>
-              <xsl:when test="$part-number">
+              <xsl:when test="not($doc-qt) and $part-number">
                 <xsl:variable name="part" as="element(db:part)" select="$document//db:part[$part-number]"/>
                 <xsl:variable name="part-title" as="xs:string">
                   <xsl:apply-templates mode="content_para_no_formatting" select="$part/db:title | $part/db:info/db:title"/>
@@ -572,10 +569,7 @@
             </xsl:if>
           </chemin>
           <urlhttp>
-            <xsl:text>https://</xsl:text>
-            <xsl:value-of select="$ftp-user"/>
-            <xsl:text>.developpez.com/</xsl:text>
-            <xsl:value-of select="$ftp-folder"/>
+            <xsl:value-of select="$http-url"/>
             <xsl:if test="$url-suffix">
               <xsl:text>/</xsl:text>
               <xsl:value-of select="$url-suffix"/>
