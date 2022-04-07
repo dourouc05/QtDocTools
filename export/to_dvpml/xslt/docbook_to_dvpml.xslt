@@ -222,7 +222,7 @@
       </synopsis>
 
       <multi-page>
-        <xsl:for-each select="db:chapter">
+        <xsl:for-each select="db:preface | db:chapter">
           <page id="page_{position()}">
             <title>
               <xsl:apply-templates mode="content_para_no_formatting" select="db:title | db:info/db:title"></xsl:apply-templates>
@@ -238,7 +238,7 @@
 
       <summary>
         <xsl:apply-templates mode="content"
-          select="./*[self::db:preface or self::db:chapter or self::db:section or self::db:sect1]"/>
+          select="./*[self::db:preface or self::db:chapter]"/>
 
         <xsl:if test="db:bibliography">
           <xsl:apply-templates select="db:bibliography"/>
