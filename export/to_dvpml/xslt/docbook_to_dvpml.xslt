@@ -271,8 +271,17 @@
           <link href="TOC"/>
         </page>
         
-        <xsl:for-each select="db:preface | db:chapter">
-          <page id="page_{position()}">
+        <xsl:for-each select="db:preface">
+          <page id="page_P{position()}">
+            <title>
+              <xsl:apply-templates mode="content_para_no_formatting" select="db:title | db:info/db:title"></xsl:apply-templates>
+            </title>
+            <link href="{generate-id()}"/>
+          </page>
+        </xsl:for-each>
+        
+        <xsl:for-each select="db:chapter">
+          <page id="page_C{position()}">
             <title>
               <xsl:apply-templates mode="content_para_no_formatting" select="db:title | db:info/db:title"></xsl:apply-templates>
             </title>
@@ -293,12 +302,13 @@
           <xsl:if test="db:preface | db:chapter">
             <liste>
               <xsl:for-each select="db:preface">
-                <xsl:apply-templates mode="document-toc" select="."/>
+                <xsl:apply-templates mode="document-toc" select=".">
+                  <xsl:with-param name="chapter-index" select="generate-id()"/>
+                </xsl:apply-templates>
               </xsl:for-each>
               <xsl:for-each select="db:chapter">
-                <xsl:variable name="chapter-index" as="xs:integer" select="position()"/>
                 <xsl:apply-templates mode="document-toc" select=".">
-                  <xsl:with-param name="chapter-index" select="$chapter-index"/>
+                  <xsl:with-param name="chapter-index" select="position()"/>
                 </xsl:apply-templates>
               </xsl:for-each>
             </liste>
@@ -442,7 +452,7 @@
         <xsl:if test="$bibliography">
           <page id="page_toc">
             <title>Bibliographie</title>
-            <link href="bibliography"/>
+            <link href="BIBLIOGRAPHY"/>
           </page>
         </xsl:if>
       </multi-page>
