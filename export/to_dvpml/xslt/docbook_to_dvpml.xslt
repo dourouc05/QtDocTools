@@ -225,14 +225,7 @@
         <xsl:for-each select="db:chapter">
           <page id="page_{position()}">
             <title>
-              <xsl:choose>
-                <xsl:when test="db:info/db:title">
-                  <xsl:value-of select="db:info/db:title"/>
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="db:title"/>
-                </xsl:otherwise>
-              </xsl:choose>
+              <xsl:apply-templates mode="content_para_no_formatting" select="db:title | db:info/db:title"></xsl:apply-templates>
             </title>
             <link>
               <xsl:attribute name="href">
