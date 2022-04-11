@@ -17,7 +17,7 @@
         <xsl:value-of select="xs:date(concat($parsed[3], '-', $parsed[2], '-', $parsed[1]))"/>
       </xsl:when>
       <xsl:when test="contains($date, '-')">
-        <!-- Assumed format: DD-MM-YYYY -->
+        <!-- Assumed format: DD-MM-YYYY. Directly understood by xs:date. -->
         <xsl:value-of select="xs:date($date)"/>
       </xsl:when>
       <xsl:otherwise>
@@ -27,7 +27,7 @@
   </xsl:function>
 
   <xsl:template match="document">
-    <xsl:variable name="maintag" as="xs:string">
+    <xsl:variable name="main-tag" as="xs:string">
       <xsl:choose>
         <xsl:when test="multi-page">
           <xsl:value-of select="'db:book'"/>
@@ -48,12 +48,12 @@
       </xsl:if>
     </xsl:if>
 
-    <xsl:variable name="outputJson" as="xs:string" select="
+    <xsl:variable name="output-json" as="xs:string" select="
         if (ends-with(current-output-uri(), '.xml')) then
           replace(current-output-uri(), '.xml', '.json')
         else
           concat(current-output-uri(), '.json')"/>
-    <xsl:variable name="jsonDocument" as="node()">
+    <xsl:variable name="json-document" as="node()">
       <map xmlns="http://www.w3.org/2005/xpath-functions">
         <number key="section">
           <xsl:value-of select="entete/rubrique"/>
@@ -122,11 +122,11 @@
         </xsl:if>
       </map>
     </xsl:variable>
-    <xsl:result-document method="text" href="{$outputJson}">
-      <xsl:value-of select="xml-to-json($jsonDocument, map {'indent': false()})"/>
+    <xsl:result-document method="text" href="{$output-json}">
+      <xsl:value-of select="xml-to-json($json-document, map {'indent': false()})"/>
     </xsl:result-document>
 
-    <xsl:element name="{$maintag}" inherit-namespaces="yes">
+    <xsl:element name="{$main-tag}" inherit-namespaces="yes">
       <xsl:attribute name="version" select="'5.2'"/>
 
       <db:info>
