@@ -82,7 +82,7 @@
 
   <xsl:template mode="content_para"
     match="db:link[not(starts-with(@role, 'lien-forum')) and not(@linkend)]">
-    <xsl:variable name="translatedLink" as="xs:string">
+    <xsl:variable name="translated-link" as="xs:string">
       <xsl:choose>
         <xsl:when test="$doc-qt and (ends-with(string(@xlink:href), '.webxml') or ends-with(string(@xlink:href), '.qdt'))">
           <xsl:variable name="filename" select="substring-before(substring-before(string(@xlink:href), '.webxml'), '.qdt')"/>
@@ -124,8 +124,8 @@
     </xsl:variable>
     
     <!-- Generate the link. -->
-    <xsl:variable name="generatedLink">
-      <link href="{$translatedLink}">
+    <xsl:variable name="generated-link">
+      <link href="{$translated-link}">
         <xsl:if test="@xlink:title">
           <xsl:attribute name="title" select="@xlink:title"/>
         </xsl:if>
@@ -146,11 +146,11 @@
       <xsl:when test="parent::node()[self::db:code]">
         <!-- No, this piece of "software" won't allow <inline><link>, that would be useful. -->
         <i>
-          <xsl:copy-of select="$generatedLink"/>
+          <xsl:copy-of select="$generated-link"/>
         </i>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:copy-of select="$generatedLink"/>
+        <xsl:copy-of select="$generated-link"/>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
