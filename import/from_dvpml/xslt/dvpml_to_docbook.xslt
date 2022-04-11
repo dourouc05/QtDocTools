@@ -625,7 +625,10 @@
       <xsl:if test="@langue">
         <xsl:attribute name="role" select="@langue"/>
       </xsl:if>
-      <!-- All other attributes are lost (target, onclick, title, langue). -->
+      <xsl:if test="@title">
+        <xsl:attribute name="title" select="@title"/>
+      </xsl:if>
+      <!-- All other attributes are lost (target, onclick). -->
 
       <xsl:choose>
         <xsl:when test="child::node()">

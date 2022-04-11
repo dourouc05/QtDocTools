@@ -113,6 +113,9 @@
     <!-- Generate the link. -->
     <xsl:variable name="generatedLink">
       <link href="{$translatedLink}">
+        <xsl:if test="@xlink:title">
+          <xsl:attribute name="title" select="@xlink:title"/>
+        </xsl:if>
         <xsl:if test="$langue">
           <xsl:attribute name="langue" select="$langue"/>
         </xsl:if>
