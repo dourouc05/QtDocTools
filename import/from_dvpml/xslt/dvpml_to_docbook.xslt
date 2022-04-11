@@ -628,7 +628,16 @@
       <xsl:if test="@title">
         <xsl:attribute name="title" select="@title"/>
       </xsl:if>
-      <!-- All other attributes are lost (target, onclick). -->
+      <xsl:if test="@target">
+        <xsl:choose>
+          <xsl:when test="@target = '_blank'"><xsl:attribute name="xlink:show" select="'new'"/></xsl:when>
+          <xsl:when test="@target = '_self'"><xsl:attribute name="xlink:show" select="'replace'"/></xsl:when>
+          <xsl:otherwise>
+            <xsl:message>WARNING: Unrecognised link target <xsl:value-of select="@target"/>.</xsl:message>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:if>
+      <!-- All other attributes are lost (onclick). -->
 
       <xsl:choose>
         <xsl:when test="child::node()">

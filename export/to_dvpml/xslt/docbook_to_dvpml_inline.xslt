@@ -110,6 +110,19 @@
       </xsl:choose>
     </xsl:variable>
     
+    <!-- Map the link show attribute to HTML meanings. -->
+    <xsl:variable name="target" as="xs:string?">
+      <xsl:choose>
+        <xsl:when test="@xlink:show = 'new'"><xsl:value-of select="'_blank'"/></xsl:when>
+        <xsl:when test="@xlink:show = 'replace'"><xsl:value-of select="'_self'"/></xsl:when>
+        <xsl:otherwise>
+          <xsl:if test="@xlink:show">
+            <xsl:message>WARNING: Unrecognised link show <xsl:value-of select="@xlink:show"/>.</xsl:message>
+          </xsl:if>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    
     <!-- Generate the link. -->
     <xsl:variable name="generatedLink">
       <link href="{$translatedLink}">
@@ -118,6 +131,9 @@
         </xsl:if>
         <xsl:if test="$langue">
           <xsl:attribute name="langue" select="$langue"/>
+        </xsl:if>
+        <xsl:if test="$target">
+          <xsl:attribute name="target" select="$target"/>
         </xsl:if>
         
         <xsl:apply-templates mode="content_para"/>
