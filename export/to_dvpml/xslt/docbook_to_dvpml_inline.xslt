@@ -9,6 +9,17 @@
     <xsl:apply-templates mode="content_para"/>
   </xsl:template>
   
+  <xsl:template mode="content_para" match="db:acronym">
+    <xsl:if test="not(@xlink:title)">
+      <xsl:message>WARNING: DocBook acronyms should work with glossaries, but they are not implemented.
+        For now, the meaning of the acronym is embedded in the xlink:title attribute.</xsl:message>
+    </xsl:if>
+    
+    <acronyme title="{@xlink:title}">
+      <xsl:apply-templates mode="content_para"/>
+    </acronyme>
+  </xsl:template>
+  
   <xsl:template mode="content_para" match="db:emphasis">
     <xsl:choose>
       <xsl:when test="not(parent::node()[self::db:code])">

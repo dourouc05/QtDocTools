@@ -653,9 +653,12 @@
     </db:link>
   </xsl:template>
   <xsl:template mode="content" match="acronyme">
-    <db:acronym>
+    <!-- Not a good mapping for the title, but no good solution is available in DocBook. -->
+    <!-- DocBook prefers to use a glossary for the whole document. -->
+    <!-- https://lists.oasis-open.org/archives/docbook-apps/200210/msg00030.html -->
+    <!-- TODO: implement glossaries and use entries from there. -->
+    <db:acronym xlink:title="{@title}">
       <xsl:apply-templates mode="content"/>
-      <xsl:value-of select="concat(' (', @title, ')')"/>
     </db:acronym>
   </xsl:template>
   <xsl:template mode="content" match="signet">
