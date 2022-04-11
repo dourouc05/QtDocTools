@@ -416,70 +416,42 @@
       </xsl:if>
     </db:mediaobject>
   </xsl:template>
-  <xsl:template mode="content" match="imgtext">
+  
+  <xsl:function name="tc:dvpml-imgtext-type-to-docbook-admonition" as="xs:string">
+    <xsl:param name="type" as="xs:string"/>
+    
     <xsl:choose>
-      <xsl:when test="@type = 'idea'">
-        <db:tip>
-          <db:para>
-            <xsl:apply-templates mode="content"/>
-          </db:para>
-        </db:tip>
+      <xsl:when test="$type = 'idea'">
+        <xsl:value-of select="'db:tip'"/>
       </xsl:when>
-      <xsl:when test="@type = 'info'">
-        <db:note>
-          <db:para>
-            <xsl:apply-templates mode="content"/>
-          </db:para>
-        </db:note>
+      <xsl:when test="$type = 'info'">
+        <xsl:value-of select="'db:note'"/>
       </xsl:when>
-      <xsl:when test="@type = 'warning'">
-        <db:warning>
-          <db:para>
-            <xsl:apply-templates mode="content"/>
-          </db:para>
-        </db:warning>
+      <xsl:when test="$type = 'warning'">
+        <xsl:value-of select="'db:warning'"/>
       </xsl:when>
-      <xsl:when test="@type = 'error'">
-        <db:caution>
-          <db:para>
-            <xsl:apply-templates mode="content"/>
-          </db:para>
-        </db:caution>
+      <xsl:when test="$type = 'error'">
+        <xsl:value-of select="'db:caution'"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:message>WARNING: custom imgtexts are not handled. How would you encode them into
           DocBook?</xsl:message>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:function>
+  <xsl:template mode="content" match="imgtext">
+    <xsl:element name="{tc:dvpml-imgtext-type-to-docbook-admonition(@type)}">
+      <db:para>
+        <xsl:apply-templates mode="content"/>
+      </db:para>
+    </xsl:element>
   </xsl:template>
   <xsl:template mode="content" match="rich-imgtext">
-    <xsl:choose>
-      <xsl:when test="@type = 'idea'">
-        <db:tip>
-          <xsl:apply-templates mode="content"/>
-        </db:tip>
-      </xsl:when>
-      <xsl:when test="@type = 'info'">
-        <db:note>
-          <xsl:apply-templates mode="content"/>
-        </db:note>
-      </xsl:when>
-      <xsl:when test="@type = 'warning'">
-        <db:warning>
-          <xsl:apply-templates mode="content"/>
-        </db:warning>
-      </xsl:when>
-      <xsl:when test="@type = 'error'">
-        <db:caution>
-          <xsl:apply-templates mode="content"/>
-        </db:caution>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:message>WARNING: custom imgtexts are not handled. How would you encode them into
-          DocBook?</xsl:message>
-      </xsl:otherwise>
-    </xsl:choose>
+    <xsl:element name="{tc:dvpml-imgtext-type-to-docbook-admonition(@type)}">
+      <xsl:apply-templates mode="content"/>
+    </xsl:element>
   </xsl:template>
+  
   <xsl:template mode="content" match="citation">
     <db:blockquote>
       <xsl:apply-templates mode="content"/>
