@@ -95,10 +95,28 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
-
+    
+    <!-- Check the role, as it can match a "langue" in DvpML. -->
+    <xsl:variable name="langue" as="xs:string?">
+      <xsl:choose>
+        <xsl:when test="lower-case(@role) = 'dico'"><xsl:value-of select="'Dico'"/></xsl:when>
+        <xsl:when test="lower-case(@role) = 'en'"><xsl:value-of select="'En'"/></xsl:when>
+        <xsl:when test="lower-case(@role) = 'faq'"><xsl:value-of select="'Faq'"/></xsl:when>
+        <xsl:when test="lower-case(@role) = 'fr'"><xsl:value-of select="'Fr'"/></xsl:when>
+        <xsl:when test="lower-case(@role) = 'icozip'"><xsl:value-of select="'Icozip'"/></xsl:when>
+        <xsl:when test="lower-case(@role) = 'icopdf'"><xsl:value-of select="'Icopdf'"/></xsl:when>
+        <xsl:when test="lower-case(@role) = 'src'"><xsl:value-of select="'Src'"/></xsl:when>
+        <xsl:when test="lower-case(@role) = 'srcs'"><xsl:value-of select="'Srcs'"/></xsl:when>
+      </xsl:choose>
+    </xsl:variable>
+    
     <!-- Generate the link. -->
     <xsl:variable name="generatedLink">
       <link href="{$translatedLink}">
+        <xsl:if test="$langue">
+          <xsl:attribute name="langue" select="$langue"/>
+        </xsl:if>
+        
         <xsl:apply-templates mode="content_para"/>
       </link>
     </xsl:variable>

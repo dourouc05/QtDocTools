@@ -622,6 +622,9 @@
   <!-- br intentionnally skipped (no meaning in DocBook). -->
   <xsl:template mode="content" match="link">
     <db:link xlink:href="{@href}">
+      <xsl:if test="@langue">
+        <xsl:attribute name="role" select="@langue"/>
+      </xsl:if>
       <!-- All other attributes are lost (target, onclick, title, langue). -->
 
       <xsl:choose>
