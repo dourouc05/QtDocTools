@@ -621,6 +621,10 @@
   </xsl:template>
   <!-- br intentionnally skipped (no meaning in DocBook). -->
   <xsl:template mode="content" match="link">
+    <xsl:if test="@onclick">
+      <xsl:message>WARNING: The onclick attribute is not supported for links.</xsl:message>
+    </xsl:if>
+    
     <db:link xlink:href="{@href}">
       <xsl:if test="@langue">
         <xsl:attribute name="role" select="@langue"/>
@@ -637,7 +641,6 @@
           </xsl:otherwise>
         </xsl:choose>
       </xsl:if>
-      <!-- All other attributes are lost (onclick). -->
 
       <xsl:choose>
         <xsl:when test="child::node()">

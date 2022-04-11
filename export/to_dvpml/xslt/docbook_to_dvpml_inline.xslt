@@ -82,6 +82,25 @@
 
   <xsl:template mode="content_para"
     match="db:link[not(starts-with(@role, 'lien-forum')) and not(@linkend)]">
+    <xsl:if test="@xlink:actuate">
+      <xsl:message>WARNING: The xlink:actuate attribute is not supported for links.</xsl:message>
+    </xsl:if>
+    <xsl:if test="@xlink:from">
+      <xsl:message>WARNING: The xlink:from attribute is not supported for links.</xsl:message>
+    </xsl:if>
+    <xsl:if test="@xlink:label">
+      <xsl:message>WARNING: The xlink:label attribute is not supported for links.</xsl:message>
+    </xsl:if>
+    <xsl:if test="@xlink:role">
+      <xsl:message>WARNING: The xlink:role attribute is not supported for links.</xsl:message>
+    </xsl:if>
+    <xsl:if test="@xlink:to">
+      <xsl:message>WARNING: The xlink:to attribute is not supported for links.</xsl:message>
+    </xsl:if>
+    <xsl:if test="@xlink:type">
+      <xsl:message>WARNING: The xlink:type attribute is not supported for links.</xsl:message>
+    </xsl:if>
+    
     <xsl:variable name="translated-link" as="xs:string">
       <xsl:choose>
         <xsl:when test="$doc-qt and (ends-with(string(@xlink:href), '.webxml') or ends-with(string(@xlink:href), '.qdt'))">
