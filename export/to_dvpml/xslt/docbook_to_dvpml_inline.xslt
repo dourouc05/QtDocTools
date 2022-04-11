@@ -101,6 +101,7 @@
       <xsl:message>WARNING: The xlink:type attribute is not supported for links.</xsl:message>
     </xsl:if>
     
+    <!-- For Qt's documentation, translate the file-system-level link to a true URL. -->
     <xsl:variable name="translated-link" as="xs:string">
       <xsl:choose>
         <xsl:when test="$doc-qt and (ends-with(string(@xlink:href), '.webxml') or ends-with(string(@xlink:href), '.qdt'))">
