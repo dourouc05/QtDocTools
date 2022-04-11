@@ -609,14 +609,14 @@
     </db:phrase>
   </xsl:template>
   <xsl:template mode="content" match="latex">
-    <xsl:element name="{if (parent::paragraph) then 'inlineequation' else 'equation'}">
+    <xsl:element name="{if (parent::paragraph) then 'db:inlineequation' else 'db:equation'}">
       <xsl:if test="@id">
         <xsl:attribute name="xml:id" select="@id"/>
       </xsl:if>
 
-      <db:mathphrase role="latex">
+      <db:alt role="latex">
         <xsl:value-of select="."/>
-      </db:mathphrase>
+      </db:alt>
     </xsl:element>
   </xsl:template>
   <!-- br intentionnally skipped (no meaning in DocBook). -->

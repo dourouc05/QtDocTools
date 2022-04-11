@@ -353,9 +353,9 @@
     
     <xsl:variable name="index" select="
       if (@xml:id) then
-      @xml:id
+        @xml:id
       else
-      generate-id()"/>
+        generate-id()"/>
     <latex id="{$index}">
       <xsl:value-of select="db:alt[@role = 'tex' or @role = 'latex']/text()"/>
     </latex>
