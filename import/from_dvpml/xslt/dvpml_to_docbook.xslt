@@ -516,28 +516,31 @@
 
   <xsl:template mode="content" match="tableau">
     <xsl:element name="{if(@legende) then 'db:table' else 'db:informaltable'}">
-      <xsl:if test="@border">
-        <xsl:attribute name="border" select="@border"/>
-      </xsl:if>
-      <xsl:if test="@width">
-        <xsl:attribute name="width" select="@width"/>
-      </xsl:if>
-
+      <!-- TODO: implement width and border. -->
       <xsl:if test="@legende">
-        <caption>
+        <db:title>
           <xsl:value-of select="@legende"/>
-        </caption>
+        </db:title>
       </xsl:if>
 
-      <xsl:apply-templates mode="content"/>
+      <xsl:if test="entete">
+        <db:thead>
+          <xsl:apply-templates mode="content" select="entete"/>
+        </db:thead>
+      </xsl:if>
+      
+      <!-- No footers in DvpML. -->
+      
+      
+      <db:tbody>
+        <xsl:apply-templates mode="content" select="ligne"/>
+      </db:tbody>
     </xsl:element>
   </xsl:template>
   <xsl:template mode="content" match="entete">
-    <db:thead>
-      <db:tr>
-        <xsl:apply-templates mode="content"/>
-      </db:tr>
-    </db:thead>
+    <db:tr>
+      <xsl:apply-templates mode="content"/>
+    </db:tr>
   </xsl:template>
   <xsl:template mode="content" match="ligne">
     <db:tr>
