@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<x:description 
+    xmlns:x="http://www.jenitennison.com/xslt/xspec"
+    xmlns:db="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    stylesheet="dvpml_to_docbook.xslt">
+  <x:scenario label="Sections">
+    <x:context mode="content">
+      <section id="I">
+        <title>Main section</title>
+        <section id="I.1">
+          <title>Subsection</title>
+        </section>
+      </section>
+    </x:context>
+    <x:expect label="Nested sections">
+      <db:section>
+        <db:title>Main section</db:title>
+        <db:section>
+          <db:title>Subsection</db:title>
+        </db:section>
+      </db:section>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Sections with IDs">
+    <x:context mode="content">
+      <section id="I">
+        <title>Main section</title>
+        <signet id="main-section"/>
+        <section id="I.1">
+          <title>Subsection</title>
+          <signet id="subsection"/>
+        </section>
+      </section>
+    </x:context>
+    <x:expect label="Anchors">
+      <db:section>
+        <db:title>Main section</db:title>
+        <db:anchor xml:id="main-section"/>
+        <db:section>
+          <db:title>Subsection</db:title>
+          <db:anchor xml:id="subsection"/>
+        </db:section>
+      </db:section>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Informal table">
+    <x:context mode="content">
+      <tableau width="80%" border="1" sautDePagePdf="0">
+        <entete>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+        </entete>
+        <ligne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+        </ligne>
+      </tableau>
+    </x:context>
+    <x:expect label="Informal table">
+      <db:informaltable>
+        <db:thead>
+          <db:tr>
+            <db:th>
+              <db:para/>
+            </db:th>
+            <db:th>
+              <db:para/>
+            </db:th>
+          </db:tr>
+        </db:thead>
+        <db:tbody>
+          <db:tr>
+            <db:td>
+              <db:para/>
+            </db:td>
+            <db:td>
+              <db:para/>
+            </db:td>
+          </db:tr>
+          <db:tr>
+            <db:td>
+              <db:para/>
+            </db:td>
+            <db:td>
+              <db:para/>
+            </db:td>
+          </db:tr>
+        </db:tbody>
+      </db:informaltable>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Formal table">
+    <x:context mode="content">
+      <tableau width="80%" border="1" sautDePagePdf="0" legende="Table title">
+        <entete>
+          <colonne useText="0">
+            <paragraph>H1</paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph>H2</paragraph>
+          </colonne>
+        </entete>
+        <ligne>
+          <colonne useText="0">
+            <paragraph>R11</paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph>R12</paragraph>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph>R21</paragraph>
+          </colonne>
+          <colonne useText="0">
+            <paragraph>R22</paragraph>
+          </colonne>
+        </ligne>
+      </tableau>
+    </x:context>
+    <x:expect label="Table">
+      <db:table>
+        <db:title>Table title</db:title>
+        <db:thead>
+          <db:tr>
+            <db:th><db:para>H1</db:para></db:th>
+            <db:th><db:para>H2</db:para></db:th>
+          </db:tr>
+        </db:thead>
+        <db:tbody>
+          <db:tr>
+            <db:td><db:para>R11</db:para></db:td>
+            <db:td><db:para>R12</db:para></db:td>
+          </db:tr>
+          <db:tr>
+            <db:td><db:para>R21</db:para></db:td>
+            <db:td><db:para>R22</db:para></db:td>
+          </db:tr>
+        </db:tbody>
+      </db:table>
+    </x:expect>
+  </x:scenario>
+</x:description>
