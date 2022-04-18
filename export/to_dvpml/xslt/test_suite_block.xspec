@@ -137,6 +137,60 @@
       </tableau>
     </x:expect>
   </x:scenario>
+  <x:scenario label="Informal CALS table with paragraphs">
+    <x:context mode="content">
+      <db:informaltable>
+        <db:tgroup cols="2">
+          <db:colspec colname="c1" colnum="1" colwidth="1*"/>
+          <db:colspec colname="c2" colnum="2" colwidth="1*"/>
+          <db:thead>
+            <db:row>
+              <db:entry><db:para/></db:entry>
+              <db:entry><db:para/></db:entry>
+            </db:row>
+          </db:thead>
+          <db:tbody>
+            <db:row>
+              <db:entry><db:para/></db:entry>
+              <db:entry><db:para/></db:entry>
+            </db:row>
+            <db:row>
+              <db:entry><db:para/></db:entry>
+              <db:entry><db:para/></db:entry>
+            </db:row>
+          </db:tbody>
+        </db:tgroup>
+      </db:informaltable>
+    </x:context>
+    <x:expect label="Table">
+      <tableau width="80%" border="1" sautDePagePdf="0">
+        <entete>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+        </entete>
+        <ligne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+        </ligne>
+        <ligne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+          <colonne useText="0">
+            <paragraph/>
+          </colonne>
+        </ligne>
+      </tableau>
+    </x:expect>
+  </x:scenario>
   
   <x:scenario label="Informal CALS table with width in pixels and border">
     <x:context mode="content">
@@ -679,8 +733,12 @@
     </x:context>
     <x:expect label="Paragraph without list" select="/*">
       <liste titre="Font Filename Extensions">
-        <element><b>TTF</b>&#0160;: TrueType fonts.</element>
-        <element><b>PFA</b>, <b>PFB</b>&#0160;: PostScript fonts.</element>
+        <element useText="0">
+          <paragraph><b>TTF</b>&#0160;: TrueType fonts.</paragraph>
+        </element>
+        <element useText="0">
+          <paragraph><b>PFA</b>, <b>PFB</b>&#0160;: PostScript fonts.</paragraph>
+        </element>
       </liste>
     </x:expect>
   </x:scenario>
