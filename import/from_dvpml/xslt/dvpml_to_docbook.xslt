@@ -295,63 +295,81 @@
       <xsl:apply-templates mode="content"/>
     </db:para>
   </xsl:template>
+  <xsl:template mode="content" match="html-brut">
+    <db:programlisting role='raw-html'>
+      <xsl:apply-templates mode="content"/>
+    </db:programlisting>
+  </xsl:template>
   <xsl:template mode="content" match="code">
     <db:programlisting>
-      <xsl:if test="@langage">
-        <xsl:attribute name="language" select="@language"/>
+      <xsl:if test="@langage and @langage != 'other'">
+        <xsl:attribute name="language" select="@langage"/>
       </xsl:if>
       <xsl:if test="@showLines">
         <xsl:attribute name="linenumbering" select="
-            if (@showLines = '0') then
-              'unnumbered'
-            else
-              'numbered'"/>
+          if (@showLines = '0') then
+            'unnumbered'
+          else
+            'numbered'"/>
       </xsl:if>
       <xsl:if test="@startLine">
         <xsl:attribute name="startinglinenumber" select="@startLine"/>
       </xsl:if>
       <!-- Attributes title, fichier, dissimulable are suppressed, as they have no matching in DocBook. -->
-
+      
       <xsl:apply-templates mode="content"/>
     </db:programlisting>
   </xsl:template>
   <xsl:template mode="content" match="image">
-    <xsl:element name="{if (parent::paragraph) then 'db:inlinemediaobject' else 'db:mediaobject'}">
-      <db:imageobject>
-        <db:imagedata fileref="{@src}">
-          <xsl:if test="@align">
-            <xsl:attribute name="align" select="@align"/>
-          </xsl:if>
-        </db:imagedata>
-      </db:imageobject>
-
-      <xsl:if test="@alt">
-        <db:textobject>
-          <db:para>
-            <xsl:value-of select="@alt"/>
-          </db:para>
-        </db:textobject>
-      </xsl:if>
-
-      <xsl:if test="@legende and @titre">
-        <xsl:message>WARNING: both a legend and a title for an image; what should I do with
-          that?</xsl:message>
-      </xsl:if>
-      <xsl:if test="@legende">
-        <db:caption>
-          <db:para>
-            <xsl:value-of select="@legende"/>
-          </db:para>
-        </db:caption>
-      </xsl:if>
-      <xsl:if test="@titre">
-        <db:caption>
-          <db:para>
-            <xsl:value-of select="@titre"/>
-          </db:para>
-        </db:caption>
-      </xsl:if>
-    </xsl:element>
+    <xsl:variable name="media-object">
+      <xsl:element name="{if (parent::para) then 'db:inlinemediaobject' else 'db:mediaobject'}">
+        <db:imageobject>
+          <db:imagedata fileref="{@src}">
+            <xsl:if test="@align">
+              <xsl:attribute name="align" select="@align"/>
+            </xsl:if>
+          </db:imagedata>
+        </db:imageobject>
+  
+        <xsl:if test="@alt">
+          <db:textobject>
+            <db:para>
+              <xsl:value-of select="@alt"/>
+            </db:para>
+          </db:textobject>
+        </xsl:if>
+  
+        <xsl:if test="@legende and @titre">
+          <xsl:message>WARNING: both a legend and a title for an image; what should I do with
+            that?</xsl:message>
+        </xsl:if>
+        <xsl:if test="@legende">
+          <db:caption>
+            <db:para>
+              <xsl:value-of select="@legende"/>
+            </db:para>
+          </db:caption>
+        </xsl:if>
+        <xsl:if test="@titre">
+          <db:caption>
+            <db:para>
+              <xsl:value-of select="@titre"/>
+            </db:para>
+          </db:caption>
+        </xsl:if>
+      </xsl:element>
+    </xsl:variable>
+    
+    <xsl:choose>
+      <xsl:when test="parent::paragraph">
+        <xsl:copy-of select="$media-object"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <db:informalfigure>
+          <xsl:copy-of select="$media-object"/>
+        </db:informalfigure>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   <xsl:template mode="content" match="animation">
     <db:mediaobject>

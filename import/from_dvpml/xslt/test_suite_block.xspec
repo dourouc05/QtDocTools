@@ -159,4 +159,237 @@
       </db:table>
     </x:expect>
   </x:scenario>
+  
+  <!-- Excerpt from https://tdg.docbook.org/tdg/5.2/informalfigure.html -->
+  <x:scenario label="Informal figure">
+    <x:context mode="content">
+      <image src="figs/print/db5d_ref10.pdf"/>
+    </x:context>
+    <x:expect label="Informal figure">
+      <db:informalfigure>
+        <db:mediaobject>
+          <db:imageobject>
+            <db:imagedata fileref="figs/print/db5d_ref10.pdf"/>
+          </db:imageobject>
+        </db:mediaobject>
+      </db:informalfigure>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Simple paragraph">
+    <x:context mode="content">
+      <paragraph>Wat Arun.</paragraph>
+    </x:context>
+    <x:expect label="Paragraph">
+      <db:para>Wat Arun.</db:para>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Raw HTML">
+    <x:context mode="content">
+      <html-brut>Wat Arun.</html-brut>
+    </x:context>
+    <x:expect label="Program listing with a specific role" select="/*">
+      <db:programlisting role='raw-html'>Wat Arun.</db:programlisting>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Program listing with no language">
+    <x:context mode="content">
+      <code langage="other">Wat Arun.</code>
+    </x:context>
+    <x:expect label="Tag without language" select="/*">
+      <db:programlisting>Wat Arun.</db:programlisting>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Program listing with language">
+    <x:context mode="content">
+      <code langage="cpp">Wat Arun.</code>
+    </x:context>
+    <x:expect label="Tag with language" select="/*">
+      <db:programlisting language="cpp">Wat Arun.</db:programlisting>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Itemized list">
+    <x:context mode="content">
+      <liste>
+        <element useText="0"><paragraph>One</paragraph></element>
+        <element useText="0"><paragraph>Two</paragraph></element>
+      </liste>
+    </x:context>
+    <x:expect label="Itemized list" select="/*">
+      <db:itemizedlist>
+        <db:listitem>
+          <db:para>One</db:para>
+        </db:listitem>
+        <db:listitem>
+          <db:para>Two</db:para>
+        </db:listitem>
+      </db:itemizedlist>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Ordered list with Arabic numbering">
+    <x:context mode="content">
+      <liste type="1">
+        <element useText="0"><paragraph>One</paragraph></element>
+        <element useText="0"><paragraph>Two</paragraph></element>
+      </liste>
+    </x:context>
+    <x:expect label="Ordered list" select="/*">
+      <db:orderedlist numeration="arabic">
+        <db:listitem>
+          <db:para>One</db:para>
+        </db:listitem>
+        <db:listitem>
+          <db:para>Two</db:para>
+        </db:listitem>
+      </db:orderedlist>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Ordered list with lower Roman numbering">
+    <x:context mode="content">
+      <liste type="i">
+        <element useText="0"><paragraph>One</paragraph></element>
+        <element useText="0"><paragraph>Two</paragraph></element>
+      </liste>
+    </x:context>
+    <x:expect label="Ordered list" select="/*">
+      <db:orderedlist numeration="lowerroman">
+        <db:listitem>
+          <db:para>One</db:para>
+        </db:listitem>
+        <db:listitem>
+          <db:para>Two</db:para>
+        </db:listitem>
+      </db:orderedlist>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Ordered list with upper Roman numbering">
+    <x:context mode="content">
+      <liste type="I">
+        <element useText="0"><paragraph>One</paragraph></element>
+        <element useText="0"><paragraph>Two</paragraph></element>
+      </liste>
+    </x:context>
+    <x:expect label="Ordered list" select="/*">
+      <db:orderedlist numeration="upperroman">
+        <db:listitem>
+          <db:para>One</db:para>
+        </db:listitem>
+        <db:listitem>
+          <db:para>Two</db:para>
+        </db:listitem>
+      </db:orderedlist>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Ordered list with lower alphabetic numbering">
+    <x:context mode="content">
+      <liste type="a">
+        <element useText="0"><paragraph>One</paragraph></element>
+        <element useText="0"><paragraph>Two</paragraph></element>
+      </liste>
+    </x:context>
+    <x:expect label="Ordered list" select="/*">
+      <db:orderedlist numeration="loweralpha">
+        <db:listitem>
+          <db:para>One</db:para>
+        </db:listitem>
+        <db:listitem>
+          <db:para>Two</db:para>
+        </db:listitem>
+      </db:orderedlist>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Ordered list with upper alphabetic numbering">
+    <x:context mode="content">
+      <liste type="A">
+        <element useText="0"><paragraph>One</paragraph></element>
+        <element useText="0"><paragraph>Two</paragraph></element>
+      </liste>
+    </x:context>
+    <x:expect label="Ordered list" select="/*">
+      <db:orderedlist numeration="upperalpha">
+        <db:listitem>
+          <db:para>One</db:para>
+        </db:listitem>
+        <db:listitem>
+          <db:para>Two</db:para>
+        </db:listitem>
+      </db:orderedlist>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Info">
+    <x:context mode="content">
+      <rich-imgtext type="info">
+        <paragraph>Admonition.</paragraph>
+      </rich-imgtext>
+    </x:context>
+    <x:expect label="Note" select="/*">
+      <db:note>
+        <db:para>Admonition.</db:para>
+      </db:note>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Idea">
+    <x:context mode="content">
+      <rich-imgtext type="idea">
+        <paragraph>Admonition.</paragraph>
+      </rich-imgtext>
+    </x:context>
+    <x:expect label="Tip" select="/*">
+      <db:tip>
+        <db:para>Admonition.</db:para>
+      </db:tip>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Warning">
+    <x:context mode="content">
+      <rich-imgtext type="warning">
+        <paragraph>Admonition.</paragraph>
+      </rich-imgtext>
+    </x:context>
+    <x:expect label="Warning" select="/*">
+      <db:warning>
+        <db:para>Admonition.</db:para>
+      </db:warning>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Error">
+    <x:context mode="content">
+      <rich-imgtext type="error">
+        <paragraph>Admonition.</paragraph>
+      </rich-imgtext>
+    </x:context>
+    <x:expect label="Caution" select="/*">
+      <db:caution>
+        <db:para>Admonition.</db:para>
+      </db:caution>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="LaTeX block equation">
+    <!-- Excerpt from https://tdg.docbook.org/tdg/5.2/inlineequation.html -->
+    <x:context mode="content">
+      <paragraph>Text:</paragraph>
+      <latex id="...">\blah</latex>
+    </x:context>
+    <x:expect label="Block equation" select="/">
+      <db:para>Text:</db:para>
+      <db:equation>
+        <db:alt role='tex'>\blah</db:alt>
+      </db:equation>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Anchor">
+    <x:context mode="content">
+      <paragraph>Text.</paragraph>
+      <signet id="xml-id"/>
+    </x:context>
+    <x:expect label="Anchor" select="/">
+      <db:para>Text.</db:para>
+      <db:anchor xml:id="xml-id"/>
+    </x:expect>
+  </x:scenario>
 </x:description>
