@@ -322,7 +322,7 @@
   </xsl:template>
   <xsl:template mode="content" match="image">
     <xsl:variable name="media-object">
-      <xsl:element name="{if (parent::para) then 'db:inlinemediaobject' else 'db:mediaobject'}">
+      <xsl:element name="{if (parent::paragraph) then 'db:inlinemediaobject' else 'db:mediaobject'}">
         <db:imageobject>
           <db:imagedata fileref="{@src}">
             <xsl:if test="@align">
@@ -372,22 +372,19 @@
     </xsl:choose>
   </xsl:template>
   <xsl:template mode="content" match="animation">
-    <db:mediaobject>
+    <xsl:element name="{if (parent::paragraph) then 'db:inlinemediaobject' else 'db:mediaobject'}">
       <db:videoobject>
-        <db:videodata fileref="{@src}">
+        <db:videodata fileref="{param-movie/text()}">
           <xsl:if test="width">
             <xsl:attribute name="width" select="width"/>
           </xsl:if>
           <xsl:if test="height">
-            <xsl:attribute name="height" select="height"/>
+            <xsl:attribute name="depth" select="height"/>
           </xsl:if>
           <xsl:if test="@type">
             <xsl:attribute name="role" select="@type"/>
           </xsl:if>
-
-          <xsl:if test="param-movie">
-            <db:multimediaparam name="param-movie" value="{param-movie}"/>
-          </xsl:if>
+          
           <xsl:if test="param-quality">
             <db:multimediaparam name="param-quality" value="{param-quality}"/>
           </xsl:if>
@@ -432,7 +429,7 @@
           </db:para>
         </db:caption>
       </xsl:if>
-    </db:mediaobject>
+    </xsl:element>
   </xsl:template>
   
   <xsl:function name="tc:dvpml-imgtext-type-to-docbook-admonition" as="xs:string">

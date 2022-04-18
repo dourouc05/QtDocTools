@@ -197,33 +197,49 @@
   </x:scenario>
   
   <x:scenario label="Animation">
+    <!-- Having no separate modes for inline and blocks forces to have -->
+    <!-- a paragraph container here. -->
     <x:context mode="content">
-      Text: <animation type="avi">
-        <param-movie>movie.avi</param-movie>
-      </animation>
+      <paragraph>
+        Text: 
+        <animation type="avi">
+          <param-movie>movie.avi</param-movie>
+        </animation>
+      </paragraph>
     </x:context>
-    <x:expect label="Inline video object" select="/">
-      Text: <db:inlinemediaobject>
-        <db:videoobject>
-          <db:videodata fileref='movie.avi'/>
-        </db:videoobject>
-      </db:inlinemediaobject>
+    <x:expect label="Inline video object">
+      <db:para>
+        Text: 
+        <db:inlinemediaobject>
+          <db:videoobject>
+            <db:videodata fileref='movie.avi' role='avi'/>
+          </db:videoobject>
+        </db:inlinemediaobject>
+      </db:para>
     </x:expect>
   </x:scenario>
   <x:scenario label="Inline video with size">
+    <!-- Having no separate modes for inline and blocks forces to have -->
+    <!-- a paragraph container here. -->
     <x:context mode="content">
-      Text: <animation type="avi">
-        <width>40</width>
-        <height>60</height>
-        <param-movie>movie.avi</param-movie>
-      </animation>
+      <paragraph>
+        Text: 
+        <animation type="avi">
+           <width>40</width>
+           <height>60</height>
+           <param-movie>movie.avi</param-movie>
+         </animation>
+      </paragraph>
     </x:context>
-    <x:expect label="Inline video object" select="/">
-      Text: <db:inlinemediaobject>
-        <db:videoobject>
-          <db:videodata fileref='movie.avi' width='40' depth='60'/>
-        </db:videoobject>
-      </db:inlinemediaobject>
+    <x:expect label="Inline video object">
+      <db:para>
+        Text: 
+        <db:inlinemediaobject>
+          <db:videoobject>
+            <db:videodata fileref='movie.avi' width='40' depth='60' role='avi'/>
+          </db:videoobject>
+        </db:inlinemediaobject>
+      </db:para>
     </x:expect>
   </x:scenario>
   
@@ -237,6 +253,8 @@
   </x:scenario>
   
   <x:scenario label="LaTeX inline equation">
+    <!-- Having no separate modes for inline and blocks forces to have -->
+    <!-- a paragraph container here. -->
     <x:context mode="content">
       <paragraph>
         Text: <latex id="blah-eq">\blah</latex>
