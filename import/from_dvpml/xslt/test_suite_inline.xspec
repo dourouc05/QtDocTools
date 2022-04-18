@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<x:description 
+    xmlns:x="http://www.jenitennison.com/xslt/xspec"
+    xmlns:db="http://docbook.org/ns/docbook"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    stylesheet="dvpml_to_docbook.xslt">
+  <x:scenario label="Emphasis: no role">
+    <x:context mode="content">
+      Text <i>with emphasis</i>
+    </x:context>
+    <x:expect label="Italics">
+      Text <db:emphasis>with emphasis</db:emphasis>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Emphasis: bold role">
+    <x:context mode="content">
+      Text <b>with bold</b>
+    </x:context>
+    <x:expect label="Bold">
+      Text <db:emphasis role='bold'>with bold</db:emphasis>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Emphasis: underline role">
+    <x:context mode="content">
+      Text <u>with underline</u>
+    </x:context>
+    <x:expect label="Underline">
+      Text <db:emphasis role='underline'>with underline</db:emphasis>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Emphasis: strike role">
+    <x:context mode="content">
+      Text <s>with strike</s>
+    </x:context>
+    <x:expect label="Strike">
+      Text <db:emphasis role='strike'>with strike</db:emphasis>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Code: raw">
+    <x:context mode="content">
+      Text then <inline>code</inline>
+    </x:context>
+    <x:expect label="Code">
+      Text then <db:code>code</db:code>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Code: with language">
+    <x:context mode="content">
+      Text then <inline langage="cpp">code</inline>
+    </x:context>
+    <x:expect label="Code with language">
+      Text then <db:code language="cpp">code</db:code>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Superscript">
+    <x:context mode="content">
+      Text<sup>sup</sup>
+    </x:context>
+    <x:expect label="Superscript without space">
+      Text<db:superscript>sup</db:superscript>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Subscript">
+    <x:context mode="content">
+      Text<sub>sub</sub>
+    </x:context>
+    <x:expect label="Subscript without space">
+      Text<db:subscript>sub</db:subscript>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Colour">
+    <x:context mode="content">
+      Text <font color="black">with colour</font>
+    </x:context>
+    <x:expect label="Subscript without space">
+      Text <db:phrase role="color:black">with colour</db:phrase>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Link to URL">
+    <x:context mode="content">
+      Text <link href="http://blah">with link</link>
+    </x:context>
+    <x:expect label="Link" select="/">
+      Text <db:link xlink:href="http://blah">with link</db:link>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Link to anchor">
+    <x:context mode="content">
+      Text <renvoi id="section4">with internal link</renvoi>
+    </x:context>
+    <x:expect label="Link" select="/">
+      Text <db:link linkend="section4">with internal link</db:link>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Link to the forum">
+    <x:context mode="content">
+      Text <lien-forum id="1"/>
+    </x:context>
+    <x:expect label="Link" select="/">
+      Text <db:link xlink:href="https://www.developpez.net/forums/showthread.php?t=1" role="lien-forum">Commentez&#0160;!</db:link>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Link to the forum with post ID">
+    <x:context mode="content">
+      Text <lien-forum id="1" idpost="11826606"/>
+    </x:context>
+    <x:expect label="Link" select="/">
+      Text <db:link xlink:href="https://www.developpez.net/forums/showthread.php?t=1#post11826606" role="lien-forum">Commentez&#0160;!</db:link>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Link to the forum with post ID and note">
+    <x:context mode="content">
+      Text <lien-forum id="1" idpost="11826606" avecnote="1"/>
+    </x:context>
+    <x:expect label="Link" select="/">
+      Text <db:link xlink:href="https://www.developpez.net/forums/showthread.php?t=1#post11826606" role="lien-forum-avec-note">Commentez&#0160;!</db:link>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Footnote with a single paragraph">
+    <x:context mode="content">
+      Text<noteBasPage>Footnote</noteBasPage>
+    </x:context>
+    <x:expect label="Footnote" select="/">
+      Text<db:footnote><db:para>Footnote</db:para></db:footnote>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Footnote with a several paragraphs">
+    <x:context mode="content">
+      Text<noteBasPage>Footnote 1<br/>Footnote 2</noteBasPage>
+    </x:context>
+    <x:expect label="Footnote" select="/">
+      Text<db:footnote><db:para>Footnote 1</db:para><db:para>Footnote 2</db:para></db:footnote>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Index term: text content">
+    <x:context mode="content">
+      Text<index>Primary</index>
+    </x:context>
+    <x:expect label="Primary" select="/">
+      Text<db:indexterm><db:primary>Primary</db:primary></db:indexterm>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Index term: attributes">
+    <x:context mode="content">
+      Text<index id1="Primary" id2="Secondary"/>
+    </x:context>
+    <x:expect label="Index with attributes" select="/">
+      Text<db:indexterm><db:primary>Primary</db:primary><db:secondary>Secondary</db:secondary></db:indexterm>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Inline figure">
+    <!-- Excerpt from https://tdg.docbook.org/tdg/5.2/inlinemediaobject.html -->
+    <x:context mode="content">
+      Text: <image src="figs/print/db5d_refeqn03.pdf"/>
+    </x:context>
+    <x:expect label="Inline image object" select="/">
+      Text: <db:inlinemediaobject>
+        <db:imageobject>
+          <db:imagedata fileref="figs/print/db5d_refeqn03.pdf"/>
+        </db:imageobject>
+      </db:inlinemediaobject>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Inline figure with description and title">
+    <!-- Excerpt from https://tdg.docbook.org/tdg/5.2/inlinemediaobject.html -->
+    <x:context mode="content">
+      Text: <image src="figs/print/db5d_refeqn03.pdf" alt="E=mc²" legende="Equation: E=mc²"/>
+    </x:context>
+    <x:expect label="Inline image object" select="/">
+      Text: <db:inlinemediaobject>
+        <db:alt>E=mc²</db:alt>
+        <db:title>Equation: E=mc²</db:title>
+        <db:imageobject>
+          <db:imagedata fileref="figs/print/db5d_refeqn03.pdf"/>
+        </db:imageobject>
+      </db:inlinemediaobject>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Inline figure with link">
+    <x:context mode="content">
+      Text: <image src="figs/print/db5d_refeqn03.pdf" href="http://blah"/>
+    </x:context>
+    <x:expect label="Inline image object" select="/">
+      Text: <db:inlinemediaobject xlink:href="http://blah">
+        <db:imageobject>
+          <db:imagedata fileref="figs/print/db5d_refeqn03.pdf"/>
+        </db:imageobject>
+      </db:inlinemediaobject>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Animation">
+    <x:context mode="content">
+      Text: <animation type="avi">
+        <param-movie>movie.avi</param-movie>
+      </animation>
+    </x:context>
+    <x:expect label="Inline video object" select="/">
+      Text: <db:inlinemediaobject>
+        <db:videoobject>
+          <db:videodata fileref='movie.avi'/>
+        </db:videoobject>
+      </db:inlinemediaobject>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Inline video with size">
+    <x:context mode="content">
+      Text: <animation type="avi">
+        <width>40</width>
+        <height>60</height>
+        <param-movie>movie.avi</param-movie>
+      </animation>
+    </x:context>
+    <x:expect label="Inline video object" select="/">
+      Text: <db:inlinemediaobject>
+        <db:videoobject>
+          <db:videodata fileref='movie.avi' width='40' depth='60'/>
+        </db:videoobject>
+      </db:inlinemediaobject>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="Anchor">
+    <x:context mode="content">
+      Text<signet id="someID"/>
+    </x:context>
+    <x:expect label="Anchor" select="/">
+      Text<db:anchor xml:id="someID"/>
+    </x:expect>
+  </x:scenario>
+  
+  <x:scenario label="LaTeX inline equation">
+    <x:context mode="content">
+      <paragraph>
+        Text: <latex id="blah-eq">\blah</latex>
+      </paragraph>
+    </x:context>
+    <x:expect label="Inline LaTeX equation" select="/*">
+      <db:para>
+        Text: <db:inlineequation xml:id="blah-eq">
+          <db:alt role='latex'>\blah</db:alt>
+        </db:inlineequation>
+      </db:para>
+    </x:expect>
+  </x:scenario>
+</x:description>

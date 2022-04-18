@@ -170,7 +170,7 @@
     </x:expect>
   </x:scenario>
   
-  <x:scenario label="Index term: only primarys">
+  <x:scenario label="Index term: only primary key">
     <x:context mode="content_para">
       Text<db:indexterm><db:primary>Primary</db:primary></db:indexterm>
     </x:context>
@@ -178,7 +178,7 @@
       Text<index>Primary</index>
     </x:expect>
   </x:scenario>
-  <x:scenario label="Index term: only primarys">
+  <x:scenario label="Index term: primary and secondary keys">
     <x:context mode="content_para">
       Text<db:indexterm><db:primary>Primary</db:primary><db:secondary>Secondary</db:secondary></db:indexterm>
     </x:context>

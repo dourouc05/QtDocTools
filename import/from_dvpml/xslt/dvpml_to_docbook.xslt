@@ -621,10 +621,15 @@
   </xsl:template>
   <xsl:template mode="content" match="inline">
     <db:code>
+      <xsl:if test="@langage">
+        <xsl:attribute name="language" select="@langage"/>
+      </xsl:if>
+      
       <xsl:apply-templates mode="content"/>
     </db:code>
   </xsl:template>
   <xsl:template mode="content" match="font">
+    <!-- Fonts are only used for colour. -->
     <db:phrase role="{concat('color:', @color)}">
       <xsl:apply-templates mode="content"/>
     </db:phrase>
@@ -714,7 +719,7 @@
     <xsl:apply-templates mode="content"/>
   </xsl:template>
   <xsl:template mode="content" match="lien-forum">
-    <xsl:variable name="link">
+    <xsl:variable name="link-url">
       <xsl:choose>
         <xsl:when test="@idpost">
           <xsl:value-of
@@ -727,14 +732,20 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+    <xsl:variable name="link-role" as="xs:string">
+      <xsl:choose>
+        <xsl:when test="@avecnote and @avecnote = '1'">
+          <xsl:text>lien-forum-avec-note</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>lien-forum</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:variable name="link-text">
+      <xsl:apply-templates/>
+    </xsl:variable>
 
-    <db:link xlink:href="{$link}" role="lien-forum">
-      <xsl:attribute name="role" select="
-          if (@avecnote and @avecnote = '1') then
-            'lien-forum-avec-note'
-          else
-            'lien-forum'"/>
-      <xsl:text>Commentez&#0160;!</xsl:text>
-    </db:link>
+    <db:link xlink:href="{$link-url}" role="{$link-role}">Commentez&#0160;!</db:link>
   </xsl:template>
 </xsl:stylesheet>
