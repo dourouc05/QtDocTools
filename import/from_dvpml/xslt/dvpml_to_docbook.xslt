@@ -323,6 +323,12 @@
   <xsl:template mode="content" match="image">
     <xsl:variable name="is-inline" as="xs:boolean" select="boolean(parent::paragraph)"/>
     <xsl:variable name="media-object">
+      <xsl:if test="@titre">
+        <db:title>
+          <xsl:value-of select="@titre"/>
+        </db:title>
+      </xsl:if>
+      
       <xsl:element name="{if ($is-inline) then 'db:inlinemediaobject' else 'db:mediaobject'}">
         <xsl:if test="$is-inline and @href">
           <xsl:attribute name="xlink:href" select="@href"/>
@@ -341,19 +347,25 @@
             </xsl:if>
           </db:imagedata>
         </db:imageobject>
-  
-        <xsl:if test="@legende">
-          <db:caption>
-            <db:para>
-              <xsl:value-of select="@legende"/>
-            </db:para>
-          </db:caption>
-        </xsl:if>
       </xsl:element>
+      
+      <xsl:if test="@legende">
+        <db:caption>
+          <db:para>
+            <xsl:value-of select="@legende"/>
+          </db:para>
+        </db:caption>
+      </xsl:if>
     </xsl:variable>
     
     <xsl:choose>
       <xsl:when test="$is-inline">
+        <xsl:if test="@legende">
+          <xsl:message>WARNING: Attribute legende on inline image not expected.</xsl:message>
+        </xsl:if>
+        <xsl:if test="@titre">
+          <xsl:message>WARNING: Attribute titre on inline image not expected.</xsl:message>
+        </xsl:if>
         <xsl:copy-of select="$media-object"/>
       </xsl:when>
       <xsl:when test="not(@titre)">
@@ -371,76 +383,96 @@
             <xsl:attribute name="xlink:href" select="@href"/>
           </xsl:if>
           
-          <xsl:if test="@titre">
-            <db:title>
-              <xsl:value-of select="@titre"/>
-            </db:title>
-          </xsl:if>
-          
           <xsl:copy-of select="$media-object"/>
         </db:figure>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
   <xsl:template mode="content" match="animation">
-    <xsl:element name="{if (parent::paragraph) then 'db:inlinemediaobject' else 'db:mediaobject'}">
-      <db:videoobject>
-        <db:videodata fileref="{param-movie/text()}">
-          <xsl:if test="width">
-            <xsl:attribute name="width" select="width"/>
-          </xsl:if>
-          <xsl:if test="height">
-            <xsl:attribute name="depth" select="height"/>
-          </xsl:if>
-          <xsl:if test="@type">
-            <xsl:attribute name="role" select="@type"/>
+    <xsl:variable name="is-inline" as="xs:boolean" select="boolean(parent::paragraph)"/>
+    <xsl:variable name="media-object">
+      <xsl:if test="@titre">
+        <db:title>
+          <xsl:value-of select="@titre"/>
+        </db:title>
+      </xsl:if>
+      
+      <xsl:if test="@alt">
+        <db:alt>
+          <xsl:value-of select="@alt"/>
+        </db:alt>
+      </xsl:if>
+      
+      <xsl:element name="{if ($is-inline) then 'db:inlinemediaobject' else 'db:mediaobject'}">
+        <db:videoobject>
+          <db:videodata fileref="{param-movie/text()}">
+            <xsl:if test="width">
+              <xsl:attribute name="width" select="width"/>
+            </xsl:if>
+            <xsl:if test="height">
+              <xsl:attribute name="depth" select="height"/>
+            </xsl:if>
+            <xsl:if test="@type">
+              <xsl:attribute name="role" select="@type"/>
+            </xsl:if>
+            
+            <xsl:if test="param-quality">
+              <db:multimediaparam name="param-quality" value="{param-quality}"/>
+            </xsl:if>
+            <xsl:if test="param-loop">
+              <db:multimediaparam name="param-loop" value="{param-loop}"/>
+            </xsl:if>
+            <xsl:if test="param-wmode">
+              <db:multimediaparam name="param-wmode" value="{param-wmode}"/>
+            </xsl:if>
+          </db:videodata>
+        </db:videoobject>
+  
+        <xsl:if test="@image">
+          <db:imageobject>
+            <db:imagedata fileref="{@image}"/>
+          </db:imageobject>
+        </xsl:if>
+  
+        <xsl:if test="@legende">
+          <db:caption>
+            <db:para>
+              <xsl:value-of select="@legende"/>
+            </db:para>
+          </db:caption>
+        </xsl:if>
+      </xsl:element>
+    </xsl:variable>
+    
+    <xsl:choose>
+      <xsl:when test="$is-inline">
+        <xsl:if test="@legende">
+          <xsl:message>WARNING: Attribute legende on inline animation not expected.</xsl:message>
+        </xsl:if>
+        <xsl:if test="@titre">
+          <xsl:message>WARNING: Attribute titre on inline animation not expected.</xsl:message>
+        </xsl:if>
+        <xsl:copy-of select="$media-object"/>
+      </xsl:when>
+      <xsl:when test="not(@titre)">
+        <db:informalfigure>
+          <xsl:if test="@href">
+            <xsl:attribute name="xlink:href" select="@href"/>
           </xsl:if>
           
-          <xsl:if test="param-quality">
-            <db:multimediaparam name="param-quality" value="{param-quality}"/>
+          <xsl:copy-of select="$media-object"/>
+        </db:informalfigure>
+      </xsl:when>
+      <xsl:otherwise>
+        <db:figure>
+          <xsl:if test="@href">
+            <xsl:attribute name="xlink:href" select="@href"/>
           </xsl:if>
-          <xsl:if test="param-loop">
-            <db:multimediaparam name="param-loop" value="{param-loop}"/>
-          </xsl:if>
-          <xsl:if test="param-wmode">
-            <db:multimediaparam name="param-wmode" value="{param-wmode}"/>
-          </xsl:if>
-        </db:videodata>
-      </db:videoobject>
-
-      <xsl:if test="@image">
-        <db:imageobject>
-          <db:imagedata fileref="{@image}"/>
-        </db:imageobject>
-      </xsl:if>
-
-      <xsl:if test="@alt">
-        <db:textobject>
-          <db:para>
-            <xsl:value-of select="@alt"/>
-          </db:para>
-        </db:textobject>
-      </xsl:if>
-
-      <xsl:if test="@legende and @title">
-        <xsl:message>WARNING: both a legend and a title for an image; what should I do with
-          that?</xsl:message>
-      </xsl:if>
-      <xsl:if test="@legende">
-        <db:caption>
-          <db:para>
-            <xsl:value-of select="@legende"/>
-          </db:para>
-        </db:caption>
-      </xsl:if>
-      <xsl:if test="@title">
-        <db:caption>
-          <db:para>
-            <xsl:value-of select="@title"/>
-          </db:para>
-        </db:caption>
-      </xsl:if>
-    </xsl:element>
+          
+          <xsl:copy-of select="$media-object"/>
+        </db:figure>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <xsl:function name="tc:dvpml-imgtext-type-to-docbook-admonition" as="xs:string">

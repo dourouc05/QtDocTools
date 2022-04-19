@@ -175,6 +175,41 @@
       </db:informalfigure>
     </x:expect>
   </x:scenario>
+  <x:scenario label="Formal figure with description">
+    <x:context mode="content">
+      <image src="figs/print/db5d_ref10.pdf" titre="TITLE" alt="E=mc²" legende="Equation: E=mc²"/>
+    </x:context>
+    <x:expect label="Informal figure">
+      <db:figure>
+        <db:title>TITLE</db:title>
+        <db:mediaobject>
+          <db:alt>E=mc²</db:alt>
+          <db:imageobject>
+            <db:imagedata fileref="figs/print/db5d_ref10.pdf"/>
+          </db:imageobject>
+        </db:mediaobject>
+        <db:caption>
+          <db:para>Equation: E=mc²</db:para>
+        </db:caption>
+      </db:figure>
+    </x:expect>
+  </x:scenario>
+  <x:scenario label="Animation">
+    <x:context mode="content">
+      <animation type="avi">
+        <param-movie>movie.avi</param-movie>
+      </animation>
+    </x:context>
+    <x:expect label="Informal video">
+      <db:informalfigure>
+        <db:mediaobject xmlns:db="http://docbook.org/ns/docbook">
+          <db:videoobject>
+            <db:videodata fileref="movie.avi" role="avi"/>
+          </db:videoobject>
+        </db:mediaobject>
+      </db:informalfigure>
+    </x:expect>
+  </x:scenario>
   
   <x:scenario label="Simple paragraph">
     <x:context mode="content">
@@ -372,12 +407,12 @@
     <!-- Excerpt from https://tdg.docbook.org/tdg/5.2/inlineequation.html -->
     <x:context mode="content">
       <paragraph>Text:</paragraph>
-      <latex id="...">\blah</latex>
+      <latex id="blih">\blah</latex>
     </x:context>
-    <x:expect label="Block equation" select="/">
+    <x:expect label="Block equation">
       <db:para>Text:</db:para>
-      <db:equation>
-        <db:alt role='tex'>\blah</db:alt>
+      <db:equation xml:id="blih">
+        <db:alt role="latex">\blah</db:alt>
       </db:equation>
     </x:expect>
   </x:scenario>
