@@ -69,14 +69,14 @@
           </number>
         </xsl:if>
         <xsl:if test="entete/licauteur">
-          <number key="license-author">
+          <string key="license-author">
             <xsl:value-of select="entete/licauteur"/>
-          </number>
+          </string>
         </xsl:if>
         <xsl:if test="entete/licence">
-          <number key="license-raw">
+          <string key="license-raw">
             <xsl:value-of select="entete/licence"/>
-          </number>
+          </string>
         </xsl:if>
         <xsl:if test="entete/cssperso">
           <string key="extra-css">
@@ -546,7 +546,6 @@
       
       <!-- No footers in DvpML. -->
       
-      
       <db:tbody>
         <xsl:apply-templates mode="content" select="ligne"/>
       </db:tbody>
@@ -744,5 +743,14 @@
     </xsl:variable>
 
     <db:link xlink:href="{$link-url}" role="{$link-role}">Commentez&#0160;!</db:link>
+  </xsl:template>
+  <xsl:template mode="content" match="noteBasPage">
+    <db:footnote>
+      <xsl:for-each-group select="node()" group-ending-with="br">
+        <db:para>
+          <xsl:apply-templates select="current-group()" mode="content"/>
+        </db:para>
+      </xsl:for-each-group>
+    </db:footnote>
   </xsl:template>
 </xsl:stylesheet>
