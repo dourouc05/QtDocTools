@@ -156,43 +156,58 @@
   </x:scenario>
   
   <x:scenario label="Inline figure">
-    <!-- Excerpt from https://tdg.docbook.org/tdg/5.2/inlinemediaobject.html -->
+    <!-- Having no separate modes for inline and blocks forces to have -->
+    <!-- a paragraph container here. -->
     <x:context mode="content">
-      Text: <image src="figs/print/db5d_refeqn03.pdf"/>
+      <paragraph>
+        Text: <image src="figs/print/db5d_refeqn03.pdf"/>
+      </paragraph>
     </x:context>
-    <x:expect label="Inline image object" select="/">
-      Text: <db:inlinemediaobject>
-        <db:imageobject>
-          <db:imagedata fileref="figs/print/db5d_refeqn03.pdf"/>
-        </db:imageobject>
-      </db:inlinemediaobject>
+    <x:expect label="Inline image object">
+      <db:para>
+        Text: <db:inlinemediaobject>
+          <db:imageobject>
+            <db:imagedata fileref="figs/print/db5d_refeqn03.pdf"/>
+          </db:imageobject>
+        </db:inlinemediaobject>
+      </db:para>
     </x:expect>
   </x:scenario>
   <x:scenario label="Inline figure with description and title">
-    <!-- Excerpt from https://tdg.docbook.org/tdg/5.2/inlinemediaobject.html -->
+    <!-- Having no separate modes for inline and blocks forces to have -->
+    <!-- a paragraph container here. -->
     <x:context mode="content">
-      Text: <image src="figs/print/db5d_refeqn03.pdf" alt="E=mc²" legende="Equation: E=mc²"/>
+      <paragraph>
+        Text: <image src="figs/print/db5d_refeqn03.pdf" alt="E=mc²"/>
+      </paragraph>
     </x:context>
-    <x:expect label="Inline image object" select="/">
-      Text: <db:inlinemediaobject>
-        <db:alt>E=mc²</db:alt>
-        <db:title>Equation: E=mc²</db:title>
-        <db:imageobject>
-          <db:imagedata fileref="figs/print/db5d_refeqn03.pdf"/>
-        </db:imageobject>
-      </db:inlinemediaobject>
+    <x:expect label="Inline image object">
+      <db:para>
+        Text: <db:inlinemediaobject>
+          <db:alt>E=mc²</db:alt>
+          <db:imageobject>
+            <db:imagedata fileref="figs/print/db5d_refeqn03.pdf"/>
+          </db:imageobject>
+        </db:inlinemediaobject>
+      </db:para>
     </x:expect>
   </x:scenario>
   <x:scenario label="Inline figure with link">
+    <!-- Having no separate modes for inline and blocks forces to have -->
+    <!-- a paragraph container here. -->
     <x:context mode="content">
-      Text: <image src="figs/print/db5d_refeqn03.pdf" href="http://blah"/>
+      <paragraph>
+        Text: <image src="figs/print/db5d_refeqn03.pdf" href="http://blah"/>
+      </paragraph>
     </x:context>
-    <x:expect label="Inline image object" select="/">
-      Text: <db:inlinemediaobject xlink:href="http://blah">
-        <db:imageobject>
-          <db:imagedata fileref="figs/print/db5d_refeqn03.pdf"/>
-        </db:imageobject>
-      </db:inlinemediaobject>
+    <x:expect label="Inline image object">
+      <db:para>
+        Text: <db:inlinemediaobject xlink:href="http://blah">
+          <db:imageobject>
+            <db:imagedata fileref="figs/print/db5d_refeqn03.pdf"/>
+          </db:imageobject>
+        </db:inlinemediaobject>
+      </db:para>
     </x:expect>
   </x:scenario>
   

@@ -321,8 +321,19 @@
     </db:programlisting>
   </xsl:template>
   <xsl:template mode="content" match="image">
+    <xsl:variable name="is-inline" as="xs:boolean" select="boolean(parent::paragraph)"/>
     <xsl:variable name="media-object">
-      <xsl:element name="{if (parent::paragraph) then 'db:inlinemediaobject' else 'db:mediaobject'}">
+      <xsl:element name="{if ($is-inline) then 'db:inlinemediaobject' else 'db:mediaobject'}">
+        <xsl:if test="$is-inline and @href">
+          <xsl:attribute name="xlink:href" select="@href"/>
+        </xsl:if>
+        
+        <xsl:if test="@alt">
+          <db:alt>
+            <xsl:value-of select="@alt"/>
+          </db:alt>
+        </xsl:if>
+        
         <db:imageobject>
           <db:imagedata fileref="{@src}">
             <xsl:if test="@align">
@@ -331,18 +342,6 @@
           </db:imagedata>
         </db:imageobject>
   
-        <xsl:if test="@alt">
-          <db:textobject>
-            <db:para>
-              <xsl:value-of select="@alt"/>
-            </db:para>
-          </db:textobject>
-        </xsl:if>
-  
-        <xsl:if test="@legende and @titre">
-          <xsl:message>WARNING: both a legend and a title for an image; what should I do with
-            that?</xsl:message>
-        </xsl:if>
         <xsl:if test="@legende">
           <db:caption>
             <db:para>
@@ -350,24 +349,36 @@
             </db:para>
           </db:caption>
         </xsl:if>
-        <xsl:if test="@titre">
-          <db:caption>
-            <db:para>
-              <xsl:value-of select="@titre"/>
-            </db:para>
-          </db:caption>
-        </xsl:if>
       </xsl:element>
     </xsl:variable>
     
     <xsl:choose>
-      <xsl:when test="parent::paragraph">
+      <xsl:when test="$is-inline">
         <xsl:copy-of select="$media-object"/>
       </xsl:when>
-      <xsl:otherwise>
+      <xsl:when test="not(@titre)">
         <db:informalfigure>
+          <xsl:if test="@href">
+            <xsl:attribute name="xlink:href" select="@href"/>
+          </xsl:if>
+          
           <xsl:copy-of select="$media-object"/>
         </db:informalfigure>
+      </xsl:when>
+      <xsl:otherwise>
+        <db:figure>
+          <xsl:if test="@href">
+            <xsl:attribute name="xlink:href" select="@href"/>
+          </xsl:if>
+          
+          <xsl:if test="@titre">
+            <db:title>
+              <xsl:value-of select="@titre"/>
+            </db:title>
+          </xsl:if>
+          
+          <xsl:copy-of select="$media-object"/>
+        </db:figure>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -712,7 +723,6 @@
         </xsl:otherwise>
       </xsl:choose>
     </db:indexterm>
-    <xsl:apply-templates mode="content"/>
   </xsl:template>
   <xsl:template mode="content" match="lien-forum">
     <xsl:variable name="link-url">

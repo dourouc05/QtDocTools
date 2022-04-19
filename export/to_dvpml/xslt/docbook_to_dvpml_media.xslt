@@ -7,6 +7,7 @@
   exclude-result-prefixes="xsl xs html saxon tc db xlink map" version="3.0">
   <xsl:template name="tc:generate-media">
     <xsl:param name="mediaobject"/>
+    <xsl:param name="caption"/>
     <xsl:param name="title"/>
     <xsl:param name="link"/>
     <xsl:param name="alt"/>
@@ -81,6 +82,17 @@
       </xsl:choose>
     </xsl:variable>
     
+    <xsl:variable name="caption_" as="xs:string?">
+      <xsl:choose>
+        <xsl:when test="$caption">
+          <xsl:value-of select="$caption"/>
+        </xsl:when>
+        <xsl:when test="$mediaobject/db:caption">
+          <xsl:value-of select="$mediaobject/db:caption"/>
+        </xsl:when>
+      </xsl:choose>
+    </xsl:variable>
+    
     <xsl:variable name="filename_" as="xs:string">
       <xsl:choose>
         <xsl:when test="$mediaobject/db:videoobject"><xsl:value-of select="$mediaobject/db:videoobject[1]/db:videodata[1]/@fileref"/></xsl:when>
@@ -100,11 +112,15 @@
             <xsl:attribute name="alt" select="$alt_"/>
           </xsl:if>
           <xsl:if test="$title_">
-            <xsl:attribute name="legende" select="$title_"/>
+            <xsl:attribute name="titre" select="$title_"/>
+          </xsl:if>
+          <xsl:if test="$caption_">
+            <xsl:attribute name="legende" select="$caption_"/>
           </xsl:if>
           <xsl:if test="string-length($link_) &gt; 0">
             <xsl:attribute name="href" select="$link_"/>
           </xsl:if>
+          <!-- TODO: support zoom. -->
         </image>
       </xsl:when>
       <xsl:when test="$mediaobject/db:videoobject or $mediaobject/db:audioobject">

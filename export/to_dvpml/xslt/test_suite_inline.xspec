@@ -206,19 +206,18 @@
       Text: <image src="figs/print/db5d_refeqn03.pdf"/>
     </x:expect>
   </x:scenario>
-  <x:scenario label="Inline figure with description and title">
+  <x:scenario label="Inline figure with description">
     <!-- Excerpt from https://tdg.docbook.org/tdg/5.2/inlinemediaobject.html -->
     <x:context mode="content_para">
       Text: <db:inlinemediaobject>
         <db:alt>E=mc²</db:alt>
-        <db:title>Equation: E=mc²</db:title>
         <db:imageobject>
           <db:imagedata fileref="figs/print/db5d_refeqn03.pdf"/>
         </db:imageobject>
       </db:inlinemediaobject>
     </x:context>
     <x:expect label="Figure" select="/">
-      Text: <image src="figs/print/db5d_refeqn03.pdf" alt="E=mc²" legende="Equation: E=mc²"/>
+      Text: <image src="figs/print/db5d_refeqn03.pdf" alt="E=mc²"/>
     </x:expect>
   </x:scenario>
   <x:scenario label="Inline figure with link on inlinemediaobject">
