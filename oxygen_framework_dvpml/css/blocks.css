@@ -1,0 +1,157 @@
+/* Header */
+
+entete {
+    display: block;
+}
+
+entete:before {
+    content: "En-tête";
+    font-size: 2.2em;
+    border-bottom: 2px solid #004477;
+    display: block;
+}
+
+rubrique, description, keywords, page, article, date, miseajour, includebas, serveur, chemin, urlhttp {
+    display: block;
+}
+
+rubrique:before, description:before, keywords:before, page:before, article:before, date:before, miseajour:before, includebas:before, serveur:before, chemin:before, urlhttp:before {
+    text-align: right;
+    width: 14.5em; /* Large enough to hold the description of each item */
+}
+
+rubrique, description, keywords, page, article, serveur, chemin, urlhttp {
+    content: oxy_textfield(
+        edit, "#text",
+        columns, 40);
+    visibility: -oxy-collapse-text;
+}
+
+includebas {
+    content: oxy_textArea(edit, '#text',, contentType, 'text/css');
+    visibility: -oxy-collapse-text;
+}
+
+date, miseajour {
+    content:
+        oxy_datePicker(
+            edit, "#text",
+            format, "yyyy-MM-dd");
+    visibility: -oxy-collapse-text;
+}
+
+rubrique:before {
+    content: "Rubrique : ";
+}
+
+description:before {
+    content: "Description : ";
+}
+
+keywords:before {
+    content: "Mots clés : ";
+}
+
+page:before {
+    content: "Titre de la page : ";
+}
+
+article:before {
+    content: "Titre de l'article : ";
+}
+
+date:before {
+    content: "Date de publication : ";
+}
+
+miseajour:before {
+    content: "Date de mise à jour : ";
+}
+
+includebas:before {
+    content: "Code PHP pour le bas de page : ";
+}
+
+serveur:before {
+    content: "Serveur FTP : ";
+}
+
+chemin:before {
+    content: "Chemin sur le FTP : ";
+}
+
+urlhttp:before {
+    content: "URL HTTP après mise en ligne : ";
+}
+
+/* See-also section */
+
+voiraussi {
+    display: block;
+}
+
+voiraussi:before {
+    content: "Voir aussi";
+    font-size: 2.2em;
+    border-bottom: 2px solid #004477;
+    display: block;
+}
+
+voiraussi lien {
+    display: block;
+}
+
+voiraussi lien texte:before {
+    content: "Texte : "
+}
+
+voiraussi lien texte {
+    width: 15em;
+}
+
+voiraussi lien url:before {
+    content: "URL : "
+}
+
+/* Authors */
+
+authorDescriptions {
+    display: block;
+}
+
+authorDescriptions:before {
+    content: "Auteurs, traducteurs, relecteurs et correcteurs";
+    font-size: 2.2em;
+    border-bottom: 2px solid #004477;
+    display: block;
+}
+
+authorDescription {
+    display: block;
+}
+
+/* Summary/synopsis */
+
+synopsis {
+    display: block;
+}
+
+synopsis:before {
+    content: "Synopsis";
+    font-size: 2.2em;
+    border-bottom: 2px solid #004477;
+    display: block;
+}
+
+/* Main text */
+
+summary {
+    display: block;
+}
+
+summary:before {
+    content: "Contenu";
+    font-size: 2.2em;
+    border-bottom: 2px solid #004477;
+    display: block;
+}

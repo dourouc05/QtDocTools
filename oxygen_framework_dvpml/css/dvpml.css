@@ -1,0 +1,429 @@
+/* @import "blocks.css"; */
+/* @import "text.css"; */
+/* @import "components.css"; */
+
+@namespace oxy "http://www.oxygenxml.com/extensions/author";
+
+oxy|document {
+    background-color: #fbfbfb;
+}
+
+document {
+    border: 1px solid #c6c6c6;
+    background-color: white;
+    
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0.25in;
+    margin-bottom: 0.25in;
+    
+    padding-top: 2em;
+    padding-right: 2em;
+    padding-left: 3em;
+    padding-bottom: 5em;
+
+    width: 21.59cm; 
+    min-height: 10cm;
+    
+    font-family: Georgia, Caladea, Cambria, serif;
+
+    font-size: 1.1em;
+    line-height: 1.5;
+}
+
+
+
+
+
+
+
+/* Header */
+
+entete {
+    display: block;
+    -oxy-foldable: true;
+}
+
+entete:before {
+    content: "En-tête";
+    font-size: 2.2em;
+    border-bottom: 1px solid #004477;
+    padding-bottom: -15px;
+    margin-bottom: 2px;
+    display: block;
+}
+
+rubrique, description, keywords, page, article, date, miseajour, includebas, serveur, chemin, urlhttp {
+    display: block;
+}
+
+rubrique:before, description:before, keywords:before, page:before, article:before, date:before, miseajour:before, includebas:before, serveur:before, chemin:before, urlhttp:before {
+    text-align: left;
+    width: 14.5em; /* Large enough to hold the description of each item */
+}
+
+rubrique, description, page, article, serveur, chemin, urlhttp {
+    content: oxy_textfield(
+        edit, "#text",
+        columns, 50);
+    visibility: -oxy-collapse-text;
+}
+
+keywords {
+    content: oxy_textfield(
+        edit, "#text",
+        columns, 50,
+        hasMultipleValues, true);
+    visibility: -oxy-collapse-text;
+}
+
+includebas {
+    content: oxy_textArea(edit, '#text', contentType, 'text/php');
+    visibility: -oxy-collapse-text;
+}
+
+date, miseajour {
+    content:
+        oxy_datePicker(
+            edit, "#text",
+            format, "yyyy-MM-dd");
+    visibility: -oxy-collapse-text;
+}
+
+rubrique:before {
+    content: "Rubrique : ";
+}
+
+description:before {
+    content: "Description : ";
+}
+
+keywords:before {
+    content: "Mots clés : ";
+}
+
+page:before {
+    content: "Titre de la page : ";
+}
+
+article:before {
+    content: "Titre de l'article : ";
+}
+
+date:before {
+    content: "Date de publication : ";
+}
+
+miseajour:before {
+    content: "Date de mise à jour : ";
+}
+
+includebas:before {
+    content: "Code PHP pour le bas de page : ";
+}
+
+serveur:before {
+    content: "Serveur FTP : ";
+}
+
+chemin:before {
+    content: "Chemin sur le FTP : ";
+}
+
+urlhttp:before {
+    content: "URL HTTP après mise en ligne : ";
+}
+
+/* See-also section */
+
+voiraussi {
+    display: block;
+    -oxy-foldable: true;
+}
+
+voiraussi:before {
+    content: "Voir aussi";
+    font-size: 2.2em;
+    border-bottom: 1px solid #004477;
+    padding-bottom: -15px;
+    margin-bottom: 2px;
+    display: block;
+}
+
+voiraussi lien {
+    display: block;
+}
+
+voiraussi lien texte:before {
+    content: "Texte : "
+}
+
+voiraussi lien texte {
+    width: 15em;
+}
+
+voiraussi lien url:before {
+    content: "URL : "
+}
+
+/* Authors */
+
+authorDescriptions {
+    display: block;
+    -oxy-foldable: true;
+}
+
+authorDescriptions:before {
+    content: "Contributeurs";
+    font-size: 2.2em;
+    border-bottom: 1px solid #004477;
+    padding-bottom: -15px;
+    margin-bottom: 2px;
+    display: block;
+}
+
+authorDescription {
+    display: block;
+    -oxy-foldable: true;
+}
+
+authorDescription:before {
+    display: block;
+    content: 
+        "Role : "
+        oxy_combobox(
+            edit, "@role",
+            editable, true,
+            values, "auteur, correcteur, gabarisateur, relecteur-technique, traducteur",
+            labels, "Auteur, Correcteur, Gabarisateur, Relecteur technique, Traducteur")
+        "          "
+        "Identifiant : "
+        oxy_textfield(
+            edit, "@name",
+            columns, 50);
+}
+
+authorDescription fullname, authorDescription url, authorDescription badge, authorDescription homepage, authorDescription liens, authorDescription blog, authorDescription google-plus, authorDescription linkedin {
+    display: block;
+    padding-left: 2em;
+}
+
+authorDescription fullname:before, authorDescription url:before, authorDescription badge:before, authorDescription homepage:before, authorDescription liens:before, authorDescription blog:before, authorDescription google-plus:before, authorDescription linkedin:before {
+    text-align: left;
+    width: 13em; /* Large enough to hold the description of each item */
+}
+
+authorDescription homepage title, authorDescription homepage url, authorDescription liens lien {
+    display: block;
+    padding-left: 6em;
+}
+
+authorDescription homepage title:before, authorDescription homepage url:before, authorDescription liens lien:before {
+    text-align: left;
+    width: 13em; /* Large enough to hold the description of each item */
+}
+
+authorDescription liens lien title, authorDescription liens lien url, authorDescription liens lien type, authorDescription liens lien icone {
+    display: block;
+    padding-left: 10em;
+}
+
+authorDescription liens lien title:before, authorDescription liens lien url:before, authorDescription liens lien type:before, authorDescription liens lien icone:before {
+    text-align: left;
+    width: 13em; /* Large enough to hold the description of each item */
+}
+
+authorDescription fullname, authorDescription url, authorDescription badge, authorDescription homepage title, authorDescription homepage url, authorDescription liens lien title, authorDescription blog, authorDescription google-plus, authorDescription linkedin {
+    content: oxy_textfield(
+        edit, "#text",
+        columns, 50);
+    visibility: -oxy-collapse-text;
+}
+
+authorDescription fullname:before {
+    content: "Nom complet : ";
+}
+
+authorDescription url:before {
+    content: "URL du profil sur le forum : ";
+}
+
+authorDescription badge:before {
+    content: "URL du badge : ";
+}
+
+authorDescription homepage:before {
+    content: "Site : ";
+}
+
+authorDescription homepage title:before {
+    content: "Nom : ";
+}
+
+authorDescription homepage url:before {
+    content: "URL : ";
+}
+
+authorDescription liens:before {
+    content: "Liens : ";
+}
+
+authorDescription liens lien:before {
+    content: "Lien : ";
+}
+
+authorDescription liens lien title:before {
+    content: "Titre : ";
+}
+
+authorDescription liens lien url:before {
+    content: "URL : ";
+}
+
+authorDescription liens lien type:before {
+    content: "Type : ";
+}
+
+authorDescription liens lien icone:before {
+    content: "URL pour l'icône : ";
+}
+
+authorDescription blog:before {
+    content: "URL du blog : ";
+}
+
+authorDescription google-plus:before {
+    content: "URL du profil Google Plus : ";
+}
+
+authorDescription linkedin:before {
+    content: "URL du profil LinkedIn : ";
+}
+
+/* Summary */
+
+synopsis {
+    display: block;
+    -oxy-foldable: true;
+    white-space: ;
+}
+
+synopsis:before {
+    content: "Synopsis";
+    font-size: 2.2em;
+    border-bottom: 1px solid #004477;
+    padding-bottom: -15px;
+    margin-bottom: 2px;
+    display: block;
+}
+
+/* Main text */
+
+summary {
+    display: block;
+    -oxy-foldable: true;
+}
+
+summary:before {
+    content: "Contenu";
+    font-size: 2.2em;
+    border-bottom: 1px solid #004477;
+    padding-bottom: -15px;
+    margin-bottom: 2px;
+    display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Text */
+
+section {
+    display: block;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    -oxy-foldable: true;
+}
+
+section title:before {
+    content: 
+        "Section "
+        oxy_xpath("../@id")
+        " : ";
+}
+
+section title {
+    font-size: 1.8em;
+}
+
+section title:after {
+    padding-left: 2em;
+    font-size: 0.5em;
+    content: 
+        "Numéro affiché : "
+        oxy_combobox(
+            edit, "@noNumber",
+            editable, true,
+            values, "1, 0");
+}
+
+paragraph {
+    display: block;
+}
+
+liste {
+    display: block;
+    margin: 0.5em 1em;
+}
+
+liste > element {
+    display: list-item;
+    list-style-type: disc;
+    line-height: 100%; 
+}
+
+liste > element liste > element {
+    list-style-type: square;
+}
+
+liste > element liste > element liste > element {
+    list-style-type: circle;
+}
+
+code {
+    visibility: -oxy-collapse-text;
+    background-color: inherit;
+    border: none;
+    margin: 0;
+    padding: 0;
+    white-space: pre;
+}
+
+code > oxy|entity {
+    display: none !important;
+}
+
+code:before {
+    content: oxy_textArea(
+        edit, '#text',
+        fontInherit, true);
+    display: block;
+    margin-left: 0.5em;
+    padding-top: 1em;
+}
+
+code[langage]:before {
+    content: 
+        oxy_textArea(
+            edit, '#text',
+            contentType, oxy_concat('text/', attr(langage)),
+            fontInherit, true);
+}
