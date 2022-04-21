@@ -535,7 +535,7 @@
       </db:informalfigure>
     </x:context>
     <x:expect label="Figure">
-      <image src="figs/print/db5d_ref10.pdf"/>
+      <image src="figs/print/db5d_ref10.pdf" legende="Wat Arun."/>
     </x:expect>
   </x:scenario>
   
@@ -568,7 +568,7 @@
     </x:context>
     <x:expect label="Figure">
       <signet id="test-id"/>
-      <image src="figs/print/db5d_ref10.pdf" legende="Wat Arun"/>
+      <image src="figs/print/db5d_ref10.pdf" titre="Wat Arun" legende="Wat Arun."/>
     </x:expect>
   </x:scenario>
   
@@ -930,12 +930,12 @@
         <ligne>
           <colonne useText="0">
             <signet id="test-id"/>
-            <image src="figs/print/db5d_ref10.pdf" legende="Wat Arun"/>
+            <image src="figs/print/db5d_ref10.pdf" titre="Wat Arun"/>
           </colonne>
         </ligne>
         <ligne>
           <colonne useText="0">
-            <image src="figs/print/db5d_ref10.pdf" legende="Arun Wat"/>
+            <image src="figs/print/db5d_ref10.pdf" titre="Arun Wat"/>
           </colonne>
         </ligne>
       </tableau>
