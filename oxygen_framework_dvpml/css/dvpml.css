@@ -305,7 +305,6 @@ authorDescription linkedin:before {
 synopsis {
     display: block;
     -oxy-foldable: true;
-    white-space: ;
 }
 
 synopsis:before {
@@ -344,7 +343,7 @@ summary:before {
 
 
 
-/* Text */
+/* Text: blocks */
 
 section {
     display: block;
@@ -426,4 +425,16 @@ code[langage]:before {
             edit, '#text',
             contentType, oxy_concat('text/', attr(langage)),
             fontInherit, true);
+}
+
+
+
+
+
+/* Text: inlines */
+
+link:before {
+    content: oxy_url('${frameworks}', 'docbook/css/img/link.png');
+    link: attr(href);
+    color: navy;
 }
