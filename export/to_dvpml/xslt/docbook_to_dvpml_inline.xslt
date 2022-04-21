@@ -209,6 +209,10 @@
         <xsl:attribute name="avecnote" select="'1'"/>
       </xsl:if>
     </lien-forum>
+    
+    <xsl:if test="text()">
+      <xsl:message>WARNING: text is ignored within forum links.</xsl:message>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template mode="content_para" match="db:link[@linkend]">
