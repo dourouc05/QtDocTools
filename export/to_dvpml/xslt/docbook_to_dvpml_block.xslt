@@ -234,7 +234,18 @@
   </xsl:template>
   
   <xsl:template mode="content" match="db:orderedlist">
-    <liste type="1">
+    <xsl:variable name="type" as="xs:string">
+      <xsl:choose>
+        <xsl:when test="@numeration='lowerroman'">i</xsl:when>
+        <xsl:when test="@numeration='upperroman'">I</xsl:when>
+        <xsl:when test="@numeration='loweralpha'">a</xsl:when>
+        <xsl:when test="@numeration='upperalpha'">A</xsl:when>
+        <xsl:when test="@numeration='arabic'">1</xsl:when>
+        <xsl:otherwise>1</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    
+    <liste type="{$type}">
       <xsl:if test="db:title">
         <xsl:attribute name="titre" select="db:title"/>
       </xsl:if>

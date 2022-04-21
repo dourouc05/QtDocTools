@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- TODO: orderedlist numbering -->
 <!-- TODO: lien-forum doesn't allow any content. -->
 <!-- TODO: recognise videodata role to generate DvpML's animation type. -->
 <x:description 
@@ -695,11 +694,51 @@
           <db:para>Two</db:para>
         </db:listitem>
       </db:orderedlist>
+      <db:orderedlist numeration="upperroman">
+        <db:listitem>
+          <db:para>One</db:para>
+        </db:listitem>
+      </db:orderedlist>
+      <db:orderedlist numeration="lowerroman">
+        <db:listitem>
+          <db:para>One</db:para>
+        </db:listitem>
+      </db:orderedlist>
+      <db:orderedlist numeration="upperalpha">
+        <db:listitem>
+          <db:para>One</db:para>
+        </db:listitem>
+      </db:orderedlist>
+      <db:orderedlist numeration="loweralpha">
+        <db:listitem>
+          <db:para>One</db:para>
+        </db:listitem>
+      </db:orderedlist>
+      <db:orderedlist numeration="arabic">
+        <db:listitem>
+          <db:para>One</db:para>
+        </db:listitem>
+      </db:orderedlist>
     </x:context>
     <x:expect label="List with type" select="/*">
       <liste type="1">
         <element useText="0"><paragraph>One</paragraph></element>
         <element useText="0"><paragraph>Two</paragraph></element>
+      </liste>
+      <liste type="I">
+        <element useText="0"><paragraph>One</paragraph></element>
+      </liste>
+      <liste type="i">
+        <element useText="0"><paragraph>One</paragraph></element>
+      </liste>
+      <liste type="A">
+        <element useText="0"><paragraph>One</paragraph></element>
+      </liste>
+      <liste type="a">
+        <element useText="0"><paragraph>One</paragraph></element>
+      </liste>
+      <liste type="1">
+        <element useText="0"><paragraph>One</paragraph></element>
       </liste>
     </x:expect>
   </x:scenario>
