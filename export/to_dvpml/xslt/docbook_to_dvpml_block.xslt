@@ -165,18 +165,19 @@
     match="db:constructorsynopsis | db:destructorsynopsis | db:enumsynopsis | db:typedefsynopsis | db:fieldsynopsis | db:methodsynopsis | db:classsynopsis | db:fieldsynopsis | db:namespacesynopsis"/>
   
   <xsl:template mode="content" match="db:para">
-    <!-- The synopsis is done in <db:article>. -->
+    <!-- The synopsis is done in <db:article>; determine whether this -->
+    <!-- paragraph is detected as an abstract. -->
     <xsl:if
       test="..[self::db:section] or ..[self::db:sect1] or ..[self::db:listitem] or ..[self::db:blockquote] or ..[self::db:th] or ..[self::db:td] or ..[self::db:footnote] or ..[self::db:note] or ..[self::db:article] or string-length(name(preceding-sibling::*[1])) = 0">
       <xsl:choose>
-        <xsl:when test="db:informaltable | db:note | db:programlisting | db:screen">
-          <!-- Some content must be moved outside the paragraph (DocBook's model is really flexible). -->
+        <xsl:when test="db:informaltable | db:note | db:programlisting | db:screen | db:equation | db:informalequation | db:inlineequation">
+          <!-- Some content must be moved outside the paragraph (DocBook's model is really flexible, DvpML not so much). -->
           <xsl:variable name="children" select="child::node()" as="node()*"/>
           <xsl:variable name="firstTagOutsideParagraph" as="xs:integer">
             <xsl:variable name="isNotPara" select="
               for $i in 1 to count($children)
               return
-              boolean($children[$i][self::db:informaltable | self::db:note | self::db:programlisting | self::db:screen]) or name($children[$i]) = 'db:informaltable' or name($children[$i]) = 'db:note' or name($children[$i]) = 'db:programlisting' or name($children[$i]) = 'db:screen'"/>
+              boolean($children[$i][self::db:informaltable | self::db:note | self::db:programlisting | self::db:screen | self::db:equation | self::db:informalequation | self::db:inlineequation]) or name($children[$i]) = 'db:informaltable' or name($children[$i]) = 'db:note' or name($children[$i]) = 'db:programlisting' or name($children[$i]) = 'db:screen'"/>
             <xsl:value-of select="index-of($isNotPara, true())"/>
           </xsl:variable>
           
@@ -345,10 +346,15 @@
     </rich-imgtext>
   </xsl:template>
   
-  <xsl:template mode="content" match="db:equation | db:informalequation">
-    <xsl:if test="not(db:alt[@role = 'tex' or @role = 'latex'])">
-      <xsl:message terminate="yes">ERROR: informalequation with no TeX or LaTeX encoding. MathML is
-        not supported.</xsl:message>
+  <xsl:template mode="content" match="db:equation | db:informalequation | db:inlineequation">
+    <xsl:if test="not(db:alt[@role = 'tex' or @role = 'latex']) and not(db:mathphrase[@role = 'tex' or @role = 'latex'])">
+      <xsl:message terminate="yes">ERROR: informalequation with no recognised 
+        TeX or LaTeX encoding (either in alt or mathphrase tag with 'tex' or 
+        'latex' role). MathML is not supported.</xsl:message>
+    </xsl:if>
+    
+    <xsl:if test="db:inlineequation">
+      <xsl:message>WARNING: inline equations are not supported in DvpML.</xsl:message>
     </xsl:if>
     
     <xsl:variable name="index" select="
@@ -357,7 +363,14 @@
       else
         generate-id()"/>
     <latex id="{$index}">
-      <xsl:value-of select="db:alt[@role = 'tex' or @role = 'latex']/text()"/>
+      <xsl:choose>
+        <xsl:when test="db:alt[@role = 'tex' or @role = 'latex']">
+          <xsl:value-of select="db:alt[@role = 'tex' or @role = 'latex']/text()"/>
+        </xsl:when>
+        <xsl:when test="db:mathphrase[@role = 'tex' or @role = 'latex']">
+          <xsl:value-of select="db:mathphrase[@role = 'tex' or @role = 'latex']/text()"/>
+        </xsl:when>
+      </xsl:choose>
     </latex>
   </xsl:template>
   

@@ -320,19 +320,9 @@
     </xsl:for-each>
   </xsl:template>
 
-  <xsl:template mode="content_para" match="db:equation | db:inlineequation">
-    <xsl:if test="not(db:alt[@role = 'tex' or @role = 'latex'])">
-      <xsl:message terminate="yes">ERROR: informalequation with no TeX or LaTeX encoding. MathML is
-        not supported.</xsl:message>
-    </xsl:if>
-
-    <xsl:variable name="index" select="
-        if (@xml:id) then
-          @xml:id
-        else
-          generate-id()"/>
-    <latex id="{$index}">
-      <xsl:value-of select="db:alt[@role = 'tex' or @role = 'latex']/text()"/>
-    </latex>
+  <xsl:template mode="content_para" match="db:equation | db:informalequation | db:inlineequation">
+    <!-- Equations must be block-level elements in DvpML. -->
+    <xsl:message>ASSERTION FAILED: equations should not be handled at the 
+      paragraph level</xsl:message>
   </xsl:template>
 </xsl:stylesheet>

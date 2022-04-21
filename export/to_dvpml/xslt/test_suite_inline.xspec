@@ -350,21 +350,27 @@
   
   <x:scenario label="Inline equation">
     <!-- Excerpt from https://tdg.docbook.org/tdg/5.2/inlineequation.html -->
-    <x:context mode="content_para">
-      Text: <db:inlineequation>
-        <db:alt role='tex'>\blah</db:alt>
-        <db:inlinemediaobject>
-          <db:imageobject condition="print">
-            <db:imagedata fileref="figs/print/db5d_refeqn03.pdf"/>
-          </db:imageobject>
-          <db:imageobject condition="web">
-            <db:imagedata fileref="figs/web/db5d_refeqn03.png"/>
-          </db:imageobject>
-        </db:inlinemediaobject>
-      </db:inlineequation>
+    <x:context mode="content">
+      <db:para>
+        Text: 
+        <db:inlineequation xml:id="bli">
+          <db:alt role='tex'>\blah</db:alt>
+          <db:inlinemediaobject>
+            <db:imageobject condition="print">
+              <db:imagedata fileref="figs/print/db5d_refeqn03.pdf"/>
+            </db:imageobject>
+            <db:imageobject condition="web">
+              <db:imagedata fileref="figs/web/db5d_refeqn03.png"/>
+            </db:imageobject>
+          </db:inlinemediaobject>
+        </db:inlineequation>
+      </db:para>
     </x:context>
-    <x:expect label="LaTeX equation" select="/">
-      Text: <latex id="...">\blah</latex>
+    <x:expect label="LaTeX equation outside the paragraph" select="/*">
+      <paragraph>
+        Text: 
+      </paragraph>
+      <latex id="bli">\blah</latex>
     </x:expect>
   </x:scenario>
   
