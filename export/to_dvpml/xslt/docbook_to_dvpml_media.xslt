@@ -11,6 +11,7 @@
     <xsl:param name="title"/>
     <xsl:param name="link"/>
     <xsl:param name="alt"/>
+    <xsl:param name="extension"/>
     
     <xsl:if test="not($mediaobject[self::db:mediaobject]) and not($mediaobject[self::db:inlinemediaobject])">
       <xsl:message terminate="yes">ASSERTION FAILED: not a mediaobject or inlinemediaobject.</xsl:message>
@@ -101,7 +102,7 @@
       </xsl:choose>
     </xsl:variable>
     
-    <xsl:variable name="extension_" select="tokenize($filename_, '\.')[last()]"/>
+    <xsl:variable name="extension_" select="if ($extension) then $extension else tokenize($filename_, '\.')[last()]"/>
     
     <xsl:choose>
       <xsl:when test="$mediaobject/db:imageobject and not($mediaobject/db:videoobject) and not($mediaobject/db:audioobject)">        
