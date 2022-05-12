@@ -1,6 +1,7 @@
 package be.tcuvelier.qdoctools.core.handlers;
 
 import net.sf.saxon.lib.StandardErrorListener;
+import net.sf.saxon.lib.StandardErrorReporter;
 import net.sf.saxon.lib.StandardLogger;
 import net.sf.saxon.s9api.*;
 
@@ -25,11 +26,11 @@ public class XsltHandler {
         saxonExecutable = saxonCompiler.compile(new StreamSource(new File(sheet)));
     }
 
-    private StandardErrorListener createLogger(ByteArrayOutputStream os) {
+    private StandardErrorReporter createLogger(ByteArrayOutputStream os) {
         PrintStream ps = new PrintStream(os, true, StandardCharsets.UTF_8);
-        StandardErrorListener sel = new StandardErrorListener();
-        sel.setLogger(new StandardLogger(ps));
-        return sel;
+        StandardErrorReporter ser = new StandardErrorReporter();
+        ser.setLogger(new StandardLogger(ps));
+        return ser;
     }
 
     public XsltTransformer createTransformer(String file, String destination, ByteArrayOutputStream os) throws SaxonApiException {
@@ -45,7 +46,7 @@ public class XsltHandler {
         out.setOutputFile(destination);
 
         if (os != null) {
-            saxonCompiler.setErrorListener(createLogger(os));
+            saxonCompiler.setErrorReporter(createLogger(os));
         }
 
         XdmNode source = saxonProcessor.newDocumentBuilder().build(new StreamSource(file));
@@ -56,7 +57,7 @@ public class XsltHandler {
         return trans;
     }
 
-    public XsltTransformer createTransformer(Path destination, String initialTemplate) throws SaxonApiException {
+    public XsltTransformer createTransformer(Path destination, String initialTemplate) {
         Serializer out = saxonProcessor.newSerializer();
         out.setOutputFile(destination.toFile());
 
@@ -93,7 +94,7 @@ public class XsltHandler {
         trans.transform();
 
         // If there were errors, print them out.
-        String errors = new String(os.toByteArray(), StandardCharsets.UTF_8);
+        String errors = os.toString(StandardCharsets.UTF_8);
         if (errors.length() > 0) {
             System.err.println(errors);
         }

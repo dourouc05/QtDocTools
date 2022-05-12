@@ -15,7 +15,7 @@ import java.util.Deque;
 import java.util.Iterator;
 
 public class FormattingStack {
-    private Deque<DocBookFormatting> stack = new ArrayDeque<>();
+    private final Deque<DocBookFormatting> stack = new ArrayDeque<>();
     private Deque<DocBookFormatting> addedInRun;
     private Deque<DocBookFormatting> removedInRun;
 
@@ -67,7 +67,7 @@ public class FormattingStack {
     }
 
     private void unrecognisedStyle(@NotNull XWPFRun run) throws XMLStreamException {
-        String styleID = POIHelpers.getStyle(run);
+        String styleID = run.getStyle();
         if (styleID.equals("CommentReference")) {
             System.out.println("There is still a comment in the document. Have proofs been checked?");
         } else if (! isStyleIDIgnored(styleID)) {
@@ -124,8 +124,8 @@ public class FormattingStack {
         dealWith(run.getVerticalAlignment().intValue() == INT_SUBSCRIPT, DocBookFormatting.SUPERSCRIPT);
 
         // Formattings encoded as styles.
-        String styleID = POIHelpers.getStyle(run);
-        String prevStyleID = prevRun == null? "" : POIHelpers.getStyle(prevRun);
+        String styleID = run.getStyle();
+        String prevStyleID = prevRun == null? "" : prevRun.getStyle();
         if ((DocBookFormatting.styleIDToDocBookTag.containsKey(styleID) || styleID.equals(""))
                 && (prevRun == null || prevStyleID.equals("") || DocBookFormatting.styleIDToDocBookTag.containsKey(prevStyleID))) {
             // If both styles are equal, nothing to do. Otherwise...

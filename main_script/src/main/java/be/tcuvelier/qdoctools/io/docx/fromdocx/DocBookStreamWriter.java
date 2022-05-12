@@ -6,7 +6,7 @@ import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 import java.util.Map;
 
-public interface DocBookStreamWriter {
+public interface DocBookStreamWriter { // TODO: really close to a standard SAX writer; is it needed to have this class?
     @SuppressWarnings("FieldCanBeLocal")
     String indentation = "  ";
     String docbookNS = "http://docbook.org/ns/docbook";

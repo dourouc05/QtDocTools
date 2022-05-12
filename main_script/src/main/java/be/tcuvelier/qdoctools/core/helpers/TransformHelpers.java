@@ -40,7 +40,7 @@ public class TransformHelpers {
 
     private static Map<String, Object> getTemplateParameters(ArticleConfiguration conf)
             throws InconsistentConfiguration, ConfigurationMissingField {
-        HashMap<String, Object> params = new HashMap();
+        HashMap<String, Object> params = new HashMap<>();
 
         // Generalities.
         params.put("document-file-name", conf.getArticleName().getFileName().toString().replace(".xml", ""));

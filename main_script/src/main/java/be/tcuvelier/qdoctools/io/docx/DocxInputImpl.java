@@ -29,8 +29,8 @@ public class DocxInputImpl {
     private final XWPFDocument doc;
     private final DocBookStreamWriter dbStream;
 
-    private Map<String, byte[]> images = new HashMap<>();
-    private Deque<FormattingStack> currentFormatting = new ArrayDeque<>();
+    private final Map<String, byte[]> images = new HashMap<>();
+    private final Deque<FormattingStack> currentFormatting = new ArrayDeque<>();
     private int currentSectionLevel;
     private boolean isWithinPart = false;
     private boolean isWithinChapter = false;
@@ -48,11 +48,11 @@ public class DocxInputImpl {
     private boolean isWithinVariableList = false;
     private boolean isWithinVariableListEntry = false;
 
-    private Set<Integer> captionPositions = new HashSet<>(); // Store position of paragraphs that have been recognised
+    private final Set<Integer> captionPositions = new HashSet<>(); // Store position of paragraphs that have been recognised
     // as captions: find those that have not been, so the user can be warned when one of them is visited.
-    private Set<Integer> backwardCaptionPositions = new HashSet<>(); // Store positions of captions that have been seen
+    private final Set<Integer> backwardCaptionPositions = new HashSet<>(); // Store positions of captions that have been seen
     // *before* an actual image. They are interpreted as figures.
-    private Set<Integer> abstractPositions = new HashSet<>(); // Store the position of the abstract.
+    private final Set<Integer> abstractPositions = new HashSet<>(); // Store the position of the abstract.
 
     @SuppressWarnings("WeakerAccess")
     public DocxInputImpl(@NotNull String filename) throws IOException, XMLStreamException {
@@ -67,15 +67,13 @@ public class DocxInputImpl {
     }
 
     private String detectDocumentType() throws XMLStreamException {
-        switch (doc.getParagraphs().get(0).getStyleID()) {
-            case "Title":
-                return "article";
-            case "Titlebook":
-                return "book";
-            default:
-                throw new XMLStreamException("Unrecognised document type. The first paragraph must be a Title or " +
-                        "a Title (book). Other document types are not implemented for now.");
-        }
+        return switch (doc.getParagraphs().get(0).getStyleID()) {
+            case "Title" -> "article";
+            case "Titlebook" -> "book";
+            default ->
+                    throw new XMLStreamException("Unrecognised document type. The first paragraph must be a Title or " +
+                            "a Title (book). Other document types are not implemented for now.");
+        };
     }
 
     @SuppressWarnings("WeakerAccess")
@@ -193,64 +191,26 @@ public class DocxInputImpl {
         }
 
         switch (p.getStyleID()) {
-            case "Title":
-            case "Titlebook":
-                visitDocumentTitle(p);
-                return;
-            case "Heading1":
-            case "Heading2":
-            case "Heading3":
-            case "Heading4":
-            case "Heading5":
-            case "Heading6":
-            case "Heading7":
-            case "Heading8":
-            case "Heading9":
-                visitSectionTitle(p);
-                return;
-            case "Titlepart":
-                visitPartTitle(p);
-                return;
-            case "Titlechapter":
-                visitChapterTitle(p);
-                return;
-            case "Editor":
-                visitAuthor(p);
-                return;
-            case "ProgramListing":
-            case "Screen":
-            case "Synopsis":
-                visitPreformatted(p);
-                return;
-            case "DefinitionListTitle":
-                visitDefinitionListTitle(p);
-                return;
-            case "DefinitionListItem":
-                visitDefinitionListItem(p);
-                return;
-            case "VariableListTitle":
-                visitVariableListTitle(p);
-                return;
-            case "VariableListItem":
-                visitVariableListItem(p);
-                return;
-            case "Normal": // The case with no style ID is already handled.
-            case "FootnoteText":
-                visitNormalParagraph(p);
-                return;
-            case "ListParagraph":
-                throw new XMLStreamException("Found a list paragraph that has not been recognised as a list.");
-            case "Caution":
-            case "Important":
-            case "Note":
-            case "Tip":
-            case "Warning":
-                visitAdmonition(p);
-                return;
-            default:
+            case "Title", "Titlebook" -> visitDocumentTitle(p);
+            case "Heading1", "Heading2", "Heading3", "Heading4", "Heading5", "Heading6", "Heading7", "Heading8", "Heading9" ->
+                    visitSectionTitle(p);
+            case "Titlepart" -> visitPartTitle(p);
+            case "Titlechapter" -> visitChapterTitle(p);
+            case "Editor" -> visitAuthor(p);
+            case "ProgramListing", "Screen", "Synopsis" -> visitPreformatted(p);
+            case "DefinitionListTitle" -> visitDefinitionListTitle(p);
+            case "DefinitionListItem" -> visitDefinitionListItem(p);
+            case "VariableListTitle" -> visitVariableListTitle(p);
+            case "VariableListItem" -> visitVariableListItem(p); // The case with no style ID is already handled.
+            case "Normal", "FootnoteText" -> visitNormalParagraph(p);
+            case "ListParagraph" ->
+                    throw new XMLStreamException("Found a list paragraph that has not been recognised as a list.");
+            case "Caution", "Important", "Note", "Tip", "Warning" -> visitAdmonition(p);
+            default -> {
                 // TODO: Don't panic when seeing something new, unless a command-line parameter says to (much more convenient for development!). For users, better to have a para than a crash.
                 System.err.println("Found a paragraph with an unsupported style: " + p.getStyleID());
                 throw new XMLStreamException("Found a paragraph with an unsupported style: " + p.getStyleID());
+            }
         }
 
         // The last switch returned from the function.
@@ -294,7 +254,7 @@ public class DocxInputImpl {
         }
 
         // Parse the other fields.
-        String[] fields = contributorInfo.split(".");
+        String[] fields = contributorInfo.split("."); // TODO: why just "." as regex? Looks suspicious.
         for (String field : fields) {
             String[] items = field.strip().split(Translations.colon.get(lang));
             if (items.length == 2) {
@@ -711,13 +671,11 @@ public class DocxInputImpl {
 
         dbStream.openBlockTag("imageobject");
 
+        final int pointsToInches = 72;
         Map<String, String> attrs = new LinkedHashMap<>(Map.ofEntries(
                 Map.entry("fileref", imageName),
-                // https://stackoverflow.com/questions/16142634/getting-image-size-from-xwpf-document-apache-poi
-                // Cx/Cx return values in EMUs (very different from EM).
-                // https://github.com/apache/poi/pull/150
-                Map.entry("width", (picture.getCTPicture().getSpPr().getXfrm().getExt().getCx() / 914_400) + "in"),
-                Map.entry("depth", (picture.getCTPicture().getSpPr().getXfrm().getExt().getCy() / 914_400) + "in")
+                Map.entry("width", picture.getWidth() / pointsToInches + "in"),
+                Map.entry("depth", picture.getDepth() / pointsToInches + "in")
         ));
         if (isDisplayedFigure) {
             XWPFParagraph parent = ((XWPFParagraph) r.getParent());
@@ -1105,7 +1063,7 @@ public class DocxInputImpl {
 
     private void visitFootNote(@NotNull XWPFRun run, @Nullable XWPFRun prevRun, boolean isLastRun) throws XMLStreamException {
         BigInteger soughtId = run.getCTR().getFootnoteReferenceList().get(0).getId();
-        List<XWPFFootnote> lfn = doc.getFootnotes().stream().filter(f -> f.getId().equals(soughtId)).collect(Collectors.toUnmodifiableList());
+        List<XWPFFootnote> lfn = doc.getFootnotes().stream().filter(f -> f.getId().equals(soughtId)).toList();
         for (XWPFFootnote fn: lfn) {
             dbStream.openBlockInlineTag("footnote");
             for (IBodyElement b: fn.getBodyElements()) {

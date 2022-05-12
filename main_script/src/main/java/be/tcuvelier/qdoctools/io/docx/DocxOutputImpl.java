@@ -14,6 +14,7 @@ import org.apache.poi.ooxml.POIXMLProperties;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.util.Units;
 import org.apache.poi.xwpf.usermodel.*;
+import org.apache.xmlbeans.SimpleValue;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.openxmlformats.schemas.officeDocument.x2006.extendedProperties.CTProperties;
@@ -38,9 +39,9 @@ public class DocxOutputImpl extends DefaultHandler {
     /** Internal variables. **/
 
     private Locator locator; // Tracks the state within the XML document, useful to display useful error messages.
-    private Path folder; // Folder of the document. Used to determine where to store images.
+    private final Path folder; // Folder of the document. Used to determine where to store images.
     XWPFDocument doc; // DOCX document being written.
-    private POIHelpers h = new POIHelpers();
+    private final POIHelpers h = new POIHelpers();
 
     private Language language;
 
@@ -75,9 +76,9 @@ public class DocxOutputImpl extends DefaultHandler {
     // null when outside a table cell.
     private int tableColumnNumber = -1; // Number of the current column within the row (starts at 0).
 
-    private LevelStack currentLevel = new LevelStack(); // Records some tags are are currently open.
+    private final LevelStack currentLevel = new LevelStack(); // Records some tags are are currently open.
     private int currentSectionDepth = 0; // 0: root; >0: sections.
-    private List<DocBookFormatting> currentFormatting = new ArrayList<>(); // Order: FIFO, i.e. first tag met in
+    private final List<DocBookFormatting> currentFormatting = new ArrayList<>(); // Order: FIFO, i.e. first tag met in
     // the document is the first one in the vector. TODO: migrate to Deque?
 
     DocxOutputImpl(Path folder, GlobalConfiguration config) throws IOException {
@@ -113,7 +114,7 @@ public class DocxOutputImpl extends DefaultHandler {
         coreProps.setTitle("");
         coreProps.getUnderlyingProperties().setCreatorProperty(Optional.empty());
 
-        // https://github.com/apache/poi/pull/157
+        // The unset* methods are missing in https://github.com/apache/poi/pull/157.
         CTProperties extendedProps = props.getExtendedProperties().getUnderlyingProperties();
         extendedProps.unsetApplication();
         extendedProps.unsetAppVersion();
@@ -133,25 +134,21 @@ public class DocxOutputImpl extends DefaultHandler {
 
     private class POIHelpers {
         private ParagraphAlignment alignmentToWordAligment(@NotNull String align) {
-            switch (align) {
-                case "center":
-                    return ParagraphAlignment.CENTER;
-                case "char":
+            return switch (align) {
+                case "center" -> ParagraphAlignment.CENTER;
+                case "char" ->
                     // No easy translation to Word.
                     // DocBook definition (https://tdg.docbook.org/tdg/5.2/imagedata.html):
                     //      Aligned horizontally on the specified character
                     // Available to Word:
                     //      http://officeopenxml.com/WPalignment.php
                     //      https://docs.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.alignment?view=openxml-2.8.1
-                    throw new IllegalArgumentException("DocBook char alignment is not supported");
-                case "justify":
-                    return ParagraphAlignment.DISTRIBUTE;
-                case "left":
-                    return ParagraphAlignment.LEFT;
-                case "right":
-                    return ParagraphAlignment.RIGHT;
-            }
-            return null;
+                        throw new IllegalArgumentException("DocBook char alignment is not supported");
+                case "justify" -> ParagraphAlignment.DISTRIBUTE;
+                case "left" -> ParagraphAlignment.LEFT;
+                case "right" -> ParagraphAlignment.RIGHT;
+                default -> null;
+            };
         }
 
         private int filenameToWordFormat(@NotNull String filename) {
@@ -159,22 +156,20 @@ public class DocxOutputImpl extends DefaultHandler {
             String[] parts = filename.split("\\.");
             String extension = parts[parts.length - 1].toLowerCase();
 
-            switch (extension) {
-                case "emf":  return XWPFDocument.PICTURE_TYPE_EMF;
-                case "wmf":  return XWPFDocument.PICTURE_TYPE_WMF;
-                case "pict": return XWPFDocument.PICTURE_TYPE_PICT;
-                case "jpg":
-                case "jpeg": return XWPFDocument.PICTURE_TYPE_JPEG;
-                case "png":  return XWPFDocument.PICTURE_TYPE_PNG;
-                case "dib":  return XWPFDocument.PICTURE_TYPE_DIB;
-                case "gif":  return XWPFDocument.PICTURE_TYPE_GIF;
-                case "tif":
-                case "tiff": return XWPFDocument.PICTURE_TYPE_TIFF;
-                case "eps":  return XWPFDocument.PICTURE_TYPE_EPS;
-                case "bmp":  return XWPFDocument.PICTURE_TYPE_BMP;
-                case "wpg":  return XWPFDocument.PICTURE_TYPE_WPG;
-            }
-            return -1;
+            return switch (extension) {
+                case "emf" -> XWPFDocument.PICTURE_TYPE_EMF;
+                case "wmf" -> XWPFDocument.PICTURE_TYPE_WMF;
+                case "pict" -> XWPFDocument.PICTURE_TYPE_PICT;
+                case "jpg", "jpeg" -> XWPFDocument.PICTURE_TYPE_JPEG;
+                case "png" -> XWPFDocument.PICTURE_TYPE_PNG;
+                case "dib" -> XWPFDocument.PICTURE_TYPE_DIB;
+                case "gif" -> XWPFDocument.PICTURE_TYPE_GIF;
+                case "tif", "tiff" -> XWPFDocument.PICTURE_TYPE_TIFF;
+                case "eps" -> XWPFDocument.PICTURE_TYPE_EPS;
+                case "bmp" -> XWPFDocument.PICTURE_TYPE_BMP;
+                case "wpg" -> XWPFDocument.PICTURE_TYPE_WPG;
+                default -> -1;
+            };
         }
 
         @Contract("null -> fail")
@@ -212,7 +207,7 @@ public class DocxOutputImpl extends DefaultHandler {
             fonts.setHint(STHint.DEFAULT);
 
             CTRPr font = CTRPr.Factory.newInstance();
-            font.setRFonts(fonts);
+            font.setRFontsArray(0, fonts);
             return font;
         }
 
@@ -220,23 +215,6 @@ public class DocxOutputImpl extends DefaultHandler {
             return paragraph.getLast().getPart().getPackagePart().addExternalRelationship(
                     uri, XWPFRelation.HYPERLINK.getRelation()
             ).getId();
-        }
-
-        private XWPFHyperlinkRun createHyperlinkRun(@NotNull String rId) {
-            // https://stackoverflow.com/questions/55275241/how-to-add-a-hyperlink-to-the-footer-of-a-xwpfdocument-using-apache-poi
-            // https://github.com/apache/poi/pull/153
-            // https://bz.apache.org/bugzilla/show_bug.cgi?id=64038
-            assert paragraph.size() > 0;
-
-            // Create the run.
-            CTHyperlink ctHyperLink = paragraph.getLast().getCTP().addNewHyperlink();
-            ctHyperLink.setId(rId);
-            ctHyperLink.addNewR();
-
-            // Append this run to the paragraph.
-            XWPFHyperlinkRun link = new XWPFHyperlinkRun(ctHyperLink, ctHyperLink.getRArray(0), paragraph.getLast());
-            paragraph.getLast().addRun(link);
-            return link;
         }
 
         private void createImage(Attributes attributes) throws SAXException {
@@ -339,7 +317,7 @@ public class DocxOutputImpl extends DefaultHandler {
             CTAbstractNum ctAbstractNum = CTAbstractNum.Factory.newInstance();
             ctAbstractNum.setAbstractNumId(abstractNumId);
             {
-                CTMultiLevelType ctMultiLevelType = CTMultiLevelType.Factory.newInstance();
+                CTMultiLevelType ctMultiLevelType = (CTMultiLevelType) CTMultiLevelType.Factory.newInstance();
                 ctMultiLevelType.setVal(STMultiLevelType.HYBRID_MULTILEVEL);
                 ctAbstractNum.setMultiLevelType(ctMultiLevelType);
             }
@@ -404,7 +382,7 @@ public class DocxOutputImpl extends DefaultHandler {
                     CTInd levelIndent = CTInd.Factory.newInstance();
                     levelIndent.setLeft(BigInteger.valueOf(720 * (i + 1)));
                     levelIndent.setHanging(BigInteger.valueOf(360));
-                    CTPPr indent = CTPPr.Factory.newInstance();
+                    CTPPrGeneral indent = CTPPrGeneral.Factory.newInstance();
                     indent.setInd(levelIndent);
                     lvl.setPPr(indent);
                 }
@@ -436,7 +414,7 @@ public class DocxOutputImpl extends DefaultHandler {
 
             iterateOverStyleHierarchy(parentStyle, (XWPFStyle s) -> {
                 /* Paragraph style */
-                CTPPr ppr = s.getCTStyle().getPPr();
+                CTPPrGeneral ppr = s.getCTStyle().getPPr();
                 if (ppr != null) {
                     // Borders.
                     if (ppr.getPBdr() != null) {
@@ -464,16 +442,16 @@ public class DocxOutputImpl extends DefaultHandler {
                         CTInd ind = ppr.getInd();
 
                         if (ind.getFirstLine() != null && p.getIndentationFirstLine() == -1) {
-                            p.setIndentationFirstLine(ind.getFirstLine().intValue());
+                            p.setIndentationFirstLine(((SimpleValue) ind.getFirstLine()).getIntValue());
                         }
                         if (ind.getHanging() != null && p.getIndentationHanging() == -1) {
-                            p.setIndentationHanging(ind.getHanging().intValue());
+                            p.setIndentationHanging(((SimpleValue) ind.getHanging()).getIntValue());
                         }
                         if (ind.getLeft() != null && p.getIndentationLeft() == -1) {
-                            p.setIndentationLeft(ind.getLeft().intValue());
+                            p.setIndentationLeft(((SimpleValue) ind.getLeft()).getIntValue());
                         }
                         if (ind.getRight() != null && p.getIndentationRight() == -1) {
-                            p.setIndentationRight(ind.getRight().intValue());
+                            p.setIndentationRight(((SimpleValue) ind.getRight()).getIntValue());
                         }
                     }
 
@@ -498,13 +476,13 @@ public class DocxOutputImpl extends DefaultHandler {
                         // rpr.getTextOutline();
 
                         // Shades.
-                        if (rpr.getShd() != null) {
+                        if (rpr.getShdArray() != null && rpr.getShdArray().length > 0) {
                             CTRPr p_rpr = r.getRPr();
                             if (p_rpr == null) {
                                 p_rpr = r.addNewRPr();
                             }
 
-                            p_rpr.setShd(rpr.getShd());
+                            p_rpr.setShdArray(rpr.getShdArray());
                         }
                     }
                 }
@@ -570,25 +548,13 @@ public class DocxOutputImpl extends DefaultHandler {
     private void setRunFormatting() throws SAXException {
         for (DocBookFormatting f: currentFormatting) {
             switch (f) {
-                case EMPHASIS:
-                    run.setItalic(true);
-                    break;
-                case EMPHASIS_BOLD:
-                    run.setBold(true);
-                    break;
-                case EMPHASIS_UNDERLINE:
-                    run.setUnderline(UnderlinePatterns.SINGLE);
-                    break;
-                case EMPHASIS_STRIKETHROUGH:
-                    run.setStrikeThrough(true);
-                    break;
-                case SUBSCRIPT:
-                    run.setSubscript(VerticalAlign.SUBSCRIPT);
-                    break;
-                case SUPERSCRIPT:
-                    run.setSubscript(VerticalAlign.SUPERSCRIPT);
-                    break;
-                default:
+                case EMPHASIS -> run.setItalic(true);
+                case EMPHASIS_BOLD -> run.setBold(true);
+                case EMPHASIS_UNDERLINE -> run.setUnderline(UnderlinePatterns.SINGLE);
+                case EMPHASIS_STRIKETHROUGH -> run.setStrikeThrough(true);
+                case SUBSCRIPT -> run.setSubscript(VerticalAlign.SUBSCRIPT);
+                case SUPERSCRIPT -> run.setSubscript(VerticalAlign.SUPERSCRIPT);
+                default -> {
                     // Special cases.
                     // Monospaced tag with a replaceable inside: just output the replaceable as italic.
                     if (currentFormatting.size() > 1 && f == DocBookFormatting.REPLACEABLE
@@ -603,7 +569,7 @@ public class DocxOutputImpl extends DefaultHandler {
                     } else {
                         throw new DocxException("formatting not recognised by setRunFormatting: " + f);
                     }
-                    break;
+                }
             }
         }
     }
@@ -729,7 +695,7 @@ public class DocxOutputImpl extends DefaultHandler {
         if (currentLink == null) {
             run = paragraph.getLast().createRun();
         } else {
-            run = h.createHyperlinkRun(currentLink);
+            run = paragraph.getLast().createHyperlinkRun(currentLink);
         }
 
         run.setLang(Language.toWordLang(language));
@@ -806,23 +772,12 @@ public class DocxOutputImpl extends DefaultHandler {
             // the style to be used).
         } else if (SAXHelpers.isInfoTag(qName)) {
             switch (currentLevel.peek()) {
-                case ROOT_ARTICLE:
-                    currentLevel.push(Level.ROOT_ARTICLE_INFO);
-                    break;
-                case ROOT_BOOK:
-                    currentLevel.push(Level.ROOT_BOOK_INFO);
-                    break;
-                case PART:
-                    currentLevel.push(Level.PART_INFO);
-                    break;
-                case CHAPTER:
-                    currentLevel.push(Level.CHAPTER_INFO);
-                    break;
-                case SECTION:
-                    currentLevel.push(Level.SECTION_INFO);
-                    break;
-                default:
-                    throw new DocxException("unexpected info tag in " + localName);
+                case ROOT_ARTICLE -> currentLevel.push(Level.ROOT_ARTICLE_INFO);
+                case ROOT_BOOK -> currentLevel.push(Level.ROOT_BOOK_INFO);
+                case PART -> currentLevel.push(Level.PART_INFO);
+                case CHAPTER -> currentLevel.push(Level.CHAPTER_INFO);
+                case SECTION -> currentLevel.push(Level.SECTION_INFO);
+                default -> throw new DocxException("unexpected info tag in " + localName);
             }
 
             ensureNoTextAllowed();
@@ -845,21 +800,13 @@ public class DocxOutputImpl extends DefaultHandler {
             if (SAXHelpers.isAuthorTag(qName)) {
                 text = Translations.author.get(language);
             } else if (SAXHelpers.isOtherCreditTag(qName)) {
-                switch (attr.getOrDefault("class", "reviewer")) {
-                    case "proofreader":
-                        text = Translations.proofreader.get(language);
-                        break;
-                    case "conversion":
-                        text = Translations.converter.get(language);
-                        break;
-                    case "reviewer":
-                    case "technicaleditor":
-                        text = Translations.reviewer.get(language);
-                        break;
-                    case "translator":
-                        text = Translations.translator.get(language);
-                        break;
-                }
+                text = switch (attr.getOrDefault("class", "reviewer")) {
+                    case "proofreader" -> Translations.proofreader.get(language);
+                    case "conversion" -> Translations.converter.get(language);
+                    case "reviewer", "technicaleditor" -> Translations.reviewer.get(language);
+                    case "translator" -> Translations.translator.get(language);
+                    default -> text;
+                };
             } else {
                 throw new DocxException("unexpected author/contributor tag.");
             }
@@ -900,27 +847,14 @@ public class DocxOutputImpl extends DefaultHandler {
             run.setText(Translations.pseudonym.get(language) + Translations.colon.get(language));
 
             Map<String, String> attr = SAXHelpers.attributes(attributes);
-            String text = "";
-            switch (attr.getOrDefault("type", "main-uri").toLowerCase()) {
-                case "main-uri":
-                    text = Translations.uriMain.get(language);
-                    break;
-                case "homepage":
-                case "webpage":
-                case "website":
-                    text = Translations.uriHomepage.get(language);
-                    break;
-                case "blog":
-                case "weblog":
-                    text = Translations.uriBlog.get(language);
-                    break;
-                case "google-plus":
-                    text = Translations.uriGooglePlus.get(language);
-                    break;
-                case "linkedin":
-                    text = Translations.uriLinkedIn.get(language);
-                    break;
-            }
+            String text = switch (attr.getOrDefault("type", "main-uri").toLowerCase()) {
+                case "main-uri" -> Translations.uriMain.get(language);
+                case "homepage", "webpage", "website" -> Translations.uriHomepage.get(language);
+                case "blog", "weblog" -> Translations.uriBlog.get(language);
+                case "google-plus" -> Translations.uriGooglePlus.get(language);
+                case "linkedin" -> Translations.uriLinkedIn.get(language);
+                default -> "";
+            };
             run.setText(text + Translations.colon.get(language));
 
             createNewRun();
@@ -1119,8 +1053,7 @@ public class DocxOutputImpl extends DefaultHandler {
             footnote = doc.createFootnote();
             paragraph.getLast().addFootnoteReference(footnote); // Creates a new run in the current paragraph.
 
-            CTP ctp = footnote.getCTFtnEdn().addNewP(); // https://github.com/apache/poi/pull/156
-            paragraph.addLast(new XWPFParagraph(ctp, footnote));
+            paragraph.addLast(footnote.createParagraph());
             paragraph.getLast().setStyle("FootnoteText");
             paragraphStyle = "FootnoteText";
 
@@ -1196,10 +1129,7 @@ public class DocxOutputImpl extends DefaultHandler {
 
             // For program listings, add the language and other parameters as a first paragraph.
             if (SAXHelpers.isProgramListingTag(qName)) {
-                // https://github.com/apache/poi/pull/152
-                CTOnOff on = CTOnOff.Factory.newInstance();
-                on.setVal(STOnOff.ON);
-                paragraph.getLast().getCTP().getPPr().setKeepNext(on);
+                paragraph.getLast().setKeepNext(true);
 
                 String text = Translations.programListing.get(language) + ". ";
                 if (attr.containsKey("language")) {
