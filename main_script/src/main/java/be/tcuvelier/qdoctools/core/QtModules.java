@@ -43,7 +43,8 @@ public class QtModules {
                 "qtwayland", Collections.singletonList(new Pair<>("compositor", "qtwaylandcompositor")),
                 "qtbase",
                 Arrays.asList(new Pair<>("concurrent", "qtconcurrent"),
-                        new Pair<>("corelib", "qtcore"), // Reason why qtbase cannot be in submodules (specific conf file name).
+                        new Pair<>("corelib", "qtcore"), // Reason why qtbase cannot be in submodules (specific
+                        // qtdocconf file name, cannot be guessed from submodule name).
                         new Pair<>("dbus", "qtdbus"),
                         new Pair<>("gui", "qtgui"),
                         new Pair<>("network", "qtnetwork"),
