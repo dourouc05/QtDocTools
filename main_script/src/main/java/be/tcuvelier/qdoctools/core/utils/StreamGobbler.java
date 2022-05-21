@@ -8,8 +8,8 @@ import java.util.function.Consumer;
 
 // From https://stackoverflow.com/a/33386692/1066843
 public class StreamGobbler implements Runnable {
-    private InputStream inputStream;
-    private Consumer<String> consumeInputLine;
+    private final InputStream inputStream;
+    private final Consumer<String> consumeInputLine;
 
     public StreamGobbler(InputStream inputStream, Consumer<String> consumeInputLine) {
         this.inputStream = inputStream;
@@ -17,8 +17,7 @@ public class StreamGobbler implements Runnable {
     }
 
     public StreamGobbler(InputStream inputStream, List<Consumer<String>> consumeInputLine) {
-        this.inputStream = inputStream;
-        this.consumeInputLine = (String r) -> consumeInputLine.forEach(c -> c.accept(r));
+        this(inputStream, (String r) -> consumeInputLine.forEach(c -> c.accept(r)));
     }
 
     public void run() {
