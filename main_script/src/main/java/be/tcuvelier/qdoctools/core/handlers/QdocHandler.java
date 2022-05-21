@@ -88,7 +88,7 @@ public class QdocHandler {
                     Path qdocconfPath = docDirectoryPath.resolve(entry.getValue().second + ".qdocconf");
 
                     if (! qdocconfPath.toFile().isFile()) {
-                        System.out.println("Skipped module: qttools / " + entry.getKey());
+                        System.out.println("Skipped module \"qttools / " + entry.getKey() + "\": no .qdocconf file");
                         continue;
                     }
 
@@ -118,7 +118,7 @@ public class QdocHandler {
                     Optional<Path> qdocconfOptionalPath = potentialQdocconfPaths.stream().filter(path -> path.toFile().isFile()).findAny();
 
                     if (qdocconfOptionalPath.isEmpty()) {
-                        System.out.println("Skipped module: " + directory + " / " + submodule.first);
+                        System.out.println("Skipped module \"" + directory + " / " + submodule.first + "\": no .qdocconf file");
                         continue;
                     }
 
@@ -147,7 +147,7 @@ public class QdocHandler {
                 Optional<Path> qdocconfOptionalPath = potentialQdocconfPaths.stream().filter(path -> path.toFile().isFile()).findAny();
 
                 if (qdocconfOptionalPath.isEmpty()) {
-                    System.out.println("Skipped module: " + directory);
+                    System.out.println("Skipped module \"" + directory + "\": no .qdocconf file");
                     continue;
                 }
 
@@ -167,7 +167,7 @@ public class QdocHandler {
 
                 if (! qdocconfPath.toFile().isFile()) {
                     if (modules.stream().noneMatch(stringPathPair -> stringPathPair.second.toFile().getName().contains(entry.getKey() + ".qdocconf"))) {
-                        System.out.println("Skipped module: qtbase / " + entry.getKey());
+                        System.out.println("Skipped module \"qtbase / " + entry.getKey() + "\": no .qdocconf file");
                     }
                     continue;
                 }
