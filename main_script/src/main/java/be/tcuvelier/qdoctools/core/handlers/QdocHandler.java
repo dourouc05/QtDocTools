@@ -290,7 +290,8 @@ public class QdocHandler {
                 "--outputformat", "DocBook",
                 "--single-exec",
                 "--log-progress",
-                "--timestamps"));
+                "--timestamps",
+                "--docbook-extensions"));
         if (qdocDebug) {
             params.add("--debug");
         }
