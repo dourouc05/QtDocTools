@@ -417,7 +417,7 @@ public class QdocHandler {
     }
 
     public void moveGeneratedFiles() throws IOException {
-        // Maybe everything under the html folder.
+        // Maybe everything is under the html folder.
         Path abnormalPath = outputFolder.resolve("html");
         if (Files.exists(abnormalPath)) {
             String[] files = abnormalPath.toFile().list((dir, name) -> name.endsWith(".xml"));
@@ -446,11 +446,17 @@ public class QdocHandler {
         }
         List<File> subfolders = Arrays.stream(fs).filter(File::isDirectory).toList();
         for (File subfolder: subfolders) { // For each module...
+            // First, deal with the DocBook files.
             File[] files = subfolder.listFiles((dir, name) -> name.endsWith(".xml"));
             if (files != null && files.length > 0) {
                 System.out.println("++> Moving qdoc's result from " + subfolder + " to the expected folder");
                 for (File f : files) { // For each DocBook file...
                     String name = f.getName();
+
+                    if (name.equals("search-results.xml")) {
+                        continue;
+                    }
+
                     try {
                         Files.copy(f.toPath(), outputFolder.resolve(name));
                     } catch (FileAlreadyExistsException e) {
