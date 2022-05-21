@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class QdocHandler {
     private final Path sourceFolder; // Containing Qt's sources.
     private final Path installedFolder; // Containing a compiled and installed version of Qt.
-    private Path outputFolder; // Where all the generated files should be put (qdoc may also output in a subfolder,
+    private final Path outputFolder; // Where all the generated files should be put (qdoc may also output in a subfolder,
     // in which case the files are automatically moved to a flatter hierarchy).
     private final Path mainQdocconfPath; // The qdocconf that lists all the other ones.
     private final String qdocPath;
@@ -92,7 +92,7 @@ public class QdocHandler {
                         continue;
                     }
 
-                    System.out.println("--> Found submodule: qttools / " + entry.getKey() + "; qdocconf: " + qdocconfPath.toString());
+                    System.out.println("--> Found submodule: qttools / " + entry.getKey() + "; qdocconf: " + qdocconfPath);
                     modules.add(new Pair<>(directory, qdocconfPath));
                 }
             } else if (QtModules.submodulesSpecificNames.containsKey(directory)) {
@@ -124,7 +124,7 @@ public class QdocHandler {
 
                     // Everything seems OK: push this module so that it will be handled later on.
                     Path qdocconfPath = qdocconfOptionalPath.get();
-                    System.out.println("--> Found submodule: " + directory + " / " + submodule.first + "; qdocconf: " + qdocconfPath.toString());
+                    System.out.println("--> Found submodule: " + directory + " / " + submodule.first + "; qdocconf: " + qdocconfPath);
                     modules.add(new Pair<>(directory, qdocconfPath));
                 }
             } else {
@@ -153,7 +153,7 @@ public class QdocHandler {
 
                 // Everything seems OK: push this module so that it will be handled later on.
                 Path qdocconfPath = qdocconfOptionalPath.get();
-                System.out.println("--> Found module: " + directory + "; qdocconf: " + qdocconfPath.toString());
+                System.out.println("--> Found module: " + directory + "; qdocconf: " + qdocconfPath);
                 modules.add(new Pair<>(directory, qdocconfPath));
             }
         }
@@ -172,7 +172,7 @@ public class QdocHandler {
                     continue;
                 }
 
-                System.out.println("--> Found submodule: qtbase / " + entry.getKey() + "; qdocconf: " + qdocconfPath.toString());
+                System.out.println("--> Found submodule: qtbase / " + entry.getKey() + "; qdocconf: " + qdocconfPath);
                 modules.add(new Pair<>("qtbase", qdocconfPath));
             }
         }
@@ -186,7 +186,7 @@ public class QdocHandler {
             if (! qdocconfPath.toFile().isFile()) {
                 System.out.println("Skipped submodule: qtdoc / qmake (old Qt 5 only)");
             } else {
-                System.out.println("--> Found submodule: qtbase / qmake (old Qt 5 only); qdocconf: " + qdocconfPath.toString());
+                System.out.println("--> Found submodule: qtbase / qmake (old Qt 5 only); qdocconf: " + qdocconfPath);
                 modules.add(new Pair<>("qtbase", qdocconfPath));
             }
         }
@@ -209,8 +209,7 @@ public class QdocHandler {
         }
         List<Path> directories = Arrays.stream(containedFiles)
                 .filter(f -> f.isDirectory() && QtModules.ignoredModules.stream().noneMatch(i -> f.toString().equals(i)))
-                .map(File::toPath)
-                .collect(Collectors.toList());
+                .map(File::toPath).toList();
 
         if (directories.size() == 0) {
             return includeDirs;
@@ -234,8 +233,7 @@ public class QdocHandler {
             List<Path> subDirectories = Arrays.stream(subDirs)
                     .filter(File::isDirectory)
                     .filter(f -> f.getName().split("\\.").length == 3)
-                    .map(File::toPath)
-                    .collect(Collectors.toList());
+                    .map(File::toPath).toList();
             for (Path sd: subDirectories) {
                 includeDirs.add(sd.toString());
 
@@ -445,7 +443,7 @@ public class QdocHandler {
             System.out.println("!!> No generated file or folder!");
             System.exit(0);
         }
-        List<File> subfolders = Arrays.stream(fs).filter(File::isDirectory).collect(Collectors.toList());
+        List<File> subfolders = Arrays.stream(fs).filter(File::isDirectory).toList();
         for (File subfolder: subfolders) { // For each module...
             File[] files = subfolder.listFiles((dir, name) -> name.endsWith(".xml"));
             if (files == null || files.length == 0) { // If there are no DocBook files: maybe everything already at the right place.
@@ -458,7 +456,7 @@ public class QdocHandler {
                 try {
                     Files.copy(f.toPath(), outputFolder.resolve(name));
                 } catch (FileAlreadyExistsException e) {
-                    System.out.println("!!> File already exists: " + outputFolder.resolve(name) + ". Tried to copy from: " + f.toString());
+                    System.out.println("!!> File already exists: " + outputFolder.resolve(name) + ". Tried to copy from: " + f);
                 }
             }
 
@@ -479,7 +477,7 @@ public class QdocHandler {
                         try {
                             Files.move(i.toPath(), outputFolder.resolve("images").resolve(name));
                         } catch (FileAlreadyExistsException e) {
-                            System.out.println("!!> File already exists: " + outputFolder.resolve("images").resolve(name) + ". Tried to copy from: " + i.toString());
+                            System.out.println("!!> File already exists: " + outputFolder.resolve("images").resolve(name) + ". Tried to copy from: " + i);
                         }
                     }
                 }
@@ -487,7 +485,7 @@ public class QdocHandler {
         }
     }
 
-    private List<Path> findWithExtension(String extension) {
+    private List<Path> findWithExtension(@SuppressWarnings("SameParameterValue") String extension) {
         String[] fileNames = outputFolder.toFile().list((current, name) -> name.endsWith(extension));
         if (fileNames == null || fileNames.length == 0) {
             return Collections.emptyList();
