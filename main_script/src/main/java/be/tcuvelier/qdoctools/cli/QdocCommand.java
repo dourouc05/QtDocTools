@@ -13,11 +13,11 @@ import java.util.concurrent.Callable;
 
 @Command(name = "qdoc", description = "Run qdoc and the associated transformations")
 public class QdocCommand implements Callable<Void> {
-    @Option(names = { "-i", "--source-folder" },
+    @Option(names = { "-s", "--source-folder" },
             description = "Folder to process (source code of Qt)", required = true)
     private String source;
 
-    @Option(names = { "-s", "--installed-folder" },
+    @Option(names = { "-i", "--installed-folder" },
             description = "Folder with a complete Qt installation " +
                     "(either precompiled or built from scratch and installed)", required = true)
     private String installed;
