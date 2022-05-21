@@ -478,17 +478,23 @@ public class QdocHandler {
     }
 
     private void moveGeneratedImagesRecursively(File folder, Path destination) throws IOException {
-        File[] images = folder.listFiles();
-        if (images == null || images.length == 0) {
+        File[] files = folder.listFiles();
+        if (files == null || files.length == 0) {
             return;
         }
 
-        for (File i : images) {
-            String name = i.getName();
+        for (File f : files) {
+            String name = f.getName();
+
+            if (f.isDirectory()) {
+                moveGeneratedImagesRecursively(f, destination.resolve(name));
+                continue;
+            }
+
             try {
-                Files.copy(i.toPath(), destination.resolve(name));
+                Files.copy(f.toPath(), destination.resolve(name));
             } catch (FileAlreadyExistsException e) {
-                System.out.println("!!> File already exists: " + destination.resolve(name) + ". Tried to copy from: " + i);
+                System.out.println("!!> File already exists: " + destination.resolve(name) + ". Tried to copy from: " + f);
             }
         }
     }
