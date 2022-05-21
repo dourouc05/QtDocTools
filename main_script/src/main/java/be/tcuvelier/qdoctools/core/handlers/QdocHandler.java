@@ -447,38 +447,35 @@ public class QdocHandler {
         List<File> subfolders = Arrays.stream(fs).filter(File::isDirectory).toList();
         for (File subfolder: subfolders) { // For each module...
             File[] files = subfolder.listFiles((dir, name) -> name.endsWith(".xml"));
-            if (files == null || files.length == 0) { // If there are no DocBook files: maybe everything already at the right place.
-                continue;
-            }
-
-            System.out.println("++> Moving qdoc's result from " + subfolder + " to the expected folder");
-            for (File f: files) { // For each DocBook file...
-                String name = f.getName();
-                try {
-                    Files.copy(f.toPath(), outputFolder.resolve(name));
-                } catch (FileAlreadyExistsException e) {
-                    System.out.println("!!> File already exists: " + outputFolder.resolve(name) + ". Tried to copy from: " + f);
+            if (files != null && files.length > 0) {
+                System.out.println("++> Moving qdoc's result from " + subfolder + " to the expected folder");
+                for (File f : files) { // For each DocBook file...
+                    String name = f.getName();
+                    try {
+                        Files.copy(f.toPath(), outputFolder.resolve(name));
+                    } catch (FileAlreadyExistsException e) {
+                        System.out.println("!!> File already exists: " + outputFolder.resolve(name) + ". Tried to copy from: " + f);
+                    }
                 }
             }
 
             // Maybe there is an images folder to move one level up.
             File[] folders = subfolder.listFiles((f, name) -> f.isDirectory());
-            if (folders == null || folders.length == 0) {
-                continue;
-            }
-            for (File f: folders) {
-                if (f.getName().equals("images")) {
-                    File[] images = f.listFiles();
-                    if (images == null || images.length == 0) {
-                        continue;
-                    }
+            if (folders != null && folders.length != 0) {
+                for (File f : folders) {
+                    if (f.getName().equals("images")) {
+                        File[] images = f.listFiles();
+                        if (images == null || images.length == 0) {
+                            continue;
+                        }
 
-                    for (File i: images) {
-                        String name = i.getName();
-                        try {
-                            Files.move(i.toPath(), outputFolder.resolve("images").resolve(name));
-                        } catch (FileAlreadyExistsException e) {
-                            System.out.println("!!> File already exists: " + outputFolder.resolve("images").resolve(name) + ". Tried to copy from: " + i);
+                        for (File i : images) {
+                            String name = i.getName();
+                            try {
+                                Files.copy(i.toPath(), outputFolder.resolve("images").resolve(name));
+                            } catch (FileAlreadyExistsException e) {
+                                System.out.println("!!> File already exists: " + outputFolder.resolve("images").resolve(name) + ". Tried to copy from: " + i);
+                            }
                         }
                     }
                 }
