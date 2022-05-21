@@ -104,14 +104,21 @@ public class QdocHandler {
 
                     // Find the exact qdocconf file.
                     List<Path> potentialQdocconfPaths = Arrays.asList(
-                            docDirectoryPath.resolve(submodule.second + ".qdocconf"), // ActiveQt.
-                            modulePath.resolve("doc").resolve("config").resolve(submodule.second + ".qdocconf"), // Qt Doc.
-                            srcDirectoryPath.resolve("doc").resolve(submodule.second + ".qdocconf"), // Qt Speech.
-                            docImportsDirectoryPath.resolve(submodule.second + ".qdocconf"), // Qt Quick modules like Controls 2.
+                            // ActiveQt.
+                            docDirectoryPath.resolve(submodule.second + ".qdocconf"),
+                            // Qt Doc.
+                            modulePath.resolve("doc").resolve("config").resolve(submodule.second + ".qdocconf"),
+                            // Qt Speech.
+                            srcDirectoryPath.resolve("doc").resolve(submodule.second + ".qdocconf"),
+                            // Qt Quick modules like Controls 2.
+                            docImportsDirectoryPath.resolve(submodule.second + ".qdocconf"),
                             docImportsDirectoryPath.resolve(submodule.second.substring(0, submodule.second.length() - 1) + ".qdocconf"),
-                            srcDirectoryPath.resolve("imports").resolve(submodule.second + ".qdocconf"), // Qt Quick modules.
-                            docDirectoryPath.resolve(submodule.second + "1.qdocconf"), // Qt Quick Controls 1.
-                            docDirectoryPath.resolve(submodule.second + ".qdocconf"), // Base case.
+                            // Qt Quick modules.
+                            srcDirectoryPath.resolve("imports").resolve(submodule.second + ".qdocconf"),
+                            // Qt Quick Controls 1.
+                            docDirectoryPath.resolve(submodule.second + "1.qdocconf"),
+                            // Base case.
+                            docDirectoryPath.resolve(submodule.second + ".qdocconf"),
                             docDirectoryPath.resolve("qt" + submodule.second + ".qdocconf")
                     );
 
