@@ -293,7 +293,7 @@ public class QdocHandler {
                 "--single-exec",
                 "--log-progress",
                 "--timestamps"));
-        if (qdocDebug) { // TODO: isn't this required to get all the needed information for later stages (like which file should be used within included examples)?
+        if (qdocDebug) {
             params.add("--debug");
         }
         for (String includePath: cppCompilerIncludes) {
