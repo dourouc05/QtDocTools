@@ -12,15 +12,18 @@ public class QtModules {
     // Private attributes are rewritten in terms of another (package-private) attribute.
     // At some point, could be moved to configuration file, but I guess there is little to gain in terms of maintenance.
 
-    public static List<String> ignoredModules; // A list of modules that have no documentation, and should thus be ignored.
-    private static Map<String, List<String>> submodules; // First-level folders in the source code that have multiple
-    // modules in them (like qtconnectivity: bluetooth and nfc).
-    public static Map<String, List<Pair<String, String>>> submodulesSpecificNames; // First-level folders in the source code
-    // that have multiple modules in them, but the qdocconf files have nonstandard names (like qtquickcontrols:
+    public static final List<String> ignoredModules; // A list of modules that have no documentation, and should thus
+    // be ignored.
+    private static final Map<String, List<String>> submodules; // First-level folders in the source code that have
+    // multiple modules in them (like qtconnectivity: bluetooth and nfc).
+    public static Map<String, List<Pair<String, String>>> submodulesSpecificNames; // First-level folders in the source
+    // code that have multiple modules in them, but the qdocconf files have nonstandard names (like qtquickcontrols:
     // controls->qtquickcontrols, dialogs->qtquickdialogs, extras->qtquickextras).
-    private static Map<String, String> renamedSubfolder; // Modules that have a strange subfolder (like qtdatavis3d: datavisualization).
-    public static Map<String, Pair<Path, String>> qtTools; // Qt Tools follows no other pattern.
-    public static Map<String, Pair<Path, String>> qtBaseTools; // Qt Tools follows no other pattern, even within Qt Base.
+    private static final Map<String, String> renamedSubfolder; // Modules that have a strange subfolder (like
+    // qtdatavis3d: datavisualization).
+    public static final Map<String, Pair<Path, String>> qtTools; // Qt Tools follows no other pattern.
+    public static final Map<String, Pair<Path, String>> qtBaseTools; // Qt Tools follows no other pattern, even within
+    // Qt Base.
 
     static {
         ignoredModules = Arrays.asList("qttranslations", "qtwebglplugin");

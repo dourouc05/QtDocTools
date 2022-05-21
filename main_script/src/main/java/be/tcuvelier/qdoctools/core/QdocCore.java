@@ -42,6 +42,7 @@ public class QdocCore {
         q.ensureOutputFolderExists();
 
         // Explore the source directory for the qdocconf files.
+        System.out.println("++> Looking for qdocconf files");
         List<Pair<String, Path>> modules = q.findModules();
         System.out.println("++> " + modules.size() + " modules found");
 
