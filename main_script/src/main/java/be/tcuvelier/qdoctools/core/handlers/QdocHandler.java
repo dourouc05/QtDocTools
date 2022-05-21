@@ -335,7 +335,7 @@ public class QdocHandler {
         Process qdoc = pb.start();
         @SuppressWarnings("StringBufferMayBeStringBuilder") StringBuffer sb = new StringBuffer(); // Will be written to from multiple threads, hence StringBuffer instead of StringBuilder.
         Consumer<String> errOutput = s -> {
-            if (! s.contains("warning: ") && ! s.contains("note: ")) {
+            if (qdocDebug || (! s.contains("warning: ") && ! s.contains("note: "))) {
                 System.err.println(s);
             }
         };
