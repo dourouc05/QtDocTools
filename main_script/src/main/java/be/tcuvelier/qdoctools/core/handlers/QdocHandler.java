@@ -457,10 +457,11 @@ public class QdocHandler {
                         continue;
                     }
 
+                    Path destination = outputFolder.resolve(name);
                     try {
-                        Files.copy(f.toPath(), outputFolder.resolve(name));
+                        Files.copy(f.toPath(), destination);
                     } catch (FileAlreadyExistsException e) {
-                        System.out.println("!!> File already exists: " + outputFolder.resolve(name) + ". Tried to copy from: " + f);
+                        System.out.println("!!> File already exists: " + destination + ". Tried to copy from: " + f);
                     }
                 }
             }
@@ -497,10 +498,11 @@ public class QdocHandler {
                 continue;
             }
 
+            Path d = destination.resolve(name);
             try {
-                Files.copy(f.toPath(), destination.resolve(name));
+                Files.copy(f.toPath(), d);
             } catch (FileAlreadyExistsException e) {
-                System.out.println("!!> File already exists: " + destination.resolve(name) + ". Tried to copy from: " + f);
+                System.out.println("!!> File already exists: " + d + ". Tried to copy from: " + f);
             }
         }
     }
