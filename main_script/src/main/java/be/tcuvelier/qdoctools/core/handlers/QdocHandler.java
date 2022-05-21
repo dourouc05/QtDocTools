@@ -483,6 +483,12 @@ public class QdocHandler {
             return;
         }
 
+        if (! destination.toFile().exists()) {
+            if (! destination.toFile().mkdirs()) {
+                throw new IOException("Could not create directories: " + destination);
+            }
+        }
+
         for (File f : files) {
             String name = f.getName();
 
