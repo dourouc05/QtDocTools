@@ -470,21 +470,25 @@ public class QdocHandler {
             if (folders != null && folders.length != 0) {
                 for (File f : folders) {
                     if (f.getName().equals("images")) {
-                        File[] images = f.listFiles();
-                        if (images == null || images.length == 0) {
-                            continue;
-                        }
-
-                        for (File i : images) {
-                            String name = i.getName();
-                            try {
-                                Files.copy(i.toPath(), outputFolder.resolve("images").resolve(name));
-                            } catch (FileAlreadyExistsException e) {
-                                System.out.println("!!> File already exists: " + outputFolder.resolve("images").resolve(name) + ". Tried to copy from: " + i);
-                            }
-                        }
+                        moveGeneratedImagesRecursively(f, outputFolder.resolve("images"));
                     }
                 }
+            }
+        }
+    }
+
+    private void moveGeneratedImagesRecursively(File folder, Path destination) throws IOException {
+        File[] images = folder.listFiles();
+        if (images == null || images.length == 0) {
+            return;
+        }
+
+        for (File i : images) {
+            String name = i.getName();
+            try {
+                Files.copy(i.toPath(), destination.resolve(name));
+            } catch (FileAlreadyExistsException e) {
+                System.out.println("!!> File already exists: " + destination.resolve(name) + ". Tried to copy from: " + i);
             }
         }
     }
