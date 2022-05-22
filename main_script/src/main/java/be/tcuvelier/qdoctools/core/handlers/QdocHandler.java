@@ -521,7 +521,14 @@ public class QdocHandler {
 
         // Build a regex pattern for the strings to remove.
         final Pattern patternMarker = Pattern.compile("(&lt;@[^&]*&gt;)|(&lt;/@[^&]*&gt;)");
-        final Pattern patternExtended = Pattern.compile("<db:extendedlink><db:link xlink:to=\"([a-zA-Z\\-]*)\\.xml\" xlink:title=\"([^\"]*)\" xlink:label=\"([^\"]*)\"/></db:extendedlink>");
+        final Pattern patternExtended = Pattern.compile(
+                "<db:extendedlink>" +
+                      "<db:link xlink:to=\"([a-zA-Z\\-]*)\\.xml\" xlink:title=\"([^\"]*)\" xlink:label=\"([^\"]*)\"/>" +
+                      "</db:extendedlink>");
+        final Pattern patternExampleLink = Pattern.compile(
+                "</db:section>\\R" +
+                        "<db:para><db:link xlink:href=\"(.*)\">Example project @ (.*)</db:link></db:para>\\R"+
+                      "</db:article>");
 
         for (Path filePath : findDocBook()) {
             boolean hasMatched = false;
@@ -547,6 +554,19 @@ public class QdocHandler {
                 if (matcher.results().findAny().isPresent()) {
                     hasMatched = true;
                     file = matcher.replaceAll("<db:extendedlink xlink:type=\"extended\"><db:link xlink:to=\"$1.xml\" xlink:title=\"$3\" xlink:type=\"arc\" xlink:arcrole=\"$2\"/></db:extendedlink>");
+                }
+            }
+            {
+                Matcher matcher = patternExampleLink.matcher(file);
+                if (matcher.results().findAny().isPresent()) {
+                    hasMatched = true;
+                    file = matcher.replaceAll("""
+                            </db:section>
+                            <db:section>
+                            <db:title>Example project</db:title>
+                            <db:para><db:link xlink:href="$1">Example project @ $2</db:link></db:para>
+                            </db:section>
+                            </db:article>""");
                 }
             }
 
