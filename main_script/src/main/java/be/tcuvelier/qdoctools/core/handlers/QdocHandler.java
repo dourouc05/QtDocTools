@@ -538,31 +538,11 @@ public class QdocHandler {
                 continue;
             }
 
-//            StringBuilder sb = new StringBuilder();
-//            boolean hasMatched = false;
-//            while (matcher.find()) {
-//                hasMatched = true;
-//                if (matcher.group("markerOpen") != null || matcher.group("markerClose") != null) {
-//                    matcher.appendReplacement(sb, "");
-//                } else if (matcher.group("extended") != null) {
-//                    sb.append("<db:extendedlink xlink:type=\"extended\">");
-//                    sb.append("<db:link xlink:to=\"");
-//                    sb.append(matcher.group("extendedTarget"));
-//                    sb.append("\" xlink:title=\"");
-//                    sb.append(matcher.group("extendedTitle"));
-//                    sb.append("\" xlink:type=\"arc\" xlink:arcrole=\"");
-//                    sb.append(matcher.group("extendedRole"));
-//                    sb.append("\"/>");
-//                    sb.append("</db:extendedlink>");
-//                }
-//            }
-//            matcher.appendTail(sb);
-
             Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak");
-//            if (! fileBackUp.toFile().exists()) {
-//                Files.move(filePath, fileBackUp);
-//            }
-//            Files.write(filePath, file.getBytes());
+            if (! fileBackUp.toFile().exists()) {
+                Files.move(filePath, fileBackUp);
+            }
+            Files.write(filePath, file.getBytes());
         }
     }
 
