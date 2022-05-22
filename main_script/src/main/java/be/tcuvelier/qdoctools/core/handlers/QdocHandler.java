@@ -88,15 +88,21 @@ public class QdocHandler {
                 // The most annoying case: Qt Tools, everything seems ad-hoc.
                 for (Map.Entry<String, Pair<Path, String>> entry : QtModules.qtTools.entrySet()) {
                     Path docDirectoryPath = modulePath.resolve(entry.getValue().first);
-                    Path qdocconfPath = docDirectoryPath.resolve(entry.getValue().second + ".qdocconf");
 
-                    if (! qdocconfPath.toFile().isFile()) {
+                    List<Path> potentialQdocconfPaths = Arrays.asList(
+                            docDirectoryPath.resolve(entry.getValue().second + ".qdocconf"),
+                            docDirectoryPath.resolve("qt" + entry.getValue().second + ".qdocconf")
+                    );
+
+                    Optional<Path> qdocconfOptionalPath = potentialQdocconfPaths.stream().filter(path -> path.toFile().isFile()).findAny();
+
+                    if (qdocconfOptionalPath.isEmpty()) {
                         System.out.println("Skipped module \"qttools / " + entry.getKey() + "\": no .qdocconf file");
                         continue;
                     }
 
-                    System.out.println("--> Found submodule: qttools / " + entry.getKey() + "; qdocconf: " + qdocconfPath);
-                    modules.add(new Pair<>(directory, qdocconfPath));
+                    System.out.println("--> Found submodule: qttools / " + entry.getKey() + "; qdocconf: " + qdocconfOptionalPath.get());
+                    modules.add(new Pair<>(directory, qdocconfOptionalPath.get()));
                 }
             } else if (QtModules.submodulesSpecificNames.containsKey(directory)) {
                 // Find the path to the documentation folders for each of the submodule.
@@ -111,13 +117,17 @@ public class QdocHandler {
                             docDirectoryPath.resolve(submodule.second + ".qdocconf"),
                             // Qt Doc.
                             modulePath.resolve("doc").resolve("config").resolve(submodule.second + ".qdocconf"),
+                            modulePath.resolve("doc").resolve("src").resolve(submodule.first).resolve(submodule.second + ".qdocconf"),
                             // Qt Speech.
                             srcDirectoryPath.resolve("doc").resolve(submodule.second + ".qdocconf"),
                             // Qt Quick modules like Controls 2.
                             docImportsDirectoryPath.resolve(submodule.second + ".qdocconf"),
+                            docImportsDirectoryPath.resolve("qt" + submodule.second + ".qdocconf"),
                             docImportsDirectoryPath.resolve(submodule.second.substring(0, submodule.second.length() - 1) + ".qdocconf"),
                             // Qt Quick modules.
                             srcDirectoryPath.resolve("imports").resolve(submodule.second + ".qdocconf"),
+                            // Qt Quick Dialogs 2 (Qt 6)
+                            srcDirectoryPath.resolve(submodule.first).resolve(submodule.first).resolve("doc").resolve("qt" + submodule.second + ".qdocconf"),
                             // Qt Quick Controls 1.
                             docDirectoryPath.resolve(submodule.second + "1.qdocconf"),
                             // Base case.

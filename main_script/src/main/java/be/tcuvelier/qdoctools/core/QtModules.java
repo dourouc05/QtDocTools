@@ -29,39 +29,72 @@ public class QtModules {
         ignoredModules = Arrays.asList("qttranslations", "qtwebglplugin");
         submodules = Map.of(
                 "qtconnectivity", Arrays.asList("bluetooth", "nfc"),
-                "qtdeclarative", Arrays.asList("qml", "qmltest", "quick"),
                 "qtscript", Arrays.asList("script", "scripttools"),
-                "qtlocation", Arrays.asList("location", "positioning")
+                "qtlocation", Arrays.asList("location", "positioning"),
+                "qtlanguageserver", List.of("jsonrpc")
         );
-        submodulesSpecificNames = Map.of(
-                "qtquickcontrols",
-                Arrays.asList(new Pair<>("controls", "qtquickcontrols"),
-                        new Pair<>("dialogs", "qtquickdialogs"),
-                        new Pair<>("extras", "qtquickextras")),
-                "qtlottie",
-                Collections.singletonList(new Pair<>("", "qtlottieanimation")),
-                "qtwayland", Collections.singletonList(new Pair<>("compositor", "qtwaylandcompositor")),
-                "qtbase",
-                Arrays.asList(new Pair<>("concurrent", "qtconcurrent"),
-                        new Pair<>("corelib", "qtcore"), // Reason why qtbase cannot be in submodules (specific
-                        // qtdocconf file name, cannot be guessed from submodule name).
-                        new Pair<>("dbus", "qtdbus"),
-                        new Pair<>("gui", "qtgui"),
-                        new Pair<>("network", "qtnetwork"),
-                        new Pair<>("opengl", "qtopengl"),
-                        new Pair<>("platformheaders", "qtplatformheaders"),
-                        new Pair<>("printsupport", "qtprintsupport"),
-                        new Pair<>("sql", "qtsql"),
-                        new Pair<>("testlib", "qttestlib"),
-                        new Pair<>("widgets", "qtwidgets"),
-                        new Pair<>("xml", "qtxml")),
-                "qtquickcontrols2",
-                Arrays.asList(new Pair<>("calendar", "qtlabscalendar"),
-                        new Pair<>("controls", "qtquickcontrols2"),
-                        new Pair<>("platform", "qtlabsplatform")),
-                "qtquick1", Collections.singletonList(new Pair<>("", "qtdeclarative")), // Needed for Qt 5.3 and previous.
-                "qtenginio", Arrays.asList(new Pair<>("enginio_client", "qtenginio"),
-                        new Pair<>("enginio_plugin", "qtenginioqml")) // Needed for Qt 5.3 and previous.
+        submodulesSpecificNames = Map.ofEntries(
+                Map.entry(
+                        "qtquickcontrols",
+                        Arrays.asList(new Pair<>("controls", "qtquickcontrols"),
+                                new Pair<>("dialogs", "qtquickdialogs"),
+                                new Pair<>("extras", "qtquickextras"))),
+                Map.entry("qtlottie", Collections.singletonList(new Pair<>("", "qtlottieanimation"))),
+                Map.entry("qtwayland", Collections.singletonList(new Pair<>("compositor", "qtwaylandcompositor"))),
+                Map.entry(
+                        "qtdeclarative",
+                        Arrays.asList(
+                                // Qt 5.
+                                new Pair<>("qml", "qml"),
+                                new Pair<>("qmltest", "qmltest"),
+                                new Pair<>("quick", "quick"),
+                                // Qt 6.
+                                new Pair<>("core", "qmlcore"),
+                                new Pair<>("qmlworkerscript", "qmlworkerscript"),
+                                new Pair<>("qmlxmllistmodel", "qmlxmllistmodel"),
+                                new Pair<>("qmlmodels", "qmlmodels"),
+                                new Pair<>("quickcontrols2", "quickcontrols"),
+                                new Pair<>("quickdialogs2", "quickdialogs"),
+                                new Pair<>("labs/platform", "labsplatform"))),
+                Map.entry("qtbase",
+                    Arrays.asList(new Pair<>("concurrent", "qtconcurrent"),
+                            new Pair<>("corelib", "qtcore"), // Reason why qtbase cannot be in submodules (specific
+                            // qtdocconf file name, cannot be guessed from submodule name).
+                            new Pair<>("dbus", "qtdbus"),
+                            new Pair<>("gui", "qtgui"),
+                            new Pair<>("network", "qtnetwork"),
+                            new Pair<>("opengl", "qtopengl"),
+                            new Pair<>("platformheaders", "qtplatformheaders"),
+                            new Pair<>("printsupport", "qtprintsupport"),
+                            new Pair<>("sql", "qtsql"),
+                            new Pair<>("testlib", "qttestlib"),
+                            new Pair<>("widgets", "qtwidgets"),
+                            new Pair<>("xml", "qtxml"))),
+                Map.entry("qtquickcontrols2",
+                    Arrays.asList(new Pair<>("calendar", "qtlabscalendar"),
+                            new Pair<>("controls", "qtquickcontrols2"),
+                            new Pair<>("platform", "qtlabsplatform"))),
+                Map.entry("qt3d", Collections.singletonList(new Pair<>("core", "qt3d"))),
+                Map.entry("qt5compat",
+                        Arrays.asList(new Pair<>("core5", "core5compat"),
+                                new Pair<>("graphicaleffects5", "graphicaleffects5compat"))),
+                Map.entry("qtdoc",
+                        Arrays.asList(new Pair<>("qtdoc", "qtdoc"),
+                                new Pair<>("cmake", "qtcmake"),
+                                new Pair<>("platformintegration", "qtplatformintegration"))),
+                Map.entry("qtquicktimeline", Collections.singletonList(new Pair<>("timeline", "qtquicktimeline"))),
+                Map.entry("qtscxml",
+                        Arrays.asList(new Pair<>("scxml", "qtscxml"),
+                                new Pair<>("statemachine", "qtstatemachine"))),
+                Map.entry("qtwebengine",
+                        Arrays.asList(new Pair<>("core", "qtwebengine"),
+                                new Pair<>("pdf", "qtpdf"))),
+
+                // Below: Qt 5.3 and previous only.
+                Map.entry("qtquick1", Collections.singletonList(new Pair<>("", "qtdeclarative"))),
+                Map.entry("qtenginio",
+                        Arrays.asList(new Pair<>("enginio_client", "qtenginio"),
+                                new Pair<>("enginio_plugin", "qtenginioqml")))
         );
         renamedSubfolder = Map.of(
                 "qtdatavis3d", "datavisualization",
