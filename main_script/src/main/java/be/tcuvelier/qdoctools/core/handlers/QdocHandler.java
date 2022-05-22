@@ -76,6 +76,9 @@ public class QdocHandler {
         // Loop over all these folders and identify the modules (and their associated qdocconf file).
         // Process based on https://github.com/pyside/pyside2-setup/blob/5.11/sources/pyside2/doc/CMakeLists.txt
         // Find the qdocconf files, skip if it does not exist at known places.
+        // This system cannot be replaced by a simple enumeration of all qdocconf files: many of them just define
+        // global configuration options or example URLs. For instance, for Qt 6.3, qtbase has 70 qdocconf files, but
+        // only 12 of them are relevant.
         List<Pair<String, Path>> modules = new ArrayList<>(directories.length);
         for (String directory : directories) {
             Path modulePath = sourceFolder.resolve(directory);
