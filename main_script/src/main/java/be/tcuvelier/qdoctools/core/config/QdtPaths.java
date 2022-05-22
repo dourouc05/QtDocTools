@@ -11,7 +11,7 @@ public class QdtPaths {
     }
 
     public String getDocBookRNGPath() throws ConfigurationMissingField {
-        return config.getQtDocToolsRoot() + "/schemas/docbook52/custom.rnc";
+        return config.getQtDocToolsRoot() + "/schemas/docbook52/docbookxi.rnc";
     }
 
     public String getDvpMLXSDPath() throws ConfigurationMissingField {
