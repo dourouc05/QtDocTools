@@ -491,31 +491,78 @@ public class QdocHandler {
         //       &lt;@keyword&gt;class&lt;/@keyword&gt; &lt;@type&gt;QObject&lt;/@type&gt;
         //   This example should be mapped to:
         //       class QObject;
+        //   -> regex: (&lt;@[^&]*&gt;)|(&lt;/@[^&]*&gt;)
+        // - in the DocBook output, extendedlinks are not valid: https://bugreports.qt.io/browse/QTBUG-103747
+        //   For instance:
+        //       <db:extendedlink><db:link xlink:to="xml-namespaces.xml" xlink:title="prev" xlink:label="An
+        //       Introduction to Namespaces"/></db:extendedlink>
+        //   This example should be mapped to:
+        //       <db:extendedlink xlink:type="extended"><db:link xlink:to="xml-namespaces.xml" xlink:title="An
+        //       Introduction to Namespaces" xlink:type="arc" xlink:arcrole="prev"/></db:extendedlink>
+        //   -> base regex:
+        //          <db:extendedlink><db:link xlink:to="(.*)" xlink:title="(.*)" xlink:label="(.*)"/></db:extendedlink>
 
         // Build a regex pattern for the strings to remove.
-        final String patternString = "(&lt;@[^&]*&gt;)|(&lt;/@[^&]*&gt;)";
-        final Pattern pattern = Pattern.compile(patternString);
+        final Pattern patternMarker = Pattern.compile("(&lt;@[^&]*&gt;)|(&lt;/@[^&]*&gt;)");
+        final Pattern patternExtended = Pattern.compile("<db:extendedlink><db:link xlink:to=\"([a-zA-Z\\-]*)\\.xml\" xlink:title=\"([^\"]*)\" xlink:label=\"([^\"]*)\"/></db:extendedlink>");
 
         for (Path filePath : findDocBook()) {
+            boolean hasMatched = false;
             String file = Files.readString(filePath);
 
-            Matcher matcher = pattern.matcher(file);
-            StringBuilder sb = new StringBuilder();
-            boolean hasMatched = false;
-            while (matcher.find()) {
+            {
+                Matcher matcher = patternMarker.matcher(file);
+                if (matcher.results().findAny().isPresent()) {
+                    hasMatched = true;
+                    file = matcher.replaceAll("");
+                }
+            }
+            if (file.contains("</db:extendedlink><db:extendedlink>")) {
                 hasMatched = true;
-                matcher.appendReplacement(sb, "");
+                file = file.replaceAll("</db:extendedlink><db:extendedlink>", "</db:extendedlink>\n<db:extendedlink>");
             }
+            if (file.contains("</db:extendedlink><db:abstract>")) {
+                hasMatched = true;
+                file = file.replaceAll("</db:extendedlink><db:abstract>", "</db:extendedlink>\n<db:abstract>");
+            }
+            {
+                Matcher matcher = patternExtended.matcher(file);
+                if (matcher.results().findAny().isPresent()) {
+                    hasMatched = true;
+                    file = matcher.replaceAll("<db:extendedlink xlink:type=\"extended\"><db:link xlink:to=\"$1.xml\" xlink:title=\"$3\" xlink:type=\"arc\" xlink:arcrole=\"$2\"/></db:extendedlink>");
+                }
+            }
+
             if (! hasMatched) {
-                continue; // This file has not changed: no need to have a back-up file or to spend time writing.
+                // This file has not changed: no need to have a back-up file or to spend time writing on disk.
+                continue;
             }
-            matcher.appendTail(sb);
+
+//            StringBuilder sb = new StringBuilder();
+//            boolean hasMatched = false;
+//            while (matcher.find()) {
+//                hasMatched = true;
+//                if (matcher.group("markerOpen") != null || matcher.group("markerClose") != null) {
+//                    matcher.appendReplacement(sb, "");
+//                } else if (matcher.group("extended") != null) {
+//                    sb.append("<db:extendedlink xlink:type=\"extended\">");
+//                    sb.append("<db:link xlink:to=\"");
+//                    sb.append(matcher.group("extendedTarget"));
+//                    sb.append("\" xlink:title=\"");
+//                    sb.append(matcher.group("extendedTitle"));
+//                    sb.append("\" xlink:type=\"arc\" xlink:arcrole=\"");
+//                    sb.append(matcher.group("extendedRole"));
+//                    sb.append("\"/>");
+//                    sb.append("</db:extendedlink>");
+//                }
+//            }
+//            matcher.appendTail(sb);
 
             Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak");
-            if (! fileBackUp.toFile().exists()) {
-                Files.move(filePath, fileBackUp);
-            }
-            Files.write(filePath, sb.toString().getBytes());
+//            if (! fileBackUp.toFile().exists()) {
+//                Files.move(filePath, fileBackUp);
+//            }
+//            Files.write(filePath, file.getBytes());
         }
     }
 
