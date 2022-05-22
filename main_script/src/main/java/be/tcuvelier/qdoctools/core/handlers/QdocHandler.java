@@ -527,7 +527,16 @@ public class QdocHandler {
                       "</db:extendedlink>");
         final Pattern patternExampleLink = Pattern.compile(
                 "</db:section>\\R" +
-                        "<db:para><db:link xlink:href=\"(.*)\">Example project @ (.*)</db:link></db:para>\\R"+
+                      "<db:para><db:link xlink:href=\"(.*)\">Example project @ (.*)</db:link></db:para>\\R"+
+                      "</db:article>");
+        final Pattern patternSeeAlso = Pattern.compile(
+                "</db:section>\\R" +
+                      "<db:para>\\R?"+
+                      "<db:emphasis>See also( )?</db:emphasis>\\R"+
+                      "<db:simplelist type=\"vert\" role=\"see-also\">\\R?"+
+                      "(<db:member>([^\r\n]*)</db:member>\\R)+(\\R)?" +
+                      "</db:simplelist>\\R"+
+                      "</db:para>\\R?"+
                       "</db:article>");
 
         for (Path filePath : findDocBook()) {
@@ -565,6 +574,23 @@ public class QdocHandler {
                             <db:section>
                             <db:title>Example project</db:title>
                             <db:para><db:link xlink:href="$1">Example project @ $2</db:link></db:para>
+                            </db:section>
+                            </db:article>""");
+                }
+            }
+            {
+                Matcher matcher = patternSeeAlso.matcher(file);
+                if (matcher.results().findAny().isPresent()) {
+                    hasMatched = true;
+                    file = matcher.replaceAll("""
+                            </db:section>
+                            <db:section>
+                            <db:title>See also</db:title>
+                            <db:para><db:emphasis>See also </db:emphasis>
+                            <db:simplelist type="vert" role="see-also">
+                            $2
+                            </db:simplelist>
+                            </db:para>
                             </db:section>
                             </db:article>""");
                 }
