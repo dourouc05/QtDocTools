@@ -540,13 +540,18 @@ public class QdocHandler {
         final String patternString = "(&lt;@[^&]*&gt;)|(&lt;/@[^&]*&gt;)";
         final Pattern pattern = Pattern.compile(patternString);
 
-        for (Path filePath : findWithExtension(".xml")) {
+        for (Path filePath : findDocBook()) {
             String file = Files.readString(filePath);
 
             Matcher matcher = pattern.matcher(file);
             StringBuilder sb = new StringBuilder();
-            while(matcher.find()) {
+            boolean hasMatched = false;
+            while (matcher.find()) {
+                hasMatched = true;
                 matcher.appendReplacement(sb, "");
+            }
+            if (! hasMatched) {
+                continue; // This file has not changed: no need to have a back-up file or to spend time writing.
             }
             matcher.appendTail(sb);
 

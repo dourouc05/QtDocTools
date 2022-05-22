@@ -90,13 +90,13 @@ public class QdocCore {
                 Path destination = root.resolve(FileHelpers.changeExtension(file, ".xml"));
 
                 // Print the name of the file to process to ease debugging.
-                System.out.println(FormattingHelpers.prefix(i, xml) + " " + file.toString());
+                System.out.println(FormattingHelpers.prefix(i, xml) + " " + file);
 
                 // Actually convert the DocBook into DvpML. This may print errors directly to stderr.
                 ByteArrayOutputStream os = new ByteArrayOutputStream();
                 h.createTransformer(file, destination, os).transform();
 
-                String errors = new String(os.toByteArray(), StandardCharsets.UTF_8);
+                String errors = os.toString(StandardCharsets.UTF_8);
                 if (errors.length() > 0) {
                     System.out.println(errors);
                 }
@@ -119,7 +119,5 @@ public class QdocCore {
             }
             System.out.println("++> DocBook-to-DvpML transformation done.");
         }
-
-        return;
     }
 }
