@@ -539,6 +539,20 @@ public class QdocHandler {
         // - rows in tables can be empty:
         //        <db:tr valign="top">
         //        </db:tr>
+        // - media objects have their title afterwards:
+        //        <db:mediaobject>
+        //        <db:textobject>
+        //        <db:para><db:emphasis>[Missing image ../images/wayland-multi-process.png]</db:emphasis></db:para>
+        //        </db:textobject>
+        //        </db:mediaobject>
+        //        <db:title>Multi-Process Client Architecture</db:title>
+        //   This example should be:
+        //        <db:mediaobject>
+        //        <db:title>Multi-Process Client Architecture</db:title>
+        //        <db:textobject>
+        //        <db:para><db:emphasis>[Missing image ../images/wayland-multi-process.png]</db:emphasis></db:para>
+        //        </db:textobject>
+        //        </db:mediaobject>
 
         // Build a regex pattern for the strings to remove.
         final Pattern patternMarker = Pattern.compile("(&lt;@[^&]*&gt;)|(&lt;/@[^&]*&gt;)");
