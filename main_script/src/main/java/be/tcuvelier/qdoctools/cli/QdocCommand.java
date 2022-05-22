@@ -50,15 +50,10 @@ public class QdocCommand implements Callable<Void> {
             "This operation requires the prior generation of the DocBook files")
     private boolean convertToDvpML = true;
 
-    @Option(names = "--no-consistency-checks", description = "Disables advanced consistency checks. " +
-            "They require an Internet connection")
-    private boolean consistencyChecks = true;
-    // TODO: Still required with the qdoc machinery? Probably not that much, but it would really not hurt to have it to check qdoc works properly...
-
     @Override
     public Void call() throws SaxonApiException, IOException, InterruptedException, ParserConfigurationException, SAXException {
         QdocCore.call(source, installed, output, configurationFile, qtVersion, qdocDebug, validate, convertToDocBook,
-                convertToDvpML, consistencyChecks);
+                convertToDvpML);
         return null;
     }
 }

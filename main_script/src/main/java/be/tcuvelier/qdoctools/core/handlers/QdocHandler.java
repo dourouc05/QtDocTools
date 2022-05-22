@@ -389,53 +389,6 @@ public class QdocHandler {
         }
     }
 
-    public void checkUngeneratedFiles() throws ParserConfigurationException, IOException, SAXException {
-        // TODO: update to DocBook, based on the same files.
-//        // Not always working, just catching some errors, that's already a good improvement on top of not using this function.
-//        File[] fs = outputFolder.toFile().listFiles();
-//        if (fs == null || fs.length == 0) {
-//            return;
-//        }
-//        List<File> subfolders = Arrays.stream(fs).filter(File::isDirectory).collect(Collectors.toList());
-//        for (File subfolder: subfolders) { // For each module...
-//            // Find the index file.
-//            File[] potentialIndices = subfolder.listFiles((dir, name) -> name.endsWith(".index"));
-//            if (potentialIndices == null || potentialIndices.length != 1) {
-//                continue;
-//            }
-//
-//            File index = potentialIndices[0];
-//            if (! index.exists()) {
-//                continue;
-//            }
-//
-//            // Find all WebXML files in this folder.
-//            File[] webxmlFiles = subfolder.listFiles((dir, name) -> name.endsWith(".webxml"));
-//            if (webxmlFiles == null) {
-//                continue;
-//            }
-//            Set<String> webxml = Arrays.stream(webxmlFiles).map(File::getName).collect(Collectors.toSet());
-//
-//            // Iterate through the folder and find missing files.
-//            Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(index);
-//            Node root = doc.getDocumentElement().getElementsByTagName("namespace").item(0);
-//            NodeList children = root.getChildNodes();
-//            for (int i = 0; i < children.getLength(); ++i) {
-//                Node page = children.item(i);
-//                if (! page.getNodeName().equals("page")) {
-//                    continue;
-//                }
-//
-//                String pageName = page.getAttributes().getNamedItem("href").getNodeValue().replace(".html", ".webxml");
-//                if (! webxml.contains(pageName) && ! pageName.equals("nolink") && !
-//                        (pageName.startsWith("http://") || pageName.startsWith("https://") || pageName.startsWith("ftp://"))
-//                ) {
-//                    System.out.println("Missing file: " + pageName + "; module: " + subfolder);
-//                }
-//            }
-//        }
-    }
-
     public void moveGeneratedFiles() throws IOException {
         // Maybe everything is under the html folder.
         Path abnormalPath = outputFolder.resolve("html");

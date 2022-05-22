@@ -22,8 +22,7 @@ import java.util.List;
 
 public class QdocCore {
     public static void call(String source, String installed, String output, String configurationFile, QtVersion qtVersion,
-                            boolean qdocDebug, boolean validate, boolean convertToDocBook, boolean convertToDvpML,
-                            boolean consistencyChecks)
+                            boolean qdocDebug, boolean validate, boolean convertToDocBook, boolean convertToDvpML)
             throws SaxonApiException, IOException, InterruptedException, ParserConfigurationException, SAXException {
         // Perform the conversion cycle, as complete as required.
 
@@ -60,10 +59,6 @@ public class QdocCore {
             // Sometimes, qdoc outputs things in a strange folder. Ahoy!
             q.moveGeneratedFiles();
             q.fixQdocBugs();
-
-            System.out.println("++> Checking whether all indexed files are present.");
-            q.checkUngeneratedFiles();
-            System.out.println("++> Checked!");
 
             // TODO: validate the files.
         }
