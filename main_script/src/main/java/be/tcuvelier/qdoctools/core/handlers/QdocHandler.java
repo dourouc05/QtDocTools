@@ -520,9 +520,17 @@ public class QdocHandler {
     }
 
     public void validateDocBook() throws IOException, SAXException {
+        int nFiles = 0;
+        int nValidFiles = 0;
         for (Path file : findDocBook()) {
-            ValidationHelper.validateDocBook(file, config); // TODO: do something with the returned value.
+            nFiles += 1;
+            if (ValidationHelper.validateDocBook(file, config)) {
+                nValidFiles += 1;
+            } else {
+                System.out.println("!!> Invalid file: " + file);
+            }
         }
+        System.out.println("++> " + nFiles + " validated, " + nValidFiles + " valid, " + (nFiles - nValidFiles) + " invalid.");
     }
 
     private List<Path> findWithExtension(@SuppressWarnings("SameParameterValue") String extension) {
