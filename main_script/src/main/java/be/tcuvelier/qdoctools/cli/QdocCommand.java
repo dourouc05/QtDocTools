@@ -1,6 +1,7 @@
 package be.tcuvelier.qdoctools.cli;
 
 import be.tcuvelier.qdoctools.core.QdocCore;
+import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.utils.QtVersion;
 import net.sf.saxon.s9api.SaxonApiException;
 import org.xml.sax.SAXException;
@@ -52,8 +53,9 @@ public class QdocCommand implements Callable<Void> {
 
     @Override
     public Void call() throws SaxonApiException, IOException, InterruptedException, ParserConfigurationException, SAXException {
+        GlobalConfiguration config = new GlobalConfiguration(configurationFile);
         QdocCore.call(source, installed, output, configurationFile, qtVersion, qdocDebug, validate, convertToDocBook,
-                convertToDvpML);
+                convertToDvpML, config);
         return null;
     }
 }

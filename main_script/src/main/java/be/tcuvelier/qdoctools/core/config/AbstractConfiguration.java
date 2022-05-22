@@ -41,7 +41,13 @@ public abstract class AbstractConfiguration {
     }
 
     protected AbstractConfiguration(File file) throws FileNotFoundException {
-        config = JsonParser.parseReader(new FileReader(file)).getAsJsonObject();
+        try {
+            config = JsonParser.parseReader(new FileReader(file)).getAsJsonObject();
+        } catch (FileNotFoundException e) {
+            System.out.println("!!> Configuration file not found! Trying to load: " + file.getAbsolutePath());
+            throw e;
+        }
+
     }
 
     protected String getStringAttribute(String field) throws ConfigurationMissingField {

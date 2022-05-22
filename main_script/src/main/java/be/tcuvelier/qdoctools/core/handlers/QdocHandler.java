@@ -1,6 +1,8 @@
 package be.tcuvelier.qdoctools.core.handlers;
 
+import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.exceptions.WriteQdocconfException;
+import be.tcuvelier.qdoctools.core.helpers.ValidationHelper;
 import be.tcuvelier.qdoctools.core.utils.Pair;
 import be.tcuvelier.qdoctools.core.utils.QtVersion;
 import be.tcuvelier.qdoctools.core.utils.StreamGobbler;
@@ -8,7 +10,6 @@ import be.tcuvelier.qdoctools.core.QtModules;
 import org.jetbrains.annotations.NotNull;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
@@ -31,15 +32,17 @@ public class QdocHandler {
     private final QtVersion qtVersion;
     private final boolean qdocDebug;
     private final List<String> cppCompilerIncludes;
+    private final GlobalConfiguration config;
 
     public QdocHandler(String source, String installed, String output, String qdocPath, QtVersion qtVersion,
-                       boolean qdocDebug, List<String> cppCompilerIncludes) {
+                       boolean qdocDebug, List<String> cppCompilerIncludes, GlobalConfiguration config) {
         sourceFolder = Paths.get(source);
         installedFolder = Paths.get(installed);
         outputFolder = Paths.get(output);
         mainQdocconfPath = outputFolder.resolve("qtdoctools-main.qdocconf");
 
-        this.qdocPath = qdocPath;
+        this.config = config;
+        this.qdocPath = qdocPath; // TODO: either read this from `config` or from `installed`.
         this.qtVersion = qtVersion;
         this.qdocDebug = qdocDebug;
         this.cppCompilerIncludes = cppCompilerIncludes;
@@ -513,6 +516,12 @@ public class QdocHandler {
                 Files.move(filePath, fileBackUp);
             }
             Files.write(filePath, sb.toString().getBytes());
+        }
+    }
+
+    public void validateDocBook() throws IOException, SAXException {
+        for (Path file : findDocBook()) {
+            ValidationHelper.validateDocBook(file, config); // TODO: do something with the returned value.
         }
     }
 

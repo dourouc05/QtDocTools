@@ -21,23 +21,16 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class QdocCore {
-    public static void call(String source, String installed, String output, String configurationFile, QtVersion qtVersion,
-                            boolean qdocDebug, boolean validate, boolean convertToDocBook, boolean convertToDvpML)
+    public static void call(String source, String installed, String output, String configurationFile,
+                            QtVersion qtVersion, boolean qdocDebug, boolean validate, boolean convertToDocBook,
+                            boolean convertToDvpML, GlobalConfiguration config)
             throws SaxonApiException, IOException, InterruptedException, ParserConfigurationException, SAXException {
         // Perform the conversion cycle, as complete as required.
 
         // First, initialise global objects.
-        GlobalConfiguration config;
-        try {
-            config = new GlobalConfiguration(configurationFile);
-        } catch (FileNotFoundException e) {
-            System.out.println("!!> Configuration file not found! " + configurationFile);
-            return;
-        }
-
         List<String> includes = config.getCppCompilerIncludes();
         includes.addAll(config.getNdkIncludes());
-        QdocHandler q = new QdocHandler(source, installed, output, config.getQdocLocation(), qtVersion, qdocDebug, includes);
+        QdocHandler q = new QdocHandler(source, installed, output, config.getQdocLocation(), qtVersion, qdocDebug, includes, config);
         q.ensureOutputFolderExists();
 
         // Explore the source directory for the qdocconf files.
@@ -53,14 +46,17 @@ public class QdocCore {
 
             // Actually run qdoc on this new file.
             System.out.println("++> Running qdoc.");
-            q.runQdoc();
+//            q.runQdoc();
             System.out.println("++> Qdoc done.");
 
-            // Sometimes, qdoc outputs things in a strange folder. Ahoy!
-            q.moveGeneratedFiles();
+            System.out.println("++> Fixing some qdoc quirks.");
+            q.moveGeneratedFiles(); // Sometimes, qdoc outputs things in a strange folder. Ahoy!
             q.fixQdocBugs();
+            System.out.println("++> Qdoc quirks fixed."); // At least, the ones I know about right now.
 
-            // TODO: validate the files.
+            System.out.println("++> Validating DocBook output.");
+            q.validateDocBook();
+            System.out.println("++> DocBook output validated.");
         }
 
         // Run Saxon to get the DvpML output.
