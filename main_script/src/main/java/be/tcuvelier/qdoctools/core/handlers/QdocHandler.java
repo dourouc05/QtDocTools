@@ -527,6 +527,37 @@ public class QdocHandler {
         }
     }
 
+    public void fixQdocBugs() throws IOException {
+        // Only the files in the root folder are considered.
+        // List of bugs fixed here:
+        // - in the DocBook output, code has markers for syntax highlighting (e.g., around keywords).
+        //   For instance:
+        //       &lt;@keyword&gt;class&lt;/@keyword&gt; &lt;@type&gt;QObject&lt;/@type&gt;
+        //   This example should be mapped to:
+        //       class QObject;
+
+        // Build a regex pattern for the strings to remove.
+        final String patternString = "(&lt;@[^&]*&gt;)|(&lt;/@[^&]*&gt;)";
+        final Pattern pattern = Pattern.compile(patternString);
+
+        for (Path filePath : findWithExtension(".xml")) {
+            String file = Files.readString(filePath);
+
+            Matcher matcher = pattern.matcher(file);
+            StringBuilder sb = new StringBuilder();
+            while(matcher.find()) {
+                matcher.appendReplacement(sb, "");
+            }
+            matcher.appendTail(sb);
+
+            Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak");
+            if (! fileBackUp.toFile().exists()) {
+                Files.move(filePath, fileBackUp);
+            }
+            Files.write(filePath, sb.toString().getBytes());
+        }
+    }
+
     private List<Path> findWithExtension(@SuppressWarnings("SameParameterValue") String extension) {
         String[] fileNames = outputFolder.toFile().list((current, name) -> name.endsWith(extension));
         if (fileNames == null || fileNames.length == 0) {

@@ -59,6 +59,7 @@ public class QdocCore {
 
             // Sometimes, qdoc outputs things in a strange folder. Ahoy!
             q.moveGeneratedFiles();
+            q.fixQdocBugs();
 
             System.out.println("++> Checking whether all indexed files are present.");
             q.checkUngeneratedFiles();
