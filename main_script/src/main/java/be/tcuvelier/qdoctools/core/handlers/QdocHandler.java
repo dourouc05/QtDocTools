@@ -518,6 +518,27 @@ public class QdocHandler {
         //        project @ code.qt.io</db:link></db:para>
         //        </db:section>
         //        </db:article>
+        // - a similar problem is present for the list of see also:
+        //        </db:section>
+        //        <db:para><db:emphasis>See also </db:emphasis>
+        //        <db:simplelist type="vert" role="see-also"><db:member><db:link
+        //        xlink:href="activeqt-index.xml">ActiveQt Framework</db:link></db:member>
+        //        </db:simplelist>
+        //        </db:para></db:article>
+        //   This example should be:
+        //        </db:section>
+        //        <db:section>
+        //        <db:title>See also</db:title>
+        //        <db:para><db:emphasis>See also </db:emphasis>
+        //        <db:simplelist type="vert" role="see-also"><db:member><db:link
+        //        xlink:href="activeqt-index.xml">ActiveQt Framework</db:link></db:member>
+        //        </db:simplelist>
+        //        </db:para>
+        //        </db:section>
+        //        </db:article>
+        // - rows in tables can be empty:
+        //        <db:tr valign="top">
+        //        </db:tr>
 
         // Build a regex pattern for the strings to remove.
         final Pattern patternMarker = Pattern.compile("(&lt;@[^&]*&gt;)|(&lt;/@[^&]*&gt;)");
@@ -538,6 +559,7 @@ public class QdocHandler {
                       "</db:simplelist>\\R"+
                       "</db:para>\\R?"+
                       "</db:article>");
+        final Pattern patternEmptyTableRow = Pattern.compile("<db:tr(.*)>(\\R)?</db:tr>(\\R)?");
 
         for (Path filePath : findDocBook()) {
             boolean hasMatched = false;
@@ -593,6 +615,13 @@ public class QdocHandler {
                             </db:para>
                             </db:section>
                             </db:article>""");
+                }
+            }
+            {
+                Matcher matcher = patternEmptyTableRow.matcher(file);
+                if (matcher.results().findAny().isPresent()) {
+                    hasMatched = true;
+                    file = matcher.replaceAll("");
                 }
             }
 
