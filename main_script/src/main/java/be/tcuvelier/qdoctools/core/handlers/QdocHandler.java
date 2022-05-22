@@ -501,6 +501,23 @@ public class QdocHandler {
         //       Introduction to Namespaces" xlink:type="arc" xlink:arcrole="prev"/></db:extendedlink>
         //   -> base regex:
         //          <db:extendedlink><db:link xlink:to="(.*)" xlink:title="(.*)" xlink:label="(.*)"/></db:extendedlink>
+        // - in the DocBook output, for examples, links to projects are output outside sections:
+        //   https://bugreports.qt.io/browse/QTBUG-103749
+        //   For instance, at the end of the file:
+        //        </db:section>
+        //        <db:para><db:link
+        //        xlink:href="https://code.qt.io/cgit/qt/qtbase.git/tree/examples/gui/hellovulkanwidget?h=6.3">Example
+        //        project @ code.qt.io</db:link></db:para>
+        //        </db:article>
+        //   This example should be mapped to:
+        //        </db:section>
+        //        <db:section>
+        //        <db:title>Example project</db:title>
+        //        <db:para><db:link
+        //        xlink:href="https://code.qt.io/cgit/qt/qtbase.git/tree/examples/gui/hellovulkanwidget?h=6.3">Example
+        //        project @ code.qt.io</db:link></db:para>
+        //        </db:section>
+        //        </db:article>
 
         // Build a regex pattern for the strings to remove.
         final Pattern patternMarker = Pattern.compile("(&lt;@[^&]*&gt;)|(&lt;/@[^&]*&gt;)");
