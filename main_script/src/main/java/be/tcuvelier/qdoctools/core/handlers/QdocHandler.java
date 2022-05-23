@@ -15,6 +15,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -586,36 +587,37 @@ public class QdocHandler {
         final Pattern patternEmptyTableRow = Pattern.compile("<db:tr(.*)>(\\R)?</db:tr>(\\R)?");
 
         for (Path filePath : findDocBook()) {
+            boolean abandon = false;
             boolean hasMatched = false;
             String file = Files.readString(filePath);
 
             if (file.length() == 0) {
-                continue;
+                abandon = true;
             }
 
-            {
+            if (! abandon) {
                 Matcher matcher = patternMarker.matcher(file);
                 if (matcher.results().findAny().isPresent()) {
                     hasMatched = true;
                     file = matcher.replaceAll("");
                 }
             }
-            if (file.contains("</db:extendedlink><db:extendedlink>")) {
+            if (! abandon && file.contains("</db:extendedlink><db:extendedlink>")) {
                 hasMatched = true;
                 file = file.replaceAll("</db:extendedlink><db:extendedlink>", "</db:extendedlink>\n<db:extendedlink>");
             }
-            if (file.contains("</db:extendedlink><db:abstract>")) {
+            if (! abandon && file.contains("</db:extendedlink><db:abstract>")) {
                 hasMatched = true;
                 file = file.replaceAll("</db:extendedlink><db:abstract>", "</db:extendedlink>\n<db:abstract>");
             }
-            {
+            if (! abandon) {
                 Matcher matcher = patternExtended.matcher(file);
                 if (matcher.results().findAny().isPresent()) {
                     hasMatched = true;
                     file = matcher.replaceAll("<db:extendedlink xlink:type=\"extended\"><db:link xlink:to=\"$1.xml\" xlink:title=\"$3\" xlink:type=\"arc\" xlink:arcrole=\"$2\"/></db:extendedlink>");
                 }
             }
-            {
+            if (! abandon) {
                 Matcher matcher = patternExampleLink.matcher(file);
                 if (matcher.results().findAny().isPresent()) {
                     hasMatched = true;
@@ -628,7 +630,7 @@ public class QdocHandler {
                             </db:article>""");
                 }
             }
-            {
+            if (! abandon) {
                 Matcher matcher = patternSeeAlso.matcher(file);
                 if (matcher.results().findAny().isPresent()) {
                     hasMatched = true;
@@ -645,14 +647,34 @@ public class QdocHandler {
                             </db:article>""");
                 }
             }
-            {
+            if (! abandon) {
                 Matcher matcher = patternEmptyTableRow.matcher(file);
                 if (matcher.results().findAny().isPresent()) {
                     hasMatched = true;
                     file = matcher.replaceAll("");
                 }
             }
-            {
+            if (! abandon) {
+                try {
+                    Processor processor = new Processor(false);
+                    DocumentBuilder db = processor.newDocumentBuilder();
+                    db.setLineNumbering(true);
+
+                    InputStream is = new ByteArrayInputStream(file.getBytes());
+                    db.build(new StreamSource(is));
+                } catch (Exception e) {
+                    if (filePath.endsWith("classes.xml")) {
+                        // FUBAR with Qdoc 6.3: not even proper XML (many root tags).
+                        System.out.println("!!> Improperly formatted classes.xml! Skipping.");
+                        e.printStackTrace();
+                        abandon = true;
+                    } else {
+                        // Another file that's simply not valid XML (let alone DocBook).
+                        throw e;
+                    }
+                }
+            }
+            if (! abandon) {
                 Processor processor = new Processor(false);
                 DocumentBuilder db = processor.newDocumentBuilder();
                 db.setLineNumbering(true);
@@ -685,6 +707,9 @@ public class QdocHandler {
                 }
             }
 
+            if (abandon) {
+                continue;
+            }
             if (! hasMatched) {
                 // This file has not changed: no need to have a back-up file or to spend time writing on disk.
                 continue;
