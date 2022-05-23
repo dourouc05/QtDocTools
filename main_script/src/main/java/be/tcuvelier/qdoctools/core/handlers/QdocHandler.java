@@ -586,10 +586,6 @@ public class QdocHandler {
         final Pattern patternEmptyTableRow = Pattern.compile("<db:tr(.*)>(\\R)?</db:tr>(\\R)?");
 
         for (Path filePath : findDocBook()) {
-            if (! filePath.endsWith("gallery.xml")) {
-                continue;
-            }
-
             boolean hasMatched = false;
             String file = Files.readString(filePath);
 
@@ -687,31 +683,6 @@ public class QdocHandler {
 
                     file = String.join("\n", lines);
                 }
-
-//                Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is);
-//                NodeList mediaObjects = doc.getDocumentElement().getElementsByTagName("db:mediaobject");
-//                for (int i = 0; i < mediaObjects.getLength(); ++i) {
-//                    Node mo = mediaObjects.item(i);
-//                    Node next = mo.getNextSibling();
-//                    while (next != null && next.getNodeType() != ELEMENT_NODE) {
-//                        next = next.getNextSibling();
-//                    }
-//                    if (next == null) {
-//                        continue;
-//                    }
-//
-//                    if (next.getNodeName().equals("db:title")) {
-//                        next.getFeature()
-//                    }
-//                }
-//                Matcher matcher = patternTitleAfterMediaObject.matcher(file);
-//                if (matcher.results().findAny().isPresent()) {
-//                    hasMatched = true;
-//                    file = matcher.replaceAll("""
-//                            <db:mediaobject>
-//                            <db:title>$3</db:title>
-//                            $1</db:mediaobject>""");
-//                }
             }
 
             if (! hasMatched) {
