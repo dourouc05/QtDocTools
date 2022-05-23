@@ -565,7 +565,7 @@ public class QdocHandler {
         final Pattern patternMarker = Pattern.compile("(&lt;@[^&]*&gt;)|(&lt;/@[^&]*&gt;)");
         final Pattern patternExtended = Pattern.compile(
                 "<db:extendedlink>" +
-                      "<db:link xlink:to=\"([a-zA-Z\\-]*)\\.xml\" xlink:title=\"([^\"]*)\" xlink:label=\"([^\"]*)\"/>" +
+                      "<db:link xlink:to=\"([a-zA-Z\\-\\s]*)\\.xml\" xlink:title=\"([^\"]*)\" xlink:label=\"([^\"]*)\"/>" +
                       "</db:extendedlink>");
         final Pattern patternExampleLink = Pattern.compile(
                 "</db:section>\\R" +
@@ -671,7 +671,7 @@ public class QdocHandler {
                     if (Arrays.stream(filesToIgnore).anyMatch(filePath::endsWith)) {
                         // FUBAR with Qdoc 6.3: not even proper XML (many root tags).
                         System.out.println("!!> Improperly formatted file, invalid XML: " + filePath + "! Skipping.");
-                        e.printStackTrace();
+//                        e.printStackTrace();
                         abandon = true;
                     } else {
                         // Another file that's simply not valid XML (let alone DocBook).
@@ -690,7 +690,7 @@ public class QdocHandler {
 
                 XPathCompiler compiler = processor.newXPathCompiler();
                 compiler.declareNamespace("db", "http://docbook.org/ns/docbook");
-                XPathExecutable xpathExecutable = compiler.compile("//db:mediaobject[following-sibling::*[self::db:title]]");
+                XPathExecutable xpathExecutable = compiler.compile("//db:mediaobject[following-sibling::*[1][self::db:title]]");
                 XPathSelector xpath = xpathExecutable.load();
                 xpath.setContextItem(root);
                 XdmValue mediaObjects = xpath.evaluate();
@@ -704,9 +704,11 @@ public class QdocHandler {
                         XdmNode title = mo.select(Steps.followingSibling("http://docbook.org/ns/docbook", "title")).first().asNode();
                         int lineNextTitle = title.getLineNumber();
 
-                        // Insert lineNextTitle after lineMediaObjectRoot.
-                        lines.add(lineMediaObjectRoot, lines.get(lineNextTitle - 1));
-                        lines.remove(lineNextTitle);
+                        // Insert a <db:figure> wrapper, the title, then the mediaobject.
+                        lines.add(lineMediaObjectRoot - 1, "<db:figure>");
+                        lines.add(lineMediaObjectRoot, lines.get(lineNextTitle));
+                        lines.remove(lineNextTitle + 1);
+                        lines.add(lineNextTitle + 1, "</db:figure>");
                     }
 
                     file = String.join("\n", lines);
