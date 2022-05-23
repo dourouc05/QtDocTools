@@ -7,11 +7,19 @@ import be.tcuvelier.qdoctools.core.utils.Pair;
 import be.tcuvelier.qdoctools.core.utils.QtVersion;
 import be.tcuvelier.qdoctools.core.utils.StreamGobbler;
 import be.tcuvelier.qdoctools.core.QtModules;
+import net.sf.saxon.s9api.*;
+import net.sf.saxon.s9api.streams.Step;
+import net.sf.saxon.s9api.streams.Steps;
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import java.io.File;
-import java.io.IOException;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.stream.StreamSource;
+import java.io.*;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,6 +29,8 @@ import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import static org.w3c.dom.Node.ELEMENT_NODE;
 
 public class QdocHandler {
     private final Path sourceFolder; // Containing Qt's sources.
@@ -483,7 +493,7 @@ public class QdocHandler {
         }
     }
 
-    public void fixQdocBugs() throws IOException {
+    public void fixQdocBugs() throws IOException, SaxonApiException {
         // Only the files in the root folder are considered.
         // List of bugs fixed here:
         // - in the DocBook output, code has markers for syntax highlighting (e.g., around keywords).
@@ -576,8 +586,16 @@ public class QdocHandler {
         final Pattern patternEmptyTableRow = Pattern.compile("<db:tr(.*)>(\\R)?</db:tr>(\\R)?");
 
         for (Path filePath : findDocBook()) {
+            if (! filePath.endsWith("gallery.xml")) {
+                continue;
+            }
+
             boolean hasMatched = false;
             String file = Files.readString(filePath);
+
+            if (file.length() == 0) {
+                continue;
+            }
 
             {
                 Matcher matcher = patternMarker.matcher(file);
@@ -637,6 +655,63 @@ public class QdocHandler {
                     hasMatched = true;
                     file = matcher.replaceAll("");
                 }
+            }
+            {
+                Processor processor = new Processor(false);
+                DocumentBuilder db = processor.newDocumentBuilder();
+                db.setLineNumbering(true);
+
+                InputStream is = new ByteArrayInputStream(file.getBytes());
+                XdmNode root = db.build(new StreamSource(is));
+
+                XPathCompiler compiler = processor.newXPathCompiler();
+                compiler.declareNamespace("db", "http://docbook.org/ns/docbook");
+                XPathExecutable xpathExecutable = compiler.compile("//db:mediaobject[following-sibling::*[self::db:title]]");
+                XPathSelector xpath = xpathExecutable.load();
+                xpath.setContextItem(root);
+                XdmValue mediaObjects = xpath.evaluate();
+
+                if (! mediaObjects.isEmpty()) {
+                    List<String> lines = new ArrayList<>(Arrays.asList(file.split("\\R")));
+
+                    for (XdmValue mo : mediaObjects) {
+                        int lineMediaObjectRoot = mo.stream().asNode().getLineNumber();
+
+                        XdmNode title = mo.select(Steps.followingSibling("http://docbook.org/ns/docbook", "title")).first().asNode();
+                        int lineNextTitle = title.getLineNumber();
+
+                        // Insert lineNextTitle after lineMediaObjectRoot.
+                        lines.add(lineMediaObjectRoot, lines.get(lineNextTitle - 1));
+                        lines.remove(lineNextTitle);
+                    }
+
+                    file = String.join("\n", lines);
+                }
+
+//                Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is);
+//                NodeList mediaObjects = doc.getDocumentElement().getElementsByTagName("db:mediaobject");
+//                for (int i = 0; i < mediaObjects.getLength(); ++i) {
+//                    Node mo = mediaObjects.item(i);
+//                    Node next = mo.getNextSibling();
+//                    while (next != null && next.getNodeType() != ELEMENT_NODE) {
+//                        next = next.getNextSibling();
+//                    }
+//                    if (next == null) {
+//                        continue;
+//                    }
+//
+//                    if (next.getNodeName().equals("db:title")) {
+//                        next.getFeature()
+//                    }
+//                }
+//                Matcher matcher = patternTitleAfterMediaObject.matcher(file);
+//                if (matcher.results().findAny().isPresent()) {
+//                    hasMatched = true;
+//                    file = matcher.replaceAll("""
+//                            <db:mediaobject>
+//                            <db:title>$3</db:title>
+//                            $1</db:mediaobject>""");
+//                }
             }
 
             if (! hasMatched) {
