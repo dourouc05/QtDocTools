@@ -1,26 +1,22 @@
 package be.tcuvelier.qdoctools.core.handlers;
 
+import be.tcuvelier.qdoctools.core.QtModules;
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.exceptions.WriteQdocconfException;
 import be.tcuvelier.qdoctools.core.helpers.ValidationHelper;
 import be.tcuvelier.qdoctools.core.utils.Pair;
 import be.tcuvelier.qdoctools.core.utils.QtVersion;
 import be.tcuvelier.qdoctools.core.utils.StreamGobbler;
-import be.tcuvelier.qdoctools.core.QtModules;
 import net.sf.saxon.s9api.*;
-import net.sf.saxon.s9api.streams.Step;
 import net.sf.saxon.s9api.streams.Steps;
 import org.jetbrains.annotations.NotNull;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.stream.StreamSource;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,8 +26,6 @@ import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
-import static org.w3c.dom.Node.ELEMENT_NODE;
 
 public class QdocHandler {
     private final Path sourceFolder; // Containing Qt's sources.
@@ -564,8 +558,10 @@ public class QdocHandler {
         //        <db:para><db:emphasis>[Missing image ../images/wayland-multi-process.png]</db:emphasis></db:para>
         //        </db:textobject>
         //        </db:mediaobject>
+        //   Building a regex for this case is possible, but it would need to be quite complex with negative lookahead;
+        //   it quickly creates StackOverflowError with decent-size documents.
 
-        // Build a regex pattern for the strings to remove.
+        // Build a regex pattern for the strings to remove or alter.
         final Pattern patternMarker = Pattern.compile("(&lt;@[^&]*&gt;)|(&lt;/@[^&]*&gt;)");
         final Pattern patternExtended = Pattern.compile(
                 "<db:extendedlink>" +
@@ -586,10 +582,16 @@ public class QdocHandler {
                       "</db:article>");
         final Pattern patternEmptyTableRow = Pattern.compile("<db:tr(.*)>(\\R)?</db:tr>(\\R)?");
 
+        int nFiles = 0;
+        int nFilesRewritten = 0;
+        int nFilesIgnored = 0;
+
         for (Path filePath : findDocBook()) {
             boolean abandon = false;
             boolean hasMatched = false;
             String file = Files.readString(filePath);
+
+            nFiles += 1;
 
             if (file.length() == 0) {
                 abandon = true;
@@ -663,13 +665,17 @@ public class QdocHandler {
                     InputStream is = new ByteArrayInputStream(file.getBytes());
                     db.build(new StreamSource(is));
                 } catch (Exception e) {
-                    if (filePath.endsWith("classes.xml")) {
+                    String[] filesToIgnore = {"classes.xml", "obsoleteclasses.xml", "obsoleteqmltypes.xml",
+                            "qml-font.xml", "qml-qtquick-text.xml", "qml-qtquick-textedit.xml",
+                            "qml-qtquick-textinput.xml", "qmlbasictypes.xml", "qmltypes.xml"};
+                    if (Arrays.stream(filesToIgnore).anyMatch(filePath::endsWith)) {
                         // FUBAR with Qdoc 6.3: not even proper XML (many root tags).
-                        System.out.println("!!> Improperly formatted classes.xml! Skipping.");
+                        System.out.println("!!> Improperly formatted file, invalid XML: " + filePath + "! Skipping.");
                         e.printStackTrace();
                         abandon = true;
                     } else {
                         // Another file that's simply not valid XML (let alone DocBook).
+                        System.out.println("!!> Could not parse XML file: " + filePath);
                         throw e;
                     }
                 }
@@ -708,12 +714,14 @@ public class QdocHandler {
             }
 
             if (abandon) {
+                nFilesIgnored += 1;
                 continue;
             }
             if (! hasMatched) {
                 // This file has not changed: no need to have a back-up file or to spend time writing on disk.
                 continue;
             }
+            nFilesRewritten += 1;
 
             Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak");
             if (! fileBackUp.toFile().exists()) {
@@ -721,6 +729,9 @@ public class QdocHandler {
             }
             Files.write(filePath, file.getBytes());
         }
+
+        System.out.println("++> " + nFiles + " postprocessed, " +
+                nFilesRewritten + " rewritten, " + nFilesIgnored + " ignored.");
     }
 
     public void validateDocBook() throws IOException, SAXException {
