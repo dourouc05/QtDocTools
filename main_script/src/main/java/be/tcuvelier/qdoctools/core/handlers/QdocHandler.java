@@ -491,95 +491,11 @@ public class QdocHandler {
     public void fixQdocBugs() throws IOException, SaxonApiException {
         // Only the files in the root folder are considered.
         // List of bugs fixed here:
-        // - in the DocBook output, code has markers for syntax highlighting (e.g., around keywords).
-        //   For instance:
-        //       &lt;@keyword&gt;class&lt;/@keyword&gt; &lt;@type&gt;QObject&lt;/@type&gt;
-        //   This example should be mapped to:
-        //       class QObject;
-        //   -> regex: (&lt;@[^&]*&gt;)|(&lt;/@[^&]*&gt;)
-        // - in the DocBook output, extendedlinks are not valid: https://bugreports.qt.io/browse/QTBUG-103747
-        //   For instance:
-        //       <db:extendedlink><db:link xlink:to="xml-namespaces.xml" xlink:title="prev" xlink:label="An
-        //       Introduction to Namespaces"/></db:extendedlink>
-        //   This example should be mapped to:
-        //       <db:extendedlink xlink:type="extended"><db:link xlink:to="xml-namespaces.xml" xlink:title="An
-        //       Introduction to Namespaces" xlink:type="arc" xlink:arcrole="prev"/></db:extendedlink>
-        //   -> base regex:
-        //          <db:extendedlink><db:link xlink:to="(.*)" xlink:title="(.*)" xlink:label="(.*)"/></db:extendedlink>
-        // - in the DocBook output, for examples, links to projects are output outside sections:
-        //   https://bugreports.qt.io/browse/QTBUG-103749
-        //   For instance, at the end of the file:
-        //        </db:section>
-        //        <db:para><db:link
-        //        xlink:href="https://code.qt.io/cgit/qt/qtbase.git/tree/examples/gui/hellovulkanwidget?h=6.3">Example
-        //        project @ code.qt.io</db:link></db:para>
-        //        </db:article>
-        //   This example should be mapped to:
-        //        </db:section>
-        //        <db:section>
-        //        <db:title>Example project</db:title>
-        //        <db:para><db:link
-        //        xlink:href="https://code.qt.io/cgit/qt/qtbase.git/tree/examples/gui/hellovulkanwidget?h=6.3">Example
-        //        project @ code.qt.io</db:link></db:para>
-        //        </db:section>
-        //        </db:article>
-        // - a similar problem is present for the list of see also:
-        //        </db:section>
-        //        <db:para><db:emphasis>See also </db:emphasis>
-        //        <db:simplelist type="vert" role="see-also"><db:member><db:link
-        //        xlink:href="activeqt-index.xml">ActiveQt Framework</db:link></db:member>
-        //        </db:simplelist>
-        //        </db:para></db:article>
-        //   This example should be:
-        //        </db:section>
-        //        <db:section>
-        //        <db:title>See also</db:title>
-        //        <db:para><db:emphasis>See also </db:emphasis>
-        //        <db:simplelist type="vert" role="see-also"><db:member><db:link
-        //        xlink:href="activeqt-index.xml">ActiveQt Framework</db:link></db:member>
-        //        </db:simplelist>
-        //        </db:para>
-        //        </db:section>
-        //        </db:article>
         // - rows in tables can be empty:
         //        <db:tr valign="top">
         //        </db:tr>
-        // - media objects have their title afterwards:
-        //        <db:mediaobject>
-        //        <db:textobject>
-        //        <db:para><db:emphasis>[Missing image ../images/wayland-multi-process.png]</db:emphasis></db:para>
-        //        </db:textobject>
-        //        </db:mediaobject>
-        //        <db:title>Multi-Process Client Architecture</db:title>
-        //   This example should be:
-        //        <db:mediaobject>
-        //        <db:title>Multi-Process Client Architecture</db:title>
-        //        <db:textobject>
-        //        <db:para><db:emphasis>[Missing image ../images/wayland-multi-process.png]</db:emphasis></db:para>
-        //        </db:textobject>
-        //        </db:mediaobject>
-        //   Building a regex for this case is possible, but it would need to be quite complex with negative lookahead;
-        //   it quickly creates StackOverflowError with decent-size documents.
 
         // Build a regex pattern for the strings to remove or alter.
-        final Pattern patternMarker = Pattern.compile("(&lt;@[^&]*&gt;)|(&lt;/@[^&]*&gt;)");
-        final Pattern patternExtended = Pattern.compile(
-                "<db:extendedlink>" +
-                      "<db:link xlink:to=\"([a-zA-Z\\-\\s]*)\\.xml\" xlink:title=\"([^\"]*)\" xlink:label=\"([^\"]*)\"/>" +
-                      "</db:extendedlink>");
-        final Pattern patternExampleLink = Pattern.compile(
-                "</db:section>\\R" +
-                      "<db:para><db:link xlink:href=\"(.*)\">Example project @ (.*)</db:link></db:para>\\R"+
-                      "</db:article>");
-        final Pattern patternSeeAlso = Pattern.compile(
-                "</db:section>\\R" +
-                      "<db:para>\\R?"+
-                      "<db:emphasis>See also( )?</db:emphasis>\\R"+
-                      "<db:simplelist type=\"vert\" role=\"see-also\">\\R?"+
-                      "(<db:member>([^\r\n]*)</db:member>\\R)+(\\R)?" +
-                      "</db:simplelist>\\R"+
-                      "</db:para>\\R?"+
-                      "</db:article>");
         final Pattern patternEmptyTableRow = Pattern.compile("<db:tr(.*)>(\\R)?</db:tr>(\\R)?");
 
         int nFiles = 0;
@@ -598,120 +514,10 @@ public class QdocHandler {
             }
 
             if (! abandon) {
-                Matcher matcher = patternMarker.matcher(file);
-                if (matcher.results().findAny().isPresent()) {
-                    hasMatched = true;
-                    file = matcher.replaceAll("");
-                }
-            }
-            if (! abandon && file.contains("</db:extendedlink><db:extendedlink>")) {
-                hasMatched = true;
-                file = file.replaceAll("</db:extendedlink><db:extendedlink>", "</db:extendedlink>\n<db:extendedlink>");
-            }
-            if (! abandon && file.contains("</db:extendedlink><db:abstract>")) {
-                hasMatched = true;
-                file = file.replaceAll("</db:extendedlink><db:abstract>", "</db:extendedlink>\n<db:abstract>");
-            }
-            if (! abandon) {
-                Matcher matcher = patternExtended.matcher(file);
-                if (matcher.results().findAny().isPresent()) {
-                    hasMatched = true;
-                    file = matcher.replaceAll("<db:extendedlink xlink:type=\"extended\"><db:link xlink:to=\"$1.xml\" xlink:title=\"$3\" xlink:type=\"arc\" xlink:arcrole=\"$2\"/></db:extendedlink>");
-                }
-            }
-            if (! abandon) {
-                Matcher matcher = patternExampleLink.matcher(file);
-                if (matcher.results().findAny().isPresent()) {
-                    hasMatched = true;
-                    file = matcher.replaceAll("""
-                            </db:section>
-                            <db:section>
-                            <db:title>Example project</db:title>
-                            <db:para><db:link xlink:href="$1">Example project @ $2</db:link></db:para>
-                            </db:section>
-                            </db:article>""");
-                }
-            }
-            if (! abandon) {
-                Matcher matcher = patternSeeAlso.matcher(file);
-                if (matcher.results().findAny().isPresent()) {
-                    hasMatched = true;
-                    file = matcher.replaceAll("""
-                            </db:section>
-                            <db:section>
-                            <db:title>See also</db:title>
-                            <db:para><db:emphasis>See also </db:emphasis>
-                            <db:simplelist type="vert" role="see-also">
-                            $2
-                            </db:simplelist>
-                            </db:para>
-                            </db:section>
-                            </db:article>""");
-                }
-            }
-            if (! abandon) {
                 Matcher matcher = patternEmptyTableRow.matcher(file);
                 if (matcher.results().findAny().isPresent()) {
                     hasMatched = true;
                     file = matcher.replaceAll("");
-                }
-            }
-            if (! abandon) {
-                try {
-                    Processor processor = new Processor(false);
-                    DocumentBuilder db = processor.newDocumentBuilder();
-                    db.setLineNumbering(true);
-
-                    InputStream is = new ByteArrayInputStream(file.getBytes());
-                    db.build(new StreamSource(is));
-                } catch (Exception e) {
-                    String[] filesToIgnore = {"classes.xml", "obsoleteclasses.xml", "obsoleteqmltypes.xml",
-                            "qml-font.xml", "qml-qtquick-text.xml", "qml-qtquick-textedit.xml",
-                            "qml-qtquick-textinput.xml", "qmlbasictypes.xml", "qmltypes.xml"};
-                    if (Arrays.stream(filesToIgnore).anyMatch(filePath::endsWith)) {
-                        // FUBAR with Qdoc 6.3: not even proper XML (many root tags).
-                        System.out.println("!!> Improperly formatted file, invalid XML: " + filePath + "! Skipping.");
-//                        e.printStackTrace();
-                        abandon = true;
-                    } else {
-                        // Another file that's simply not valid XML (let alone DocBook).
-                        System.out.println("!!> Could not parse XML file: " + filePath);
-                        throw e;
-                    }
-                }
-            }
-            if (! abandon) {
-                Processor processor = new Processor(false);
-                DocumentBuilder db = processor.newDocumentBuilder();
-                db.setLineNumbering(true);
-
-                InputStream is = new ByteArrayInputStream(file.getBytes());
-                XdmNode root = db.build(new StreamSource(is));
-
-                XPathCompiler compiler = processor.newXPathCompiler();
-                compiler.declareNamespace("db", "http://docbook.org/ns/docbook");
-                XPathExecutable xpathExecutable = compiler.compile("//db:mediaobject[following-sibling::*[1][self::db:title]]");
-                XPathSelector xpath = xpathExecutable.load();
-                xpath.setContextItem(root);
-                XdmValue mediaObjects = xpath.evaluate();
-
-                if (! mediaObjects.isEmpty()) {
-                    List<String> lines = new ArrayList<>(Arrays.asList(file.split("\\R")));
-
-                    for (XdmValue mo : mediaObjects) {
-                        int lineMediaObjectRoot = mo.stream().asNode().getLineNumber();
-
-                        XdmNode title = mo.select(Steps.followingSibling("http://docbook.org/ns/docbook", "title")).first().asNode();
-                        int lineNextTitle = title.getLineNumber();
-
-                        // Insert a <db:figure> wrapper, the title, then the mediaobject.
-                        lines.add(lineMediaObjectRoot - 1, "<db:figure>");
-                        lines.add(lineMediaObjectRoot, lines.get(lineNextTitle));
-                        lines.remove(lineNextTitle + 1);
-                        lines.add(lineNextTitle + 1, "</db:figure>");
-                    }
-
-                    file = String.join("\n", lines);
                 }
             }
 
