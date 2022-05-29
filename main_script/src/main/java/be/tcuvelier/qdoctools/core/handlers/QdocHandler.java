@@ -448,10 +448,11 @@ public class QdocHandler {
             }
 
             // Maybe there is an images folder to move one level up.
+            // Sometimes, the folder has a stranger name, like "Ã images".
             File[] folders = subfolder.listFiles((f, name) -> f.isDirectory());
             if (folders != null && folders.length != 0) {
                 for (File f : folders) {
-                    if (f.getName().equals("images")) {
+                    if (f.getName().endsWith("images")) {
                         moveGeneratedImagesRecursively(f, outputFolder.resolve("images"));
                     }
                 }
