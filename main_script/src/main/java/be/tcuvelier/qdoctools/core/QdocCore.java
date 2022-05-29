@@ -40,9 +40,9 @@ public class QdocCore {
 
         // Run qdoc to get the DocBook output.
         if (convertToDocBook) {
-            // Rewrite the list of qdocconf files (one per module, may be multiple times per folder).
+            // Write the list of qdocconf files.
             Path mainQdocconfPath = q.makeMainQdocconf(modules);
-            System.out.println("++> Main qdocconf rewritten: " + mainQdocconfPath);
+            System.out.println("++> Main qdocconf written: " + mainQdocconfPath);
 
             // Actually run qdoc on this new file.
             System.out.println("++> Running qdoc.");
