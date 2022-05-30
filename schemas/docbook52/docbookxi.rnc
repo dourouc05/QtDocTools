@@ -8504,7 +8504,7 @@ div {
   db.html.tr =
     
     ## A row in an HTML table
-    element tr { db.html.tr.attlist, db.anchor?, (db.html.th | db.html.td)+ }
+    element tr { db.html.tr.attlist, (db.html.th | db.html.td)+ }
 }
 div {
   db.html.th.attlist =
