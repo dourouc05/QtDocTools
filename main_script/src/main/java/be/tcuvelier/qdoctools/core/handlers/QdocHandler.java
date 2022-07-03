@@ -40,7 +40,7 @@ public class QdocHandler {
     private final GlobalConfiguration config;
 
     public QdocHandler(String source, String installed, String output, String qdocPath, QtVersion qtVersion,
-                       boolean qdocDebug, List<String> cppCompilerIncludes, GlobalConfiguration config) {
+                       boolean qdocDebug, List<String> cppCompilerIncludes, GlobalConfiguration config) throws IOException {
         sourceFolder = Paths.get(source);
         installedFolder = Paths.get(installed);
         outputFolder = Paths.get(output);
@@ -51,14 +51,25 @@ public class QdocHandler {
         this.qtVersion = qtVersion;
         this.qdocDebug = qdocDebug;
         this.cppCompilerIncludes = cppCompilerIncludes;
+
+        ensureOutputFolderExists();
+        ensureIncludesExist();
     }
 
-    public void ensureOutputFolderExists() throws IOException {
+    private void ensureOutputFolderExists() throws IOException {
         if (! outputFolder.toFile().isDirectory()) {
             Files.createDirectories(outputFolder);
         }
         if (! outputFolder.resolve("images").toFile().isDirectory()) {
             Files.createDirectories(outputFolder.resolve("images"));
+        }
+    }
+
+    private void ensureIncludesExist() throws IOException {
+        for (String path : cppCompilerIncludes) {
+            if (! Files.exists(Paths.get(path))) {
+                throw new IOException("Include folder " + path + " does not exist.");
+            }
         }
     }
 
@@ -489,7 +500,7 @@ public class QdocHandler {
         }
     }
 
-    public void fixQdocBugs() throws IOException, SaxonApiException {
+    public void fixQdocBugs() throws IOException {
         // Only the files in the root folder are considered.
         // List of bugs fixed here:
         // - rows in tables can be empty:

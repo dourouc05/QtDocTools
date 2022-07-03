@@ -31,7 +31,6 @@ public class QdocCore {
         List<String> includes = config.getCppCompilerIncludes();
         includes.addAll(config.getNdkIncludes());
         QdocHandler q = new QdocHandler(source, installed, output, config.getQdocLocation(), qtVersion, qdocDebug, includes, config);
-        q.ensureOutputFolderExists();
 
         // Explore the source directory for the qdocconf files.
         System.out.println("++> Looking for qdocconf files");
