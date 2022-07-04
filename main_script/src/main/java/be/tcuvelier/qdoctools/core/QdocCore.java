@@ -50,6 +50,7 @@ public class QdocCore {
 
             System.out.println("++> Fixing some qdoc quirks.");
             q.moveGeneratedFiles(); // Sometimes, qdoc outputs things in a strange folder. Ahoy!
+            // TODO: fix paths when moving files from one folder to the other. (xref: ../qtwidgets/...)
             q.fixQdocBugs();
             System.out.println("++> Qdoc quirks fixed."); // At least, the ones I know about right now.
 
