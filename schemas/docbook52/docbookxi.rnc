@@ -11,7 +11,7 @@ namespace trans = "http://docbook.org/ns/transclusion"
 namespace xi = "http://www.w3.org/2001/XInclude"
 namespace xlink = "http://www.w3.org/1999/xlink"
 
-# This file is part of DocBook XInclude V5.2CR1
+# This file is part of DocBook XInclude V5.2CR2
 # 
 # Copyright 1992-2015 HaL Computer Systems, Inc.,
 # O'Reilly & Associates, Inc., ArborText, Inc., Fujitsu Software
@@ -10441,7 +10441,10 @@ div {
     
     ## A class in an object-oriented programming language
     element ooclass {
-      db.ooclass.attlist, (db.package | db.modifier)*, db.classname
+      db.ooclass.attlist,
+      (db.package | db.modifier)*,
+      db.classname,
+      db.modifier*
     }
 }
 div {
@@ -10456,7 +10459,8 @@ div {
     element oointerface {
       db.oointerface.attlist,
       (db.package | db.modifier)*,
-      db.interfacename
+      db.interfacename,
+      db.modifier*
     }
 }
 div {
@@ -10471,7 +10475,8 @@ div {
     element ooexception {
       db.ooexception.attlist,
       (db.package | db.modifier)*,
-      db.exceptionname
+      db.exceptionname,
+      db.modifier*
     }
 }
 db.modifier.xml.space.attribute =
@@ -10563,6 +10568,7 @@ div {
       db.modifier*,
       (db.type | db.templatename)*,
       db.varname,
+      db.modifier*,
       db.initializer?,
       db.synopsisinfo*
     }
@@ -10656,6 +10662,7 @@ div {
       db.modifier*,
       db.methodname?,
       ((db.methodparam | db.group.methodparam)+ | db.void?),
+      db.modifier*,
       db.exceptionname*,
       db.synopsisinfo*
     }
@@ -11154,7 +11161,7 @@ div {
       db.enumsynopsis.info,
       db.synopsisinfo*,
       (db.package | db.modifier)*,
-      db.enumname?,
+      (db.enumname, db.modifier*)?,
       db.enumitem+,
       db.synopsisinfo*
     }
