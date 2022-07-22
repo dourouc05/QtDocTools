@@ -45,7 +45,7 @@ public class QdocCore {
 
             // Actually run qdoc on this new file.
             System.out.println("++> Running qdoc.");
-            q.runQdoc();
+            q.runQdoc(); // TODO: think about running moc to avoid too many errors while reading the code.
             System.out.println("++> Qdoc done.");
 
             System.out.println("++> Fixing some qdoc quirks.");
