@@ -378,8 +378,11 @@ public class QdocHandler {
                 System.err.println(s);
             }
         };
-        StreamGobbler outputGobbler = new StreamGobbler(qdoc.getInputStream(), List.of(errOutput, sb::append));
-        StreamGobbler errorGobbler = new StreamGobbler(qdoc.getErrorStream(), List.of(errOutput, sb::append));
+        Consumer<String> errAppend = s -> {
+            sb.append(s).append("\n");
+        };
+        StreamGobbler outputGobbler = new StreamGobbler(qdoc.getInputStream(), List.of(errOutput, errAppend));
+        StreamGobbler errorGobbler = new StreamGobbler(qdoc.getErrorStream(), List.of(errOutput, errAppend));
         new Thread(outputGobbler).start();
         new Thread(errorGobbler).start();
         qdoc.waitFor();
