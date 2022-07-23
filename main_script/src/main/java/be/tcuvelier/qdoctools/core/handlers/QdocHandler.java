@@ -385,7 +385,7 @@ public class QdocHandler {
         StreamGobbler errorGobbler = new StreamGobbler(qdoc.getErrorStream(), List.of(errOutput, errAppend));
         new Thread(outputGobbler).start();
         new Thread(errorGobbler).start();
-        qdoc.waitFor();
+        int qdocCode = qdoc.waitFor();
 
         // Write down the log.
         String errors = sb.toString();
@@ -403,6 +403,7 @@ public class QdocHandler {
 
         if (nErrors > 0) {
             System.out.println("::> Qdoc ran into issues: ");
+            System.out.println("::>   - Return code: " + qdocCode);
             System.out.println("::>   - " + nErrors + " errors");
             System.out.println("::>   - " + nFatalErrors + " fatal errors");
 //            System.out.println("::>   - " + nMissingDepends + " missing QtModuleDepends files");
