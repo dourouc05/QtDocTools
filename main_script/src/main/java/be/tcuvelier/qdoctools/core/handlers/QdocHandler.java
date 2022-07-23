@@ -378,9 +378,7 @@ public class QdocHandler {
                 System.err.println(s);
             }
         };
-        Consumer<String> errAppend = s -> {
-            sb.append(s).append("\n");
-        };
+        Consumer<String> errAppend = s -> sb.append(s).append("\n");
         StreamGobbler outputGobbler = new StreamGobbler(qdoc.getInputStream(), List.of(errOutput, errAppend));
         StreamGobbler errorGobbler = new StreamGobbler(qdoc.getErrorStream(), List.of(errOutput, errAppend));
         new Thread(outputGobbler).start();
@@ -407,6 +405,9 @@ public class QdocHandler {
             System.out.println("::>   - " + nErrors + " errors");
             System.out.println("::>   - " + nFatalErrors + " fatal errors");
 //            System.out.println("::>   - " + nMissingDepends + " missing QtModuleDepends files");
+            if (qdocCode != 0) {
+                throw new IOException("qdoc ran into errors");
+            }
         } else {
             System.out.println("::> Qdoc ended with no errors.");
         }
