@@ -7,16 +7,11 @@ import be.tcuvelier.qdoctools.core.helpers.ValidationHelper;
 import be.tcuvelier.qdoctools.core.utils.Pair;
 import be.tcuvelier.qdoctools.core.utils.QtVersion;
 import be.tcuvelier.qdoctools.core.utils.StreamGobbler;
-import net.sf.saxon.s9api.*;
-import net.sf.saxon.s9api.streams.Steps;
 import org.jetbrains.annotations.NotNull;
 import org.xml.sax.SAXException;
 
-import javax.xml.transform.stream.StreamSource;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
