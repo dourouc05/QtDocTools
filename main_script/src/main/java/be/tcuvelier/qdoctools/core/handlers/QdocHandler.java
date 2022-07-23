@@ -25,8 +25,8 @@ import java.util.stream.Collectors;
 public class QdocHandler {
     private final Path sourceFolder; // Containing Qt's sources.
     private final Path installedFolder; // Containing a compiled and installed version of Qt.
-    private final Path outputFolder; // Where all the generated files should be put (qdoc may also output in a subfolder,
-    // in which case the files are automatically moved to a flatter hierarchy).
+    private final Path outputFolder; // Where all the generated files should be put (qdoc may also output in a
+    // subfolder, in which case the files are automatically moved to a flatter hierarchy).
     private final Path mainQdocconfPath; // The qdocconf that lists all the other ones.
     private final String qdocPath;
     private final QtVersion qtVersion;
@@ -229,14 +229,14 @@ public class QdocHandler {
     }
 
     private List<String> findIncludes() {
-        // Accumulate the include folders. Base case: just the include folder of an installed Qt.
+        // Accumulate the `include` folders. Base case: just the `include` folder of an installed Qt.
         List<String> includeDirs = new ArrayList<>(List.of(installedFolder.resolve("include").toString()));
 
         // Special cases.
         includeDirs.add(sourceFolder.resolve("qtbase").resolve("qmake").toString());
         includeDirs.add(sourceFolder.resolve("qtandroidextras").resolve("src").resolve("androidextras").resolve("doc").resolve("QtAndroidExtras").toString());
 
-        // Find all modules within the include folder, to capture all private folders.
+        // Find all modules within the `include` folder, to capture all private folders.
         File[] containedFiles = installedFolder.resolve("include").toFile().listFiles();
         if (containedFiles == null || containedFiles.length == 0) {
             return includeDirs;
@@ -409,7 +409,7 @@ public class QdocHandler {
     }
 
     public void moveGeneratedFiles() throws IOException {
-        // Maybe everything is under the html folder.
+        // Maybe everything is under the `html` folder.
         Path abnormalPath = outputFolder.resolve("html");
         if (Files.exists(abnormalPath)) {
             String[] files = abnormalPath.toFile().list((dir, name) -> name.endsWith(".xml"));
@@ -425,7 +425,7 @@ public class QdocHandler {
                 }
 
                 if (! abnormalPath.resolve("images").toFile().renameTo(outputFolder.resolve("images").toFile())) {
-                    System.out.println("!!> Moving the images folder was not possible!");
+                    System.out.println("!!> Moving the `images` folder was not possible!");
                 }
             }
         }
@@ -458,8 +458,8 @@ public class QdocHandler {
                 }
             }
 
-            // Maybe there is an images folder to move one level up.
-            // Sometimes, the folder has a stranger name, like "Ã images".
+            // Maybe there is an `images` folder to move one level up.
+            // Sometimes, the folder has a stranger name, like "images".
             File[] folders = subfolder.listFiles((f, name) -> f.isDirectory());
             if (folders != null && folders.length != 0) {
                 for (File f : folders) {
