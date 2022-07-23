@@ -7,7 +7,6 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("FieldCanBeLocal")
 public class QtModules {
     // Private attributes are rewritten in terms of another (package-private) attribute.
     // At some point, could be moved to configuration file, but I guess there is little to gain in terms of maintenance.
