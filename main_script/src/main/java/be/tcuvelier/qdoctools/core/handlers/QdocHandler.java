@@ -506,7 +506,6 @@ public class QdocHandler {
         // - rows in tables can be empty:
         //        <db:tr valign="top">
         //        </db:tr>
-        // TODO: several prefixes for namespaces, like n1... in qsqlquerymodel
         // TODO: links to xml files
 
         // Build a regex pattern for the strings to remove or alter.
