@@ -502,15 +502,7 @@ public class QdocHandler {
 
     public void fixQdocBugs() throws IOException {
         // Only the files in the root folder are considered.
-        // List of bugs fixed here:
-        // - rows in tables can be empty:
-        //        <db:tr valign="top">
-        //        </db:tr>
         // TODO: links to xml files
-
-        // Build a regex pattern for the strings to remove or alter.
-        final Pattern patternEmptyTableRow = Pattern.compile("<db:tr(.*)>(\\R)?</db:tr>(\\R)?");
-
         int nFiles = 0;
         int nFilesRewritten = 0;
         int nFilesIgnored = 0;
@@ -526,13 +518,9 @@ public class QdocHandler {
                 abandon = true;
             }
 
-            if (! abandon) {
-                Matcher matcher = patternEmptyTableRow.matcher(file);
-                if (matcher.results().findAny().isPresent()) {
-                    hasMatched = true;
-                    file = matcher.replaceAll("");
-                }
-            }
+            // if (! abandon) {
+            //     ;
+            // }
 
             if (abandon) {
                 nFilesIgnored += 1;
