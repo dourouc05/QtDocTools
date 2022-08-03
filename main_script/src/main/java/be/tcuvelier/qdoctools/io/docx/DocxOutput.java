@@ -15,15 +15,19 @@ import java.nio.file.Paths;
 
 public class DocxOutput {
     /*
-    * How to make a new template? Basically, use every style available in Word. This ensures that no style that is
-    * used by this script remains "latent", in OpenXML terminology.
-    * You must also define some new styles:
-    *   - for segmented lists (which will always be shown as textual lists!): "Definition List Title" and
-    *     "Definition List Item"
-    *   - for variable lists (which will always be shown as textual lists): "Variable List Title" and
-    *     "Variable List Item". Graphically, those styles should resemble segmented lists (they are distinct so that
-    *     round-tripping is possible)
-    */
+     * How to make a new template? Basically, use every style available in Word. This ensures
+     * that no style that is
+     * used by this script remains "latent", in OpenXML terminology.
+     * You must also define some new styles:
+     *   - for segmented lists (which will always be shown as textual lists!): "Definition List
+     * Title" and
+     *     "Definition List Item"
+     *   - for variable lists (which will always be shown as textual lists): "Variable List
+     * Title" and
+     *     "Variable List Item". Graphically, those styles should resemble segmented lists (they
+     * are distinct so that
+     *     round-tripping is possible)
+     */
 
 //    public static void main(String[] args) throws Exception {
 //        String test = "synthetic/basic";
@@ -61,14 +65,16 @@ public class DocxOutput {
         this.config = config;
     }
 
-    public void toDocx(String output) throws IOException, ParserConfigurationException, SAXException, InvalidFormatException {
+    public void toDocx(String output) throws IOException, ParserConfigurationException,
+            SAXException, InvalidFormatException {
         try (FileOutputStream out = new FileOutputStream(output)) {
             toDocx().write(out);
         }
     }
 
     @SuppressWarnings("WeakerAccess")
-    public XWPFDocument toDocx() throws IOException, ParserConfigurationException, SAXException, InvalidFormatException {
+    public XWPFDocument toDocx() throws IOException, ParserConfigurationException, SAXException,
+            InvalidFormatException {
         SAXParserFactory spf = SAXParserFactory.newInstance();
         spf.setNamespaceAware(true);
         spf.setXIncludeAware(true);

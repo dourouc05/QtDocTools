@@ -27,55 +27,53 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
-@Command(name = "transform", description = "Perform transformations to and from DocBook for publishing")
+@Command(name = "transform", description = "Perform transformations to and from DocBook for " +
+        "publishing")
 // No other formats are handled here. In particular, DvpML tools are wrapped by UploadCore.
 public class TransformCommand implements Callable<Void> {
-    @Option(names = { "-i", "--input-file", "--input-folder" },
-            description = "File or folder to process", required = true)
-    private String input;
-
-    @Option(names = { "-if", "--input-format" },
-            description = "Format of the input to transform. Default value: detected from extension. " +
-                    "Valid values: ${COMPLETION-CANDIDATES}")
-    private Format inputFormat = Format.Default;
-
-    @Option(names = { "-o", "--output-file", "--output-folder" },
-            description = "Output file or folder")
-    private String output;
-
-    @Option(names = { "-of", "--output-format" },
-            description = "Format of the output to generate. Default value: DOCX if the input is DocBook, " +
-                    "DocBook otherwise. Valid values: ${COMPLETION-CANDIDATES}")
-    private Format outputFormat = Format.Default;
-
-    @Option(names = { "-c", "--configuration-file" },
+    @Option(names = {"-c", "--configuration-file"},
             description = "Configuration file (default: ${DEFAULT-VALUE})")
-    private String configurationFile = "config.json";
-
+    private final String configurationFile = "config.json";
     @Option(names = "--no-validation",
-            description = "Disables the validation of the output against a known XSD or RNG (default: ${DEFAULT-VALUE})")
-    private boolean validate = true;
-
-    @Option(names = { "--disable-sanity-checks" },
-            description = "Perform the sanity checks, but continue with generation even in case of failure (default: ${DEFAULT-VALUE})")
-    private boolean disableSanityChecks = false;
-
-    @Option(names = { "--generate" },
-            description = "Starts the standard DvpML tools to generate PHP/HTML files (default: ${DEFAULT-VALUE})")
-    private boolean generate = false;
-
-    @Option(names = { "--upload" },
-            description = "Uploads the generated (with the --generate option) files (default: ${DEFAULT-VALUE})")
-    private boolean upload = false;
-
-    @Option(names = { "--clean" },
-            description = "Cleans the generated file. This option is mostly useful with --generate and --upload (default: ${DEFAULT-VALUE})")
-    private boolean clean = false;
-
+            description = "Disables the validation of the output against a known XSD or RNG " +
+                    "(default: ${DEFAULT-VALUE})")
+    private final boolean validate = true;
+    @Option(names = {"--disable-sanity-checks"},
+            description = "Perform the sanity checks, but continue with generation even in case " +
+                    "of failure (default: ${DEFAULT-VALUE})")
+    private final boolean disableSanityChecks = false;
+    @Option(names = {"--generate"},
+            description = "Starts the standard DvpML tools to generate PHP/HTML files (default: " +
+                    "${DEFAULT-VALUE})")
+    private final boolean generate = false;
+    @Option(names = {"--upload"},
+            description = "Uploads the generated (with the --generate option) files (default: " +
+                    "${DEFAULT-VALUE})")
+    private final boolean upload = false;
+    @Option(names = {"--clean"},
+            description = "Cleans the generated file. This option is mostly useful with " +
+                    "--generate and --upload (default: ${DEFAULT-VALUE})")
+    private final boolean clean = false;
     @Option(names = "--follow-links",
             description = "Follows the links in the files (default: ${DEFAULT-VALUE}). " +
-                          "If true, for reference files, all linked files will be generated")
-    private boolean followLinks = true;
+                    "If true, for reference files, all linked files will be generated")
+    private final boolean followLinks = true;
+    @Option(names = {"-i", "--input-file", "--input-folder"},
+            description = "File or folder to process", required = true)
+    private String input;
+    @Option(names = {"-if", "--input-format"},
+            description = "Format of the input to transform. Default value: detected from " +
+                    "extension. " +
+                    "Valid values: ${COMPLETION-CANDIDATES}")
+    private Format inputFormat = Format.Default;
+    @Option(names = {"-o", "--output-file", "--output-folder"},
+            description = "Output file or folder")
+    private String output;
+    @Option(names = {"-of", "--output-format"},
+            description = "Format of the output to generate. Default value: DOCX if the input is " +
+                    "DocBook, " +
+                    "DocBook otherwise. Valid values: ${COMPLETION-CANDIDATES}")
+    private Format outputFormat = Format.Default;
 
     @Override
     public Void call() throws SaxonApiException, IOException, SAXException, InvalidFormatException,
@@ -94,12 +92,15 @@ public class TransformCommand implements Callable<Void> {
 
             Map<Path, String> linkedFiles = null;
             if (followLinks) {
-                List<Path> linkedFilesList = TransformHelpers.fromRelatedJSONToListOfRelatedFiles(input, config);
+                List<Path> linkedFilesList =
+                        TransformHelpers.fromRelatedJSONToListOfRelatedFiles(input, config);
                 linkedFiles = new HashMap<>(linkedFilesList.size());
 
                 for (Path linked : linkedFilesList) {
-                    linkedFiles.put(linked, FileHelpers.generateOutputFilename(linked, Format.DvpML));
-                    TransformCore.call(linked.toString(), Format.DocBook, linkedFiles.get(linked), Format.DvpML, config, false, false);
+                    linkedFiles.put(linked, FileHelpers.generateOutputFilename(linked,
+                            Format.DvpML));
+                    TransformCore.call(linked.toString(), Format.DocBook, linkedFiles.get(linked)
+                            , Format.DvpML, config, false, false);
                 }
             }
 
@@ -150,7 +151,8 @@ public class TransformCommand implements Callable<Void> {
             }
 
             // Start the transformation into DvpML.
-            TransformCore.call(input, inputFormat, output, outputFormat, config, validate, disableSanityChecks);
+            TransformCore.call(input, inputFormat, output, outputFormat, config, validate,
+                    disableSanityChecks);
 
             // Perform the upload if needed.
             if (isOutputDvpML && generate) {

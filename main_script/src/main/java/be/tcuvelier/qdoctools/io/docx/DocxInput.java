@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Map;
 
 public class DocxInput {
 //    public static void main(String[] args) throws IOException, XMLStreamException {
@@ -35,11 +35,14 @@ public class DocxInput {
 //
 //        String test = "CPLEX";
 //
-//        String docBook = new DocxInput(MainCommand.fromDocxTests + "synthetic/" + test + ".docx").toDocBook();
+//        String docBook = new DocxInput(MainCommand.fromDocxTests + "synthetic/" + test + "
+//        .docx").toDocBook();
 //        System.out.println(docBook);
-////        Files.write(Paths.get(MainCommand.fromDocxTests + "synthetic/" + test + ".xml"), docBook.getBytes());
+////        Files.write(Paths.get(MainCommand.fromDocxTests + "synthetic/" + test + ".xml"),
+// docBook.getBytes());
 //
-//        new DocxInput(MainCommand.fromDocxTests + test + ".docx").toDocBook(MainCommand.fromDocxTests + test + ".xml");
+//        new DocxInput(MainCommand.fromDocxTests + test + ".docx").toDocBook(MainCommand
+//        .fromDocxTests + test + ".xml");
 //    }
 
     private final DocxInputImpl impl;
@@ -56,7 +59,7 @@ public class DocxInput {
 
         // Deal with images.
         Path folder = outputPath.getParent();
-        for (Map.Entry<String, byte[]> entry: impl.getImages().entrySet()) {
+        for (Map.Entry<String, byte[]> entry : impl.getImages().entrySet()) {
             Files.write(folder.resolve(entry.getKey()), entry.getValue());
         }
     }

@@ -6,20 +6,29 @@ import net.sf.saxon.s9api.*;
 
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
-import java.nio.file.*;
-import java.util.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class DvpToolchainHandler {
-    public static void updateToolchain(GlobalConfiguration config) throws IOException, InterruptedException {
-        String script = config.getDvpPerlScriptsPath().resolve("mise-a-jour-kit-generation.pl").toString();
-        List<String> params = new ArrayList<>(Arrays.asList(new PerlPath(config).getPerlPath(), script));
+    public static void updateToolchain(GlobalConfiguration config) throws IOException,
+            InterruptedException {
+        String script =
+                config.getDvpPerlScriptsPath().resolve("mise-a-jour-kit-generation.pl").toString();
+        List<String> params = new ArrayList<>(Arrays.asList(new PerlPath(config).getPerlPath(),
+                script));
         new ProcessBuilder(params).start().waitFor();
     }
 
     private static void ensureFolderExists(Path folder) throws IOException {
         if (!folder.toFile().mkdir()) {
-            throw new IOException("Impossible to create a folder " + folder.getFileName() + " within " + folder.getParent());
+            throw new IOException("Impossible to create a folder " + folder.getFileName() + " " +
+                    "within " + folder.getParent());
         }
     }
 
@@ -39,10 +48,12 @@ public class DvpToolchainHandler {
         return folder;
     }
 
-    private static List<Path> neededFiles(Path file) throws FileNotFoundException, SaxonApiException {
+    private static List<Path> neededFiles(Path file) throws FileNotFoundException,
+            SaxonApiException {
         // First, parse the file.
         Processor processor = new Processor(false);
-        XdmNode xdm = processor.newDocumentBuilder().build(new StreamSource(new FileReader(file.toFile())));
+        XdmNode xdm =
+                processor.newDocumentBuilder().build(new StreamSource(new FileReader(file.toFile())));
         XPathCompiler compiler = processor.newXPathCompiler();
         compiler.declareNamespace("db", "http://docbook.org/ns/docbook");
         compiler.declareNamespace("xlink", "http://www.w3.org/1999/xlink");
@@ -77,12 +88,14 @@ public class DvpToolchainHandler {
         int errorCode = process.waitFor();
 
         if (errorCode != 0) {
-            String error = new BufferedReader(new InputStreamReader(process.getErrorStream())).lines().collect(Collectors.joining("\n"));
+            String error =
+                    new BufferedReader(new InputStreamReader(process.getErrorStream())).lines().collect(Collectors.joining("\n"));
             if (error.length() > 0) {
                 System.err.println(error);
             }
 
-            throw new RuntimeException("Running the DvpML tools failed.", new RuntimeException(error));
+            throw new RuntimeException("Running the DvpML tools failed.",
+                    new RuntimeException(error));
         }
     }
 
@@ -118,25 +131,29 @@ public class DvpToolchainHandler {
         List<Path> neededFiles = relativisedNeededFiles(file, fileFolder);
 
         Files.copy(file, folder.resolve(folderName + ".xml"));
-        for (Path f: neededFiles) {
-            Files.copy(fileFolder.resolve(f), folder.resolve(f), StandardCopyOption.REPLACE_EXISTING);
+        for (Path f : neededFiles) {
+            Files.copy(fileFolder.resolve(f), folder.resolve(f),
+                    StandardCopyOption.REPLACE_EXISTING);
         }
 
         // Start generation.
         startDvpMLTool("buildart", folderName, config);
 
         // Copy the result in the right place.
-        Path cache = config.getDvpToolchainPath().resolve("cache").resolve(folderName); // cache: PHP files; html: HTML files.
+        Path cache = config.getDvpToolchainPath().resolve("cache").resolve(folderName); // cache:
+        // PHP files; html: HTML files.
         Path output = Paths.get(outputFolder);
 
         Files.copy(cache.resolve("index.php"), output.resolve("index.php"));
         Files.copy(cache.resolve(folderName + ".xml"), output.resolve("qdt.xml"));
-        for (Path f: neededFiles) {
+        for (Path f : neededFiles) {
             // The Developpez tools do not copy files outside the "images" and "fichiers" folders...
             if (cache.resolve(f).toFile().exists()) {
-                Files.copy(cache.resolve(f), output.resolve(f), StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(cache.resolve(f), output.resolve(f),
+                        StandardCopyOption.REPLACE_EXISTING);
             } else {
-                Files.copy(fileFolder.resolve(f), output.resolve(f), StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(fileFolder.resolve(f), output.resolve(f),
+                        StandardCopyOption.REPLACE_EXISTING);
             }
         }
 
@@ -147,7 +164,8 @@ public class DvpToolchainHandler {
         cleanFolder(cache);
     }
 
-    public static void generateRelated(String file, String outputFolder, GlobalConfiguration config) throws IOException, InterruptedException {
+    public static void generateRelated(String file, String outputFolder,
+            GlobalConfiguration config) throws IOException, InterruptedException {
         // Find a good folder name (i.e. one that does not exist yet).
         Path folder = findFreeFolderName(config);
         String folderName = folder.getFileName().toString();
@@ -167,7 +185,8 @@ public class DvpToolchainHandler {
         Path output = Paths.get(outputFolder);
 
         Files.copy(cache.resolve(folderName + ".inc"), output.resolve("related.inc"));
-        Files.copy(xml, output.resolve("related.xml")); // The XML file is not copied to the cache folder.
+        Files.copy(xml, output.resolve("related.xml")); // The XML file is not copied to the
+        // cache folder.
 
         // Clean the toolchain's folders.
         cleanFolder(folder);

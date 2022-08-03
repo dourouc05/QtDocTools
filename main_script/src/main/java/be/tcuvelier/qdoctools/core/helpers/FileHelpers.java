@@ -10,12 +10,13 @@ import java.nio.file.Paths;
 
 public class FileHelpers {
     public static boolean isDvpML(String path) {
-        return path.endsWith(".xml") && ! isDocBook(path);
+        return path.endsWith(".xml") && !isDocBook(path);
     }
 
     public static boolean isDocBook(String path) {
         // Check the extension: it sometimes is sufficient to conclude.
-        boolean extensionOK = path.endsWith(".db") || path.endsWith(".dbk") || path.endsWith(".xml");
+        boolean extensionOK = path.endsWith(".db") || path.endsWith(".dbk") || path.endsWith(
+                ".xml");
         if (extensionOK) {
             return true;
         }
@@ -23,7 +24,8 @@ public class FileHelpers {
         // Check the contents of the file if it ends with ".xml".
         try {
             // Must find a reference to the DocBook name space near the top.
-            // A cleaner way would be to read parse whole XML document and look at the name spaces, but that may
+            // A cleaner way would be to read parse whole XML document and look at the name
+            // spaces, but that may
             // take quite a while.
             // The name space declaration can be quite far, beyond the first ten lines:
             // https://docbook.org/docs/howto/howto.xml.
@@ -34,12 +36,13 @@ public class FileHelpers {
             try {
                 content = Files.lines(Paths.get(path)).toArray(String[]::new);
             } catch (UncheckedIOException e) {
-                // Mostly happens when the input is far from ASCII, like a DOCX/ODT file (ZIP header).
+                // Mostly happens when the input is far from ASCII, like a DOCX/ODT file (ZIP
+                // header).
                 return false;
             }
 
-            for (String s: content) {
-                if (! foundXMLNS && s.contains("xmlns")) {
+            for (String s : content) {
+                if (!foundXMLNS && s.contains("xmlns")) {
                     foundXMLNS = true;
                 }
                 if (!foundDB && s.contains("http://docbook.org/ns/docbook")) {
@@ -72,7 +75,8 @@ public class FileHelpers {
         return file.toFile().isDirectory() && file.resolve("related.json").toFile().exists();
     }
 
-    public static TransformCore.Format parseFileFormat(TransformCore.Format format, String filename) {
+    public static TransformCore.Format parseFileFormat(TransformCore.Format format,
+            String filename) {
         if (format != TransformCore.Format.Default) {
             return format;
         }
@@ -90,7 +94,8 @@ public class FileHelpers {
         }
     }
 
-    public static TransformCore.Format parseOutputFileFormat(TransformCore.Format input, TransformCore.Format output) {
+    public static TransformCore.Format parseOutputFileFormat(TransformCore.Format input,
+            TransformCore.Format output) {
         if (output != TransformCore.Format.Default) {
             return output;
         }
@@ -116,7 +121,8 @@ public class FileHelpers {
     }
 
     public static String generateOutputFilename(String input, TransformCore.Format outputFormat) {
-        // Specific handling for collisions between DocBook and DvpML: add a suffix (just before the extension).
+        // Specific handling for collisions between DocBook and DvpML: add a suffix (just before
+        // the extension).
         if (input.endsWith("_dvp.xml")) {
             input = input.replace("_dvp.xml", ".xml");
         } else if (input.endsWith("_db.xml")) {
@@ -153,6 +159,7 @@ public class FileHelpers {
         }
 
         // Format not found. This is mostly a Java requirement...
-        throw new IllegalArgumentException("Format not recognised when generating a new file name.");
+        throw new IllegalArgumentException("Format not recognised when generating a new file name" +
+                ".");
     }
 }

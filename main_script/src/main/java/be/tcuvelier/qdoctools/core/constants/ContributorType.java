@@ -1,7 +1,5 @@
 package be.tcuvelier.qdoctools.core.constants;
 
-import be.tcuvelier.qdoctools.io.docx.fromdocx.MetaDataParagraphs;
-
 public enum ContributorType {
     AUTHOR, CONVERTER, PROOFREADER, REVIEWER, TRANSLATOR;
 

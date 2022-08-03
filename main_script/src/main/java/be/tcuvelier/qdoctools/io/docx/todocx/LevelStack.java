@@ -10,16 +10,19 @@ import java.util.stream.Stream;
 
 /**
  * A few design notes.
- * - Avoid SDTs. Two reasons: they are not really supported within POI (but you can work around it); they are not
- *   really supported by LibreOffice, at least with 6.1.3.2 (not shown on screen as different from the rest of
- *   the code; many bug reports related to loss of information when saving as DOCX).
+ * - Avoid SDTs. Two reasons: they are not really supported within POI (but you can work around
+ * it); they are not
+ * really supported by LibreOffice, at least with 6.1.3.2 (not shown on screen as different from
+ * the rest of
+ * the code; many bug reports related to loss of information when saving as DOCX).
  */
 
 public class LevelStack {
-    // Slight interface on top of a stack (internally, a Deque) to provide some facilities when peeking, based on
+    // Slight interface on top of a stack (internally, a Deque) to provide some facilities when
+    // peeking, based on
     // the values of Level.
 
-    private Deque<Level> levels = new ArrayDeque<>();
+    private final Deque<Level> levels = new ArrayDeque<>();
     private int listDepth = 0;
 
     public void push(Level l) {
@@ -47,7 +50,7 @@ public class LevelStack {
     }
 
     private boolean pop(Set<Level> ls) {
-        if (! ls.contains(levels.peek())) {
+        if (!ls.contains(levels.peek())) {
             return false;
         }
 
@@ -56,13 +59,13 @@ public class LevelStack {
     }
 
     public void pop(Level l, SAXException t) throws SAXException {
-        if (! pop(l)) {
+        if (!pop(l)) {
             throw t;
         }
     }
 
     public void pop(Stream<Level> l, SAXException t) throws SAXException {
-        if (! pop(l)) {
+        if (!pop(l)) {
             throw t;
         }
     }

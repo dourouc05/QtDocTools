@@ -10,17 +10,15 @@ import java.util.concurrent.Callable;
 
 @Command(name = "upload", description = "Generates and uploads an article or a website")
 public class UploadCommand implements Callable<Void> {
-    @Option(names = { "-i", "--input-file", "--input-folder" },
-            description = "File or folder to generate and upload", required = true)
-    private String input;
-
     @Option(names = "--upload",
             description = "Uploads the generated files (default: ${DEFAULT-VALUE})")
-    private boolean upload = true;
-
-    @Option(names = { "-c", "--configuration-file" },
+    private final boolean upload = true;
+    @Option(names = {"-c", "--configuration-file"},
             description = "Configuration file (default: ${DEFAULT-VALUE})")
-    private String configurationFile = "config.json";
+    private final String configurationFile = "config.json";
+    @Option(names = {"-i", "--input-file", "--input-folder"},
+            description = "File or folder to generate and upload", required = true)
+    private String input;
 
     @Override
     public Void call() throws Exception {

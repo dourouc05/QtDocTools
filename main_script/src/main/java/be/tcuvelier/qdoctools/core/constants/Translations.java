@@ -1,7 +1,5 @@
 package be.tcuvelier.qdoctools.core.constants;
 
-import be.tcuvelier.qdoctools.core.constants.Language;
-
 import java.util.Map;
 
 public class Translations {
@@ -33,13 +31,15 @@ public class Translations {
     public static final Map<Language, String> programListingLineNumberingValueUnnumbered =
             Map.of(Language.FRENCH, "non numéroté", Language.ENGLISH, "unnumbered");
     public static final Map<Language, String> programListingStartingLineNumber =
-            Map.of(Language.FRENCH, "Numéro de la première ligne", Language.ENGLISH, "Starting line number");
+            Map.of(Language.FRENCH, "Numéro de la première ligne", Language.ENGLISH, "Starting " +
+                    "line number");
 
     // <db:author>, <db:authorgroup>, and family.
     public static final Map<Language, String> author =
             Map.of(Language.FRENCH, "Auteur", Language.ENGLISH, "Author");
     public static final Map<Language, String> converter =
-            Map.of(Language.FRENCH, "Mise au gabarit", Language.ENGLISH, "Converter"); // TODO: find a nice way of saying that in French.
+            Map.of(Language.FRENCH, "Mise au gabarit", Language.ENGLISH, "Converter"); // TODO:
+    // find a nice way of saying that in French.
     public static final Map<Language, String> proofreader =
             Map.of(Language.FRENCH, "Correcteur", Language.ENGLISH, "Proofreader");
     public static final Map<Language, String> reviewer =
@@ -53,7 +53,8 @@ public class Translations {
     public static final Map<Language, String> pseudonym =
             Map.of(Language.FRENCH, "Pseudonyme", Language.ENGLISH, "Pseudonym");
     public static final Map<Language, String> uriMain =
-            Map.of(Language.FRENCH, "URL principale (profil forum)", Language.ENGLISH, "Main URL (forum profile)");
+            Map.of(Language.FRENCH, "URL principale (profil forum)", Language.ENGLISH, "Main URL " +
+                    "(forum profile)");
     public static final Map<Language, String> uriHomepage =
             Map.of(Language.FRENCH, "Site Web", Language.ENGLISH, "Website");
     public static final Map<Language, String> uriBlog =

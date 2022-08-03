@@ -21,7 +21,8 @@ public class RelatedJSON {
     private final GlobalConfiguration config;
     private final ArticleConfiguration articleConfiguration;
 
-    public RelatedJSON(String file, GlobalConfiguration config, ArticleConfiguration articleConfiguration) {
+    public RelatedJSON(String file, GlobalConfiguration config,
+            ArticleConfiguration articleConfiguration) {
         this.file = file + "/related.json";
         this.config = config;
         this.articleConfiguration = articleConfiguration;
@@ -34,8 +35,9 @@ public class RelatedJSON {
 
         // Retrieve the listed files.
         List<Path> files = new ArrayList<>();
-        for (Map.Entry<String, JsonElement> section: refs.entrySet()) {
-            for (Map.Entry<String, JsonElement> ref: section.getValue().getAsJsonObject().entrySet()) {
+        for (Map.Entry<String, JsonElement> section : refs.entrySet()) {
+            for (Map.Entry<String, JsonElement> ref :
+                    section.getValue().getAsJsonObject().entrySet()) {
                 files.add(Paths.get(file).getParent().resolve(ref.getValue().getAsString()));
             }
         }
@@ -67,17 +69,19 @@ public class RelatedJSON {
                 .append("</urlhttp>\n");
         xml.append("    </entete>\n");
 
-        for (Map.Entry<String, JsonElement> section: refs.entrySet()) {
+        for (Map.Entry<String, JsonElement> section : refs.entrySet()) {
             xml.append("    <reference>\n")
-               .append("        <title>")
+                    .append("        <title>")
                     .append(section.getKey())
                     .append("</title>\n");
 
-            for (Map.Entry<String, JsonElement> ref: section.getValue().getAsJsonObject().entrySet()) {
+            for (Map.Entry<String, JsonElement> ref :
+                    section.getValue().getAsJsonObject().entrySet()) {
                 Path article = Paths.get(file).getParent().resolve(ref.getValue().getAsString());
                 ArticleConfiguration conf = new ArticleConfiguration(article.toString());
                 assert conf.getFtpUser().isPresent();
-                String url = "http://" + conf.getFtpUser().get() + ".developpez.com/" + conf.getFtpFolder();
+                String url =
+                        "http://" + conf.getFtpUser().get() + ".developpez.com/" + conf.getFtpFolder();
 
                 xml.append("        <element>")
                         .append("<link href=\"")

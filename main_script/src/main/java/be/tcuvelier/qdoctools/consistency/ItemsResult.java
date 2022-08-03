@@ -19,7 +19,8 @@ public class ItemsResult {
 
     void addComparison(String name, Set<String> xml, Set<String> html) {
         if (xmls.containsKey(name) || htmls.containsKey(name) || results.containsKey(name)) {
-            throw new IllegalStateException("A comparison with the name " + name + " has already been added!");
+            throw new IllegalStateException("A comparison with the name " + name + " has already " +
+                    "been added!");
         }
 
         xmls.put(name, xml);
@@ -28,8 +29,8 @@ public class ItemsResult {
     }
 
     public boolean result() {
-        for (Boolean v: results.values()) {
-            if (! v) {
+        for (Boolean v : results.values()) {
+            if (!v) {
                 return false;
             }
         }

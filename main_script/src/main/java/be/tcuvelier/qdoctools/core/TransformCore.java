@@ -15,20 +15,18 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class TransformCore {
-    public enum Format {
-        // All pairs with DocBook are supported.
-        Default, DocBook, DOCX, DvpML, ODT
-    }
-
-    public static String sanityCheckFailedMessage = "SANITY CHECK: one or more sanity checks did not pass. It is " +
-            "better if you correct these problems now; otherwise, you may use the option --disable-sanity-checks to " +
-            "ignore them. In the latter case, you may face errors while producing the DOCX file or, " +
+    public static String sanityCheckFailedMessage = "SANITY CHECK: one or more sanity checks did " +
+            "not pass. It is " +
+            "better if you correct these problems now; otherwise, you may use the option " +
+            "--disable-sanity-checks to " +
+            "ignore them. In the latter case, you may face errors while producing the DOCX file " +
+            "or, " +
             "more likely, you will not get a comparable DocBook file when round-tripping.";
-
-    public static String validationFailedMessage = "There were validation errors. See the above exception for details.";
+    public static String validationFailedMessage = "There were validation errors. See the above " +
+            "exception for details.";
 
     public static void callRelated(String input, String output, GlobalConfiguration config) throws IOException {
-        if (! new File(input).exists()) {
+        if (!new File(input).exists()) {
             throw new IOException("Related file " + input + "/related.json does not exist!");
         }
 
@@ -36,11 +34,12 @@ public class TransformCore {
     }
 
     public static void call(String input, Format inputFormat,
-                            String output, Format outputFormat,
-                            GlobalConfiguration config, boolean validate, boolean disableSanityChecks)
-            throws SaxonApiException, IOException, SAXException, ParserConfigurationException, InvalidFormatException,
+            String output, Format outputFormat,
+            GlobalConfiguration config, boolean validate, boolean disableSanityChecks)
+            throws SaxonApiException, IOException, SAXException, ParserConfigurationException,
+            InvalidFormatException,
             XMLStreamException {
-        if (! new File(input).exists()) {
+        if (!new File(input).exists()) {
             throw new IOException("Input file " + input + " does not exist!");
         }
 
@@ -100,7 +99,13 @@ public class TransformCore {
         }
     }
 
-    public static boolean checkSanity(String input) throws SaxonApiException, FileNotFoundException {
+    public static boolean checkSanity(String input) throws SaxonApiException,
+            FileNotFoundException {
         return new DocBookSanityCheckHandler(input).performSanityCheck();
+    }
+
+    public enum Format {
+        // All pairs with DocBook are supported.
+        Default, DocBook, DOCX, DvpML, ODT
     }
 }

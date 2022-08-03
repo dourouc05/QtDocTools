@@ -21,8 +21,10 @@ public class QdocConsistencyChecks {
         try {
             r = new CheckRequest(fileName, qtVersion);
         } catch (HttpStatusException e) {
-            System.out.println(prefix + " Error while performing consistency checks: 404 when downloading the original file.");
-            // For instance, QAbstractXMLReceiver: https://doc-snapshots.qt.io/qt5-5.9/qabstractxmlreceiver.html exists,
+            System.out.println(prefix + " Error while performing consistency checks: 404 when " +
+                    "downloading the original file.");
+            // For instance, QAbstractXMLReceiver: https://doc-snapshots.qt.io/qt5-5.9/qabstractxmlreceiver.html
+            // exists,
             // but not http://doc.qt.io/qt-5/qabstractxmlreceiver.html.
             throw e; // Cannot continue for this file.
         } catch (IOException | SaxonApiException e) {
@@ -35,7 +37,7 @@ public class QdocConsistencyChecks {
     public boolean checkInheritedBy() {
         try {
             InheritedByResult inheritedBy = InheritedBy.checkInheritedBy(r);
-            if (! inheritedBy.result) {
+            if (!inheritedBy.result) {
                 System.out.println(prefix + " File: " + fileName.toString());
                 System.out.println(prefix + " Inherited-by classes mismatch: ");
                 System.out.println(prefix + "     - DocBook has: " + Arrays.toString(inheritedBy.xml.toArray()));
@@ -52,9 +54,9 @@ public class QdocConsistencyChecks {
     public boolean checkItems() {
         try {
             ItemsResult items = Items.checkItems(r);
-            if (! items.result()) {
-                for (String name: items.tests()) {
-                    if (! items.getResult(name)) {
+            if (!items.result()) {
+                for (String name : items.tests()) {
+                    if (!items.getResult(name)) {
                         System.out.println(prefix + " " + name + " mismatch: ");
 
                         Object[] docbook = items.getXML(name).toArray();
@@ -65,9 +67,11 @@ public class QdocConsistencyChecks {
                         Arrays.sort(html);
                         System.out.println(prefix + "     - HTML has:    " + Arrays.toString(html));
 
-                        // Compute XML \ HTML and HTML \ XML (i.e. all differences, items in one set but not the other),
+                        // Compute XML \ HTML and HTML \ XML (i.e. all differences, items in one
+                        // set but not the other),
                         // their union (XML \ HTML) u (HTML \ XML), and output it.
-                        Object[] differences = SetHelpers.difference(items.getXML(name), items.getHTML(name)).toArray();
+                        Object[] differences = SetHelpers.difference(items.getXML(name),
+                                items.getHTML(name)).toArray();
 
                         Arrays.sort(differences);
                         System.out.println(prefix + "     > Differences between the sets: " + Arrays.toString(differences));

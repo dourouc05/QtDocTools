@@ -11,10 +11,12 @@ import java.nio.file.Path;
 
 public class ValidationHelper {
     public static boolean validateDvpML(String file, GlobalConfiguration config) throws IOException, SAXException {
-        return ValidationHandler.validateXSD(new File(file), new QdtPaths(config).getDvpMLXSDPath());
+        return ValidationHandler.validateXSD(new File(file),
+                new QdtPaths(config).getDvpMLXSDPath());
     }
 
-    public static boolean validateDvpML(Path file, GlobalConfiguration config) throws IOException, SAXException {
+    public static boolean validateDvpML(Path file, GlobalConfiguration config) throws IOException
+            , SAXException {
         return ValidationHandler.validateXSD(file.toFile(), new QdtPaths(config).getDvpMLXSDPath());
     }
 

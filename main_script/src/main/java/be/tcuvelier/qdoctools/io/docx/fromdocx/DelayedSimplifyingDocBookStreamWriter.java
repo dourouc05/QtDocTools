@@ -10,25 +10,12 @@ import java.util.Objects;
 import java.util.Stack;
 
 public class DelayedSimplifyingDocBookStreamWriter implements DocBookStreamWriter {
-    // Simplification implemented here: </tag><tag>, merge them if it's just formatting and if all attributes match.
+    // Simplification implemented here: </tag><tag>, merge them if it's just formatting and if
+    // all attributes match.
 
     private final DocBookStreamWriter db;
     private final Stack<Tag> tags;
     private boolean justClosedInlineTag = false;
-
-    private static class Tag {
-        @NotNull final String tag;
-        @Nullable Map<String, String> attributes;
-
-        Tag(@NotNull String tag) {
-            this.tag = tag;
-        }
-
-        Tag(@NotNull String tag, @NotNull Map<String, String> attributes) {
-            this.tag = tag;
-            this.attributes = attributes;
-        }
-    }
 
     public DelayedSimplifyingDocBookStreamWriter(DocBookStreamWriter db) {
         this.db = db;
@@ -45,11 +32,12 @@ public class DelayedSimplifyingDocBookStreamWriter implements DocBookStreamWrite
     }
 
     private boolean doesDelayedTagMatch(@NotNull String tag) {
-        return ! tags.empty() && tags.peek().tag.equals(tag) && tags.peek().attributes == null;
+        return !tags.empty() && tags.peek().tag.equals(tag) && tags.peek().attributes == null;
     }
 
-    private boolean doesDelayedTagMatch(@NotNull String tag, @NotNull Map<String, String> attributes) {
-        return ! tags.empty() && tags.peek().tag.equals(tag) && Objects.equals(tags.peek().attributes, attributes);
+    private boolean doesDelayedTagMatch(@NotNull String tag,
+            @NotNull Map<String, String> attributes) {
+        return !tags.empty() && tags.peek().tag.equals(tag) && Objects.equals(tags.peek().attributes, attributes);
     }
 
     private void addTag(Tag tag) {
@@ -167,5 +155,20 @@ public class DelayedSimplifyingDocBookStreamWriter implements DocBookStreamWrite
         }
 
         db.writeCharacters(text);
+    }
+
+    private static class Tag {
+        @NotNull
+        final String tag;
+        @Nullable Map<String, String> attributes;
+
+        Tag(@NotNull String tag) {
+            this.tag = tag;
+        }
+
+        Tag(@NotNull String tag, @NotNull Map<String, String> attributes) {
+            this.tag = tag;
+            this.attributes = attributes;
+        }
     }
 }

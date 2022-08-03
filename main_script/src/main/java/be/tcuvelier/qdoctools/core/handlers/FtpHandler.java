@@ -36,8 +36,10 @@ public class FtpHandler {
     }
 
     public FtpHandler(ArticleConfiguration config) throws ConfigurationMissingField {
-        // Some calls in the first branch of the if could, in theory, throw ConfigurationMissingField
-        // because there is no user and no password. In practice, needsFtpPassword() checks for their presence,
+        // Some calls in the first branch of the if could, in theory, throw
+        // ConfigurationMissingField
+        // because there is no user and no password. In practice, needsFtpPassword() checks for
+        // their presence,
         // so that it is only possible with the server.
         if (config.needsFtpPassword() && config.getFtpUser().isPresent() && config.getFtpPassword().isPresent()) {
             this.user = config.getFtpUser().get();
@@ -59,7 +61,7 @@ public class FtpHandler {
 
         ftp.connect(server, port);
         final int reply = ftp.getReplyCode();
-        if(!FTPReply.isPositiveCompletion(reply)) {
+        if (!FTPReply.isPositiveCompletion(reply)) {
             disconnect();
             throw new IOException("Unable to connect to the server: server refused connection. " + ftp.getReplyString());
         }
@@ -67,7 +69,8 @@ public class FtpHandler {
         if (user.length() > 0) {
             if (!ftp.login(user, password)) {
                 disconnect();
-                throw new IOException("Unable to connect to the server: credentials not recognised. " + ftp.getReplyString());
+                throw new IOException("Unable to connect to the server: credentials not " +
+                        "recognised. " + ftp.getReplyString());
             }
         }
 
@@ -159,7 +162,8 @@ public class FtpHandler {
 
             // Upload.
             final String fn = file.getFileName().toString();
-            if (fn.endsWith(".xml") || fn.endsWith(".php") || fn.endsWith(".htm") || fn.endsWith(".html")) {
+            if (fn.endsWith(".xml") || fn.endsWith(".php") || fn.endsWith(".htm") || fn.endsWith(
+                    ".html")) {
                 sendTextFile(fn, file);
             } else {
                 sendBinaryFile(fn, file);

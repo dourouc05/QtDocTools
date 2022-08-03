@@ -36,49 +36,57 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class DocxOutputImpl extends DefaultHandler {
-    /** Internal variables. **/
-
-    private Locator locator; // Tracks the state within the XML document, useful to display useful error messages.
     private final Path folder; // Folder of the document. Used to determine where to store images.
-    XWPFDocument doc; // DOCX document being written.
     private final POIHelpers h = new POIHelpers();
+    private final LevelStack currentLevel = new LevelStack(); // Records some tags are are
+    // currently open.
+    private final List<DocBookFormatting> currentFormatting = new ArrayList<>(); // Order: FIFO,
+    // i.e. first tag met in
+    XWPFDocument doc; // DOCX document being written.
+    /**
+     * Internal variables.
+     **/
 
+    private Locator locator; // Tracks the state within the XML document, useful to display
+    // useful error messages.
     private Language language;
-
     // Paragraph being filled.
-    private Deque<XWPFParagraph> paragraph; // Paragraph being written while another paragraph is not finished yet,
-    // e.g. within footnotes. In normal cases, this deque only stores one paragraph. At any rate, most operations
+    private Deque<XWPFParagraph> paragraph; // Paragraph being written while another paragraph is
+    // not finished yet,
+    // e.g. within footnotes. In normal cases, this deque only stores one paragraph. At any rate,
+    // most operations
     // are performed only on the last element of the deque.
     private XWPFRun run; // Belongs to the last paragraph in the queue.
-
     // Current state.
     private int paragraphNumber = -1;
     private int runNumber = -1;
     private int runCharactersNumber = -1;
     private String currentLink = null; // When != null: all new runs must point to that link.
-
     private boolean footnotesInitialised = false; // Whether initialiseFootnotes() should be called.
-    private XWPFFootnote footnote; // Footnote being filled.
-    private String paragraphStyle = "Normal"; // Current style for the current paragraph. Paragraphs created when
     // opening a <para> tag will have the same style.
-
+    private XWPFFootnote footnote; // Footnote being filled.
+    private String paragraphStyle = "Normal"; // Current style for the current paragraph.
+    // Paragraphs created when
     private BigInteger numbering; // != null when filling a list. Used when opening a <para> tag.
-    private BigInteger lastFilledNumbering = BigInteger.ZERO; // Ease the look-up for a new numbering to fill.
-    private int numberingItemParagraphNumber = -1; // Check whether multiple paragraphs are used for a single item.
-    private List<String> segmentedListHeaders; // Stores the header of a segmented list (Word requires that they are
-    // repeated). TODO: Limitation for ease of implementation: no styling stored in this list, just raw headers.
+    private BigInteger lastFilledNumbering = BigInteger.ZERO; // Ease the look-up for a new
+    // numbering to fill.
+    private int numberingItemParagraphNumber = -1; // Check whether multiple paragraphs are used
+    // for a single item.
+    private List<String> segmentedListHeaders; // Stores the header of a segmented list (Word
+    // requires that they are
+    // repeated). TODO: Limitation for ease of implementation: no styling stored in this list,
+    //  just raw headers.
     private int segmentNumber = -1;
-
-    private XWPFTable table; // Table being currently filled TODO: What about nested tables? Really care about this case? Would need to stack them...
+    private XWPFTable table; // Table being currently filled TODO: What about nested tables?
+    // Really care about this case? Would need to stack them...
     private XWPFTableRow tableRow; // Table row being currently filled. null outside a table row.
     private int tableRowNumber = -1; // Number of the current row (starts at 0).
-    private XWPFTableCell tableCell; // Table cell being currently filled (i.e. the intersection of a row and a column).
+    private XWPFTableCell tableCell; // Table cell being currently filled (i.e. the intersection
+    // of a row and a column).
     // null when outside a table cell.
-    private int tableColumnNumber = -1; // Number of the current column within the row (starts at 0).
-
-    private final LevelStack currentLevel = new LevelStack(); // Records some tags are are currently open.
+    private int tableColumnNumber = -1; // Number of the current column within the row (starts at
+    // 0).
     private int currentSectionDepth = 0; // 0: root; >0: sections.
-    private final List<DocBookFormatting> currentFormatting = new ArrayList<>(); // Order: FIFO, i.e. first tag met in
     // the document is the first one in the vector. TODO: migrate to Deque?
 
     DocxOutputImpl(Path folder, GlobalConfiguration config) throws IOException {
@@ -87,8 +95,10 @@ public class DocxOutputImpl extends DefaultHandler {
         // Start a document with the template that defines all needed styles.
         doc = new XWPFDocument(new FileInputStream(new QdtPaths(config).getToDocxTemplate()));
 
-        // A Word document always contains empty paragraphs, remove them (just to have a clean output).
-        // Either it is just an empty document, or these paragraphs are used so that Word has no latent style.
+        // A Word document always contains empty paragraphs, remove them (just to have a clean
+        // output).
+        // Either it is just an empty document, or these paragraphs are used so that Word has no
+        // latent style.
         int nParagraphs = doc.getBodyElements().size();
         while (nParagraphs > 0) {
             doc.removeBodyElement(0);
@@ -128,369 +138,9 @@ public class DocxOutputImpl extends DefaultHandler {
         props.getExtendedProperties().setTemplate("QtDocTools.docm");
     }
 
-    /** POI-level helpers. These functions are not really specific to this project and could be upstreamed. **/
-    // Cannot be a static class, as some methods require access to the current document. (A static class would be
-    // less clean to use.)
-
-    private class POIHelpers {
-        private ParagraphAlignment alignmentToWordAligment(@NotNull String align) {
-            return switch (align) {
-                case "center" -> ParagraphAlignment.CENTER;
-                case "char" ->
-                    // No easy translation to Word.
-                    // DocBook definition (https://tdg.docbook.org/tdg/5.2/imagedata.html):
-                    //      Aligned horizontally on the specified character
-                    // Available to Word:
-                    //      http://officeopenxml.com/WPalignment.php
-                    //      https://docs.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.alignment?view=openxml-2.8.1
-                        throw new IllegalArgumentException("DocBook char alignment is not supported");
-                case "justify" -> ParagraphAlignment.DISTRIBUTE;
-                case "left" -> ParagraphAlignment.LEFT;
-                case "right" -> ParagraphAlignment.RIGHT;
-                default -> null;
-            };
-        }
-
-        private int filenameToWordFormat(@NotNull String filename) {
-            // See org.apache.poi.xwpf.usermodel.Document.
-            String[] parts = filename.split("\\.");
-            String extension = parts[parts.length - 1].toLowerCase();
-
-            return switch (extension) {
-                case "emf" -> XWPFDocument.PICTURE_TYPE_EMF;
-                case "wmf" -> XWPFDocument.PICTURE_TYPE_WMF;
-                case "pict" -> XWPFDocument.PICTURE_TYPE_PICT;
-                case "jpg", "jpeg" -> XWPFDocument.PICTURE_TYPE_JPEG;
-                case "png" -> XWPFDocument.PICTURE_TYPE_PNG;
-                case "dib" -> XWPFDocument.PICTURE_TYPE_DIB;
-                case "gif" -> XWPFDocument.PICTURE_TYPE_GIF;
-                case "tif", "tiff" -> XWPFDocument.PICTURE_TYPE_TIFF;
-                case "eps" -> XWPFDocument.PICTURE_TYPE_EPS;
-                case "bmp" -> XWPFDocument.PICTURE_TYPE_BMP;
-                case "wpg" -> XWPFDocument.PICTURE_TYPE_WPG;
-                default -> -1;
-            };
-        }
-
-        @Contract("null -> fail")
-        private int parseMeasurementAsEMU(String m) throws SAXException {
-            if (m == null) {
-                throw new DocxException("invalid measured quantity.");
-            }
-
-            if (m.endsWith("in")) {
-                return Integer.parseInt(m.replace("in", "")) * 914_400;
-            } else if (m.endsWith("pt")) {
-                return Units.toEMU(Integer.parseInt(m.replace("pt", "")));
-            } else if (m.endsWith("cm")) {
-                return Integer.parseInt(m.replace("cm", "")) * Units.EMU_PER_CENTIMETER;
-            } else if (m.endsWith("mm")) {
-                return Integer.parseInt(m.replace("mm", "")) * Units.EMU_PER_CENTIMETER / 10;
-            } else if (m.endsWith("px")) {
-                return Integer.parseInt(m.replace("px", "")) * Units.EMU_PER_PIXEL;
-            } else {
-                throw new DocxException("unknown measurement unit in " + m + ".");
-            }
-        }
-
-        private CTLevelText createText(@NotNull String t) {
-            CTLevelText ct = CTLevelText.Factory.newInstance();
-            ct.setVal(t);
-            return ct;
-        }
-
-        private CTRPr createFont(@NotNull String name) {
-            CTFonts fonts = CTFonts.Factory.newInstance();
-            fonts.setAscii(name);
-            fonts.setHAnsi(name);
-            fonts.setCs(name);
-            fonts.setHint(STHint.DEFAULT);
-
-            CTRPr font = CTRPr.Factory.newInstance();
-            font.setRFontsArray(0, fonts);
-            return font;
-        }
-
-        private String createHyperlinkReference(@NotNull String uri) {
-            return paragraph.getLast().getPart().getPackagePart().addExternalRelationship(
-                    uri, XWPFRelation.HYPERLINK.getRelation()
-            ).getId();
-        }
-
-        private void createImage(Attributes attributes) throws SAXException {
-            assert paragraph.size() > 0;
-            assert run != null;
-
-            Map<String, String> attr = SAXHelpers.attributes(attributes);
-
-            if (! attr.containsKey("fileref")) {
-                throw new DocxException("the image tag has no fileref attribute.");
-            }
-
-            String filename = attr.get("fileref");
-            Path filePath = folder.resolve(filename);
-            int width;
-            int height;
-            String align = attr.getOrDefault("width", null);
-
-            // Get the image width and height: either from the XML or from the image itself.
-            // Avoid loading the image if both dimensions are known from the XML.
-            {
-                String imageWidth = null;
-                String imageHeight = null;
-                if (! attr.containsKey("width") && ! attr.containsKey("depth")) {
-                    try {
-                        BufferedImage img = ImageIO.read(filePath.toFile());
-                        imageWidth = img.getWidth() + "px";
-                        imageHeight = img.getHeight() + "px";
-                    } catch (IOException e) {
-                        throw new DocxException("there was a problem reading the image", e);
-                    }
-                }
-
-                width = parseMeasurementAsEMU(attr.getOrDefault("width", imageWidth));
-                height = parseMeasurementAsEMU(attr.getOrDefault("depth", imageHeight));
-            }
-
-            warnUnknownAttributes(attr, Stream.of("fileref", "width", "depth", "align"));
-
-            // Detect the format of the image.
-            int format = filenameToWordFormat(filename);
-            if (format < 0) {
-                throw new DocxException("unknown image extension " + filename + ".");
-            }
-
-            // Prepare the current paragraph to only receive this image.
-            if (run.text().length() > 0) {
-                paragraph.getLast().removeRun(0);
-                createNewRun();
-                runNumber -= 1;
-            }
-
-            // To allow images in admonitions, apply the admonition style to the image.
-            if (currentLevel.peekSecondAdmonition()) {
-                String style = DocBookBlock.docbookTagToStyleID.get(Level.qnameFromAdmonition(currentLevel.peekSecond()));
-                if (style != null) {
-                    paragraphStyle = style;
-                    paragraph.getLast().setStyle(style);
-                }
-            }
-
-            // Use the last attributes.
-            if (align != null && ! align.isBlank()) {
-                ParagraphAlignment a = h.alignmentToWordAligment(align);
-                if (a != null) {
-                    paragraph.getLast().setAlignment(a);
-                }
-            }
-
-            // Actually add the image.
-            try {
-                run.addPicture(new FileInputStream(filePath.toFile()), format,
-                        filePath.getFileName().toString(), width, height);
-            } catch (IOException | InvalidFormatException e) {
-                throw new DocxException("there was a problem adding the image to the output file", e);
-            }
-        }
-
-        private BigInteger createNumbering(boolean isOrdered) {
-            // Based on https://github.com/apache/poi/blob/trunk/src/ooxml/testcases/org/apache/poi/xwpf/usermodel/TestXWPFNumbering.java
-            // A bit of inspiration from https://coderanch.com/t/649584/java/create-Bullet-Square-Word-POI
-
-            // Create a numbering identifier (find the first empty).
-            // lastFilledNumbering is only used to speed up the computations.
-            XWPFNumbering numbering = doc.createNumbering();
-            BigInteger abstractNumId = lastFilledNumbering;
-            {
-                // First, test id == 1 (start at zero, increase, check if 1 exists: if not, loop).
-                Object o;
-                do {
-                    abstractNumId = abstractNumId.add(BigInteger.ONE);
-                    o = numbering.getAbstractNum(abstractNumId);
-                } while (o != null);
-            }
-            lastFilledNumbering = abstractNumId;
-
-            // Create the abstract numbering from scratch. Inspired by:
-            // https://stackoverflow.com/questions/1940911/openxml-2-sdk-word-document-create-bulleted-list-programmatically
-            // http://officeopenxml.com/WPnumbering.php
-            CTAbstractNum ctAbstractNum = CTAbstractNum.Factory.newInstance();
-            ctAbstractNum.setAbstractNumId(abstractNumId);
-            {
-                CTMultiLevelType ctMultiLevelType = (CTMultiLevelType) CTMultiLevelType.Factory.newInstance();
-                ctMultiLevelType.setVal(STMultiLevelType.HYBRID_MULTILEVEL);
-                ctAbstractNum.setMultiLevelType(ctMultiLevelType);
-            }
-            {
-                // Define many useful values that will be used several times later on (only in this scope).
-                CTDecimalNumber one = CTDecimalNumber.Factory.newInstance();
-                one.setVal(BigInteger.ONE);
-
-                CTNumFmt bullet = CTNumFmt.Factory.newInstance();
-                bullet.setVal(STNumberFormat.BULLET);
-                CTNumFmt decimal = CTNumFmt.Factory.newInstance();
-                decimal.setVal(STNumberFormat.DECIMAL);
-                CTNumFmt lowerLetter = CTNumFmt.Factory.newInstance();
-                lowerLetter.setVal(STNumberFormat.LOWER_LETTER);
-                CTNumFmt lowerRoman = CTNumFmt.Factory.newInstance();
-                lowerRoman.setVal(STNumberFormat.LOWER_ROMAN);
-
-                CTLevelText charFullBullet = createText("\uF0B7"); // Not working in all fonts!
-                CTLevelText charEmptyBullet = createText("o"); // Just an o.
-                CTLevelText charFullSquare = createText("\uF0A7"); // Not working in all fonts!
-
-                CTJc left = CTJc.Factory.newInstance();
-                left.setVal(STJc.LEFT);
-
-                CTRPr symbolFont = createFont("Symbol");
-                CTRPr courierNewFont = createFont("Courier New");
-                CTRPr wingdingsFont = createFont("Wingdings");
-
-                // Create the various levels of this abstract numbering.
-                for (int i = 0; i < 9; ++i) {
-                    CTLvl lvl = ctAbstractNum.addNewLvl();
-                    lvl.setIlvl(BigInteger.valueOf(i));
-                    lvl.setStart(one);
-                    lvl.setLvlJc(left);
-
-                    // Actually define the bullets: either a real bullet, or a number (following what Word 2019 does).
-                    if (! isOrdered) {
-                        lvl.setNumFmt(bullet);
-                        if (i % 3 == 0) {
-                            lvl.setLvlText(charFullBullet);
-                            lvl.setRPr(symbolFont);
-                        } else if (i % 3 == 1) {
-                            lvl.setLvlText(charEmptyBullet);
-                            lvl.setRPr(courierNewFont);
-                        } else {
-                            lvl.setLvlText(charFullSquare);
-                            lvl.setRPr(wingdingsFont);
-                        }
-                    } else {
-                        if (i % 3 == 0) {
-                            lvl.setNumFmt(decimal);
-                        } else if (i % 3 == 1) {
-                            lvl.setNumFmt(lowerLetter);
-                        } else {
-                            lvl.setNumFmt(lowerRoman);
-                        }
-                        lvl.setLvlText(createText("%" + (i + 1) + "."));
-                    }
-
-                    // Indentation values taken from Word 2019 (major difference with that reference: left vs start,
-                    // see http://officeopenxml.com/WPindentation.php).
-                    CTInd levelIndent = CTInd.Factory.newInstance();
-                    levelIndent.setLeft(BigInteger.valueOf(720 * (i + 1)));
-                    levelIndent.setHanging(BigInteger.valueOf(360));
-                    CTPPrGeneral indent = CTPPrGeneral.Factory.newInstance();
-                    indent.setInd(levelIndent);
-                    lvl.setPPr(indent);
-                }
-            }
-
-            // Actually create the (concrete) numbering.
-            BigInteger numId = numbering.addNum(abstractNumId);
-            XWPFAbstractNum abstractNum = new XWPFAbstractNum(ctAbstractNum, numbering);
-            numbering.addAbstractNum(abstractNum);
-
-            return numId;
-        }
-
-        private void iterateOverStyleHierarchy(XWPFStyle s, Consumer<XWPFStyle> f) {
-            XWPFStyle style = s;
-            XWPFStyles styles = s.getStyles();
-            while (style != null) {
-                f.accept(style);
-                style = styles.getStyle(style.getBasisStyleID());
-            }
-        }
-
-        private void copyStyleToParagraph(XWPFStyle parentStyle, XWPFParagraph p) {
-            // Copy groups of properties from the given style (or any parent style).
-            // Properties may come from any parent! However, the child styles always override a parent: once a property
-            // has been set, it should not get overwritten.
-            // Should be called once the paragraph is empty, so that the properties can be properly updated for all
-            // its runs.
-
-            iterateOverStyleHierarchy(parentStyle, (XWPFStyle s) -> {
-                /* Paragraph style */
-                CTPPrGeneral ppr = s.getCTStyle().getPPr();
-                if (ppr != null) {
-                    // Borders.
-                    if (ppr.getPBdr() != null) {
-                        CTPBdr pbdr = ppr.getPBdr();
-
-                        if (pbdr.getBetween() != null && p.getBorderBetween().equals(Borders.NONE)) {
-                            p.setBorderBetween(Borders.valueOf(pbdr.getBetween().getVal().intValue()));
-                        }
-                        if (pbdr.getBottom() != null && p.getBorderBottom().equals(Borders.NONE)) {
-                            p.setBorderBottom(Borders.valueOf(pbdr.getBottom().getVal().intValue()));
-                        }
-                        if (pbdr.getLeft() != null && p.getBorderLeft().equals(Borders.NONE)) {
-                            p.setBorderLeft(Borders.valueOf(pbdr.getLeft().getVal().intValue()));
-                        }
-                        if (pbdr.getRight() != null && p.getBorderRight().equals(Borders.NONE)) {
-                            p.setBorderRight(Borders.valueOf(pbdr.getRight().getVal().intValue()));
-                        }
-                        if (pbdr.getTop() != null && p.getBorderTop().equals(Borders.NONE)) {
-                            p.setBorderTop(Borders.valueOf(pbdr.getTop().getVal().intValue()));
-                        }
-                    }
-
-                    // Indentation.
-                    if (ppr.getInd() != null) {
-                        CTInd ind = ppr.getInd();
-
-                        if (ind.getFirstLine() != null && p.getIndentationFirstLine() == -1) {
-                            p.setIndentationFirstLine(((SimpleValue) ind.getFirstLine()).getIntValue());
-                        }
-                        if (ind.getHanging() != null && p.getIndentationHanging() == -1) {
-                            p.setIndentationHanging(((SimpleValue) ind.getHanging()).getIntValue());
-                        }
-                        if (ind.getLeft() != null && p.getIndentationLeft() == -1) {
-                            p.setIndentationLeft(((SimpleValue) ind.getLeft()).getIntValue());
-                        }
-                        if (ind.getRight() != null && p.getIndentationRight() == -1) {
-                            p.setIndentationRight(((SimpleValue) ind.getRight()).getIntValue());
-                        }
-                    }
-
-                    // Shades.
-                    if (ppr.getShd() != null) {
-                        CTPPr p_ppr = p.getCTP().getPPr();
-                        if (p_ppr == null) {
-                            p_ppr = p.getCTP().addNewPPr();
-                        }
-
-                        p_ppr.setShd(ppr.getShd());
-                    }
-                }
-
-                /* Run style */
-                CTRPr rpr = s.getCTStyle().getRPr();
-                if (rpr != null) {
-                    // Iterate over the runs.
-                    for (CTR r : p.getCTP().getRList()) {
-                        // Text outline. Apparently not yet supported by POI. (Albeit it's from Word 2010: CT_TextOutlineEffect,
-                        // https://docs.microsoft.com/en-us/openspecs/office_standards/ms-docx/9704b59f-bc49-4618-ac66-41beb82a0d7f)
-                        // rpr.getTextOutline();
-
-                        // Shades.
-                        if (rpr.getShdArray() != null && rpr.getShdArray().length > 0) {
-                            CTRPr p_rpr = r.getRPr();
-                            if (p_rpr == null) {
-                                p_rpr = r.addNewRPr();
-                            }
-
-                            p_rpr.setShdArray(rpr.getShdArray());
-                        }
-                    }
-                }
-            });
-        }
-    }
-
-    /** Error and warning management. **/
+    /**
+     * Error and warning management.
+     **/
 
     @Override
     public void setDocumentLocator(Locator locator) {
@@ -502,17 +152,8 @@ public class DocxOutputImpl extends DefaultHandler {
                 "column " + locator.getColumnNumber() + ": ";
     }
 
-    private class DocxException extends SAXException {
-        DocxException(String message) {
-            super(getLocationString() + message);
-        }
-        DocxException (String message, Exception e) {
-            super(getLocationString() + message, e);
-        }
-    }
-
     private void warnUnknownAttributes(Map<String, String> attr) {
-        for (String key: attr.keySet()) {
+        for (String key : attr.keySet()) {
             // Ignore XInclude attributes.
             if (key.equals("base")) {
                 continue;
@@ -543,10 +184,12 @@ public class DocxOutputImpl extends DefaultHandler {
         }
     }
 
-    /** Remaining POI helpers, really specific to this class. **/
+    /**
+     * Remaining POI helpers, really specific to this class.
+     **/
 
     private void setRunFormatting() throws SAXException {
-        for (DocBookFormatting f: currentFormatting) {
+        for (DocBookFormatting f : currentFormatting) {
             switch (f) {
                 case EMPHASIS -> run.setItalic(true);
                 case EMPHASIS_BOLD -> run.setBold(true);
@@ -556,7 +199,8 @@ public class DocxOutputImpl extends DefaultHandler {
                 case SUPERSCRIPT -> run.setSubscript(VerticalAlign.SUPERSCRIPT);
                 default -> {
                     // Special cases.
-                    // Monospaced tag with a replaceable inside: just output the replaceable as italic.
+                    // Monospaced tag with a replaceable inside: just output the replaceable as
+                    // italic.
                     if (currentFormatting.size() > 1 && f == DocBookFormatting.REPLACEABLE
                             && currentFormatting.stream().anyMatch(DocBookFormatting::isMonospacedFormatting)) {
                         run.setItalic(true);
@@ -610,17 +254,21 @@ public class DocxOutputImpl extends DefaultHandler {
         runNumber = 0;
     }
 
-    /** Actual SAX handler. **/
+    /**
+     * Actual SAX handler.
+     **/
 
     private void initialiseFootnotes() {
-        if (! footnotesInitialised) {
+        if (!footnotesInitialised) {
             footnotesInitialised = true;
             doc.createFootnotes();
 
-            // Create the first two "dummy" footnotes. Without them, the document cannot be considered valid by Word
+            // Create the first two "dummy" footnotes. Without them, the document cannot be
+            // considered valid by Word
             // (even though LibreOffice has no problem with it).
 
-            // <w:footnote w:type="separator" w:id="-1"><w:p><w:r><w:separator/></w:r></w:p></w:footnote>
+            // <w:footnote w:type="separator"
+            // w:id="-1"><w:p><w:r><w:separator/></w:r></w:p></w:footnote>
             footnote = doc.createFootnote();
             footnote.getCTFtnEdn().setId(BigInteger.ZERO.subtract(BigInteger.ONE)); // -1
             footnote.getCTFtnEdn().setType(STFtnEdn.SEPARATOR);
@@ -628,7 +276,8 @@ public class DocxOutputImpl extends DefaultHandler {
             footnote.getCTFtnEdn().getPArray(0).addNewR();
             footnote.getCTFtnEdn().getPArray(0).getRArray(0).addNewSeparator();
 
-            // <w:footnote w:type="continuationSeparator" w:id="0"><w:p><w:r><w:continuationSeparator/></w:r></w:p></w:footnote>
+            // <w:footnote w:type="continuationSeparator"
+            // w:id="0"><w:p><w:r><w:continuationSeparator/></w:r></w:p></w:footnote>
             footnote = doc.createFootnote();
             footnote.getCTFtnEdn().setId(BigInteger.ZERO);
             footnote.getCTFtnEdn().setType(STFtnEdn.CONTINUATION_SEPARATOR);
@@ -647,15 +296,17 @@ public class DocxOutputImpl extends DefaultHandler {
             return true;
         }
 
-        boolean hasText = ! p.getText().isBlank();
+        boolean hasText = !p.getText().isBlank();
         boolean hasImage = p.getRuns().stream().anyMatch(r -> r.getCTR().sizeOfDrawingArray() > 0);
-        return ! hasText && ! hasImage;
+        return !hasText && !hasImage;
     }
 
     private void createNewParagraph() {
         // If there is already a paragraph in the deque, maybe it's empty and still useable.
-        // Remember: this code only creates a document, it does not modify one. Moreover, for footnotes, paragraph
-        // creation does not use this mechanism, so that footnote paragraphs do not end up in doc.paragraphs.
+        // Remember: this code only creates a document, it does not modify one. Moreover, for
+        // footnotes, paragraph
+        // creation does not use this mechanism, so that footnote paragraphs do not end up in doc
+        // .paragraphs.
         XWPFParagraph pendingP = (paragraph.size() > 0) ? paragraph.getLast() : null;
         List<XWPFParagraph> lp = doc.getParagraphs();
         XWPFParagraph lastP = (lp.size() > 0) ? lp.get(lp.size() - 1) : null;
@@ -718,57 +369,67 @@ public class DocxOutputImpl extends DefaultHandler {
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        // Note: XInclude not supported right now. Could easily be done to export to DOCX, but the reverse would be
+        // Note: XInclude not supported right now. Could easily be done to export to DOCX, but
+        // the reverse would be
         // much harder. TODO at a later point.
 
         if (currentLink != null) {
             throw new IllegalStateException("Not yet implemented: tag within a ubiquitous link.");
-            // This would require to register all opening/closing tags since the opening of the ubiquitous link.
-            // Indeed, when closing a tag, the attributes are not passed anymore! So there is no other way to find which
+            // This would require to register all opening/closing tags since the opening of the
+            // ubiquitous link.
+            // Indeed, when closing a tag, the attributes are not passed anymore! So there is no
+            // other way to find which
             // tag opened the link. A lot of effort that will probably not be required.
         }
 
         // Root tags and assimilate.
         if (DocBookBlock.blockToPredicate.get(DocBookBlock.ARTICLE).test(qName)) {
             if (currentLevel.peekRootBook()) {
-                throw new DocxException("unexpected article within a book (use stand-alone articles).");
-                // TODO: Maybe this is too conservative? Articles in books are allowed by the standard (equivalent to chapters).
+                throw new DocxException("unexpected article within a book (use stand-alone " +
+                        "articles).");
+                // TODO: Maybe this is too conservative? Articles in books are allowed by the
+                //  standard (equivalent to chapters).
             }
 
             parseLanguage(attributes);
 
             currentLevel.push(Level.ROOT_ARTICLE);
             ensureNoTextAllowed();
-            // Don't warn about unknown attributes, as it will most likely just be version and name spaces.
+            // Don't warn about unknown attributes, as it will most likely just be version and
+            // name spaces.
         } else if (DocBookBlock.blockToPredicate.get(DocBookBlock.BOOK).test(qName)) {
             if (currentLevel.peekRootArticle()) {
-                throw new DocxException("unexpected book within an article (the other direction works).");
+                throw new DocxException("unexpected book within an article (the other direction " +
+                        "works).");
             }
 
             parseLanguage(attributes);
 
             currentLevel.push(Level.ROOT_BOOK);
             ensureNoTextAllowed();
-            // Don't warn about unknown attributes, as it will most likely just be version and name spaces.
+            // Don't warn about unknown attributes, as it will most likely just be version and
+            // name spaces.
         } else if (DocBookBlock.blockToPredicate.get(DocBookBlock.PART).test(qName)) {
-            if (! currentLevel.peekRootBook()) {
+            if (!currentLevel.peekRootBook()) {
                 throw new DocxException("unexpected part outside a book.");
             }
 
             currentLevel.push(Level.PART);
             ensureNoTextAllowed();
             warnUnknownAttributes(attributes);
-            // Don't increase section depth: it is only meant to be used with real sections (direct mapping to
+            // Don't increase section depth: it is only meant to be used with real sections
+            // (direct mapping to
             // the style to be used).
         } else if (DocBookBlock.blockToPredicate.get(DocBookBlock.CHAPTER).test(qName)) {
-            if (! currentLevel.peekRootBook() && ! currentLevel.peekPart()) {
+            if (!currentLevel.peekRootBook() && !currentLevel.peekPart()) {
                 throw new DocxException("unexpected chapter outside a book or a part.");
             }
 
             currentLevel.push(Level.CHAPTER);
             ensureNoTextAllowed();
             warnUnknownAttributes(attributes);
-            // Don't increase section depth: it is only meant to be used with real sections (direct mapping to
+            // Don't increase section depth: it is only meant to be used with real sections
+            // (direct mapping to
             // the style to be used).
         } else if (SAXHelpers.isInfoTag(qName)) {
             switch (currentLevel.peek()) {
@@ -786,7 +447,7 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // Authors and various credits.
         else if (SAXHelpers.isAuthorTag(qName) || SAXHelpers.isOtherCreditTag(qName)) {
-            if (! currentLevel.peekInfo()) {
+            if (!currentLevel.peekInfo()) {
                 throw new DocxException("unexpected author/contributor outside an info container.");
             }
 
@@ -815,7 +476,8 @@ public class DocxOutputImpl extends DefaultHandler {
             createNewRun();
             warnUnknownAttributes(attr, Stream.of("class"));
         } else if (SAXHelpers.isPersonNameTag(qName)) {
-            // Do nothing: this is usually just a placeholder. It might also contain the full name without further
+            // Do nothing: this is usually just a placeholder. It might also contain the full
+            // name without further
             // structure, so still allow text here.
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isFirstNameTag(qName)) {
@@ -828,21 +490,23 @@ public class DocxOutputImpl extends DefaultHandler {
             Map<String, String> attr = SAXHelpers.attributes(attributes);
 
             if (attr.get("role") == null) {
-                throw new DocxException("unsupported othername: the role attribute must be specified");
+                throw new DocxException("unsupported othername: the role attribute must be " +
+                        "specified");
             }
-            if (! attr.get("role").equals("pseudonym")) {
+            if (!attr.get("role").equals("pseudonym")) {
                 throw new DocxException("unsupported othername role: " + attr.get("role"));
             }
 
             run.setText(Translations.pseudonym.get(language) + Translations.colon.get(language));
             warnUnknownAttributes(attr, Stream.of("role"));
         } else if (SAXHelpers.isAuthorGroupTag(qName)) {
-            if (! currentLevel.peekInfo()) {
+            if (!currentLevel.peekInfo()) {
                 throw new DocxException("unexpected author group outside an info container.");
             }
 
             throw new DocxException("authorgroup not implemented.");
-        } else if (SAXHelpers.isURI(qName) && currentLevel.peekInfo()) { // URIs are also considered as monospace formatting.
+        } else if (SAXHelpers.isURI(qName) && currentLevel.peekInfo()) { // URIs are also
+            // considered as monospace formatting.
             // TODO: check that this is within an author?
             run.setText(Translations.pseudonym.get(language) + Translations.colon.get(language));
 
@@ -863,7 +527,7 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // Other parts of the info container.
         else if (SAXHelpers.isDate(qName)) {
-            if (! currentLevel.peekInfo()) {
+            if (!currentLevel.peekInfo()) {
                 throw new DocxException("unexpected date outside an info container.");
             }
 
@@ -874,7 +538,7 @@ public class DocxOutputImpl extends DefaultHandler {
             createNewRun();
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isPubDate(qName)) {
-            if (! currentLevel.peekInfo()) {
+            if (!currentLevel.peekInfo()) {
                 throw new DocxException("unexpected pubdate outside an info container.");
             }
 
@@ -896,7 +560,7 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         // Section titles (only delimiter for sections in DOCX).
-        else if (SAXHelpers.isTitleTag(qName) && ! currentLevel.peekFigure()) {
+        else if (SAXHelpers.isTitleTag(qName) && !currentLevel.peekFigure()) {
             paragraph = null;
             allocateNewParagraph();
 
@@ -924,9 +588,7 @@ public class DocxOutputImpl extends DefaultHandler {
 
             createNewRun();
             warnUnknownAttributes(attributes);
-        }
-
-        else if (SAXHelpers.isAbstractTag(qName) || SAXHelpers.isPartIntroTag(qName)) {
+        } else if (SAXHelpers.isAbstractTag(qName) || SAXHelpers.isPartIntroTag(qName)) {
             paragraphStyle = "Abstract";
             warnUnknownAttributes(attributes);
         }
@@ -935,7 +597,8 @@ public class DocxOutputImpl extends DefaultHandler {
         else if (DocBookBlock.isAdmonition(qName)) {
             paragraphStyle = DocBookBlock.docbookTagToStyleID.get(qName);
             if (paragraphStyle == null) {
-                throw new DocxException("admonition " + qName + " not found in docbookTagToStyleID.");
+                throw new DocxException("admonition " + qName + " not found in " +
+                        "docbookTagToStyleID.");
             }
 
             currentLevel.push(Level.fromAdmonitionQname(qName));
@@ -945,17 +608,21 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // Paragraphs: lots of special cases...
         else if (SAXHelpers.isParagraphTag(qName)) {
-            // For tables, the paragraph is automatically created within a table cell. Same for a footnote.
+            // For tables, the paragraph is automatically created within a table cell. Same for a
+            // footnote.
             if (currentLevel.peekTable() && paragraphNumber == 0) {
                 return;
             }
-            if (footnote != null && paragraphNumber >= -1) { // TODO: Second part of the condition wrong, but will do for now. Would need to check if this is the first paragraph OF THE FOOTNOTE, not more globally.
+            if (footnote != null && paragraphNumber >= -1) { // TODO: Second part of the
+                // condition wrong, but will do for now. Would need to check if this is the first
+                // paragraph OF THE FOOTNOTE, not more globally.
                 return;
             }
 
             // Consistency checks.
             if (footnote == null && ((paragraph != null && paragraph.size() > 0) || run != null)) {
-                throw new DocxException("tried to create a new paragraph, but one was already being filled.");
+                throw new DocxException("tried to create a new paragraph, but one was already " +
+                        "being filled.");
             }
 
             // Create the new paragraph.
@@ -968,13 +635,16 @@ public class DocxOutputImpl extends DefaultHandler {
                 CTDecimalNumber depth = CTDecimalNumber.Factory.newInstance();
                 depth.setVal(BigInteger.valueOf(currentLevel.countListDepth() - 1));
                 paragraph.getLast().getCTP().getPPr().getNumPr().setIlvl(depth);
-                // https://bz.apache.org/bugzilla/show_bug.cgi?id=63465 -- at some point on GitHub too?
+                // https://bz.apache.org/bugzilla/show_bug.cgi?id=63465 -- at some point on
+                // GitHub too?
 
                 // If within a list, this must be a new item (only one paragraph allowed per item).
                 // This is just allowed for variable lists.
                 if (numberingItemParagraphNumber > 0) {
-                    throw new DocxException("more than one paragraph in a list item, this is not supported.");
-                    // How to make the difference when decoding this back? For implementation, maybe hack
+                    throw new DocxException("more than one paragraph in a list item, this is not " +
+                            "supported.");
+                    // How to make the difference when decoding this back? For implementation,
+                    // maybe hack
                     // something based on https://stackoverflow.com/a/43164999/1066843.
                     // However, easy to do for variable list: new items are indicated with a title.
                 }
@@ -995,27 +665,36 @@ public class DocxOutputImpl extends DefaultHandler {
             if (currentLevel.peekBlockPreformatted() && currentFormatting.size() > 1) {
                 // Adding one more tag is possible (like <screen><prompt>…</prompt>…</screen>).
                 // More complex things are not.
-                System.err.println(getLocationString() + "formatting (" + qName + ") within a preformatted block: " +
-                        "the document is probably too complex for this kind of tool to ever success at round-tripping; " +
-                        "it will do its best, but don't complain if some content is lost during round-tripping.");
+                System.err.println(getLocationString() + "formatting (" + qName + ") within a " +
+                        "preformatted block: " +
+                        "the document is probably too complex for this kind of tool to ever " +
+                        "success at round-tripping; " +
+                        "it will do its best, but don't complain if some content is lost during " +
+                        "round-tripping.");
             }
 
             if (currentFormatting.size() > 0) {
-                // Word cannot store infinitely many tags: one for paragraphs (blocks) and one for runs (inlines).
+                // Word cannot store infinitely many tags: one for paragraphs (blocks) and one
+                // for runs (inlines).
                 // More than one formatting at a time is thus impossible to render.
                 // Exceptions: italics within <filename>.
-                DocBookFormatting topFormatting = currentFormatting.get(currentFormatting.size() - 1);
-                boolean exceptionFilenameReplaceable = topFormatting.equals(DocBookFormatting.FILE_NAME)
+                DocBookFormatting topFormatting =
+                        currentFormatting.get(currentFormatting.size() - 1);
+                boolean exceptionFilenameReplaceable =
+                        topFormatting.equals(DocBookFormatting.FILE_NAME)
                         && DocBookFormatting.formattingToPredicate.get(DocBookFormatting.REPLACEABLE).test(qName);
-                if (! DocBookFormatting.isRunFormatting(topFormatting) && ! exceptionFilenameReplaceable) {
+                if (!DocBookFormatting.isRunFormatting(topFormatting) && !exceptionFilenameReplaceable) {
                     System.err.println(getLocationString() + "style-based formatting (" + qName + ") " +
                             "within a formatting (" + DocBookFormatting.formattingToDocBookTag.get(topFormatting) + "): " +
-                            "the document is probably too complex for this kind of tool to ever success at round-tripping; " +
-                            "it will do its best, but don't complain if some content is lost during round-tripping.");
+                            "the document is probably too complex for this kind of tool to ever " +
+                            "success at round-tripping; " +
+                            "it will do its best, but don't complain if some content is lost " +
+                            "during round-tripping.");
                 }
             }
 
-            // Add this inline formatting to the list, so that it is taken into account when creating a new run.
+            // Add this inline formatting to the list, so that it is taken into account when
+            // creating a new run.
             try {
                 currentFormatting.add(DocBookFormatting.tagToFormatting(qName, attributes));
             } catch (IllegalArgumentException e) {
@@ -1029,7 +708,8 @@ public class DocxOutputImpl extends DefaultHandler {
                 setCurrentLink(attr.getOrDefault("href", attr.get("xlink:href")));
             }
 
-            // Create a new run if this one is already started. Ubiquitous links already create a new run.
+            // Create a new run if this one is already started. Ubiquitous links already create a
+            // new run.
             if (run.text().length() > 0) {
                 createNewRun();
             }
@@ -1040,7 +720,8 @@ public class DocxOutputImpl extends DefaultHandler {
             Map<String, String> attr = SAXHelpers.attributes(attributes);
             warnUnknownAttributes(attr, Stream.of("href"));
 
-            // Always create a new run, as it is much easier than to replace a run within the paragraph.
+            // Always create a new run, as it is much easier than to replace a run within the
+            // paragraph.
             setCurrentLink(attr.get("href"));
             createNewRun();
         } else if (SAXHelpers.isFootnoteTag(qName)) {
@@ -1048,10 +729,13 @@ public class DocxOutputImpl extends DefaultHandler {
                 throw new DocxException("unexpected end of footnote");
             }
 
-            // Loosely based on https://stackoverflow.com/questions/39939057/adding-footnotes-to-a-word-document, then modernised.
-            // Hypothesis of the rest of the code: creating a footnote does *not* use doc.createParagraph().
+            // Loosely based on https://stackoverflow.com/questions/39939057/adding-footnotes-to-a-word-document,
+            // then modernised.
+            // Hypothesis of the rest of the code: creating a footnote does *not* use doc
+            // .createParagraph().
             footnote = doc.createFootnote();
-            paragraph.getLast().addFootnoteReference(footnote); // Creates a new run in the current paragraph.
+            paragraph.getLast().addFootnoteReference(footnote); // Creates a new run in the
+            // current paragraph.
 
             paragraph.addLast(footnote.createParagraph());
             paragraph.getLast().setStyle("FootnoteText");
@@ -1059,7 +743,8 @@ public class DocxOutputImpl extends DefaultHandler {
 
             createNewRun();
             run.setStyle("FootnoteReference");
-            run.getCTR().addNewFootnoteRef(); // Not addNewFootnoteReference, this is not recognised by Word.
+            run.getCTR().addNewFootnoteRef(); // Not addNewFootnoteReference, this is not
+            // recognised by Word.
 
             // Create a new run, so that the new text is not within the same run.
             createNewRun();
@@ -1070,7 +755,8 @@ public class DocxOutputImpl extends DefaultHandler {
             currentLevel.push(Level.TABLE);
 
             table = doc.createTable();
-            tableRowNumber = 0;tableColumnNumber = 0;
+            tableRowNumber = 0;
+            tableColumnNumber = 0;
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isTableBodyTag(qName)) {
             // Nothing to do, just go inside the table.
@@ -1093,8 +779,10 @@ public class DocxOutputImpl extends DefaultHandler {
                 throw new DocxException("unexpected table column.");
             }
 
-            // If this is the first column of the row, exploit the one automatically created by the row.
-            // If there has already been a complete row, several columns have already been generated.
+            // If this is the first column of the row, exploit the one automatically created by
+            // the row.
+            // If there has already been a complete row, several columns have already been
+            // generated.
             if (tableColumnNumber == 0) {
                 tableCell = tableRow.getCell(0);
             } else if (tableRowNumber > 0 && tableRow.getTableCells().size() >= tableColumnNumber) {
@@ -1115,9 +803,12 @@ public class DocxOutputImpl extends DefaultHandler {
         // Preformatted areas.
         else if (DocBookBlock.isPreformatted(qName)) {
             if (currentLevel.peekBlockPreformatted()) {
-                System.err.println(getLocationString() + "preformatted block (" + qName + ") within a preformatted block: " +
-                        "the document is probably too complex for this kind of tool to ever success at round-tripping; " +
-                        "it will do its best, but don't complain if some content is lost during round-tripping.");
+                System.err.println(getLocationString() + "preformatted block (" + qName + ") " +
+                        "within a preformatted block: " +
+                        "the document is probably too complex for this kind of tool to ever " +
+                        "success at round-tripping; " +
+                        "it will do its best, but don't complain if some content is lost during " +
+                        "round-tripping.");
             }
 
             currentLevel.push(Level.BLOCK_PREFORMATTED);
@@ -1142,7 +833,8 @@ public class DocxOutputImpl extends DefaultHandler {
                     } else if (attr.get("continuation").equals("restarts")) {
                         text += Translations.programListingContinuationValueRestarts.get(language);
                     } else {
-                        throw new IllegalStateException("Unknown value for continuation attribute: " + attr.get("continuation"));
+                        throw new IllegalStateException("Unknown value for continuation " +
+                                "attribute: " + attr.get("continuation"));
                     }
                     text += ". ";
                 }
@@ -1153,7 +845,8 @@ public class DocxOutputImpl extends DefaultHandler {
                     } else if (attr.get("linenumbering").equals("unnumbered")) {
                         text += Translations.programListingLineNumberingValueUnnumbered.get(language);
                     } else {
-                        throw new IllegalStateException("Unknown value for linenumbering attribute: " + attr.get("linenumbering"));
+                        throw new IllegalStateException("Unknown value for linenumbering " +
+                                "attribute: " + attr.get("linenumbering"));
                     }
                     text += ". ";
                 }
@@ -1167,7 +860,8 @@ public class DocxOutputImpl extends DefaultHandler {
                 createNewParagraph();
                 paragraph.getLast().setStyle(DocBookBlock.tagToStyleID(qName, attributes));
 
-                warnUnknownAttributes(attr, Stream.of("language", "continuation", "linenumbering", "startinglinenumber"));
+                warnUnknownAttributes(attr, Stream.of("language", "continuation", "linenumbering"
+                        , "startinglinenumber"));
                 return;
             } else {
                 warnUnknownAttributes(attr);
@@ -1193,7 +887,7 @@ public class DocxOutputImpl extends DefaultHandler {
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isMediaObjectTag(qName)) {
             // If there has already been a <db:figure>, no need to create a new paragraph.
-            if (! currentLevel.peekFigure()) {
+            if (!currentLevel.peekFigure()) {
                 createNewParagraph();
             }
 
@@ -1209,13 +903,15 @@ public class DocxOutputImpl extends DefaultHandler {
             // TODO: check if there is only one imagedata per imageobject?
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isCaptionTag(qName) || (currentLevel.peekFigure() && SAXHelpers.isTitleTag(qName))) {
-            // TODO: <db:caption> may also appear in tables and other items; use currentLevel or is this implementation good enough?
+            // TODO: <db:caption> may also appear in tables and other items; use currentLevel or
+            //  is this implementation good enough?
             createNewParagraph();
             paragraph.getLast().setStyle("Caption");
 
             // If in an admonition, update its style to match the admonition.
             if (currentLevel.peekSecondAdmonition()) {
-                XWPFStyle s = doc.getStyles().getStyle(DocBookBlock.docbookTagToStyleID.get(Level.qnameFromAdmonition(currentLevel.peekSecond())));
+                XWPFStyle s =
+                        doc.getStyles().getStyle(DocBookBlock.docbookTagToStyleID.get(Level.qnameFromAdmonition(currentLevel.peekSecond())));
                 h.copyStyleToParagraph(s, paragraph.getLast());
             }
 
@@ -1238,16 +934,19 @@ public class DocxOutputImpl extends DefaultHandler {
             if (currentLevel.peekList()) {
                 if ((currentLevel.peekOrderedList() && SAXHelpers.isItemizedListTag(qName))
                         || (currentLevel.peekItemizedList() && SAXHelpers.isOrderedListTag(qName))) {
-                    throw new DocxException("mixing list types not yet implemented (itemized only within itemized, " +
+                    throw new DocxException("mixing list types not yet implemented (itemized only" +
+                            " within itemized, " +
                             "ordered only within ordered).");
                 }
             }
 
             // Create a numbering only if one does not already exists.
-            if (! currentLevel.peekList()) {
+            if (!currentLevel.peekList()) {
                 numbering = h.createNumbering(SAXHelpers.isOrderedListTag(qName));
-                // For now, only able to create homogeneous numberings: only bullets OR only numbers.
-                // To do better, would need to look ahead in the SAX stream, or store information along the way
+                // For now, only able to create homogeneous numberings: only bullets OR only
+                // numbers.
+                // To do better, would need to look ahead in the SAX stream, or store information
+                // along the way
                 // before creating the numbering. To be done in a later iteration.
             }
 
@@ -1275,9 +974,11 @@ public class DocxOutputImpl extends DefaultHandler {
             numberingItemParagraphNumber = 0;
         }
 
-        // Principles for handling segmented lists: buffer the titles in segmentedListHeaders, then spit them
+        // Principles for handling segmented lists: buffer the titles in segmentedListHeaders,
+        // then spit them
         // out as necessary for each seglistitem.
-        // Thus, characters() will need a mode to write to the buffer only if SAX is within a title right now;
+        // Thus, characters() will need a mode to write to the buffer only if SAX is within a
+        // title right now;
         // afterwards, it should just print text normally to the current run.
         else if (SAXHelpers.isSegmentedListTag(qName)) {
             currentLevel.push(Level.SEGMENTED_LIST);
@@ -1289,7 +990,7 @@ public class DocxOutputImpl extends DefaultHandler {
             ensureNoTextAllowed();
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isSegmentedListTitleTag(qName)) {
-            if (! currentLevel.peekSegmentedList()) {
+            if (!currentLevel.peekSegmentedList()) {
                 throw new DocxException("unexpected segmented list header");
             }
 
@@ -1299,7 +1000,7 @@ public class DocxOutputImpl extends DefaultHandler {
             // (done in characters).
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isSegmentedListItemTag(qName)) {
-            if (! currentLevel.peekSegmentedList()) {
+            if (!currentLevel.peekSegmentedList()) {
                 throw new DocxException("unexpected segmented list content");
             }
 
@@ -1309,7 +1010,7 @@ public class DocxOutputImpl extends DefaultHandler {
 
             segmentNumber = 0;
         } else if (SAXHelpers.isSegmentedListItemValueTag(qName)) {
-            if (segmentNumber < 0 || ! currentLevel.peekSegmentedList()) {
+            if (segmentNumber < 0 || !currentLevel.peekSegmentedList()) {
                 throw new DocxException("unexpected segmented list content");
             }
 
@@ -1327,7 +1028,8 @@ public class DocxOutputImpl extends DefaultHandler {
             paragraph.getLast().setStyle("DefinitionListItem");
         }
 
-        // Variable lists: quite similar to segmented lists, but a completely different content model.
+        // Variable lists: quite similar to segmented lists, but a completely different content
+        // model.
         else if (SAXHelpers.isVariableListTag(qName)) {
             currentLevel.push(Level.VARIABLE_LIST);
 
@@ -1336,14 +1038,14 @@ public class DocxOutputImpl extends DefaultHandler {
             ensureNoTextAllowed();
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isVariableListItemTag(qName)) {
-            if (! currentLevel.peekVariableList()) {
+            if (!currentLevel.peekVariableList()) {
                 throw new DocxException("unexpected segmented list content");
             }
 
             ensureNoTextAllowed();
             warnUnknownAttributes(attributes);
         } else if (SAXHelpers.isVariableListItemDefinitionTag(qName)) {
-            if (! currentLevel.peekVariableList()) {
+            if (!currentLevel.peekVariableList()) {
                 throw new DocxException("unexpected segmented list content");
             }
 
@@ -1385,7 +1087,8 @@ public class DocxOutputImpl extends DefaultHandler {
         } else if (SAXHelpers.isInfoTag(qName)) {
             currentLevel.pop(
                     Stream.of(
-                            Level.ROOT_ARTICLE_INFO, Level.ROOT_BOOK_INFO, Level.PART_INFO, Level.CHAPTER_INFO,
+                            Level.ROOT_ARTICLE_INFO, Level.ROOT_BOOK_INFO, Level.PART_INFO,
+                            Level.CHAPTER_INFO,
                             Level.SECTION_INFO
                     ),
                     new DocxException("unexpected end of info")
@@ -1398,7 +1101,7 @@ public class DocxOutputImpl extends DefaultHandler {
 
                 // Append this as a new author or replace the empty string.
                 String currentAuthor = paragraph.getLast().getText();
-                if (coreProps.getCreator() != null && ! coreProps.getCreator().isBlank()) {
+                if (coreProps.getCreator() != null && !coreProps.getCreator().isBlank()) {
                     currentAuthor = coreProps.getCreator() + currentAuthor;
                 }
                 coreProps.setCreator(currentAuthor);
@@ -1430,7 +1133,7 @@ public class DocxOutputImpl extends DefaultHandler {
         }
 
         // Section titles.
-        else if (SAXHelpers.isTitleTag(qName) && ! currentLevel.peekFigure()) {
+        else if (SAXHelpers.isTitleTag(qName) && !currentLevel.peekFigure()) {
             // Set the title to the core properties.
             POIXMLProperties props = doc.getProperties();
             POIXMLProperties.CoreProperties coreProps = props.getCoreProperties();
@@ -1470,7 +1173,8 @@ public class DocxOutputImpl extends DefaultHandler {
         // Inline tags: ensure the formatting is no more included in the next runs.
         else if (DocBookFormatting.isRunFormatting(qName)) {
             if (currentFormatting.size() == 0) {
-                throw new DocxException("Assertion failed: end of formatting [" + qName + "], but no current formatting");
+                throw new DocxException("Assertion failed: end of formatting [" + qName + "], but" +
+                        " no current formatting");
             }
 
             // In case of ubiquitous link.
@@ -1550,7 +1254,8 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // Segmented lists: update counters.
         else if (SAXHelpers.isSegmentedListTag(qName)) {
-            currentLevel.pop(Level.SEGMENTED_LIST, new DocxException("unexpected end of segmented list"));
+            currentLevel.pop(Level.SEGMENTED_LIST, new DocxException("unexpected end of segmented" +
+                    " list"));
 
             numberingItemParagraphNumber = -1;
             segmentedListHeaders = null;
@@ -1576,19 +1281,20 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // Variable lists: update counters.
         else if (SAXHelpers.isVariableListTag(qName)) {
-            currentLevel.pop(Level.VARIABLE_LIST, new DocxException("unexpected end of variable list"));
+            currentLevel.pop(Level.VARIABLE_LIST, new DocxException("unexpected end of variable " +
+                    "list"));
 
             numberingItemParagraphNumber = -1;
 
             ensureNoTextAllowed();
         } else if (SAXHelpers.isVariableListItemTag(qName)) {
-            if (! currentLevel.peekVariableList()) {
+            if (!currentLevel.peekVariableList()) {
                 throw new DocxException("unexpected variable list content");
             }
 
             ensureNoTextAllowed();
         } else if (SAXHelpers.isVariableListItemDefinitionTag(qName)) {
-            if (! currentLevel.peekVariableList()) {
+            if (!currentLevel.peekVariableList()) {
                 throw new DocxException("unexpected variable list content");
             }
             restoreParagraphStyle();
@@ -1611,7 +1317,8 @@ public class DocxOutputImpl extends DefaultHandler {
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
         // How to deal with white space? This is a tricky question...
-        // Don't trim this string, as the series of runs might require those spaces to be kept. Real-life example
+        // Don't trim this string, as the series of runs might require those spaces to be kept.
+        // Real-life example
         // (a sequence of runs):
         // - "La méthode " -- useful space at the end
         // - "addMIPStart()" -- DocBook tag
@@ -1620,14 +1327,17 @@ public class DocxOutputImpl extends DefaultHandler {
 
         // Some consistency checks.
         if (run != null && currentFormatting.size() > 0 && run.getCTR().getRPr() == null) {
-            throw new DocxException("assertion failed: this run should have some formatting, but has no RPr.");
+            throw new DocxException("assertion failed: this run should have some formatting, but " +
+                    "has no RPr.");
         }
 
         // Start processing the characters.
         String content = new String(ch, start, length);
 
-        // This function is called for anything that is not a tag, including whitespace. In most cases, this whitespace
-        // can be ignored, but it may also be important (the previous run has no space at the end and the next one
+        // This function is called for anything that is not a tag, including whitespace. In most
+        // cases, this whitespace
+        // can be ignored, but it may also be important (the previous run has no space at the end
+        // and the next one
         // starts a new style).
         if (content.length() == 0) {
             return;
@@ -1642,7 +1352,7 @@ public class DocxOutputImpl extends DefaultHandler {
             XWPFRun previous = runs.get(runs.size() - 1);
             String prevText = previous.text();
 
-            if (! prevText.endsWith(" ")) {
+            if (!prevText.endsWith(" ")) {
                 content = " ";
             } else {
                 return;
@@ -1657,21 +1367,27 @@ public class DocxOutputImpl extends DefaultHandler {
         // Special cases: the text should not be written in the current run.
         // Just segmented lists, for now.
         if (currentLevel.peekSegmentedListTitle()) {
-            // Store the run in segmentedListTitles, as it should be rewritten for each item in the segmented list.
+            // Store the run in segmentedListTitles, as it should be rewritten for each item in
+            // the segmented list.
             // Formatting is ignored; this is a known limitation.
             segmentedListHeaders.add(content);
             return;
         }
 
-        // Generic case: try to write inside the current run. If there is none open, it means text is not expected
+        // Generic case: try to write inside the current run. If there is none open, it means
+        // text is not expected
         // here (also see ensureNoTextAllowed method).
         if (run == null) {
-            throw new DocxException("invalid document, text not expected here. A likely cause is that you used " +
-                    "block tags within paragraphs. For this tool, paragraphs are not supposed to contain block elements " +
-                    "(such as lists or blocks of code): round-tripping would be very hard to implement in this case.");
+            throw new DocxException("invalid document, text not expected here. A likely cause is " +
+                    "that you used " +
+                    "block tags within paragraphs. For this tool, paragraphs are not supposed to " +
+                    "contain block elements " +
+                    "(such as lists or blocks of code): round-tripping would be very hard to " +
+                    "implement in this case.");
         }
 
-        // Line feeds are not well understood by setText: they should be replaced by a series of runs.
+        // Line feeds are not well understood by setText: they should be replaced by a series of
+        // runs.
         // This is only done in environments where line feeds must be reflected in DocBook.
         if (currentLevel.peekBlockPreformatted()) {
             if (content.contains("\n") || content.contains("\r")) {
@@ -1693,16 +1409,20 @@ public class DocxOutputImpl extends DefaultHandler {
                 content = content.replace("  ", " ");
             }
 
-            // TODO: Can't the conditions on runNumber be replaced by looking at paragraph.getLast().getRuns()?
+            // TODO: Can't the conditions on runNumber be replaced by looking at paragraph
+            //  .getLast().getRuns()?
 
-            // If this is the first run of the paragraph, white space at the beginning is not important.
+            // If this is the first run of the paragraph, white space at the beginning is not
+            // important.
             if (runNumber == 0 && runCharactersNumber == 0) {
                 content = content.replaceAll("^\\s*", ""); // Trim left.
             }
 
-            // If the previous run ends with white space, as it is not relevant in this run, remove it from
+            // If the previous run ends with white space, as it is not relevant in this run,
+            // remove it from
             // the beginning of this run (i.e. trim left).
-            // When adding text multiple times to the same run (i.e. runCharactersNumber > 0), the implemented
+            // When adding text multiple times to the same run (i.e. runCharactersNumber > 0),
+            // the implemented
             // test does not work as expected.
             if (runNumber > 0 && runCharactersNumber == 0) {
                 List<XWPFRun> runs = paragraph.getLast().getRuns();
@@ -1724,18 +1444,22 @@ public class DocxOutputImpl extends DefaultHandler {
     @SuppressWarnings("RedundantIfStatement")
     private boolean isIgnorablePI(String target, String data) {
         // Ignore things like:
-        // <? xml-model href="http://docbook.org/xml/5.0/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0" ?>
-        // <? xml-model href="http://docbook.org/xml/5.0/sch/docbook.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron" ?>
-        if (! target.equals("xml-model")) {
+        // <? xml-model href="http://docbook.org/xml/5.0/rng/docbook.rng"
+        // schematypens="http://relaxng.org/ns/structure/1.0" ?>
+        // <? xml-model href="http://docbook.org/xml/5.0/sch/docbook.sch" type="application/xml"
+        // schematypens="http://purl.oclc.org/dsdl/schematron" ?>
+        if (!target.equals("xml-model")) {
             return false;
         }
 
-        if (! data.startsWith("href=\"http://docbook.org/xml/")) {
+        if (!data.startsWith("href=\"http://docbook.org/xml/")) {
             return false;
         }
 
-        if (! data.endsWith("/rng/docbook.rng\" schematypens=\"http://relaxng.org/ns/structure/1.0\"")
-                && ! data.endsWith("/sch/docbook.sch\" type=\"application/xml\" schematypens=\"http://purl.oclc.org/dsdl/schematron\"")) {
+        if (!data.endsWith("/rng/docbook.rng\" schematypens=\"http://relaxng.org/ns/structure/1" +
+                ".0\"")
+                && !data.endsWith("/sch/docbook.sch\" type=\"application/xml\" " +
+                "schematypens=\"http://purl.oclc.org/dsdl/schematron\"")) {
             return false;
         }
 
@@ -1744,18 +1468,410 @@ public class DocxOutputImpl extends DefaultHandler {
     }
 
     public void processingInstruction(String target, String data) {
-        // Don't warn for all processing instructions. For instance, Oxygen always inserts this at the beginning
+        // Don't warn for all processing instructions. For instance, Oxygen always inserts this
+        // at the beginning
         // of a DocBook file (depending on the version of DocBook):
-        //      <?xml-model href="http://docbook.org/xml/5.1/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
-        //      <?xml-model href="http://docbook.org/xml/5.1/sch/docbook.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-        // This warning is directed towards processing instructions in the middle of the text that are supposed
+        //      <?xml-model href="http://docbook.org/xml/5.1/rng/docbook.rng"
+        //      schematypens="http://relaxng.org/ns/structure/1.0"?>
+        //      <?xml-model href="http://docbook.org/xml/5.1/sch/docbook.sch"
+        //      type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+        // This warning is directed towards processing instructions in the middle of the text
+        // that are supposed
         // to be used when generating HTML or PDF.
-        // The ignored processing instructions are still not round-tripped, but their loss is deemed not so important.
+        // The ignored processing instructions are still not round-tripped, but their loss is
+        // deemed not so important.
         if (isIgnorablePI(target, data)) {
             return;
         }
 
-        System.err.println("Processing instructions are not taken into account and will not be round-tripped.");
+        System.err.println("Processing instructions are not taken into account and will not be " +
+                "round-tripped.");
         System.err.println("<?" + target + " " + data + "?>");
+    }
+
+    /**
+     * POI-level helpers. These functions are not really specific to this project and could be
+     * upstreamed.
+     **/
+    // Cannot be a static class, as some methods require access to the current document. (A
+    // static class would be
+    // less clean to use.)
+
+    private class POIHelpers {
+        private ParagraphAlignment alignmentToWordAligment(@NotNull String align) {
+            return switch (align) {
+                case "center" -> ParagraphAlignment.CENTER;
+                case "char" ->
+                    // No easy translation to Word.
+                    // DocBook definition (https://tdg.docbook.org/tdg/5.2/imagedata.html):
+                    //      Aligned horizontally on the specified character
+                    // Available to Word:
+                    //      http://officeopenxml.com/WPalignment.php
+                    //      https://docs.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.alignment?view=openxml-2.8.1
+                        throw new IllegalArgumentException("DocBook char alignment is not " +
+                                "supported");
+                case "justify" -> ParagraphAlignment.DISTRIBUTE;
+                case "left" -> ParagraphAlignment.LEFT;
+                case "right" -> ParagraphAlignment.RIGHT;
+                default -> null;
+            };
+        }
+
+        private int filenameToWordFormat(@NotNull String filename) {
+            // See org.apache.poi.xwpf.usermodel.Document.
+            String[] parts = filename.split("\\.");
+            String extension = parts[parts.length - 1].toLowerCase();
+
+            return switch (extension) {
+                case "emf" -> XWPFDocument.PICTURE_TYPE_EMF;
+                case "wmf" -> XWPFDocument.PICTURE_TYPE_WMF;
+                case "pict" -> XWPFDocument.PICTURE_TYPE_PICT;
+                case "jpg", "jpeg" -> XWPFDocument.PICTURE_TYPE_JPEG;
+                case "png" -> XWPFDocument.PICTURE_TYPE_PNG;
+                case "dib" -> XWPFDocument.PICTURE_TYPE_DIB;
+                case "gif" -> XWPFDocument.PICTURE_TYPE_GIF;
+                case "tif", "tiff" -> XWPFDocument.PICTURE_TYPE_TIFF;
+                case "eps" -> XWPFDocument.PICTURE_TYPE_EPS;
+                case "bmp" -> XWPFDocument.PICTURE_TYPE_BMP;
+                case "wpg" -> XWPFDocument.PICTURE_TYPE_WPG;
+                default -> -1;
+            };
+        }
+
+        @Contract("null -> fail")
+        private int parseMeasurementAsEMU(String m) throws SAXException {
+            if (m == null) {
+                throw new DocxException("invalid measured quantity.");
+            }
+
+            if (m.endsWith("in")) {
+                return Integer.parseInt(m.replace("in", "")) * 914_400;
+            } else if (m.endsWith("pt")) {
+                return Units.toEMU(Integer.parseInt(m.replace("pt", "")));
+            } else if (m.endsWith("cm")) {
+                return Integer.parseInt(m.replace("cm", "")) * Units.EMU_PER_CENTIMETER;
+            } else if (m.endsWith("mm")) {
+                return Integer.parseInt(m.replace("mm", "")) * Units.EMU_PER_CENTIMETER / 10;
+            } else if (m.endsWith("px")) {
+                return Integer.parseInt(m.replace("px", "")) * Units.EMU_PER_PIXEL;
+            } else {
+                throw new DocxException("unknown measurement unit in " + m + ".");
+            }
+        }
+
+        private CTLevelText createText(@NotNull String t) {
+            CTLevelText ct = CTLevelText.Factory.newInstance();
+            ct.setVal(t);
+            return ct;
+        }
+
+        private CTRPr createFont(@NotNull String name) {
+            CTFonts fonts = CTFonts.Factory.newInstance();
+            fonts.setAscii(name);
+            fonts.setHAnsi(name);
+            fonts.setCs(name);
+            fonts.setHint(STHint.DEFAULT);
+
+            CTRPr font = CTRPr.Factory.newInstance();
+            font.setRFontsArray(0, fonts);
+            return font;
+        }
+
+        private String createHyperlinkReference(@NotNull String uri) {
+            return paragraph.getLast().getPart().getPackagePart().addExternalRelationship(
+                    uri, XWPFRelation.HYPERLINK.getRelation()
+            ).getId();
+        }
+
+        private void createImage(Attributes attributes) throws SAXException {
+            assert paragraph.size() > 0;
+            assert run != null;
+
+            Map<String, String> attr = SAXHelpers.attributes(attributes);
+
+            if (!attr.containsKey("fileref")) {
+                throw new DocxException("the image tag has no fileref attribute.");
+            }
+
+            String filename = attr.get("fileref");
+            Path filePath = folder.resolve(filename);
+            int width;
+            int height;
+            String align = attr.getOrDefault("width", null);
+
+            // Get the image width and height: either from the XML or from the image itself.
+            // Avoid loading the image if both dimensions are known from the XML.
+            {
+                String imageWidth = null;
+                String imageHeight = null;
+                if (!attr.containsKey("width") && !attr.containsKey("depth")) {
+                    try {
+                        BufferedImage img = ImageIO.read(filePath.toFile());
+                        imageWidth = img.getWidth() + "px";
+                        imageHeight = img.getHeight() + "px";
+                    } catch (IOException e) {
+                        throw new DocxException("there was a problem reading the image", e);
+                    }
+                }
+
+                width = parseMeasurementAsEMU(attr.getOrDefault("width", imageWidth));
+                height = parseMeasurementAsEMU(attr.getOrDefault("depth", imageHeight));
+            }
+
+            warnUnknownAttributes(attr, Stream.of("fileref", "width", "depth", "align"));
+
+            // Detect the format of the image.
+            int format = filenameToWordFormat(filename);
+            if (format < 0) {
+                throw new DocxException("unknown image extension " + filename + ".");
+            }
+
+            // Prepare the current paragraph to only receive this image.
+            if (run.text().length() > 0) {
+                paragraph.getLast().removeRun(0);
+                createNewRun();
+                runNumber -= 1;
+            }
+
+            // To allow images in admonitions, apply the admonition style to the image.
+            if (currentLevel.peekSecondAdmonition()) {
+                String style =
+                        DocBookBlock.docbookTagToStyleID.get(Level.qnameFromAdmonition(currentLevel.peekSecond()));
+                if (style != null) {
+                    paragraphStyle = style;
+                    paragraph.getLast().setStyle(style);
+                }
+            }
+
+            // Use the last attributes.
+            if (align != null && !align.isBlank()) {
+                ParagraphAlignment a = h.alignmentToWordAligment(align);
+                if (a != null) {
+                    paragraph.getLast().setAlignment(a);
+                }
+            }
+
+            // Actually add the image.
+            try {
+                run.addPicture(new FileInputStream(filePath.toFile()), format,
+                        filePath.getFileName().toString(), width, height);
+            } catch (IOException | InvalidFormatException e) {
+                throw new DocxException("there was a problem adding the image to the output file"
+                        , e);
+            }
+        }
+
+        private BigInteger createNumbering(boolean isOrdered) {
+            // Based on https://github.com/apache/poi/blob/trunk/src/ooxml/testcases/org/apache/poi/xwpf/usermodel/TestXWPFNumbering.java
+            // A bit of inspiration from https://coderanch.com/t/649584/java/create-Bullet-Square-Word-POI
+
+            // Create a numbering identifier (find the first empty).
+            // lastFilledNumbering is only used to speed up the computations.
+            XWPFNumbering numbering = doc.createNumbering();
+            BigInteger abstractNumId = lastFilledNumbering;
+            {
+                // First, test id == 1 (start at zero, increase, check if 1 exists: if not, loop).
+                Object o;
+                do {
+                    abstractNumId = abstractNumId.add(BigInteger.ONE);
+                    o = numbering.getAbstractNum(abstractNumId);
+                } while (o != null);
+            }
+            lastFilledNumbering = abstractNumId;
+
+            // Create the abstract numbering from scratch. Inspired by:
+            // https://stackoverflow.com/questions/1940911/openxml-2-sdk-word-document-create-bulleted-list-programmatically
+            // http://officeopenxml.com/WPnumbering.php
+            CTAbstractNum ctAbstractNum = CTAbstractNum.Factory.newInstance();
+            ctAbstractNum.setAbstractNumId(abstractNumId);
+            {
+                CTMultiLevelType ctMultiLevelType =
+                        (CTMultiLevelType) CTMultiLevelType.Factory.newInstance();
+                ctMultiLevelType.setVal(STMultiLevelType.HYBRID_MULTILEVEL);
+                ctAbstractNum.setMultiLevelType(ctMultiLevelType);
+            }
+            {
+                // Define many useful values that will be used several times later on (only in
+                // this scope).
+                CTDecimalNumber one = CTDecimalNumber.Factory.newInstance();
+                one.setVal(BigInteger.ONE);
+
+                CTNumFmt bullet = CTNumFmt.Factory.newInstance();
+                bullet.setVal(STNumberFormat.BULLET);
+                CTNumFmt decimal = CTNumFmt.Factory.newInstance();
+                decimal.setVal(STNumberFormat.DECIMAL);
+                CTNumFmt lowerLetter = CTNumFmt.Factory.newInstance();
+                lowerLetter.setVal(STNumberFormat.LOWER_LETTER);
+                CTNumFmt lowerRoman = CTNumFmt.Factory.newInstance();
+                lowerRoman.setVal(STNumberFormat.LOWER_ROMAN);
+
+                CTLevelText charFullBullet = createText("\uF0B7"); // Not working in all fonts!
+                CTLevelText charEmptyBullet = createText("o"); // Just an o.
+                CTLevelText charFullSquare = createText("\uF0A7"); // Not working in all fonts!
+
+                CTJc left = CTJc.Factory.newInstance();
+                left.setVal(STJc.LEFT);
+
+                CTRPr symbolFont = createFont("Symbol");
+                CTRPr courierNewFont = createFont("Courier New");
+                CTRPr wingdingsFont = createFont("Wingdings");
+
+                // Create the various levels of this abstract numbering.
+                for (int i = 0; i < 9; ++i) {
+                    CTLvl lvl = ctAbstractNum.addNewLvl();
+                    lvl.setIlvl(BigInteger.valueOf(i));
+                    lvl.setStart(one);
+                    lvl.setLvlJc(left);
+
+                    // Actually define the bullets: either a real bullet, or a number (following
+                    // what Word 2019 does).
+                    if (!isOrdered) {
+                        lvl.setNumFmt(bullet);
+                        if (i % 3 == 0) {
+                            lvl.setLvlText(charFullBullet);
+                            lvl.setRPr(symbolFont);
+                        } else if (i % 3 == 1) {
+                            lvl.setLvlText(charEmptyBullet);
+                            lvl.setRPr(courierNewFont);
+                        } else {
+                            lvl.setLvlText(charFullSquare);
+                            lvl.setRPr(wingdingsFont);
+                        }
+                    } else {
+                        if (i % 3 == 0) {
+                            lvl.setNumFmt(decimal);
+                        } else if (i % 3 == 1) {
+                            lvl.setNumFmt(lowerLetter);
+                        } else {
+                            lvl.setNumFmt(lowerRoman);
+                        }
+                        lvl.setLvlText(createText("%" + (i + 1) + "."));
+                    }
+
+                    // Indentation values taken from Word 2019 (major difference with that
+                    // reference: left vs start,
+                    // see http://officeopenxml.com/WPindentation.php).
+                    CTInd levelIndent = CTInd.Factory.newInstance();
+                    levelIndent.setLeft(BigInteger.valueOf(720 * (i + 1)));
+                    levelIndent.setHanging(BigInteger.valueOf(360));
+                    CTPPrGeneral indent = CTPPrGeneral.Factory.newInstance();
+                    indent.setInd(levelIndent);
+                    lvl.setPPr(indent);
+                }
+            }
+
+            // Actually create the (concrete) numbering.
+            BigInteger numId = numbering.addNum(abstractNumId);
+            XWPFAbstractNum abstractNum = new XWPFAbstractNum(ctAbstractNum, numbering);
+            numbering.addAbstractNum(abstractNum);
+
+            return numId;
+        }
+
+        private void iterateOverStyleHierarchy(XWPFStyle s, Consumer<XWPFStyle> f) {
+            XWPFStyle style = s;
+            XWPFStyles styles = s.getStyles();
+            while (style != null) {
+                f.accept(style);
+                style = styles.getStyle(style.getBasisStyleID());
+            }
+        }
+
+        private void copyStyleToParagraph(XWPFStyle parentStyle, XWPFParagraph p) {
+            // Copy groups of properties from the given style (or any parent style).
+            // Properties may come from any parent! However, the child styles always override a
+            // parent: once a property
+            // has been set, it should not get overwritten.
+            // Should be called once the paragraph is empty, so that the properties can be
+            // properly updated for all
+            // its runs.
+
+            iterateOverStyleHierarchy(parentStyle, (XWPFStyle s) -> {
+                /* Paragraph style */
+                CTPPrGeneral ppr = s.getCTStyle().getPPr();
+                if (ppr != null) {
+                    // Borders.
+                    if (ppr.getPBdr() != null) {
+                        CTPBdr pbdr = ppr.getPBdr();
+
+                        if (pbdr.getBetween() != null && p.getBorderBetween().equals(Borders.NONE)) {
+                            p.setBorderBetween(Borders.valueOf(pbdr.getBetween().getVal().intValue()));
+                        }
+                        if (pbdr.getBottom() != null && p.getBorderBottom().equals(Borders.NONE)) {
+                            p.setBorderBottom(Borders.valueOf(pbdr.getBottom().getVal().intValue()));
+                        }
+                        if (pbdr.getLeft() != null && p.getBorderLeft().equals(Borders.NONE)) {
+                            p.setBorderLeft(Borders.valueOf(pbdr.getLeft().getVal().intValue()));
+                        }
+                        if (pbdr.getRight() != null && p.getBorderRight().equals(Borders.NONE)) {
+                            p.setBorderRight(Borders.valueOf(pbdr.getRight().getVal().intValue()));
+                        }
+                        if (pbdr.getTop() != null && p.getBorderTop().equals(Borders.NONE)) {
+                            p.setBorderTop(Borders.valueOf(pbdr.getTop().getVal().intValue()));
+                        }
+                    }
+
+                    // Indentation.
+                    if (ppr.getInd() != null) {
+                        CTInd ind = ppr.getInd();
+
+                        if (ind.getFirstLine() != null && p.getIndentationFirstLine() == -1) {
+                            p.setIndentationFirstLine(((SimpleValue) ind.getFirstLine()).getIntValue());
+                        }
+                        if (ind.getHanging() != null && p.getIndentationHanging() == -1) {
+                            p.setIndentationHanging(((SimpleValue) ind.getHanging()).getIntValue());
+                        }
+                        if (ind.getLeft() != null && p.getIndentationLeft() == -1) {
+                            p.setIndentationLeft(((SimpleValue) ind.getLeft()).getIntValue());
+                        }
+                        if (ind.getRight() != null && p.getIndentationRight() == -1) {
+                            p.setIndentationRight(((SimpleValue) ind.getRight()).getIntValue());
+                        }
+                    }
+
+                    // Shades.
+                    if (ppr.getShd() != null) {
+                        CTPPr p_ppr = p.getCTP().getPPr();
+                        if (p_ppr == null) {
+                            p_ppr = p.getCTP().addNewPPr();
+                        }
+
+                        p_ppr.setShd(ppr.getShd());
+                    }
+                }
+
+                /* Run style */
+                CTRPr rpr = s.getCTStyle().getRPr();
+                if (rpr != null) {
+                    // Iterate over the runs.
+                    for (CTR r : p.getCTP().getRList()) {
+                        // Text outline. Apparently not yet supported by POI. (Albeit it's from
+                        // Word 2010: CT_TextOutlineEffect,
+                        // https://docs.microsoft.com/en-us/openspecs/office_standards/ms-docx/9704b59f-bc49-4618-ac66-41beb82a0d7f)
+                        // rpr.getTextOutline();
+
+                        // Shades.
+                        if (rpr.getShdArray() != null && rpr.getShdArray().length > 0) {
+                            CTRPr p_rpr = r.getRPr();
+                            if (p_rpr == null) {
+                                p_rpr = r.addNewRPr();
+                            }
+
+                            p_rpr.setShdArray(rpr.getShdArray());
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    private class DocxException extends SAXException {
+        DocxException(String message) {
+            super(getLocationString() + message);
+        }
+
+        DocxException(String message, Exception e) {
+            super(getLocationString() + message, e);
+        }
     }
 }

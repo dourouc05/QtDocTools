@@ -1,10 +1,9 @@
 package be.tcuvelier.qdoctools.core;
 
-import be.tcuvelier.qdoctools.core.exceptions.ConfigurationMissingField;
-import be.tcuvelier.qdoctools.core.handlers.DvpToolchainHandler;
-import be.tcuvelier.qdoctools.core.handlers.FtpHandler;
 import be.tcuvelier.qdoctools.core.config.ArticleConfiguration;
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
+import be.tcuvelier.qdoctools.core.handlers.DvpToolchainHandler;
+import be.tcuvelier.qdoctools.core.handlers.FtpHandler;
 import net.sf.saxon.s9api.SaxonApiException;
 
 import java.io.BufferedReader;
@@ -78,7 +77,8 @@ public class UploadCore {
         }
 
         // Upload if required.
-        // TODO: check whether all these articles share the same FTP (they should)? If so, start the FTP connection with any one of them, and reuse it.
+        // TODO: check whether all these articles share the same FTP (they should)? If so, start
+        //  the FTP connection with any one of them, and reuse it.
         if (upload) {
             for (Path input : inputs) {
                 System.out.println("Uploading article: " + input);

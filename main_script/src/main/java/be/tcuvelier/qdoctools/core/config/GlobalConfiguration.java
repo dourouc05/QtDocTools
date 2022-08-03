@@ -15,8 +15,10 @@ public class GlobalConfiguration extends AbstractConfiguration {
         configName = file;
 
         // Check if this is really a global configuration, not an article configuration.
-        if (config.get("qdoc") == null && config.get("dvp_toolchain") == null && config.get("qdoctools_root") == null) {
-            throw new IllegalArgumentException("A GlobalConfiguration object was built with an article configuration file.");
+        if (config.get("qdoc") == null && config.get("dvp_toolchain") == null && config.get(
+                "qdoctools_root") == null) {
+            throw new IllegalArgumentException("A GlobalConfiguration object was built with an " +
+                    "article configuration file.");
         }
     }
 

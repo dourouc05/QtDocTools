@@ -2,7 +2,10 @@ package be.tcuvelier.qdoctools.io.docx.helpers;
 
 import org.xml.sax.Attributes;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -63,14 +66,15 @@ public enum DocBookBlock {
         whole.addAll(admonitions);
 
         // Fill the static maps: indexed by enum value.
-        for (Triple<DocBookBlock, String, String> t: whole) {
+        for (Triple<DocBookBlock, String, String> t : whole) {
             // Recognise the base tag and its prefixed version.
             blockToPredicate.put(t.first, DocBook.tagRecogniser(t.second, "db:" + t.second));
         }
 
         // Fill the static maps: not indexed by enum value.
-        whole = whole.stream().flatMap(t -> Stream.of(t, new Triple<>(t.first, "db:" + t.second, t.third))).collect(Collectors.toUnmodifiableList());
-        for (Triple<DocBookBlock, String, String> t: whole) {
+        whole = whole.stream().flatMap(t -> Stream.of(t, new Triple<>(t.first, "db:" + t.second,
+                t.third))).collect(Collectors.toUnmodifiableList());
+        for (Triple<DocBookBlock, String, String> t : whole) {
             predicateToStyleID.put(DocBook.tagRecogniser(t.second), t.third);
             styleIDToDocBookTag.put(t.third, t.second);
             styleIDToBlock.put(t.third, t.first);
@@ -93,7 +97,7 @@ public enum DocBookBlock {
         // Attributes are ignored.
 
         // Many cases are really simple: just a function to call to decide which formatting it is.
-        for (Map.Entry<Predicate<String>, String> e: predicateToStyleID.entrySet()) {
+        for (Map.Entry<Predicate<String>, String> e : predicateToStyleID.entrySet()) {
             if (e.getKey().test(localName)) {
                 return e.getValue();
             }

@@ -30,20 +30,23 @@ public class PerlPath {
     }
 
     public String getPerlPath() {
-        // Always first try to use the toolchain's Perl version, as it is more or less ensured to work.
+        // Always first try to use the toolchain's Perl version, as it is more or less ensured to
+        // work.
         try {
             Path toolchain = getToolchainPerlPath();
             if (toolchain.toFile().exists()) {
                 return toolchain.toString();
             }
-        } catch (ConfigurationMissingField ignored) {}
+        } catch (ConfigurationMissingField ignored) {
+        }
 
         // Either the configuration is missing or Perl is missing: try to use system Perl.
         if (isPerlInPath()) {
             return "perl";
         }
 
-        throw new RuntimeException("Impossible to find an installation of Perl. Did you configure QtDocTools properly," +
+        throw new RuntimeException("Impossible to find an installation of Perl. Did you configure" +
+                " QtDocTools properly," +
                 "especially its dvp_toolchain parameter in " + config.getConfigName() + "?");
     }
 }

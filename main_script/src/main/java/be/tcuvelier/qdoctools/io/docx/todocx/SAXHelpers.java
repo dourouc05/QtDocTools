@@ -16,9 +16,11 @@ public class SAXHelpers {
     }
 
     private static String qNameToTagName(String qName) {
-        // SAX returns a localName that is zero-length... Hence this function: go from db:article to article.
-        // But maybe a specific DocBook document has no defined namespace, or DocBook is the default namespace.
-        if (! qName.contains(":")) {
+        // SAX returns a localName that is zero-length... Hence this function: go from db:article
+        // to article.
+        // But maybe a specific DocBook document has no defined namespace, or DocBook is the
+        // default namespace.
+        if (!qName.contains(":")) {
             return qName;
         } else {
             return qName.split(":")[1];

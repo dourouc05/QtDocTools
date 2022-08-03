@@ -19,7 +19,7 @@ public class SetHelpers {
     @SafeVarargs
     public static <T> Set<T> union(Set<T> a, Set<T>... lb) {
         Set<T> result = new HashSet<>(a);
-        for (Set<T> b: lb) {
+        for (Set<T> b : lb) {
             result.addAll(b);
         }
         return result;

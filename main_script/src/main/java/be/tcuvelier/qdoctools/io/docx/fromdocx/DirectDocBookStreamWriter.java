@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class DirectDocBookStreamWriter implements DocBookStreamWriter {
     private final OutputStream writer;
-    private XMLStreamWriter xmlStream;
+    private final XMLStreamWriter xmlStream;
     private int currentDepth;
 
     public DirectDocBookStreamWriter() throws XMLStreamException {
@@ -28,7 +28,8 @@ public class DirectDocBookStreamWriter implements DocBookStreamWriter {
     }
 
     @Override
-    public void startDocument(@NotNull String root, @SuppressWarnings("SameParameterValue") @NotNull String version) throws XMLStreamException {
+    public void startDocument(@NotNull String root,
+            @SuppressWarnings("SameParameterValue") @NotNull String version) throws XMLStreamException {
         xmlStream.writeStartDocument("UTF-8", "1.0");
 
         writeNewLine();
@@ -79,7 +80,9 @@ public class DirectDocBookStreamWriter implements DocBookStreamWriter {
     }
 
     @Override
-    public void openParagraphTag(@NotNull String tag) throws XMLStreamException { // Paragraphs start on a new line, but contain inline elements on the same line. Examples: paragraphs, titles.
+    public void openParagraphTag(@NotNull String tag) throws XMLStreamException { // Paragraphs
+        // start on a new line, but contain inline elements on the same line. Examples:
+        // paragraphs, titles.
         openParagraphTag(tag, Collections.emptyMap());
     }
 
@@ -88,7 +91,7 @@ public class DirectDocBookStreamWriter implements DocBookStreamWriter {
         writeIndent();
         xmlStream.writeStartElement(docbookNS, tag);
 
-        for (Map.Entry<String, String> attribute: attributes.entrySet()) {
+        for (Map.Entry<String, String> attribute : attributes.entrySet()) {
             xmlStream.writeAttribute(attribute.getKey(), attribute.getValue());
         }
     }
@@ -100,7 +103,8 @@ public class DirectDocBookStreamWriter implements DocBookStreamWriter {
     }
 
     @Override
-    public void openInlineTag(@NotNull String tag) throws XMLStreamException { // Inline elements are on the same line.
+    public void openInlineTag(@NotNull String tag) throws XMLStreamException { // Inline elements
+        // are on the same line.
         openInlineTag(tag, Collections.emptyMap());
     }
 
@@ -108,7 +112,7 @@ public class DirectDocBookStreamWriter implements DocBookStreamWriter {
     public void openInlineTag(@NotNull String tag, @NotNull Map<String, String> attributes) throws XMLStreamException {
         xmlStream.writeStartElement(docbookNS, tag);
 
-        for (Map.Entry<String, String> attribute: attributes.entrySet()) {
+        for (Map.Entry<String, String> attribute : attributes.entrySet()) {
             xmlStream.writeAttribute(attribute.getKey(), attribute.getValue());
         }
     }
@@ -119,7 +123,8 @@ public class DirectDocBookStreamWriter implements DocBookStreamWriter {
     }
 
     @Override
-    public void openBlockInlineTag(@NotNull String tag) throws XMLStreamException { // Inline block elements start on the same line, but have nothing else to their right.
+    public void openBlockInlineTag(@NotNull String tag) throws XMLStreamException { // Inline
+        // block elements start on the same line, but have nothing else to their right.
         openInlineTag(tag);
         writeNewLine();
         increaseIndent();
@@ -133,7 +138,8 @@ public class DirectDocBookStreamWriter implements DocBookStreamWriter {
     }
 
     @Override
-    public void openBlockTag(@NotNull String tag) throws XMLStreamException { // Blocks start on a new line, and have nothing else on the same line.
+    public void openBlockTag(@NotNull String tag) throws XMLStreamException { // Blocks start on
+        // a new line, and have nothing else on the same line.
         openBlockTag(tag, Collections.emptyMap());
     }
 
@@ -142,7 +148,7 @@ public class DirectDocBookStreamWriter implements DocBookStreamWriter {
         writeIndent();
         xmlStream.writeStartElement(docbookNS, tag);
 
-        for (Map.Entry<String, String> attribute: attributes.entrySet()) {
+        for (Map.Entry<String, String> attribute : attributes.entrySet()) {
             xmlStream.writeAttribute(attribute.getKey(), attribute.getValue());
         }
 
@@ -168,7 +174,7 @@ public class DirectDocBookStreamWriter implements DocBookStreamWriter {
         writeIndent();
         xmlStream.writeEmptyElement(docbookNS, tag);
 
-        for (Map.Entry<String, String> attribute: attributes.entrySet()) {
+        for (Map.Entry<String, String> attribute : attributes.entrySet()) {
             xmlStream.writeAttribute(attribute.getKey(), attribute.getValue());
         }
 

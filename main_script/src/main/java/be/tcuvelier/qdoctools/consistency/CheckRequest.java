@@ -16,9 +16,9 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 public class CheckRequest {
+    final Document html;
     private final XdmNode xdm;
     private final XPathCompiler compiler;
-    final Document html;
 
     public CheckRequest(Path fileName, QtVersion qtVersion) throws IOException, SaxonApiException {
         Processor processor = new Processor(false);
@@ -40,7 +40,7 @@ public class CheckRequest {
         Set<String> set = new HashSet<>();
         for (int i = 0; i < xml.size(); ++i) {
             String element = xml.itemAt(i).getStringValue();
-            if (! element.contains("::")) {
+            if (!element.contains("::")) {
                 set.add(element);
             } else {
                 set.add(element.split("::")[1]);
@@ -57,18 +57,23 @@ public class CheckRequest {
         return htmlToSet(expression, tag, anchor, enumMode, (s) -> true);
     }
 
-    Set<String> htmlToSet(String expression, String tag, String anchor, boolean enumMode, Predicate<String> firstColumn) {
-        Elements html = this.html.getElementsContainingText(expression).select(tag + (anchor.isEmpty()? "" : ("#" + anchor)));
+    Set<String> htmlToSet(String expression, String tag, String anchor, boolean enumMode,
+            Predicate<String> firstColumn) {
+        Elements html =
+                this.html.getElementsContainingText(expression).select(tag + (anchor.isEmpty() ?
+                        "" : ("#" + anchor)));
         Set<String> set = new HashSet<>();
         if (html.size() > 0) {
-            // For flags: one enumeration is followed by flags (same name, just in the plural; more robust test:
+            // For flags: one enumeration is followed by flags (same name, just in the plural;
+            // more robust test:
             // same links), but only one documentation entry for the two.
             String previousLink = "";
             Elements propertiesListHTML = html.get(0).nextElementSibling().getElementsByTag("a");
             for (Element e : propertiesListHTML) {
                 boolean toConsider = true;
 
-                // If there is a previous element and this one just adds an s (enum then flags), skip; otherwise, keep.
+                // If there is a previous element and this one just adds an s (enum then flags),
+                // skip; otherwise, keep.
                 if (enumMode) {
                     if (!previousLink.isEmpty() && e.attr("href").equals(previousLink)) {
                         toConsider = false;
@@ -78,7 +83,8 @@ public class CheckRequest {
 
                 // Imposed first column content.
                 if (toConsider && e.parent().parent().previousElementSibling() != null) {
-                    toConsider = firstColumn.test(e.parent().parent().previousElementSibling().text());
+                    toConsider =
+                            firstColumn.test(e.parent().parent().previousElementSibling().text());
                 }
 
                 // Once all tests are performed, consider to add this element to the set.

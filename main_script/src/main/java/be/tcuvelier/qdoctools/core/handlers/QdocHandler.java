@@ -25,7 +25,8 @@ import java.util.stream.Collectors;
 public class QdocHandler {
     private final Path sourceFolder; // Containing Qt's sources.
     private final Path installedFolder; // Containing a compiled and installed version of Qt.
-    private final Path outputFolder; // Where all the generated files should be put (qdoc may also output in a
+    private final Path outputFolder; // Where all the generated files should be put (qdoc may
+    // also output in a
     // subfolder, in which case the files are automatically moved to a flatter hierarchy).
     private final Path mainQdocconfPath; // The qdocconf that lists all the other ones.
     private final String qdocPath;
@@ -34,8 +35,9 @@ public class QdocHandler {
     private final List<String> cppCompilerIncludes;
     private final GlobalConfiguration config;
 
-    public QdocHandler(String source, String installed, String output, String qdocPath, QtVersion qtVersion,
-                       boolean qdocDebug, List<String> cppCompilerIncludes, GlobalConfiguration config) throws IOException {
+    public QdocHandler(String source, String installed, String output, String qdocPath,
+            QtVersion qtVersion,
+            boolean qdocDebug, List<String> cppCompilerIncludes, GlobalConfiguration config) throws IOException {
         sourceFolder = Paths.get(source);
         installedFolder = Paths.get(installed);
         outputFolder = Paths.get(output);
@@ -52,17 +54,17 @@ public class QdocHandler {
     }
 
     private void ensureOutputFolderExists() throws IOException {
-        if (! outputFolder.toFile().isDirectory()) {
+        if (!outputFolder.toFile().isDirectory()) {
             Files.createDirectories(outputFolder);
         }
-        if (! outputFolder.resolve("images").toFile().isDirectory()) {
+        if (!outputFolder.resolve("images").toFile().isDirectory()) {
             Files.createDirectories(outputFolder.resolve("images"));
         }
     }
 
     private void ensureIncludesExist() throws IOException {
         for (String path : cppCompilerIncludes) {
-            if (! Files.exists(Paths.get(path))) {
+            if (!Files.exists(Paths.get(path))) {
                 throw new IOException("Include folder " + path + " does not exist.");
             }
         }
@@ -87,11 +89,14 @@ public class QdocHandler {
             throw new RuntimeException("No modules found in the given source directory (" + sourceFolder + ")");
         }
 
-        // Loop over all these folders and identify the modules (and their associated qdocconf file).
+        // Loop over all these folders and identify the modules (and their associated qdocconf
+        // file).
         // Process based on https://github.com/pyside/pyside2-setup/blob/5.11/sources/pyside2/doc/CMakeLists.txt
         // Find the qdocconf files, skip if it does not exist at known places.
-        // This system cannot be replaced by a simple enumeration of all qdocconf files: many of them just define
-        // global configuration options or example URLs. For instance, for Qt 6.3, qtbase has 70 qdocconf files, but
+        // This system cannot be replaced by a simple enumeration of all qdocconf files: many of
+        // them just define
+        // global configuration options or example URLs. For instance, for Qt 6.3, qtbase has 70
+        // qdocconf files, but
         // only 12 of them are relevant.
         List<Pair<String, Path>> modules = new ArrayList<>(directories.length);
         for (String directory : directories) {
@@ -108,22 +113,28 @@ public class QdocHandler {
                             docDirectoryPath.resolve("qt" + entry.getValue().second + ".qdocconf")
                     );
 
-                    Optional<Path> qdocconfOptionalPath = potentialQdocconfPaths.stream().filter(path -> path.toFile().isFile()).findAny();
+                    Optional<Path> qdocconfOptionalPath =
+                            potentialQdocconfPaths.stream().filter(path -> path.toFile().isFile()).findAny();
 
                     if (qdocconfOptionalPath.isEmpty()) {
-                        System.out.println("Skipped module \"qttools / " + entry.getKey() + "\": no .qdocconf file");
+                        System.out.println("Skipped module \"qttools / " + entry.getKey() + "\": " +
+                                "no .qdocconf file");
                         continue;
                     }
 
-                    System.out.println("--> Found submodule: qttools / " + entry.getKey() + "; qdocconf: " + qdocconfOptionalPath.get());
+                    System.out.println("--> Found submodule: qttools / " + entry.getKey() + "; " +
+                            "qdocconf: " + qdocconfOptionalPath.get());
                     modules.add(new Pair<>(directory, qdocconfOptionalPath.get()));
                 }
             } else if (QtModules.submodulesSpecificNames.containsKey(directory)) {
                 // Find the path to the documentation folders for each of the submodule.
-                for (Pair<String, String> submodule : QtModules.submodulesSpecificNames.get(directory)) {
+                for (Pair<String, String> submodule :
+                        QtModules.submodulesSpecificNames.get(directory)) {
                     Path importsDirectoryPath = srcDirectoryPath.resolve("imports");
-                    Path docDirectoryPath = srcDirectoryPath.resolve(submodule.first).resolve("doc");
-                    Path docImportsDirectoryPath = importsDirectoryPath.resolve(submodule.first).resolve("doc");
+                    Path docDirectoryPath = srcDirectoryPath.resolve(submodule.first).resolve(
+                            "doc");
+                    Path docImportsDirectoryPath =
+                            importsDirectoryPath.resolve(submodule.first).resolve("doc");
 
                     // Find the exact qdocconf file.
                     List<Path> potentialQdocconfPaths = Arrays.asList(
@@ -137,9 +148,11 @@ public class QdocHandler {
                             // Qt Quick modules like Controls 2.
                             docImportsDirectoryPath.resolve(submodule.second + ".qdocconf"),
                             docImportsDirectoryPath.resolve("qt" + submodule.second + ".qdocconf"),
-                            docImportsDirectoryPath.resolve(submodule.second.substring(0, submodule.second.length() - 1) + ".qdocconf"),
+                            docImportsDirectoryPath.resolve(submodule.second.substring(0,
+                                    submodule.second.length() - 1) + ".qdocconf"),
                             // Qt Quick modules.
-                            srcDirectoryPath.resolve("imports").resolve(submodule.second + ".qdocconf"),
+                            srcDirectoryPath.resolve("imports").resolve(submodule.second +
+                                    ".qdocconf"),
                             // Qt Quick Dialogs 2 (Qt 6)
                             srcDirectoryPath.resolve(submodule.first).resolve(submodule.first).resolve("doc").resolve("qt" + submodule.second + ".qdocconf"),
                             // Qt Quick Controls 1.
@@ -149,7 +162,8 @@ public class QdocHandler {
                             docDirectoryPath.resolve("qt" + submodule.second + ".qdocconf")
                     );
 
-                    Optional<Path> qdocconfOptionalPath = potentialQdocconfPaths.stream().filter(path -> path.toFile().isFile()).findAny();
+                    Optional<Path> qdocconfOptionalPath =
+                            potentialQdocconfPaths.stream().filter(path -> path.toFile().isFile()).findAny();
 
                     if (qdocconfOptionalPath.isEmpty()) {
                         System.out.println("Skipped module \"" + directory + " / " + submodule.first + "\": no .qdocconf file");
@@ -163,22 +177,29 @@ public class QdocHandler {
                 }
             } else {
                 // Find the path to the documentation folder.
-                Path docDirectoryPath = srcDirectoryPath.resolve(directory.replaceFirst("qt", "")).resolve("doc");
+                Path docDirectoryPath =
+                        srcDirectoryPath.resolve(directory.replaceFirst("qt", "")).resolve("doc");
 
                 // Find the exact qdocconf file.
                 List<Path> potentialQdocconfPaths = Arrays.asList(
                         docDirectoryPath.resolve(directory + ".qdocconf"),
-                        docDirectoryPath.resolve(directory.replaceFirst("qt", "") + ".qdocconf"), // ActiveQt. E.g.: doc\activeqt.qdocconf
-                        modulePath.resolve("doc").resolve("config").resolve(directory + ".qdocconf"), // Qt Doc.
-                        srcDirectoryPath.resolve("doc").resolve(directory + ".qdocconf"), // Qt Speech.
+                        docDirectoryPath.resolve(directory.replaceFirst("qt", "") + ".qdocconf"),
+                        // ActiveQt. E.g.: doc\activeqt.qdocconf
+                        modulePath.resolve("doc").resolve("config").resolve(directory +
+                                ".qdocconf"), // Qt Doc.
+                        srcDirectoryPath.resolve("doc").resolve(directory + ".qdocconf"), // Qt
+                        // Speech.
                         srcDirectoryPath.resolve("imports").resolve(directory).resolve("doc").resolve(directory + ".qdocconf"), // Qt Quick modules.
                         modulePath.resolve("Source").resolve(directory + ".qdocconf"), // Qt WebKit.
-                        modulePath.resolve("doc").resolve(directory.replace("-", "") + ".qdocconf"), // Qt WebKit Examples (5.3-).
+                        modulePath.resolve("doc").resolve(directory.replace("-", "") + ".qdocconf"
+                        ), // Qt WebKit Examples (5.3-).
                         modulePath.resolve("doc").resolve(directory.replaceAll("-a(.*)", "").replace("-", "") + ".qdocconf"), // Qt WebKit Examples and Demos (5.0).
-                        docDirectoryPath.resolve(directory + ".qdocconf") // Base case. E.g.: doc\qtdeclarative.qdocconf
+                        docDirectoryPath.resolve(directory + ".qdocconf") // Base case. E.g.:
+                        // doc\qtdeclarative.qdocconf
                 );
 
-                Optional<Path> qdocconfOptionalPath = potentialQdocconfPaths.stream().filter(path -> path.toFile().isFile()).findAny();
+                Optional<Path> qdocconfOptionalPath =
+                        potentialQdocconfPaths.stream().filter(path -> path.toFile().isFile()).findAny();
 
                 if (qdocconfOptionalPath.isEmpty()) {
                     System.out.println("Skipped module \"" + directory + "\": no .qdocconf file");
@@ -199,14 +220,16 @@ public class QdocHandler {
                 Path docDirectoryPath = qtBasePath.resolve(entry.getValue().first);
                 Path qdocconfPath = docDirectoryPath.resolve(entry.getValue().second + ".qdocconf");
 
-                if (! qdocconfPath.toFile().isFile()) {
+                if (!qdocconfPath.toFile().isFile()) {
                     if (modules.stream().noneMatch(stringPathPair -> stringPathPair.second.toFile().getName().contains(entry.getKey() + ".qdocconf"))) {
-                        System.out.println("Skipped module \"qtbase / " + entry.getKey() + "\": no .qdocconf file");
+                        System.out.println("Skipped module \"qtbase / " + entry.getKey() + "\": " +
+                                "no .qdocconf file");
                     }
                     continue;
                 }
 
-                System.out.println("--> Found submodule: qtbase / " + entry.getKey() + "; qdocconf: " + qdocconfPath);
+                System.out.println("--> Found submodule: qtbase / " + entry.getKey() + "; " +
+                        "qdocconf: " + qdocconfPath);
                 modules.add(new Pair<>("qtbase", qdocconfPath));
             }
         }
@@ -217,10 +240,11 @@ public class QdocHandler {
             Path docDirectoryPath = qtDocPath.resolve("doc").resolve("config");
             Path qdocconfPath = docDirectoryPath.resolve("qmake.qdocconf");
 
-            if (! qdocconfPath.toFile().isFile()) {
+            if (!qdocconfPath.toFile().isFile()) {
                 System.out.println("Skipped submodule: qtdoc / qmake (old Qt 5 only)");
             } else {
-                System.out.println("--> Found submodule: qtbase / qmake (old Qt 5 only); qdocconf: " + qdocconfPath);
+                System.out.println("--> Found submodule: qtbase / qmake (old Qt 5 only); " +
+                        "qdocconf: " + qdocconfPath);
                 modules.add(new Pair<>("qtbase", qdocconfPath));
             }
         }
@@ -229,12 +253,15 @@ public class QdocHandler {
     }
 
     private List<String> findIncludes() {
-        // Accumulate the `include` folders. Base case: just the `include` folder of an installed Qt.
-        List<String> includeDirs = new ArrayList<>(List.of(installedFolder.resolve("include").toString()));
+        // Accumulate the `include` folders. Base case: just the `include` folder of an installed
+        // Qt.
+        List<String> includeDirs =
+                new ArrayList<>(List.of(installedFolder.resolve("include").toString()));
 
         // Special cases.
         includeDirs.add(sourceFolder.resolve("qtbase").resolve("qmake").toString());
-        includeDirs.add(sourceFolder.resolve("qtandroidextras").resolve("src").resolve("androidextras").resolve("doc").resolve("QtAndroidExtras").toString());
+        includeDirs.add(sourceFolder.resolve("qtandroidextras").resolve("src").resolve(
+                "androidextras").resolve("doc").resolve("QtAndroidExtras").toString());
 
         // Find all modules within the `include` folder, to capture all private folders.
         File[] containedFiles = installedFolder.resolve("include").toFile().listFiles();
@@ -251,8 +278,9 @@ public class QdocHandler {
 
         // Up to now: Qt/5.13.0/include.
         // Add paths: Qt/5.13.0/include/MODULE and Qt/5.13.0/include/MODULE/VERSION
-        // and Qt/5.13.0/include/MODULE/VERSION/MODULE and Qt/5.13.0/include/MODULE/VERSION/MODULE/private.
-        for (Path directory: directories) {
+        // and Qt/5.13.0/include/MODULE/VERSION/MODULE and Qt/5.13
+        // .0/include/MODULE/VERSION/MODULE/private.
+        for (Path directory : directories) {
             File[] subDirs = directory.toFile().listFiles();
             if (subDirs == null || subDirs.length == 0) {
                 continue;
@@ -268,7 +296,7 @@ public class QdocHandler {
                     .filter(File::isDirectory)
                     .filter(f -> f.getName().split("\\.").length == 3)
                     .map(File::toPath).toList();
-            for (Path sd: subDirectories) {
+            for (Path sd : subDirectories) {
                 includeDirs.add(sd.toString());
 
                 String moduleName = sd.getParent().toFile().getName();
@@ -291,7 +319,9 @@ public class QdocHandler {
     public Path makeMainQdocconf(@NotNull List<Pair<String, Path>> modules) throws WriteQdocconfException {
         modules.sort(Comparator.comparing(a -> a.first));
         try {
-            Files.write(mainQdocconfPath, modules.stream().map(m -> m.second.toString()).collect(Collectors.joining("\n")).getBytes());
+            Files.write(mainQdocconfPath,
+                    modules.stream().map(m -> m.second.toString()).collect(Collectors.joining("\n"
+                    )).getBytes());
         } catch (IOException e) {
             throw new WriteQdocconfException(mainQdocconfPath, e);
         }
@@ -313,7 +343,7 @@ public class QdocHandler {
     }
 
     public void runQdoc() throws IOException, InterruptedException {
-        if (! new File(qdocPath).exists()){
+        if (!new File(qdocPath).exists()) {
             throw new IOException("Path to qdoc wrong: file " + qdocPath + " does not exist!");
         }
 
@@ -329,13 +359,13 @@ public class QdocHandler {
         if (qdocDebug) {
             params.add("--debug");
         }
-        for (String includePath: cppCompilerIncludes) {
+        for (String includePath : cppCompilerIncludes) {
             // https://bugreports.qt.io/browse/QTCREATORBUG-20903
             // Clang includes must come before GCC includes.
             params.add("-I");
             params.add(includePath);
         }
-        for (String includePath: findIncludes()) {
+        for (String includePath : findIncludes()) {
             params.add("-I");
             params.add(includePath);
         }
@@ -349,7 +379,7 @@ public class QdocHandler {
             String command = strings.get(i);
             System.out.print("            " + command);
 
-            if (i + 1 < strings.size() && ! commands.get(i + 1).startsWith("-")) {
+            if (i + 1 < strings.size() && !commands.get(i + 1).startsWith("-")) {
                 System.out.print(" " + commands.get(i + 1));
                 i += 1;
             }
@@ -367,15 +397,18 @@ public class QdocHandler {
 
         // Run qdoc and wait until it is done.
         Process qdoc = pb.start();
-        StringBuffer sb = new StringBuffer(); // Will be written to from multiple threads, hence StringBuffer instead of StringBuilder.
+        StringBuffer sb = new StringBuffer(); // Will be written to from multiple threads, hence
+        // StringBuffer instead of StringBuilder.
         Consumer<String> errOutput = s -> {
-            if (qdocDebug || (! s.contains("warning: ") && ! s.contains("note: "))) {
+            if (qdocDebug || (!s.contains("warning: ") && !s.contains("note: "))) {
                 System.err.println(s);
             }
         };
         Consumer<String> errAppend = s -> sb.append(s).append("\n");
-        StreamGobbler outputGobbler = new StreamGobbler(qdoc.getInputStream(), List.of(errOutput, errAppend));
-        StreamGobbler errorGobbler = new StreamGobbler(qdoc.getErrorStream(), List.of(errOutput, errAppend));
+        StreamGobbler outputGobbler = new StreamGobbler(qdoc.getInputStream(), List.of(errOutput,
+                errAppend));
+        StreamGobbler errorGobbler = new StreamGobbler(qdoc.getErrorStream(), List.of(errOutput,
+                errAppend));
         new Thread(outputGobbler).start();
         new Thread(errorGobbler).start();
         int qdocCode = qdoc.waitFor();
@@ -392,7 +425,8 @@ public class QdocHandler {
         // Parse the results from qdoc to find errors.
         int nErrors = countString(errors, "error:");
         int nFatalErrors = countString(errors, "fatal error:");
-//        int nMissingDepends = countString(errors, "fatal error: '[a-zA-Z]+/[a-zA-Z]+Depends' file not found"); // Takes too long to compute.
+//        int nMissingDepends = countString(errors, "fatal error: '[a-zA-Z]+/[a-zA-Z]+Depends'
+//        file not found"); // Takes too long to compute.
 
         if (nErrors > 0) {
             System.out.println("::> Qdoc ran into issues: ");
@@ -420,11 +454,12 @@ public class QdocHandler {
                         .map(abnormalPath::resolve)
                         .map(Path::toFile)
                         .map(file -> file.renameTo(outputFolder.resolve(file.getName()).toFile()))
-                        .anyMatch(val -> ! val)) {
+                        .anyMatch(val -> !val)) {
                     System.out.println("!!> Moving some files was not possible!");
                 }
 
-                if (! abnormalPath.resolve("images").toFile().renameTo(outputFolder.resolve("images").toFile())) {
+                if (!abnormalPath.resolve("images").toFile().renameTo(outputFolder.resolve(
+                        "images").toFile())) {
                     System.out.println("!!> Moving the `images` folder was not possible!");
                 }
             }
@@ -437,11 +472,12 @@ public class QdocHandler {
             System.exit(0);
         }
         List<File> subfolders = Arrays.stream(fs).filter(File::isDirectory).toList();
-        for (File subfolder: subfolders) { // For each module...
+        for (File subfolder : subfolders) { // For each module...
             // First, deal with the DocBook files.
             File[] files = subfolder.listFiles((dir, name) -> name.endsWith(".xml"));
             if (files != null && files.length > 0) {
-                System.out.println("++> Moving qdoc's result from " + subfolder + " to the expected folder");
+                System.out.println("++> Moving qdoc's result from " + subfolder + " to the " +
+                        "expected folder");
                 for (File f : files) { // For each DocBook file...
                     String name = f.getName();
 
@@ -453,7 +489,8 @@ public class QdocHandler {
                     try {
                         Files.copy(f.toPath(), destination);
                     } catch (FileAlreadyExistsException e) {
-                        System.out.println("!!> File already exists: " + destination + ". Tried to copy from: " + f);
+                        System.out.println("!!> File already exists: " + destination + ". Tried " +
+                                "to copy from: " + f);
                     }
                 }
             }
@@ -477,8 +514,8 @@ public class QdocHandler {
             return;
         }
 
-        if (! destination.toFile().exists()) {
-            if (! destination.toFile().mkdirs()) {
+        if (!destination.toFile().exists()) {
+            if (!destination.toFile().mkdirs()) {
                 throw new IOException("Could not create directories: " + destination);
             }
         }
@@ -526,14 +563,15 @@ public class QdocHandler {
                 nFilesIgnored += 1;
                 continue;
             }
-            if (! hasMatched) {
-                // This file has not changed: no need to have a back-up file or to spend time writing on disk.
+            if (!hasMatched) {
+                // This file has not changed: no need to have a back-up file or to spend time
+                // writing on disk.
                 continue;
             }
             nFilesRewritten += 1;
 
             Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak");
-            if (! fileBackUp.toFile().exists()) {
+            if (!fileBackUp.toFile().exists()) {
                 Files.move(filePath, fileBackUp);
             }
             Files.write(filePath, file.getBytes());
@@ -562,11 +600,13 @@ public class QdocHandler {
             }
         }
         System.out.println("++> " + nFiles + " validated, " +
-                nValidFiles + " valid, " + (nFiles - nValidFiles) + " invalid, " + nEmptyFiles + " empty.");
+                nValidFiles + " valid, " + (nFiles - nValidFiles) + " invalid, " + nEmptyFiles +
+                " empty.");
     }
 
     private List<Path> findWithExtension(@SuppressWarnings("SameParameterValue") String extension) {
-        String[] fileNames = outputFolder.toFile().list((current, name) -> name.endsWith(extension));
+        String[] fileNames =
+                outputFolder.toFile().list((current, name) -> name.endsWith(extension));
         if (fileNames == null || fileNames.length == 0) {
             return Collections.emptyList();
         } else {

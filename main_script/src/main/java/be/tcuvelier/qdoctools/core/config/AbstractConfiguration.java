@@ -18,20 +18,6 @@ import java.util.Optional;
 public abstract class AbstractConfiguration {
     protected final JsonObject config;
 
-    protected static Optional<Path> recursiveFindFile(Path configName, String soughtName) {
-        Path folder = configName.getParent();
-        while (folder.getNameCount() > 0) {
-            folder = folder.getParent();
-
-            if (folder.resolve(soughtName).toFile().exists()) {
-                return Optional.of(folder.resolve(soughtName));
-            }
-        }
-
-        return Optional.empty();
-
-    }
-
     protected AbstractConfiguration(String path) throws FileNotFoundException {
         this(Paths.get(path).toFile());
     }
@@ -47,6 +33,20 @@ public abstract class AbstractConfiguration {
             System.out.println("!!> Configuration file not found! Trying to load: " + file.getAbsolutePath());
             throw e;
         }
+
+    }
+
+    protected static Optional<Path> recursiveFindFile(Path configName, String soughtName) {
+        Path folder = configName.getParent();
+        while (folder.getNameCount() > 0) {
+            folder = folder.getParent();
+
+            if (folder.resolve(soughtName).toFile().exists()) {
+                return Optional.of(folder.resolve(soughtName));
+            }
+        }
+
+        return Optional.empty();
 
     }
 
@@ -72,7 +72,8 @@ public abstract class AbstractConfiguration {
             numberUnparsed = getStringAttribute(field);
             return Optional.of(Integer.parseInt(numberUnparsed));
         } catch (NumberFormatException e) {
-            throw new IllegalStateException("The provided field " + field + " is not an integer: " + numberUnparsed);
+            throw new IllegalStateException("The provided field " + field + " is not an integer: "
+                    + numberUnparsed);
         } catch (ConfigurationMissingField e) {
             return Optional.empty();
         }

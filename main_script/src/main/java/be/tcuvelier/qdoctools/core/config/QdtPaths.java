@@ -39,6 +39,7 @@ public class QdtPaths {
     }
 
     public String getXsltMergeAfterProofreading() throws ConfigurationMissingField {
-        return config.getQtDocToolsRoot() + "/proofread/merge_after_proofread/xslt/after_proofreading.xsl";
+        return config.getQtDocToolsRoot() + "/proofread/merge_after_proofread/xslt" +
+                "/after_proofreading.xsl";
     }
 }

@@ -53,9 +53,11 @@ public class ValidationHandler {
         try {
             return loadSchema(rng, XMLConstants.RELAXNG_NS_URI);
         } catch (IllegalArgumentException e) {
-            // Try a second time, forcing to load Jing. In the case it is not possible to load a schema of the asked
+            // Try a second time, forcing to load Jing. In the case it is not possible to load a
+            // schema of the asked
             // format, an IllegalArgumentException is thrown:
-            // No SchemaFactory that implements the schema language specified by: http://relaxng.org/ns/structure/1.0 could be loaded
+            // No SchemaFactory that implements the schema language specified by: http://relaxng.org/ns/structure/1.0
+            // could be loaded
             loadJing();
             return loadSchema(rng, XMLConstants.RELAXNG_NS_URI);
         }

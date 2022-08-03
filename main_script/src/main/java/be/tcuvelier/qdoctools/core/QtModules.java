@@ -9,19 +9,27 @@ import java.util.stream.Collectors;
 
 public class QtModules {
     // Private attributes are rewritten in terms of another (package-private) attribute.
-    // At some point, could be moved to configuration file, but I guess there is little to gain in terms of maintenance.
+    // At some point, could be moved to configuration file, but I guess there is little to gain
+    // in terms of maintenance.
 
-    public static final List<String> ignoredModules; // A list of modules that have no documentation, and should thus
-    // be ignored.
-    private static final Map<String, List<String>> submodules; // First-level folders in the source code that have
-    // multiple modules in them (like qtconnectivity: bluetooth and nfc).
-    public static Map<String, List<Pair<String, String>>> submodulesSpecificNames; // First-level folders in the source
-    // code that have multiple modules in them, but the qdocconf files have nonstandard names (like qtquickcontrols:
-    // controls->qtquickcontrols, dialogs->qtquickdialogs, extras->qtquickextras).
-    private static final Map<String, String> renamedSubfolder; // Modules that have a strange subfolder (like
+    public static final List<String> ignoredModules; // A list of modules that have no
+    // documentation, and should thus
     // qtdatavis3d: datavisualization).
-    public static final Map<String, Pair<Path, String>> qtTools; // Qt Tools follows no other pattern.
-    public static final Map<String, Pair<Path, String>> qtBaseTools; // Qt Tools follows no other pattern, even within
+    public static final Map<String, Pair<Path, String>> qtTools; // Qt Tools follows no other
+    // pattern.
+    public static final Map<String, Pair<Path, String>> qtBaseTools; // Qt Tools follows no other
+    // pattern, even within
+    // be ignored.
+    private static final Map<String, List<String>> submodules; // First-level folders in the
+    // source code that have
+    // code that have multiple modules in them, but the qdocconf files have nonstandard names
+    // (like qtquickcontrols:
+    // controls->qtquickcontrols, dialogs->qtquickdialogs, extras->qtquickextras).
+    private static final Map<String, String> renamedSubfolder; // Modules that have a strange
+    // subfolder (like
+    // multiple modules in them (like qtconnectivity: bluetooth and nfc).
+    public static Map<String, List<Pair<String, String>>> submodulesSpecificNames; // First-level
+    // folders in the source
     // Qt Base.
 
     static {
@@ -38,8 +46,10 @@ public class QtModules {
                         Arrays.asList(new Pair<>("controls", "qtquickcontrols"),
                                 new Pair<>("dialogs", "qtquickdialogs"),
                                 new Pair<>("extras", "qtquickextras"))),
-                Map.entry("qtlottie", Collections.singletonList(new Pair<>("", "qtlottieanimation"))),
-                Map.entry("qtwayland", Collections.singletonList(new Pair<>("compositor", "qtwaylandcompositor"))),
+                Map.entry("qtlottie", Collections.singletonList(new Pair<>("", "qtlottieanimation"
+                ))),
+                Map.entry("qtwayland", Collections.singletonList(new Pair<>("compositor",
+                        "qtwaylandcompositor"))),
                 Map.entry(
                         "qtdeclarative",
                         Arrays.asList(
@@ -56,23 +66,24 @@ public class QtModules {
                                 new Pair<>("quickdialogs2", "quickdialogs"),
                                 new Pair<>("labs/platform", "labsplatform"))),
                 Map.entry("qtbase",
-                    Arrays.asList(new Pair<>("concurrent", "qtconcurrent"),
-                            new Pair<>("corelib", "qtcore"), // Reason why qtbase cannot be in submodules (specific
-                            // qtdocconf file name, cannot be guessed from submodule name).
-                            new Pair<>("dbus", "qtdbus"),
-                            new Pair<>("gui", "qtgui"),
-                            new Pair<>("network", "qtnetwork"),
-                            new Pair<>("opengl", "qtopengl"),
-                            new Pair<>("platformheaders", "qtplatformheaders"),
-                            new Pair<>("printsupport", "qtprintsupport"),
-                            new Pair<>("sql", "qtsql"),
-                            new Pair<>("testlib", "qttestlib"),
-                            new Pair<>("widgets", "qtwidgets"),
-                            new Pair<>("xml", "qtxml"))),
+                        Arrays.asList(new Pair<>("concurrent", "qtconcurrent"),
+                                new Pair<>("corelib", "qtcore"), // Reason why qtbase cannot be
+                                // in submodules (specific
+                                // qtdocconf file name, cannot be guessed from submodule name).
+                                new Pair<>("dbus", "qtdbus"),
+                                new Pair<>("gui", "qtgui"),
+                                new Pair<>("network", "qtnetwork"),
+                                new Pair<>("opengl", "qtopengl"),
+                                new Pair<>("platformheaders", "qtplatformheaders"),
+                                new Pair<>("printsupport", "qtprintsupport"),
+                                new Pair<>("sql", "qtsql"),
+                                new Pair<>("testlib", "qttestlib"),
+                                new Pair<>("widgets", "qtwidgets"),
+                                new Pair<>("xml", "qtxml"))),
                 Map.entry("qtquickcontrols2",
-                    Arrays.asList(new Pair<>("calendar", "qtlabscalendar"),
-                            new Pair<>("controls", "qtquickcontrols2"),
-                            new Pair<>("platform", "qtlabsplatform"))),
+                        Arrays.asList(new Pair<>("calendar", "qtlabscalendar"),
+                                new Pair<>("controls", "qtquickcontrols2"),
+                                new Pair<>("platform", "qtlabsplatform"))),
                 Map.entry("qt3d", Collections.singletonList(new Pair<>("core", "qt3d"))),
                 Map.entry("qt5compat",
                         Arrays.asList(new Pair<>("core5", "core5compat"),
@@ -81,7 +92,8 @@ public class QtModules {
                         Arrays.asList(new Pair<>("qtdoc", "qtdoc"),
                                 new Pair<>("cmake", "qtcmake"),
                                 new Pair<>("platformintegration", "qtplatformintegration"))),
-                Map.entry("qtquicktimeline", Collections.singletonList(new Pair<>("timeline", "qtquicktimeline"))),
+                Map.entry("qtquicktimeline", Collections.singletonList(new Pair<>("timeline",
+                        "qtquicktimeline"))),
                 Map.entry("qtscxml",
                         Arrays.asList(new Pair<>("scxml", "qtscxml"),
                                 new Pair<>("statemachine", "qtstatemachine"))),
@@ -107,21 +119,25 @@ public class QtModules {
                 "uitools", new Pair<>(Paths.get("src/designer/src/uitools/doc/"), "qtuitools"),
                 "linguist", new Pair<>(Paths.get("src/linguist/linguist/doc/"), "qtlinguist"),
                 "qdoc", new Pair<>(Paths.get("src/qdoc/doc/config/"), "qdoc"),
-                "qtdistancefieldgenerator", new Pair<>(Paths.get("src/distancefieldgenerator/doc/"), "distancefieldgenerator")
+                "qtdistancefieldgenerator", new Pair<>(Paths.get("src/distancefieldgenerator/doc" +
+                        "/"), "distancefieldgenerator")
         );
         qtBaseTools = Map.of(
                 "qlalr", new Pair<>(Paths.get("src/tools/qlalr/doc/"), "qlalr"),
                 "qmake", new Pair<>(Paths.get("qmake/doc/"), "qmake"),
-                "qdoc", new Pair<>(Paths.get("src/tools/qdoc/doc/config"), "qdoc") // Needed for Qt 5.3 and previous.
+                "qdoc", new Pair<>(Paths.get("src/tools/qdoc/doc/config"), "qdoc") // Needed for
+                // Qt 5.3 and previous.
         );
 
         // Rewrite submodules and renamedSubfolder into submodulesSpecificNames.
         Map<String, List<Pair<String, String>>> tmp = new HashMap<>(submodulesSpecificNames);
         for (Map.Entry<String, List<String>> entry : submodules.entrySet()) {
-            tmp.put(entry.getKey(), entry.getValue().stream().map(s -> new Pair<>(s, s)).collect(Collectors.toList()));
+            tmp.put(entry.getKey(),
+                    entry.getValue().stream().map(s -> new Pair<>(s, s)).collect(Collectors.toList()));
         }
         for (Map.Entry<String, String> entry : renamedSubfolder.entrySet()) {
-            tmp.put(entry.getKey(), Collections.singletonList(new Pair<>(entry.getValue(), entry.getKey())));
+            tmp.put(entry.getKey(), Collections.singletonList(new Pair<>(entry.getValue(),
+                    entry.getKey())));
         }
         submodulesSpecificNames = Collections.unmodifiableMap(tmp);
     }

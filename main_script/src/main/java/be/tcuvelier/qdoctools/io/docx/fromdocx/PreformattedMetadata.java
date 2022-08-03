@@ -20,7 +20,8 @@ public class PreformattedMetadata {
     private Optional<Integer> startinglinenumber;
 
     public PreformattedMetadata(@NotNull String p) throws XMLStreamException {
-        String[] options = Arrays.stream(p.split("\\.")).map(String::strip).filter(Predicate.not(String::isEmpty)).toArray(String[]::new);
+        String[] options =
+                Arrays.stream(p.split("\\.")).map(String::strip).filter(Predicate.not(String::isEmpty)).toArray(String[]::new);
 
         // Parse the type.
         if (options[0].equals("Program listing")) {
@@ -37,7 +38,8 @@ public class PreformattedMetadata {
 
         // Parse the rests, if there is anything left.
         for (int i = 1; i < options.length; ++i) {
-            String[] option = Arrays.stream(options[i].split(":")).map(String::strip).filter(Predicate.not(String::isEmpty)).toArray(String[]::new);
+            String[] option =
+                    Arrays.stream(options[i].split(":")).map(String::strip).filter(Predicate.not(String::isEmpty)).toArray(String[]::new);
 
             if (option[0].equalsIgnoreCase("Language")) {
                 language = Optional.of(option[1]);

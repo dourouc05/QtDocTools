@@ -13,7 +13,9 @@ import com.joestelmach.natty.Parser;
 import org.apache.poi.xwpf.usermodel.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTAbstractNum;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTNumFmt;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STNumberFormat;
 
 import javax.xml.stream.XMLStreamException;
 import java.io.FileInputStream;
@@ -31,28 +33,28 @@ public class DocxInputImpl {
 
     private final Map<String, byte[]> images = new HashMap<>();
     private final Deque<FormattingStack> currentFormatting = new ArrayDeque<>();
+    private final Set<Integer> captionPositions = new HashSet<>(); // Store position of
+    // paragraphs that have been recognised
+    // as captions: find those that have not been, so the user can be warned when one of them is
+    // visited.
+    private final Set<Integer> backwardCaptionPositions = new HashSet<>(); // Store positions of
+    // captions that have been seen
+    // *before* an actual image. They are interpreted as figures.
+    private final Set<Integer> abstractPositions = new HashSet<>(); // Store the position of the
+    // abstract.
     private int currentSectionLevel;
     private boolean isWithinPart = false;
     private boolean isWithinChapter = false;
-
     private PreformattedMetadata preformattedMetadata;
     private boolean isDisplayedFigure = false;
     private Level isWithinAdmonition = null;
     private boolean isWithinList = false;
-
     private int currentDefinitionListItemNumber = -1;
     private int currentDefinitionListItemSegmentNumber = -1;
     private List<XWPFParagraph> currentDefinitionListTitles = null;
     private List<List<XWPFParagraph>> currentDefinitionListContents = null;
-
     private boolean isWithinVariableList = false;
     private boolean isWithinVariableListEntry = false;
-
-    private final Set<Integer> captionPositions = new HashSet<>(); // Store position of paragraphs that have been recognised
-    // as captions: find those that have not been, so the user can be warned when one of them is visited.
-    private final Set<Integer> backwardCaptionPositions = new HashSet<>(); // Store positions of captions that have been seen
-    // *before* an actual image. They are interpreted as figures.
-    private final Set<Integer> abstractPositions = new HashSet<>(); // Store the position of the abstract.
 
     @SuppressWarnings("WeakerAccess")
     public DocxInputImpl(@NotNull String filename) throws IOException, XMLStreamException {
@@ -61,162 +63,9 @@ public class DocxInputImpl {
         dbStream = new DelayedSimplifyingDocBookStreamWriter(new DirectDocBookStreamWriter());
     }
 
-    @SuppressWarnings("WeakerAccess")
-    public Map<String, byte[]> getImages() {
-        return images;
-    }
-
-    private String detectDocumentType() throws XMLStreamException {
-        return switch (doc.getParagraphs().get(0).getStyleID()) {
-            case "Title" -> "article";
-            case "Titlebook" -> "book";
-            default ->
-                    throw new XMLStreamException("Unrecognised document type. The first paragraph must be a Title or " +
-                            "a Title (book). Other document types are not implemented for now.");
-        };
-    }
-
-    @SuppressWarnings("WeakerAccess")
-    public String toDocBook() throws XMLStreamException, IOException {
-        // Initialise counters.
-        currentSectionLevel = 0;
-
-        // Generate the document.
-        String documentType = detectDocumentType();
-        dbStream.startDocument(documentType, "5.1");
-        for (IBodyElement b: doc.getBodyElements()) {
-            visit(b);
-        }
-
-        // Close block-level tags that have not yet been closed.
-        int nCloses = currentSectionLevel; // </db:section>, as many times as required
-        currentSectionLevel = 0;
-        if (isWithinChapter) {
-            nCloses += 1; // </db:chapter>
-        }
-        if (isWithinPart) { // </db:part>
-            nCloses += 1;
-        }
-
-        for (int i = 0; i < nCloses; ++i) {
-            dbStream.closeBlockTag();
-        }
-
-        // Finally done with writing the document!
-        dbStream.endDocument();
-
-        // Perform final consistency checks.
-        if (dbStream.getCurrentDepth() != 0) {
-            System.err.println("Reached the end of the document, but the indentation depth is not zero: " +
-                    "there is a bug! Current depth: " + dbStream.getCurrentDepth());
-        }
-
-        // Generate the string from the stream.
-        return dbStream.write();
-    }
-
-    private void visit(@NotNull IBodyElement b) throws XMLStreamException {
-        // As the XWPF hierarchy is not made for visitors, and as it is not possible to alter it, use reflection...
-        if (b instanceof XWPFParagraph) {
-            visitParagraph((XWPFParagraph) b);
-        } else if (b instanceof XWPFTable) {
-            visitTable((XWPFTable) b);
-        } else {
-            System.out.println(b.getElementType());
-            throw new RuntimeException("An element of type " + b.getClass().getName() + " has not been caught " +
-                    "by a visit() method.");
-        }
-    }
-
-    /** Dispatcher code, when information available in the body element is not enough. **/
-
-    private void visitParagraph(@NotNull XWPFParagraph p) throws XMLStreamException {
-        // Only deal with paragraphs having some content (i.e. at least one non-empty run).
-        if (p.getRuns().size() == 0) {
-            return;
-        }
-
-        // Ignore empty paragraphs, i.e. no text and no pictures.
-        if (p.getRuns().stream().allMatch(r -> r.text().length() == 0 && r.getEmbeddedPictures().size() == 0)) {
-            return;
-        }
-
-        // Once a paragraph has found its visitor, return from this function. This way, if a paragraph only
-        // partially matches the conditions for a visitor, it can be handled by the more generic ones.
-        // (Just for robustness and ability to import external Word documents into the system.)
-
-        // First, handle numbered paragraphs. They mostly indicate lists (or this is an external document, and no
-        // assumption should be made -- it could very well be a heading).
-        if (p.getNumID() != null &&
-                (p.getStyleID() == null || p.getStyleID().equals("Normal") || p.getStyleID().equals("ListParagraph"))) {
-            visitListItem(p);
-            return;
-        }
-
-        if (isWithinList) { // Should not really happen, though.
-            throw new XMLStreamException("Assertion error: paragraph detected as within list while it has no numbering.");
-        }
-
-        // Then, dispatch along the style. Captions and abstracts have special treatment (eaten by the relevant tags,
-        // which then registers the ones that have already been output).
-        if (p.getStyleID() == null || p.getStyleID().equals("")) {
-            visitNormalParagraph(p);
-            return;
-        }
-
-        if (p.getStyleID().equals("Caption")) {
-            int pos = doc.getPosOfParagraph(p);
-            if (! captionPositions.contains(pos)) {
-                backwardCaptionPositions.add(pos);
-            }
-            // Captions are generated along with images. If the image is found first, captionPositions is filled in
-            // the corresponding visitor.
-            // Otherwise, this visitor marks the paragraph in backwardCaptionPositions so that the next paragraph knows
-            // there is a caption before the image.
-            return;
-        }
-
-        // Ignore paragraphs that are already dealt with within the headers.
-        if (p.getStyleID().equals("Abstract")) {
-            // Abstracts are generated in the header, which fills abstractPositions.
-            if (! abstractPositions.contains(doc.getPosOfParagraph(p))) {
-                throw new XMLStreamException("Abstract not expected.");
-            }
-            return;
-        }
-
-        if (p.getStyleID().equals("Author")) {
-            // TODO: check this paragraph has been output, like abstracts?
-            return;
-        }
-
-        switch (p.getStyleID()) {
-            case "Title", "Titlebook" -> visitDocumentTitle(p);
-            case "Heading1", "Heading2", "Heading3", "Heading4", "Heading5", "Heading6", "Heading7", "Heading8", "Heading9" ->
-                    visitSectionTitle(p);
-            case "Titlepart" -> visitPartTitle(p);
-            case "Titlechapter" -> visitChapterTitle(p);
-            case "Editor" -> visitAuthor(p);
-            case "ProgramListing", "Screen", "Synopsis" -> visitPreformatted(p);
-            case "DefinitionListTitle" -> visitDefinitionListTitle(p);
-            case "DefinitionListItem" -> visitDefinitionListItem(p);
-            case "VariableListTitle" -> visitVariableListTitle(p);
-            case "VariableListItem" -> visitVariableListItem(p); // The case with no style ID is already handled.
-            case "Normal", "FootnoteText" -> visitNormalParagraph(p);
-            case "ListParagraph" ->
-                    throw new XMLStreamException("Found a list paragraph that has not been recognised as a list.");
-            case "Caution", "Important", "Note", "Tip", "Warning" -> visitAdmonition(p);
-            default -> {
-                // TODO: Don't panic when seeing something new, unless a command-line parameter says to (much more convenient for development!). For users, better to have a para than a crash.
-                System.err.println("Found a paragraph with an unsupported style: " + p.getStyleID());
-                throw new XMLStreamException("Found a paragraph with an unsupported style: " + p.getStyleID());
-            }
-        }
-
-        // The last switch returned from the function.
-    }
-
-    /** Structure elements. **/
+    /**
+     * Structure elements.
+     **/
 
     private static Date parseDate(String str) {
         Parser parser = new Parser();
@@ -254,7 +103,8 @@ public class DocxInputImpl {
         }
 
         // Parse the other fields.
-        String[] fields = contributorInfo.split("."); // TODO: why just "." as regex? Looks suspicious.
+        String[] fields = contributorInfo.split("."); // TODO: why just "." as regex? Looks
+        // suspicious.
         for (String field : fields) {
             String[] items = field.strip().split(Translations.colon.get(lang));
             if (items.length == 2) {
@@ -285,6 +135,191 @@ public class DocxInputImpl {
         return c;
     }
 
+    private static String dateToISO(Date date) {
+        return new SimpleDateFormat("yyyy-MM-dd").format(date);
+    }
+
+    /**
+     * Definition lists.
+     **/
+
+    private static String toString(@NotNull List<XWPFRun> runs) {
+        return runs.stream().map(XWPFRun::text).collect(Collectors.joining(""));
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public Map<String, byte[]> getImages() {
+        return images;
+    }
+
+    private String detectDocumentType() throws XMLStreamException {
+        return switch (doc.getParagraphs().get(0).getStyleID()) {
+            case "Title" -> "article";
+            case "Titlebook" -> "book";
+            default ->
+                    throw new XMLStreamException("Unrecognised document type. The first paragraph" +
+                            " must be a Title or " +
+                            "a Title (book). Other document types are not implemented for now.");
+        };
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public String toDocBook() throws XMLStreamException, IOException {
+        // Initialise counters.
+        currentSectionLevel = 0;
+
+        // Generate the document.
+        String documentType = detectDocumentType();
+        dbStream.startDocument(documentType, "5.1");
+        for (IBodyElement b : doc.getBodyElements()) {
+            visit(b);
+        }
+
+        // Close block-level tags that have not yet been closed.
+        int nCloses = currentSectionLevel; // </db:section>, as many times as required
+        currentSectionLevel = 0;
+        if (isWithinChapter) {
+            nCloses += 1; // </db:chapter>
+        }
+        if (isWithinPart) { // </db:part>
+            nCloses += 1;
+        }
+
+        for (int i = 0; i < nCloses; ++i) {
+            dbStream.closeBlockTag();
+        }
+
+        // Finally done with writing the document!
+        dbStream.endDocument();
+
+        // Perform final consistency checks.
+        if (dbStream.getCurrentDepth() != 0) {
+            System.err.println("Reached the end of the document, but the indentation depth is not" +
+                    " zero: " +
+                    "there is a bug! Current depth: " + dbStream.getCurrentDepth());
+        }
+
+        // Generate the string from the stream.
+        return dbStream.write();
+    }
+
+    private void visit(@NotNull IBodyElement b) throws XMLStreamException {
+        // As the XWPF hierarchy is not made for visitors, and as it is not possible to alter it,
+        // use reflection...
+        if (b instanceof XWPFParagraph) {
+            visitParagraph((XWPFParagraph) b);
+        } else if (b instanceof XWPFTable) {
+            visitTable((XWPFTable) b);
+        } else {
+            System.out.println(b.getElementType());
+            throw new RuntimeException("An element of type " + b.getClass().getName() + " has not" +
+                    " been caught " +
+                    "by a visit() method.");
+        }
+    }
+
+    /**
+     * Dispatcher code, when information available in the body element is not enough.
+     **/
+
+    private void visitParagraph(@NotNull XWPFParagraph p) throws XMLStreamException {
+        // Only deal with paragraphs having some content (i.e. at least one non-empty run).
+        if (p.getRuns().size() == 0) {
+            return;
+        }
+
+        // Ignore empty paragraphs, i.e. no text and no pictures.
+        if (p.getRuns().stream().allMatch(r -> r.text().length() == 0 && r.getEmbeddedPictures().size() == 0)) {
+            return;
+        }
+
+        // Once a paragraph has found its visitor, return from this function. This way, if a
+        // paragraph only
+        // partially matches the conditions for a visitor, it can be handled by the more generic
+        // ones.
+        // (Just for robustness and ability to import external Word documents into the system.)
+
+        // First, handle numbered paragraphs. They mostly indicate lists (or this is an external
+        // document, and no
+        // assumption should be made -- it could very well be a heading).
+        if (p.getNumID() != null &&
+                (p.getStyleID() == null || p.getStyleID().equals("Normal") || p.getStyleID().equals("ListParagraph"))) {
+            visitListItem(p);
+            return;
+        }
+
+        if (isWithinList) { // Should not really happen, though.
+            throw new XMLStreamException("Assertion error: paragraph detected as within list " +
+                    "while it has no numbering.");
+        }
+
+        // Then, dispatch along the style. Captions and abstracts have special treatment (eaten
+        // by the relevant tags,
+        // which then registers the ones that have already been output).
+        if (p.getStyleID() == null || p.getStyleID().equals("")) {
+            visitNormalParagraph(p);
+            return;
+        }
+
+        if (p.getStyleID().equals("Caption")) {
+            int pos = doc.getPosOfParagraph(p);
+            if (!captionPositions.contains(pos)) {
+                backwardCaptionPositions.add(pos);
+            }
+            // Captions are generated along with images. If the image is found first,
+            // captionPositions is filled in
+            // the corresponding visitor.
+            // Otherwise, this visitor marks the paragraph in backwardCaptionPositions so that
+            // the next paragraph knows
+            // there is a caption before the image.
+            return;
+        }
+
+        // Ignore paragraphs that are already dealt with within the headers.
+        if (p.getStyleID().equals("Abstract")) {
+            // Abstracts are generated in the header, which fills abstractPositions.
+            if (!abstractPositions.contains(doc.getPosOfParagraph(p))) {
+                throw new XMLStreamException("Abstract not expected.");
+            }
+            return;
+        }
+
+        if (p.getStyleID().equals("Author")) {
+            // TODO: check this paragraph has been output, like abstracts?
+            return;
+        }
+
+        switch (p.getStyleID()) {
+            case "Title", "Titlebook" -> visitDocumentTitle(p);
+            case "Heading1", "Heading2", "Heading3", "Heading4", "Heading5", "Heading6",
+                    "Heading7", "Heading8", "Heading9" ->
+                    visitSectionTitle(p);
+            case "Titlepart" -> visitPartTitle(p);
+            case "Titlechapter" -> visitChapterTitle(p);
+            case "Editor" -> visitAuthor(p);
+            case "ProgramListing", "Screen", "Synopsis" -> visitPreformatted(p);
+            case "DefinitionListTitle" -> visitDefinitionListTitle(p);
+            case "DefinitionListItem" -> visitDefinitionListItem(p);
+            case "VariableListTitle" -> visitVariableListTitle(p);
+            case "VariableListItem" ->
+                    visitVariableListItem(p); // The case with no style ID is already handled.
+            case "Normal", "FootnoteText" -> visitNormalParagraph(p);
+            case "ListParagraph" ->
+                    throw new XMLStreamException("Found a list paragraph that has not been " +
+                            "recognised as a list.");
+            case "Caution", "Important", "Note", "Tip", "Warning" -> visitAdmonition(p);
+            default -> {
+                // TODO: Don't panic when seeing something new, unless a command-line parameter
+                //  says to (much more convenient for development!). For users, better to have a
+                //  para than a crash.
+                System.err.println("Found a paragraph with an unsupported style: " + p.getStyleID());
+                throw new XMLStreamException("Found a paragraph with an unsupported style: " + p.getStyleID());
+            }
+        }
+
+        // The last switch returned from the function.
+    }
+
     private MetaDataParagraphs gatherAbstractFollowing(@NotNull XWPFParagraph p) {
         int pos = p.getDocument().getPosOfParagraph(p);
         List<XWPFParagraph> paragraphs = p.getDocument().getParagraphs();
@@ -296,7 +331,8 @@ public class DocxInputImpl {
             return metadata;
         }
 
-        // Abstract is made of a sequence of paragraphs with the Abstract style, which implies that there is
+        // Abstract is made of a sequence of paragraphs with the Abstract style, which implies
+        // that there is
         // no paragraph of another style in between.
         boolean foundRealAbstract = false;
         for (int i = pos + 1; i < paragraphs.size(); ++i) {
@@ -342,16 +378,12 @@ public class DocxInputImpl {
             }
 
             // Nothing else should follow.
-            if (! recognised) {
+            if (!recognised) {
                 break;
             }
         }
 
         return metadata;
-    }
-
-    private static String dateToISO(Date date) {
-        return new SimpleDateFormat("yyyy-MM-dd").format(date);
     }
 
     private void visitTitle(@NotNull XWPFParagraph p) throws XMLStreamException {
@@ -443,7 +475,7 @@ public class DocxInputImpl {
     private void visitTitleAndAbstract(@NotNull XWPFParagraph p) throws XMLStreamException {
         MetaDataParagraphs metadata = gatherAbstractFollowing(p);
 
-        if (! metadata.hasMetaData()) {
+        if (!metadata.hasMetaData()) {
             dbStream.openParagraphTag("title");
             visitRuns(p.getRuns());
             dbStream.closeParagraphTag();
@@ -477,10 +509,11 @@ public class DocxInputImpl {
         isWithinPart = true;
         dbStream.openBlockTag("part");
 
-        // Major difference with visitTitleAndAbstract: the abstract is output as a partintro, outside the info container.
+        // Major difference with visitTitleAndAbstract: the abstract is output as a partintro,
+        // outside the info container.
         MetaDataParagraphs metadata = gatherAbstractFollowing(p);
 
-        if (! metadata.hasMetaDataExceptAbstract()) {
+        if (!metadata.hasMetaDataExceptAbstract()) {
             dbStream.openParagraphTag("title");
             visitRuns(p.getRuns());
             dbStream.closeParagraphTag();
@@ -499,16 +532,18 @@ public class DocxInputImpl {
 
         if (metadata.abstractParas.size() > 0) {
             dbStream.openBlockTag("partintro");
-            for (XWPFParagraph ap: metadata.abstractParas) {
+            for (XWPFParagraph ap : metadata.abstractParas) {
                 visitNormalParagraph(ap);
-                abstractPositions.add(doc.getPosOfParagraph(ap)); // TODO: should be done by gatherAbstractFollowing?
+                abstractPositions.add(doc.getPosOfParagraph(ap)); // TODO: should be done by
+                // gatherAbstractFollowing?
             }
             dbStream.closeBlockTag();
         }
     }
 
     private void visitDocumentTitle(@NotNull XWPFParagraph p) throws XMLStreamException {
-        // Called only once, at tbe beginning of the document. This function is thus also responsible for the main
+        // Called only once, at tbe beginning of the document. This function is thus also
+        // responsible for the main
         // <db:info> tag.
         currentSectionLevel = 0;
         visitTitleAndAbstract(p);
@@ -534,8 +569,10 @@ public class DocxInputImpl {
         // Pop sections until the current level is reached.
         int level = Integer.parseInt(p.getStyleID().replace("Heading", ""));
         if (level > currentSectionLevel + 1) {
-            System.err.println("A section of level " + level + " was found within a section of level " +
-                    currentSectionLevel + " (for instance, a subsubsection within a section): it seems there is " +
+            System.err.println("A section of level " + level + " was found within a section of " +
+                    "level " +
+                    currentSectionLevel + " (for instance, a subsubsection within a section): it " +
+                    "seems there is " +
                     "a bad of use section levels in the input document. " +
                     "You could get a bad output (invalid XML and/or exceptions) in some cases.");
         }
@@ -553,20 +590,25 @@ public class DocxInputImpl {
         visitRuns(p.getRuns());
         dbStream.closeParagraphTag(); // </db:title>
 
-        // TODO: Implement a check on the currentSectionLevel and the level (in case someone missed a level in the headings).
+        // TODO: Implement a check on the currentSectionLevel and the level (in case someone
+        //  missed a level in the headings).
     }
 
-    /** Paragraphs. **/
+    /**
+     * Paragraphs.
+     **/
 
     private void visitNormalParagraph(@NotNull XWPFParagraph p) throws XMLStreamException {
         if (p.getRuns().stream().allMatch(r -> r.getEmbeddedPictures().size() >= 1)) {
             // Special case: only images in this paragraph.
 
             if (p.getRuns().stream().anyMatch(r -> r.getEmbeddedPictures().size() > 1)) {
-                throw new XMLStreamException("Not yet implemented: multiple images per run."); // TODO: Several pictures per run? Seems unlikely.
+                throw new XMLStreamException("Not yet implemented: multiple images per run."); //
+                // TODO: Several pictures per run? Seems unlikely.
             }
 
-            // This paragraph only contains an image, no need for a <db:para>, but rather a <db:mediaobject> or
+            // This paragraph only contains an image, no need for a <db:para>, but rather a
+            // <db:mediaobject> or
             // a <db:figure>.
             // TODO: to be adapted if there are multiple pictures per run!
             isDisplayedFigure = p.getRuns().size() == 1;
@@ -587,7 +629,8 @@ public class DocxInputImpl {
             visitRuns(p.getRuns());
 
             // Write the caption (if it corresponds to the next paragraph).
-            if (! hasCaptionBefore && ! isLastParagraph(p) && hasFollowingParagraphWithStyle(p, "Caption")) {
+            if (!hasCaptionBefore && !isLastParagraph(p) && hasFollowingParagraphWithStyle(p,
+                    "Caption")) {
                 dbStream.openParagraphTag("caption");
                 visitRuns(doc.getParagraphs().get(pos + 1).getRuns());
                 dbStream.closeParagraphTag(); // </db:caption>
@@ -611,9 +654,12 @@ public class DocxInputImpl {
     }
 
     private void visitPreformatted(@NotNull XWPFParagraph p) throws XMLStreamException {
-        // The first paragraph of a program listing can give metadata about the listing that comes after.
-        // Conditions: the whole paragraph must be in bold; the next paragraph must have the same style.
-        Stream<XWPFRun> usefulRuns = p.getRuns().stream().filter(r -> r.text().replaceAll("\\s+", "").length() > 0);
+        // The first paragraph of a program listing can give metadata about the listing that
+        // comes after.
+        // Conditions: the whole paragraph must be in bold; the next paragraph must have the same
+        // style.
+        Stream<XWPFRun> usefulRuns = p.getRuns().stream().filter(r -> r.text().replaceAll("\\s+",
+                "").length() > 0);
         if (usefulRuns.allMatch(XWPFRun::isBold)) {
             int pos = p.getDocument().getPosOfParagraph(p);
             List<XWPFParagraph> lp = p.getDocument().getParagraphs();
@@ -624,15 +670,18 @@ public class DocxInputImpl {
             }
         }
 
-        // Indentation must NOT be increased here: the content of such a tag, in particular the line feeds, must be
+        // Indentation must NOT be increased here: the content of such a tag, in particular the
+        // line feeds, must be
         // respected to the letter.
 
         if (preformattedMetadata != null) {
             if (preformattedMetadata.getType() != DocBookBlock.styleIDToBlock.get(p.getStyleID())) {
-                throw new XMLStreamException("Preformatted metadata style does not correspond to the style of the next paragraph.");
+                throw new XMLStreamException("Preformatted metadata style does not correspond to " +
+                        "the style of the next paragraph.");
             }
 
-            dbStream.openParagraphTag(DocBookBlock.styleIDToDocBookTag.get(p.getStyleID()), preformattedMetadata.toMap());
+            dbStream.openParagraphTag(DocBookBlock.styleIDToDocBookTag.get(p.getStyleID()),
+                    preformattedMetadata.toMap());
             preformattedMetadata = null;
         } else {
             dbStream.openParagraphTag(DocBookBlock.styleIDToDocBookTag.get(p.getStyleID()));
@@ -643,8 +692,9 @@ public class DocxInputImpl {
         dbStream.closeParagraphTag(); // </db:programlisting> or something else.
     }
 
-    private void visitPictureRun(@NotNull XWPFRun r, @Nullable @SuppressWarnings("unused") XWPFRun prevRun,
-                                 @SuppressWarnings("unused") boolean isLastRun) throws XMLStreamException {
+    private void visitPictureRun(@NotNull XWPFRun r,
+            @Nullable @SuppressWarnings("unused") XWPFRun prevRun,
+            @SuppressWarnings("unused") boolean isLastRun) throws XMLStreamException {
         // TODO: saner implementation based on
         //  https://github.com/apache/tika/blob/master/tika-parsers/src/main/java/org/apache/tika/parser/microsoft/ooxml/XWPFWordExtractorDecorator.java#L361?
         // TODO: the current implementation might miss some images, it seems:
@@ -664,8 +714,9 @@ public class DocxInputImpl {
         String imageName = picture.getPictureData().getFileName();
         images.put(imageName, image);
 
-        // Do the XML part: output a <db:inlinemediaobject> if there is no block-level equivalent, then imageobject.
-        if (! isDisplayedFigure) {
+        // Do the XML part: output a <db:inlinemediaobject> if there is no block-level
+        // equivalent, then imageobject.
+        if (!isDisplayedFigure) {
             dbStream.openBlockInlineTag("inlinemediaobject");
         }
 
@@ -679,7 +730,8 @@ public class DocxInputImpl {
         ));
         if (isDisplayedFigure) {
             XWPFParagraph parent = ((XWPFParagraph) r.getParent());
-            String dbAlign = DocBookAlignment.paragraphAlignmentToDocBookAttribute(parent.getAlignment());
+            String dbAlign =
+                    DocBookAlignment.paragraphAlignmentToDocBookAttribute(parent.getAlignment());
             if (dbAlign.length() > 0) {
                 attrs.put("align", dbAlign);
             }
@@ -687,7 +739,7 @@ public class DocxInputImpl {
         dbStream.emptyBlockTag("imagedata", attrs);
 
         dbStream.closeBlockTag(); // </db:imageobject>
-        if (! isDisplayedFigure) {
+        if (!isDisplayedFigure) {
             dbStream.closeBlockInlineTag(); // </db:inlinemediaobject>
         }
     }
@@ -712,15 +764,17 @@ public class DocxInputImpl {
                 close = true;
             } else { // Check on the next paragraph.
                 XWPFParagraph nextP = paragraphs.get(pos + 1);
-                String targetStyle = DocBookBlock.tagToStyleID(Level.qnameFromAdmonition(isWithinAdmonition));
+                String targetStyle =
+                        DocBookBlock.tagToStyleID(Level.qnameFromAdmonition(isWithinAdmonition));
 
                 if (nextP.getStyleID().equals(targetStyle)) { // Same style.
                     close = false;
                 } else if (pos <= paragraphs.size() - 2) {
-                    // Has at least two paragraphs after: if it's a title and a figure (with the admonition style),
+                    // Has at least two paragraphs after: if it's a title and a figure (with the
+                    // admonition style),
                     // the admonition does not stop here.
                     XWPFParagraph nextNextP = paragraphs.get(pos + 2);
-                    close = ! nextNextP.getStyleID().equals(targetStyle);
+                    close = !nextNextP.getStyleID().equals(targetStyle);
                 } else { // Not a single case matches, close the admonition.
                     close = true;
                 }
@@ -733,7 +787,9 @@ public class DocxInputImpl {
         }
     }
 
-    /** Lists (implemented as paragraphs with a specific style and a numbering attribute). **/
+    /**
+     * Lists (implemented as paragraphs with a specific style and a numbering attribute).
+     **/
 
     private boolean isListOrdered(@NotNull XWPFParagraph p) {
         // What would be best to write...
@@ -741,8 +797,9 @@ public class DocxInputImpl {
 //                isOrderedList = p.getNumFmt()...;
 //            }
 
-        // Instead, we have to dig deeper (have a look at what is done in DocxOutputImpl::createNumbering).
-        int depth = p.getNumIlvl() == null? 0 : p.getNumIlvl().intValue();
+        // Instead, we have to dig deeper (have a look at what is done in
+        // DocxOutputImpl::createNumbering).
+        int depth = p.getNumIlvl() == null ? 0 : p.getNumIlvl().intValue();
 
         XWPFNumbering numbering = p.getDocument().getNumbering();
         BigInteger abstractNumID = numbering.getAbstractNumID(p.getNumID());
@@ -751,48 +808,62 @@ public class DocxInputImpl {
 
         if (ctAbstractNum.getLvlList().get(depth).getNumFmt() != null) {
             CTNumFmt ctNumFmt = ctAbstractNum.getLvlList().get(depth).getNumFmt();
-            return ! ctNumFmt.getVal().equals(STNumberFormat.BULLET);
+            return !ctNumFmt.getVal().equals(STNumberFormat.BULLET);
         } else {
             return false;
         }
     }
 
     private void visitListItem(@NotNull XWPFParagraph p) throws XMLStreamException {
-        int depth = p.getNumIlvl() == null? 0 : p.getNumIlvl().intValue(); // 0: one list to close; 1: two lists to close; etc.
+        int depth = p.getNumIlvl() == null ? 0 : p.getNumIlvl().intValue(); // 0: one list to
+        // close; 1: two lists to close; etc.
         Optional<XWPFParagraph> prevPara;
         Optional<XWPFParagraph> nextPara;
         {
             int pos = p.getDocument().getPosOfParagraph(p);
             List<XWPFParagraph> paragraphs = p.getDocument().getParagraphs();
             prevPara = (pos > 0) ? Optional.of(paragraphs.get(pos - 1)) : Optional.empty();
-            nextPara = (pos + 1) < paragraphs.size() ? Optional.of(paragraphs.get(pos + 1)) : Optional.empty();
+            nextPara = (pos + 1) < paragraphs.size() ? Optional.of(paragraphs.get(pos + 1)) :
+                    Optional.empty();
         }
 
-        if (depth > 0 && ! isWithinList) {
-            throw new XMLStreamException("Assertion error: not at the first level of a list that has never started.");
+        if (depth > 0 && !isWithinList) {
+            throw new XMLStreamException("Assertion error: not at the first level of a list that " +
+                    "has never started.");
         }
 
-        { // At the beginning of the list (i.e. if not within a list right now), write the begin tag.
+        { // At the beginning of the list (i.e. if not within a list right now), write the begin
+            // tag.
             boolean openList = false;
-            if (prevPara.isEmpty()) { // The first paragraph of the document is already within a list: open one.
+            if (prevPara.isEmpty()) { // The first paragraph of the document is already within a
+                // list: open one.
                 openList = true;
-            } else { // Otherwise, this paragraph has a previous one; check numbering differences between them.
-                if (prevPara.get().getNumID() == null) { // Previous paragraph was not within a list: open one.
+            } else { // Otherwise, this paragraph has a previous one; check numbering differences
+                // between them.
+                if (prevPara.get().getNumID() == null) { // Previous paragraph was not within a
+                    // list: open one.
                     openList = true;
-                } else { // Previous paragraph was already in a list: is there any meaningful difference between them?
+                } else { // Previous paragraph was already in a list: is there any meaningful
+                    // difference between them?
                     // Two things to compare: the numbering and the depth.
-                    int prevDepth = prevPara.get().getNumIlvl() == null ? 0 : prevPara.get().getNumIlvl().intValue();
+                    int prevDepth = prevPara.get().getNumIlvl() == null ? 0 :
+                            prevPara.get().getNumIlvl().intValue();
 
-                    if (! p.getNumID().equals(prevPara.get().getNumID())) { // Different numbering, hence different list: open one.
+                    if (!p.getNumID().equals(prevPara.get().getNumID())) { // Different
+                        // numbering, hence different list: open one.
                         openList = true;
                     } else if (depth > prevDepth) { // Getting deeper in lists: open one.
                         openList = true;
 
-                        // When increasing depth, only allow one level (otherwise, will get troubles when
-                        // closing lists). Another solution would be to keep an internal level, but round-tripping
-                        // would not be possible (this strange pattern in list depths would be lost).
+                        // When increasing depth, only allow one level (otherwise, will get
+                        // troubles when
+                        // closing lists). Another solution would be to keep an internal level,
+                        // but round-tripping
+                        // would not be possible (this strange pattern in list depths would be
+                        // lost).
                         if (depth != prevDepth + 1) {
-                            throw new XMLStreamException("Difference in list depth larger than one: did you indent too much at some point?");
+                            throw new XMLStreamException("Difference in list depth larger than " +
+                                    "one: did you indent too much at some point?");
                         }
                     }
                 }
@@ -808,26 +879,32 @@ public class DocxInputImpl {
         dbStream.openBlockTag("listitem");
         visitNormalParagraph(p);
 
-        // Deal with the last paragraph of the document: end the list item and all opened lists if required.
+        // Deal with the last paragraph of the document: end the list item and all opened lists
+        // if required.
         int nCloses = 0;
         if (nextPara.isEmpty()) {
-            // Close the opened lists. If depth is 0, just end the current list item and the list. Otherwise,
+            // Close the opened lists. If depth is 0, just end the current list item and the list
+            // . Otherwise,
             // also close the containing lists.
             nCloses = 2; // </db:listitem>, then </db:orderedlist> or </db:itemizedlist>.
             isWithinList = false;
         }
         // There is a next paragraph, and things can get very complicated.
         else {
-            int nextDepth = nextPara.get().getNumIlvl() == null? 0 : nextPara.get().getNumIlvl().intValue();
+            int nextDepth = nextPara.get().getNumIlvl() == null ? 0 :
+                    nextPara.get().getNumIlvl().intValue();
 
             // Should this list/list item be closed? That's gory.
-            if (! p.getNumID().equals(nextPara.get().getNumID())) { // Is the next paragraph not in a list (its numbering is null)
+            if (!p.getNumID().equals(nextPara.get().getNumID())) { // Is the next paragraph not
+                // in a list (its numbering is null)
                 // or in a different list (indicated by a different numbering)? Close it.
-                nCloses = 2 * (depth + 1); // </db:listitem>, then </db:orderedlist> or </db:itemizedlist>, for each level.
+                nCloses = 2 * (depth + 1); // </db:listitem>, then </db:orderedlist> or
+                // </db:itemizedlist>, for each level.
                 isWithinList = false;
             } else if (nextDepth <= depth) { // Two cases:
                 // - If staying at the same level, close this item, and that's it.
-                // - Going less deep: must close a few things (a list item and a list per difference in depth, plus a list item).
+                // - Going less deep: must close a few things (a list item and a list per
+                // difference in depth, plus a list item).
                 nCloses = 2 * (depth - nextDepth) + 1;
             }
         }
@@ -838,18 +915,16 @@ public class DocxInputImpl {
         }
     }
 
-    /** Definition lists. **/
-
-    private static String toString(@NotNull List<XWPFRun> runs) {
-        return runs.stream().map(XWPFRun::text).collect(Collectors.joining(""));
-    }
-
     private void visitDefinitionListTitle(@NotNull XWPFParagraph p) throws XMLStreamException {
         // If a list is not being treated, initialise what is required.
-        // currentDefinitionListTitles: store all the titles that have been found so far, so that the we can check
-        // for each item whether it still uses exactly the same segtitle; otherwise, report an error.
-        // currentDefinitionListItemNumber: indicates the position within the elements of a segmented list.
-        // currentDefinitionListItemSegmentNumber: current position within an item of a segmented list (i.e. a segment).
+        // currentDefinitionListTitles: store all the titles that have been found so far, so that
+        // the we can check
+        // for each item whether it still uses exactly the same segtitle; otherwise, report an
+        // error.
+        // currentDefinitionListItemNumber: indicates the position within the elements of a
+        // segmented list.
+        // currentDefinitionListItemSegmentNumber: current position within an item of a segmented
+        // list (i.e. a segment).
         if (currentDefinitionListTitles == null) {
             currentDefinitionListItemNumber = 0;
             currentDefinitionListItemSegmentNumber = 0;
@@ -872,7 +947,8 @@ public class DocxInputImpl {
             // Never seen before: add to the list of titles.
             currentDefinitionListTitles.add(p);
         } else {
-            // Already seen: either this is normal (i.e. at the right place) or completely unexpected (e.g., one title
+            // Already seen: either this is normal (i.e. at the right place) or completely
+            // unexpected (e.g., one title
             // has been skipped in the input document).
             if (position == 0) {
                 // New item.
@@ -880,7 +956,8 @@ public class DocxInputImpl {
                 currentDefinitionListItemSegmentNumber = 0;
             } else if (position != currentDefinitionListItemSegmentNumber) {
                 // Error!
-                throw new XMLStreamException("Mismatch within a definition list: expected to have " +
+                throw new XMLStreamException("Mismatch within a definition list: expected to have" +
+                        " " +
                         "a title '" + toString(currentDefinitionListTitles.get(position).getRuns()) + "', " +
                         "but got '" + thisTitle + "' instead.");
             }
@@ -891,7 +968,8 @@ public class DocxInputImpl {
 
     private void visitDefinitionListItem(@NotNull XWPFParagraph p) throws XMLStreamException {
         if (currentDefinitionListTitles == null) {
-            throw new XMLStreamException("Unexpected definition list item; at least one title line must be present " +
+            throw new XMLStreamException("Unexpected definition list item; at least one title " +
+                    "line must be present " +
                     "beforehand.");
         }
 
@@ -905,8 +983,9 @@ public class DocxInputImpl {
 
         currentDefinitionListItemSegmentNumber += 1;
 
-        // If the next item is no more within a segmented list, serialise it all and forbid adding elements to the list.
-        if (isLastParagraph(p) || ! hasFollowingParagraphWithStyle(p, "DefinitionListTitle")) {
+        // If the next item is no more within a segmented list, serialise it all and forbid
+        // adding elements to the list.
+        if (isLastParagraph(p) || !hasFollowingParagraphWithStyle(p, "DefinitionListTitle")) {
             serialiseDefinitionList();
 
             currentDefinitionListItemNumber = -1;
@@ -917,19 +996,20 @@ public class DocxInputImpl {
     }
 
     private void serialiseDefinitionList() throws XMLStreamException {
-        // Once the whole definition list is built in currentDefinitionListTitles and currentDefinitionListContents,
+        // Once the whole definition list is built in currentDefinitionListTitles and
+        // currentDefinitionListContents,
         // serialise it as DocBook.
         dbStream.openBlockTag("segmentedlist");
 
-        for (XWPFParagraph title: currentDefinitionListTitles) {
+        for (XWPFParagraph title : currentDefinitionListTitles) {
             dbStream.openParagraphTag("segtitle");
             visitRuns(title.getRuns());
             dbStream.closeParagraphTag();
         }
 
-        for (List<XWPFParagraph> item: currentDefinitionListContents) {
+        for (List<XWPFParagraph> item : currentDefinitionListContents) {
             dbStream.openBlockTag("seglistitem");
-            for (XWPFParagraph value: item) {
+            for (XWPFParagraph value : item) {
                 dbStream.openParagraphTag("seg");
                 visitRuns(value.getRuns());
                 dbStream.closeParagraphTag();
@@ -940,15 +1020,17 @@ public class DocxInputImpl {
         dbStream.closeBlockTag(); // </db:segmentedlist>
     }
 
-    /** Variable lists. **/
+    /**
+     * Variable lists.
+     **/
 
     private void visitVariableListTitle(@NotNull XWPFParagraph p) throws XMLStreamException {
-        if (! isWithinVariableList) {
+        if (!isWithinVariableList) {
             dbStream.openBlockTag("variablelist");
             isWithinVariableList = true;
         }
 
-        if (! isWithinVariableListEntry) {
+        if (!isWithinVariableListEntry) {
             dbStream.openBlockTag("varlistentry");
             isWithinVariableListEntry = true;
         }
@@ -959,11 +1041,12 @@ public class DocxInputImpl {
     }
 
     private void visitVariableListItem(@NotNull XWPFParagraph p) throws XMLStreamException {
-        if (! isWithinVariableList) {
-            throw new XMLStreamException("Unexpected variable list item: must have a variable list title beforehand.");
+        if (!isWithinVariableList) {
+            throw new XMLStreamException("Unexpected variable list item: must have a variable " +
+                    "list title beforehand.");
         }
 
-        if (! isWithinVariableListEntry) {
+        if (!isWithinVariableListEntry) {
             throw new XMLStreamException("Inconsistent state when dealing with a variable list.");
         }
 
@@ -977,7 +1060,7 @@ public class DocxInputImpl {
         dbStream.closeBlockTag(); // </db:varlistentry>
 
         // If the next item is no more within a variable list, end the fight.
-        if (isLastParagraph(p) || ! hasFollowingParagraphWithStyle(p, "VariableListTitle")) {
+        if (isLastParagraph(p) || !hasFollowingParagraphWithStyle(p, "VariableListTitle")) {
             dbStream.closeBlockTag(); // </db:variablelist>
             isWithinVariableList = false;
         }
@@ -992,31 +1075,36 @@ public class DocxInputImpl {
         return p.getStyleID() != null && p.getStyleID().equals(styleID);
     }
 
-    private boolean hasPreviousParagraphWithStyle(@NotNull XWPFParagraph p, @NotNull String styleID) {
+    private boolean hasPreviousParagraphWithStyle(@NotNull XWPFParagraph p,
+            @NotNull String styleID) {
         int pos = doc.getPosOfParagraph(p);
         return hasParagraphWithStyle(doc.getParagraphs().get(pos - 1), styleID);
     }
 
-    private boolean hasFollowingParagraphWithStyle(@NotNull XWPFParagraph p, @NotNull String styleID) {
+    private boolean hasFollowingParagraphWithStyle(@NotNull XWPFParagraph p,
+            @NotNull String styleID) {
         int pos = doc.getPosOfParagraph(p);
 
         if (isLastParagraph(p)) {
-            throw new AssertionError("Called hasFollowingParagraphWithStyle when this is the last paragraph; always call isLastParagraph first");
+            throw new AssertionError("Called hasFollowingParagraphWithStyle when this is the last" +
+                    " paragraph; always call isLastParagraph first");
         }
 
         return hasParagraphWithStyle(doc.getParagraphs().get(pos + 1), styleID);
     }
 
-    /** Tables. **/
+    /**
+     * Tables.
+     **/
 
     private void visitTable(@NotNull XWPFTable t) throws XMLStreamException {
         dbStream.openBlockTag("informaltable");
 
         // Output the table row per row, in HTML format.
-        for (XWPFTableRow row: t.getRows()) {
+        for (XWPFTableRow row : t.getRows()) {
             dbStream.openBlockTag("tr");
 
-            for (XWPFTableCell cell: row.getTableCells()) {
+            for (XWPFTableCell cell : row.getTableCells()) {
                 // Special case: an empty cell. One paragraph with zero runs.
                 if (cell.getParagraphs().size() == 0 ||
                         (cell.getParagraphs().size() == 1 && cell.getParagraphs().get(0).getRuns().size() == 0)) {
@@ -1026,7 +1114,7 @@ public class DocxInputImpl {
 
                 // Normal case.
                 dbStream.openBlockTag("td");
-                for (XWPFParagraph p: cell.getParagraphs()){
+                for (XWPFParagraph p : cell.getParagraphs()) {
                     visitParagraph(p);
                 }
                 dbStream.closeBlockTag(); // </db:td>
@@ -1038,7 +1126,9 @@ public class DocxInputImpl {
         dbStream.closeBlockTag(); // </db:informaltable>
     }
 
-    /** Inline elements (runs, in Word parlance). **/
+    /**
+     * Inline elements (runs, in Word parlance).
+     **/
 
     private void visitRuns(@NotNull List<XWPFRun> runs) throws XMLStreamException {
         currentFormatting.addLast(new FormattingStack());
@@ -1047,13 +1137,13 @@ public class DocxInputImpl {
         for (Iterator<XWPFRun> iterator = runs.iterator(); iterator.hasNext(); ) {
             XWPFRun r = iterator.next();
             if (r instanceof XWPFHyperlinkRun) {
-                visitHyperlinkRun((XWPFHyperlinkRun) r, prevRun, ! iterator.hasNext());
+                visitHyperlinkRun((XWPFHyperlinkRun) r, prevRun, !iterator.hasNext());
             } else if (r.getEmbeddedPictures().size() >= 1) {
-                visitPictureRun(r, prevRun, ! iterator.hasNext());
+                visitPictureRun(r, prevRun, !iterator.hasNext());
             } else if (r.getCTR().getFootnoteReferenceList().size() > 0) {
-                visitFootNote(r, prevRun, ! iterator.hasNext());
+                visitFootNote(r, prevRun, !iterator.hasNext());
             } else {
-                visitRun(r, prevRun, ! iterator.hasNext());
+                visitRun(r, prevRun, !iterator.hasNext());
             }
             prevRun = r;
         }
@@ -1061,12 +1151,14 @@ public class DocxInputImpl {
         currentFormatting.removeLast();
     }
 
-    private void visitFootNote(@NotNull XWPFRun run, @Nullable XWPFRun prevRun, boolean isLastRun) throws XMLStreamException {
+    private void visitFootNote(@NotNull XWPFRun run, @Nullable XWPFRun prevRun,
+            boolean isLastRun) throws XMLStreamException {
         BigInteger soughtId = run.getCTR().getFootnoteReferenceList().get(0).getId();
-        List<XWPFFootnote> lfn = doc.getFootnotes().stream().filter(f -> f.getId().equals(soughtId)).toList();
-        for (XWPFFootnote fn: lfn) {
+        List<XWPFFootnote> lfn =
+                doc.getFootnotes().stream().filter(f -> f.getId().equals(soughtId)).toList();
+        for (XWPFFootnote fn : lfn) {
             dbStream.openBlockInlineTag("footnote");
-            for (IBodyElement b: fn.getBodyElements()) {
+            for (IBodyElement b : fn.getBodyElements()) {
                 visit(b);
             }
             dbStream.closeBlockInlineTag();
@@ -1075,11 +1167,12 @@ public class DocxInputImpl {
 
     private void visitRun(@NotNull XWPFRun run, @Nullable XWPFRun prevRun, boolean isLastRun) throws XMLStreamException {
         // Deal with changes of formattings between the previous run and the current one.
-        Tuple<Deque<DocBookFormatting>, Deque<DocBookFormatting>> formattings = currentFormatting.getLast().processRun(run, prevRun);
+        Tuple<Deque<DocBookFormatting>, Deque<DocBookFormatting>> formattings =
+                currentFormatting.getLast().processRun(run, prevRun);
         for (DocBookFormatting ignored : formattings.second) {
             dbStream.closeInlineTag();
         }
-        for (DocBookFormatting f: formattings.first) {
+        for (DocBookFormatting f : formattings.first) {
             // Emphasis and its variants.
             if (f == DocBookFormatting.EMPHASIS) {
                 // Replaceable special case.
@@ -1106,19 +1199,23 @@ public class DocxInputImpl {
 
         // Close the tags at the end of the paragraph.
         if (isLastRun && currentFormatting.getLast().formattings().size() > 0) {
-            for (DocBookFormatting ignored: currentFormatting.getLast().formattings()) {
+            for (DocBookFormatting ignored : currentFormatting.getLast().formattings()) {
                 dbStream.closeInlineTag();
             }
         }
     }
 
-    private void visitHyperlinkRun(@NotNull XWPFHyperlinkRun r, @Nullable XWPFRun prevRun, boolean isLastRun)
+    private void visitHyperlinkRun(@NotNull XWPFHyperlinkRun r, @Nullable XWPFRun prevRun,
+            boolean isLastRun)
             throws XMLStreamException {
-        // Code symmetric to link generation: the hyperlink is maybe stored in another package part (main text,
+        // Code symmetric to link generation: the hyperlink is maybe stored in another package
+        // part (main text,
         // footer, and footnotes are in three different packages).
-        String url = r.getParent().getPart().getPackagePart().getRelationship(r.getHyperlinkId()).getTargetURI().toString();
+        String url =
+                r.getParent().getPart().getPackagePart().getRelationship(r.getHyperlinkId()).getTargetURI().toString();
         dbStream.openInlineTag("link", Map.of("xlink:href", url));
-        visitRun(r, prevRun, isLastRun); // Text and formatting attributes are inherited for XWPFHyperlinkRun.
+        visitRun(r, prevRun, isLastRun); // Text and formatting attributes are inherited for
+        // XWPFHyperlinkRun.
         dbStream.closeInlineTag();
     }
 }

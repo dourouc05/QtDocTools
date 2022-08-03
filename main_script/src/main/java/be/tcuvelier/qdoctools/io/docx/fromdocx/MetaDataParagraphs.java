@@ -10,21 +10,6 @@ import java.util.List;
 public class MetaDataParagraphs {
     // Store metadata about a document (except its title) as a list of raw paragraphs.
 
-    public static class Contributor {
-        public ContributorType type;
-        public String pseudonym;
-
-        public String name; // Only if no specific information is available (i.e. no firstName and no familyName).
-        public String firstName;
-        public String familyName;
-
-        public String mainUri;
-        public String websiteUri;
-        public String blogUri;
-        public String googlePlusgUri;
-        public String linkedInUri;
-    }
-
     public XWPFParagraph datePara; // TODO: useless?
     public Date date;
     public XWPFParagraph pubdatePara; // TODO: useless?
@@ -43,6 +28,22 @@ public class MetaDataParagraphs {
     }
 
     public boolean hasMetaDataExceptAbstract() {
-        return ! contributorParas.isEmpty() && datePara != null && pubdatePara != null;
+        return !contributorParas.isEmpty() && datePara != null && pubdatePara != null;
+    }
+
+    public static class Contributor {
+        public ContributorType type;
+        public String pseudonym;
+
+        public String name; // Only if no specific information is available (i.e. no firstName
+        // and no familyName).
+        public String firstName;
+        public String familyName;
+
+        public String mainUri;
+        public String websiteUri;
+        public String blogUri;
+        public String googlePlusgUri;
+        public String linkedInUri;
     }
 }

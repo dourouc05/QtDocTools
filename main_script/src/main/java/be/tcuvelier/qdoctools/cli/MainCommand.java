@@ -18,7 +18,9 @@ public class MainCommand implements Callable<Void> {
 
     @Override
     public Void call() {
-        // Using a subcommand is required, this command is just an umbrella and a place to store global things.
-        throw new CommandLine.ParameterException(spec.commandLine(), "Missing required subcommand\n");
+        // Using a subcommand is required, this command is just an umbrella and a place to store
+        // global things.
+        throw new CommandLine.ParameterException(spec.commandLine(), "Missing required " +
+                "subcommand\n");
     }
 }
