@@ -22,11 +22,11 @@ import picocli.CommandLine;
  * - After proofreading: metadata gets lost
  * - After a Qt update: get changes from the update, update an older translation (and indicate
  * what changed)
- * - Run qdoc (5.15+) to get DocBook
+ * - Run QDoc (5.15+) to get DocBook
  * - Upload documents to a given FTP, either one by one OR in batch
  * Dvp's toolchains are used to get the files to upload.
  * <p>
- * All options to find qdoc and other tools are contained in a configuration file (config.json).
+ * All options to find QDoc and other tools are contained in a configuration file (config.json).
  * Passwords are stored in a keyring (i.e. within the operating system).
  */
 

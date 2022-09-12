@@ -1,6 +1,6 @@
 package be.tcuvelier.qdoctools.cli;
 
-import be.tcuvelier.qdoctools.core.QdocCore;
+import be.tcuvelier.qdoctools.core.QDocCore;
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.utils.QtVersion;
 import net.sf.saxon.s9api.SaxonApiException;
@@ -12,24 +12,24 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 
-@Command(name = "qdoc", description = "Run qdoc and the associated transformations")
-public class QdocCommand implements Callable<Void> {
+@Command(name = "qdoc", description = "Run QDoc and the associated transformations")
+public class QDocCommand implements Callable<Void> {
     @Option(names = {"-c", "--configuration-file"},
-            description = "Configuration file, mostly useful in qdoc mode (default: " +
+            description = "Configuration file, mostly useful in QDoc mode (default: " +
                     "${DEFAULT-VALUE})")
     private final String configurationFile = "config.json";
     @Option(names = "--qt-version",
             description = "Version of Qt that is being processed")
     private final QtVersion qtVersion = new QtVersion("1.0");
     @Option(names = "--qdoc-debug",
-            description = "Run qdoc in debug mode")
+            description = "Run QDoc in debug mode")
     private final boolean qdocDebug = false;
     @Option(names = "--no-validation",
             description = "Disables the validation of the output against a known XSD or RNG at " +
                     "all steps")
     private final boolean validate = true;
     @Option(names = "--no-convert-docbook",
-            description = "Disables the generation of the DocBook files (i.e. do not run qdoc)")
+            description = "Disables the generation of the DocBook files (i.e. do not run QDoc)")
     private final boolean convertToDocBook = true;
     @Option(names = "--no-consistency-check",
             description = "Disables the consistency checks between the DocBook version and a" +
@@ -58,7 +58,7 @@ public class QdocCommand implements Callable<Void> {
     public Void call() throws SaxonApiException, IOException, InterruptedException,
             ParserConfigurationException, SAXException {
         GlobalConfiguration config = new GlobalConfiguration(configurationFile);
-        QdocCore.call(source, installed, output, htmlVersion, qtVersion, qdocDebug,
+        QDocCore.call(source, installed, output, htmlVersion, qtVersion, qdocDebug,
                 validate, convertToDocBook, checkConsistency, convertToDvpML, config);
         return null;
     }

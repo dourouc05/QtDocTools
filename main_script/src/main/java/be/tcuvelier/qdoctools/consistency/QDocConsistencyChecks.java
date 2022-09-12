@@ -9,12 +9,12 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Arrays;
 
-public class QdocConsistencyChecks {
+public class QDocConsistencyChecks {
     private final Path fileName;
     private final String prefix;
     private final CheckRequest r;
 
-    public QdocConsistencyChecks(Path fileName, String prefix, QtVersion qtVersion) throws IOException, SaxonApiException {
+    public QDocConsistencyChecks(Path fileName, String prefix, QtVersion qtVersion) throws IOException, SaxonApiException {
         this.fileName = fileName;
         this.prefix = prefix;
 

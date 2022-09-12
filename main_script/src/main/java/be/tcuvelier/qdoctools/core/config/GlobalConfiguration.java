@@ -26,7 +26,7 @@ public class GlobalConfiguration extends AbstractConfiguration {
         return configName;
     }
 
-    public String getQdocLocation() throws ConfigurationMissingField {
+    public String getQDocLocation() throws ConfigurationMissingField {
         return getStringAttribute("qdoc");
     }
 

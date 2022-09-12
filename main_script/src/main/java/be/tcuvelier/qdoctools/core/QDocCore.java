@@ -2,7 +2,7 @@ package be.tcuvelier.qdoctools.core;
 
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.config.QdtPaths;
-import be.tcuvelier.qdoctools.core.handlers.QdocHandler;
+import be.tcuvelier.qdoctools.core.handlers.QDocHandler;
 import be.tcuvelier.qdoctools.core.handlers.XsltHandler;
 import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
 import be.tcuvelier.qdoctools.core.helpers.FormattingHelpers;
@@ -19,7 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.List;
 
-public class QdocCore {
+public class QDocCore {
     public static void call(String source, String installed, String output, String htmlVersion,
             QtVersion qtVersion, boolean qdocDebug, boolean validate, boolean convertToDocBook,
             boolean convertToDvpML, boolean checkConsistency, GlobalConfiguration config)
@@ -30,7 +30,7 @@ public class QdocCore {
         // First, initialise global objects.
         List<String> includes = config.getCppCompilerIncludes();
         includes.addAll(config.getNdkIncludes());
-        QdocHandler q = new QdocHandler(source, installed, output, config.getQdocLocation(),
+        QDocHandler q = new QDocHandler(source, installed, output, config.getQDocLocation(),
                 qtVersion, qdocDebug, includes, config);
 
         // Explore the source directory for the qdocconf files.
@@ -46,16 +46,16 @@ public class QdocCore {
 
             // Actually run qdoc on this new file.
             System.out.println("++> Running qdoc.");
-            q.runQdoc(); // TODO: think about running moc to avoid too many errors while reading
+            q.runQDoc(); // TODO: think about running moc to avoid too many errors while reading
             // the code.
-            System.out.println("++> Qdoc done.");
+            System.out.println("++> QDoc done.");
 
             System.out.println("++> Fixing some qdoc quirks.");
             q.copyGeneratedFiles(); // Sometimes, qdoc outputs things in a strange folder. Ahoy!
             // TODO: fix paths when moving files from one folder to the other. (xref: .
             //  ./qtwidgets/...)
-            q.fixQdocBugs();
-            System.out.println("++> Qdoc quirks fixed."); // At least, the ones I know about
+            q.fixQDocBugs();
+            System.out.println("++> QDoc quirks fixed."); // At least, the ones I know about
             // right now.
 
             System.out.println("++> Validating DocBook output.");

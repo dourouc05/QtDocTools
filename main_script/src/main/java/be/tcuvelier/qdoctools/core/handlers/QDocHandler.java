@@ -22,10 +22,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class QdocHandler {
+public class QDocHandler {
     private final Path sourceFolder; // Containing Qt's sources.
     private final Path installedFolder; // Containing a compiled and installed version of Qt.
-    private final Path outputFolder; // Where all the generated files should be put (qdoc may
+    private final Path outputFolder; // Where all the generated files should be put (QDoc may
     // also output in a
     // subfolder, in which case the files are automatically moved to a flatter hierarchy).
     private final Path mainQdocconfPath; // The qdocconf that lists all the other ones.
@@ -35,7 +35,7 @@ public class QdocHandler {
     private final List<String> cppCompilerIncludes;
     private final GlobalConfiguration config;
 
-    public QdocHandler(String source, String installed, String output, String qdocPath,
+    public QDocHandler(String source, String installed, String output, String qdocPath,
             QtVersion qtVersion,
             boolean qdocDebug, List<String> cppCompilerIncludes, GlobalConfiguration config) throws IOException {
         sourceFolder = Paths.get(source);
@@ -342,7 +342,7 @@ public class QdocHandler {
         return count;
     }
 
-    public void runQdoc() throws IOException, InterruptedException {
+    public void runQDoc() throws IOException, InterruptedException {
         if (!new File(qdocPath).exists()) {
             throw new IOException("Path to qdoc wrong: file " + qdocPath + " does not exist!");
         }
@@ -387,7 +387,7 @@ public class QdocHandler {
             System.out.println();
         }
 
-        // Qdoc requires a series of environment variables.
+        // QDoc requires a series of environment variables.
         Map<String, String> env = pb.environment();
         env.put("QT_INSTALL_DOCS", sourceFolder.resolve("qtbase").resolve("doc").toString());
         env.put("BUILDDIR", sourceFolder.resolve("qtbase").resolve("doc").toString());
@@ -429,7 +429,7 @@ public class QdocHandler {
 //        file not found"); // Takes too long to compute.
 
         if (nErrors > 0) {
-            System.out.println("::> Qdoc ran into issues: ");
+            System.out.println("::> QDoc ran into issues: ");
             System.out.println("::>   - Return code: " + qdocCode);
             System.out.println("::>   - " + nErrors + " errors");
             System.out.println("::>   - " + nFatalErrors + " fatal errors");
@@ -438,7 +438,7 @@ public class QdocHandler {
                 throw new IOException("qdoc ran into errors");
             }
         } else {
-            System.out.println("::> Qdoc ended with no errors.");
+            System.out.println("::> QDoc ended with no errors.");
         }
     }
 
@@ -539,7 +539,7 @@ public class QdocHandler {
         }
     }
 
-    public void fixQdocBugs() throws IOException {
+    public void fixQDocBugs() throws IOException {
         // Only the files in the root folder are considered.
         // TODO: links to xml files
         int nFiles = 0;
