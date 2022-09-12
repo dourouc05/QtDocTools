@@ -20,10 +20,9 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class QdocCore {
-    public static void call(String source, String installed, String output,
-            String configurationFile,
+    public static void call(String source, String installed, String output, String htmlVersion,
             QtVersion qtVersion, boolean qdocDebug, boolean validate, boolean convertToDocBook,
-            boolean convertToDvpML, GlobalConfiguration config)
+            boolean convertToDvpML, boolean checkConsistency, GlobalConfiguration config)
             throws SaxonApiException, IOException, InterruptedException,
             ParserConfigurationException, SAXException {
         // Perform the conversion cycle, as complete as required.
@@ -52,7 +51,7 @@ public class QdocCore {
             System.out.println("++> Qdoc done.");
 
             System.out.println("++> Fixing some qdoc quirks.");
-            q.moveGeneratedFiles(); // Sometimes, qdoc outputs things in a strange folder. Ahoy!
+            q.copyGeneratedFiles(); // Sometimes, qdoc outputs things in a strange folder. Ahoy!
             // TODO: fix paths when moving files from one folder to the other. (xref: .
             //  ./qtwidgets/...)
             q.fixQdocBugs();
@@ -62,6 +61,20 @@ public class QdocCore {
             System.out.println("++> Validating DocBook output.");
             q.validateDocBook();
             System.out.println("++> DocBook output validated.");
+        }
+
+        // Perform some consistency checks on the contents to ensure that there is no hidden major
+        // qdoc bug.
+        if (checkConsistency && htmlVersion.isEmpty()) {
+            System.out.println("!!> Cannot check consistency without an existing HTML version" +
+                    " (--html-version).");
+        } else if (checkConsistency) {
+            // As of Qt 5.15-6.4, the docs installed at the same time as Qt with the official
+            // installer have the same folder structure as output by QDoc: the copies done in
+            // copyGeneratedFiles() cannot yet be removed for this check to be performed!
+            System.out.println("++> Checking consistency of the DocBook output.");
+            q.checkDocBookConsistency();
+            System.out.println("++> DocBook consistency checked.");
         }
 
         // Run Saxon to get the DvpML output.

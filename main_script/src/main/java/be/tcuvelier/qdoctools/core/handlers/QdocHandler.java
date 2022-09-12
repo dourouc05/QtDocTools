@@ -442,7 +442,9 @@ public class QdocHandler {
         }
     }
 
-    public void moveGeneratedFiles() throws IOException {
+    public void copyGeneratedFiles() throws IOException {
+        // Only copy, no move, because consistency checks requires the same folder structure.
+
         // Maybe everything is under the `html` folder.
         Path abnormalPath = outputFolder.resolve("html");
         if (Files.exists(abnormalPath)) {
@@ -603,6 +605,8 @@ public class QdocHandler {
                 nValidFiles + " valid, " + (nFiles - nValidFiles) + " invalid, " + nEmptyFiles +
                 " empty.");
     }
+
+    public void checkDocBookConsistency() throws IOException, SAXException {}
 
     private List<Path> findWithExtension(@SuppressWarnings("SameParameterValue") String extension) {
         String[] fileNames =

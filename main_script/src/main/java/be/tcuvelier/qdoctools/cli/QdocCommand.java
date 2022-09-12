@@ -28,13 +28,16 @@ public class QdocCommand implements Callable<Void> {
             description = "Disables the validation of the output against a known XSD or RNG at " +
                     "all steps")
     private final boolean validate = true;
-    @Option(names = "--no-convert-docbook", description = "Disables the generation of the DocBook" +
-            " files " +
-            "(i.e. do not run qdoc)")
+    @Option(names = "--no-convert-docbook",
+            description = "Disables the generation of the DocBook files (i.e. do not run qdoc)")
     private final boolean convertToDocBook = true;
-    @Option(names = "--no-convert-dvpml", description = "Disables the generation of the DvpML " +
-            "files. " +
-            "This operation requires the prior generation of the DocBook files")
+    @Option(names = "--no-consistency-check",
+            description = "Disables the consistency checks between the DocBook version and a" +
+                    " given HTML version of the docs (passed with --html-folder)")
+    private final boolean checkConsistency = true;
+    @Option(names = "--no-convert-dvpml",
+            description = "Disables the generation of the DvpML files. " +
+                    "This operation requires the prior generation of the DocBook files")
     private final boolean convertToDvpML = true;
     @Option(names = {"-s", "--source-folder"},
             description = "Folder to process (source code of Qt)", required = true)
@@ -46,14 +49,17 @@ public class QdocCommand implements Callable<Void> {
     @Option(names = {"-o", "--output-folder"},
             description = "Output folder", required = true)
     private String output;
+    @Option(names = {"-h", "--html-folder"},
+            description = "HTML-version folder (already generated documentation; it will not be" +
+                    " created by this tool), typically found near your Qt installation")
+    private String htmlVersion;
 
     @Override
     public Void call() throws SaxonApiException, IOException, InterruptedException,
             ParserConfigurationException, SAXException {
         GlobalConfiguration config = new GlobalConfiguration(configurationFile);
-        QdocCore.call(source, installed, output, configurationFile, qtVersion, qdocDebug,
-                validate, convertToDocBook,
-                convertToDvpML, config);
+        QdocCore.call(source, installed, output, htmlVersion, qtVersion, qdocDebug,
+                validate, convertToDocBook, checkConsistency, convertToDvpML, config);
         return null;
     }
 }
