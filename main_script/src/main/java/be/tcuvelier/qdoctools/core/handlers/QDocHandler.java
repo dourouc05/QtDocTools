@@ -1,5 +1,7 @@
 package be.tcuvelier.qdoctools.core.handlers;
 
+import be.tcuvelier.qdoctools.consistency.ConsistencyChecks;
+import be.tcuvelier.qdoctools.consistency.ConsistencyResults;
 import be.tcuvelier.qdoctools.core.QtModules;
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.exceptions.WriteQdocconfException;
@@ -7,6 +9,7 @@ import be.tcuvelier.qdoctools.core.helpers.ValidationHelper;
 import be.tcuvelier.qdoctools.core.utils.Pair;
 import be.tcuvelier.qdoctools.core.utils.QtVersion;
 import be.tcuvelier.qdoctools.core.utils.StreamGobbler;
+import net.sf.saxon.s9api.SaxonApiException;
 import org.jetbrains.annotations.NotNull;
 import org.xml.sax.SAXException;
 
@@ -28,6 +31,7 @@ public class QDocHandler {
     private final Path outputFolder; // Where all the generated files should be put (QDoc may
     // also output in a
     // subfolder, in which case the files are automatically moved to a flatter hierarchy).
+    private final Path htmlFolder; // A preexisting copy of the HTML docs.
     private final Path mainQdocconfPath; // The qdocconf that lists all the other ones.
     private final String qdocPath;
     private final QtVersion qtVersion;
@@ -35,12 +39,13 @@ public class QDocHandler {
     private final List<String> cppCompilerIncludes;
     private final GlobalConfiguration config;
 
-    public QDocHandler(String source, String installed, String output, String qdocPath,
+    public QDocHandler(String source, String installed, String output, String htmlVersion, String qdocPath,
             QtVersion qtVersion,
             boolean qdocDebug, List<String> cppCompilerIncludes, GlobalConfiguration config) throws IOException {
         sourceFolder = Paths.get(source);
         installedFolder = Paths.get(installed);
         outputFolder = Paths.get(output);
+        htmlFolder = Paths.get(htmlVersion);
         mainQdocconfPath = outputFolder.resolve("qtdoctools-main.qdocconf");
 
         this.config = config;
@@ -606,7 +611,15 @@ public class QDocHandler {
                 " empty.");
     }
 
-    public void checkDocBookConsistency() throws IOException, SAXException {}
+    public void checkDocBookConsistency() throws IOException, SaxonApiException {
+        ConsistencyResults cr = new ConsistencyChecks(outputFolder, htmlFolder, ">>> ").checkAll();
+        if (! cr.hasErrors()) {
+            System.out.println("++> Consistency checks revealed no discrepancy.");
+        } else {
+            System.out.println("++> Consistency checks revealed differences between DocBook and HTML.");
+            System.out.println(cr.describe("++> "));
+        }
+    }
 
     private List<Path> findWithExtension(@SuppressWarnings("SameParameterValue") String extension) {
         String[] fileNames =

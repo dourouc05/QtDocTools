@@ -1,6 +1,6 @@
 package be.tcuvelier.qdoctools.consistency;
 
-import net.sf.saxon.s9api.SaxonApiException;
+import be.tcuvelier.qdoctools.core.helpers.SetHelpers;
 import net.sf.saxon.s9api.XdmValue;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -9,15 +9,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class InheritedBy {
-    public static InheritedByResult checkInheritedBy(CheckRequest request) throws SaxonApiException {
+    public static ConsistencyCheckResults checkInheritedBy(ConsistencyChecker cc) {
         // If the local file is not a class, the test is passed (only for classes).
-        if (!request.isClass()) {
-            return new InheritedByResult(true);
+        if (! cc.isClass(cc.xdm)) {
+            return ConsistencyCheckResults.fromNoError();
         }
 
         // Find the inherited-by classes.
-        XdmValue inheritedByListXML = request.xpath("//db:classsynopsisinfo[@role='inheritedBy" +
-                "']/text()");
+        XdmValue inheritedByListXML = cc.xpath("//db:classsynopsisinfo[@role='inheritedBy" +
+                "']/text()", cc.xdm);
 
         Set<String> inheritedBySetXML = new HashSet<>();
         for (int i = 0; i < inheritedByListXML.size(); ++i) {
@@ -25,13 +25,12 @@ public class InheritedBy {
         }
 
         // Load the remote HTML.
-        Elements inheritedByTagHTML = request.html.getElementsContainingText("Inherited By:");
+        Elements inheritedByTagHTML = cc.html.getElementsContainingText("Inherited By:");
         Set<String> inheritedBySetHTML = new HashSet<>();
 
-        if (inheritedByTagHTML.size() > 0) {
+        if (inheritedByTagHTML != null && inheritedByTagHTML.size() > 0) {
             // inheritedByTagHTML contains all tags that contain a tag that has "Inherited by":
-            // take the last one,
-            // the most precise of this collection.
+            // take the last one, the most precise of this collection.
             Elements inheritedByListHTML =
                     inheritedByTagHTML.get(inheritedByTagHTML.size() - 1).siblingElements().get(0).getElementsByTag("a");
             //                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -42,6 +41,7 @@ public class InheritedBy {
         }
 
         // Compare.
-        return new InheritedByResult(inheritedBySetXML, inheritedBySetHTML);
+        return ConsistencyCheckResults.fromXmlHtmlSets(
+                "Inherited-by classes", inheritedBySetXML, inheritedBySetHTML);
     }
 }

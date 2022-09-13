@@ -30,8 +30,8 @@ public class QDocCore {
         // First, initialise global objects.
         List<String> includes = config.getCppCompilerIncludes();
         includes.addAll(config.getNdkIncludes());
-        QDocHandler q = new QDocHandler(source, installed, output, config.getQDocLocation(),
-                qtVersion, qdocDebug, includes, config);
+        QDocHandler q = new QDocHandler(source, installed, output, htmlVersion,
+                config.getQDocLocation(), qtVersion, qdocDebug, includes, config);
 
         // Explore the source directory for the qdocconf files.
         System.out.println("++> Looking for qdocconf files");
