@@ -1,7 +1,7 @@
 package be.tcuvelier.qdoctools.core.helpers;
 
-import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -28,19 +28,18 @@ public class SetHelpers {
     }
 
     @SafeVarargs
-    public static <T> T[] union(T[] a, T[]... lb) {
-        Stream<T> stream = Arrays.stream(a);
-        for (T[] b : lb) {
-            stream = Stream.concat(stream, Arrays.stream(b));
+    public static <T> List<T> union(List<T> a, List<T>... lb) {
+        Stream<T> stream = a.stream();
+        for (List<T> b : lb) {
+            stream = Stream.concat(stream, b.stream());
         }
-        //noinspection unchecked
-        return (T[]) stream.distinct().toArray();
+        return stream.distinct().toList();
     }
 
     @SafeVarargs
-    public static <T> T[] sortedUnion(T[] a, T[]... lb) {
-        T[] array = union(a, lb);
-        Arrays.sort(array);
+    public static <T> List<T> sortedUnion(List<T> a, List<T>... lb) {
+        List<T> array = union(a, lb);
+        array.sort(null);
         return array;
     }
 

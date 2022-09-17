@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -52,24 +53,32 @@ public class ConsistencyChecks {
         // subfolders.)
         Predicate<String> isQtModulePredicate =
                 (String moduleName) -> moduleName.startsWith("q") || moduleName.equals("activeqt");
-        String[] docbookFolders = docbookFolder.toFile().list((dir, name) ->
-                new File(dir, name).isDirectory() && isQtModulePredicate.test(name));
-        String[] htmlFolders = htmlFolder.toFile().list((dir, name) ->
-                new File(dir, name).isDirectory() && isQtModulePredicate.test(name));
+        List<String> docbookFolders;
+        List<String> htmlFolders;
 
-        if (docbookFolders == null || docbookFolders.length == 0) {
-            return ConsistencyResults.fromMajorError("No DocBook subfolders.");
-        }
-        if (htmlFolders == null || htmlFolders.length == 0) {
-            return ConsistencyResults.fromMajorError("No HTML subfolders.");
+        {
+            String[] docbookFolders_ = docbookFolder.toFile().list((dir, name) ->
+                    new File(dir, name).isDirectory() && isQtModulePredicate.test(name));
+            String[] htmlFolders_ = htmlFolder.toFile().list((dir, name) ->
+                    new File(dir, name).isDirectory() && isQtModulePredicate.test(name));
+
+            if (docbookFolders_ == null || docbookFolders_.length == 0) {
+                return ConsistencyResults.fromMajorError("No DocBook subfolders.");
+            }
+            if (htmlFolders_ == null || htmlFolders_.length == 0) {
+                return ConsistencyResults.fromMajorError("No HTML subfolders.");
+            }
+
+            docbookFolders = Arrays.asList(docbookFolders_);
+            htmlFolders = Arrays.asList(htmlFolders_);
         }
 
         // Operate on sorted arrays to ease the cases where the two versions do not have the same
         // subfolders (e.g., no ActiveQt installed, but its source is available).
-        String[] folders = SetHelpers.sortedUnion(docbookFolders, htmlFolders);
+        List<String> folders = SetHelpers.sortedUnion(docbookFolders, htmlFolders);
 
-        Arrays.sort(docbookFolders);
-        Arrays.sort(htmlFolders);
+        docbookFolders.sort(null);
+        htmlFolders.sort(null);
 
         int indexDocBook = 0;
         int indexHtml = 0;
@@ -77,12 +86,12 @@ public class ConsistencyChecks {
         ConsistencyResults cr = ConsistencyResults.fromNoError();
 
         for (final String folderName : folders) {
-            if (!docbookFolders[indexDocBook].equals(folderName)) {
+            if (!docbookFolders.get(indexDocBook).equals(folderName)) {
                 cr.add(ConsistencyResults.fromMissingDocBookModules(1));
                 System.out.println(logPrefix + " No DocBook module with name " + folderName + ".");
                 indexHtml += 1;
                 continue;
-            } else if (!htmlFolders[indexHtml].equals(folderName)) {
+            } else if (!htmlFolders.get(indexHtml).equals(folderName)) {
                 cr.add(ConsistencyResults.fromMissingHTMLModules(1));
                 System.out.println(logPrefix + " No HTML module with name " + folderName + ".");
                 indexDocBook += 1;
@@ -110,42 +119,48 @@ public class ConsistencyChecks {
                 (String extension) -> path.getFileName().endsWith(extension));
     }
 
-    String[] getFilesRecursivelyWithOneExtensionOf(final Path path, final String[] extensions)
+    List<String> getFilesRecursivelyWithOneExtensionOf(final Path path, final String[] extensions)
             throws IOException {
         try (Stream<Path> paths = Files.walk(path)) {
             return paths.filter(isFileAndHasOneExtensionOf(extensions))
                     .map((Path p) -> path.relativize(p).toString())
-                    .toArray(String[]::new);
+                    .toList();
         }
     }
 
     public ConsistencyResults checkModulePages(final String moduleName) throws IOException,
             SaxonApiException {
         // List all files within the module.
-        String[] docbookPages = docbookFolder.resolve(moduleName).toFile().list(
-                isFileAndHasExtension(".xml"));
-        String[] htmlPages = htmlFolder.resolve(moduleName).toFile().list(
-                isFileAndHasExtension(".html"));
+        List<String> docbookPages;
+        List<String> htmlPages;
+        {
+            String[] docbookPages_ = docbookFolder.resolve(moduleName).toFile().list(
+                    isFileAndHasExtension(".xml"));
+            String[] htmlPages_ = htmlFolder.resolve(moduleName).toFile().list(
+                    isFileAndHasExtension(".html"));
 
-        if (docbookPages == null || docbookPages.length == 0) {
-            return ConsistencyResults.fromMajorError(
-                    "No DocBook pages within the module " + moduleName + ".");
-        }
-        if (htmlPages == null || htmlPages.length == 0) {
-            return ConsistencyResults.fromMajorError(
-                    "No HTML pages within the module " + moduleName + ".");
+            if (docbookPages_ == null || docbookPages_.length == 0) {
+                return ConsistencyResults.fromMajorError(
+                        "No DocBook pages within the module " + moduleName + ".");
+            }
+            if (htmlPages_ == null || htmlPages_.length == 0) {
+                return ConsistencyResults.fromMajorError(
+                        "No HTML pages within the module " + moduleName + ".");
+            }
+            docbookPages = Arrays.asList(docbookPages_);
+            htmlPages = Arrays.asList(htmlPages_);
         }
 
         // Remove extensions so that comparisons can be performed. DocBook: remove ".xml".
         // HTML: remove ".html".
-        docbookPages = (String[]) Arrays.stream(docbookPages).map(
-                (String pageName) -> pageName.substring(0, pageName.length() - 4)).sorted().toArray();
-        htmlPages = (String[]) Arrays.stream(htmlPages).map(
-                (String pageName) -> pageName.substring(0, pageName.length() - 5)).sorted().toArray();
+        docbookPages = docbookPages.stream().map((String pageName) ->
+                pageName.substring(0, pageName.length() - 4)).sorted().toList();
+        htmlPages = htmlPages.stream().map((String pageName) ->
+                pageName.substring(0, pageName.length() - 5)).sorted().toList();
 
         // Operate on sorted arrays to ease the cases where the two versions do not have the same
         // pages.
-        String[] pages = SetHelpers.sortedUnion(docbookPages, htmlPages);
+        List<String> pages = SetHelpers.sortedUnion(docbookPages, htmlPages);
 
         int indexDocBook = 0;
         int indexHtml = 0;
@@ -153,13 +168,13 @@ public class ConsistencyChecks {
         ConsistencyResults cr = ConsistencyResults.fromNoError();
 
         for (final String pageName : pages) {
-            if (!docbookPages[indexDocBook].equals(pageName)) {
+            if (!docbookPages.get(indexDocBook).equals(pageName)) {
                 cr.add(ConsistencyResults.fromMissingDocBookPages(1));
                 System.out.println(logPrefix + " No DocBook page with name " + pageName +
                         " in the module " + moduleName + ".");
                 indexHtml += 1;
                 continue;
-            } else if (!htmlPages[indexHtml].equals(pageName)) {
+            } else if (!htmlPages.get(indexHtml).equals(pageName)) {
                 cr.add(ConsistencyResults.fromMissingHTMLPages(1));
                 System.out.println(logPrefix + " No HTML page with name " + pageName +
                         " in the module " + moduleName + ".");
@@ -180,15 +195,15 @@ public class ConsistencyChecks {
         // List all images within the module. They may be at various depths, but always have an
         // image extension: JPG, GIF, PNG, SVG.
         final String[] extensions = new String[]{".jpg", ".gif", ".png", ".svg"};
-        String[] docbookImages = getFilesRecursivelyWithOneExtensionOf(docbookFolder, extensions);
-        String[] htmlImages = getFilesRecursivelyWithOneExtensionOf(htmlFolder, extensions);
+        List<String> docbookImages = getFilesRecursivelyWithOneExtensionOf(docbookFolder, extensions);
+        List<String> htmlImages = getFilesRecursivelyWithOneExtensionOf(htmlFolder, extensions);
 
         // Operate on sorted arrays to ease the cases where the two versions do not have the same
         // pages.
-        String[] images = SetHelpers.sortedUnion(docbookImages, htmlImages);
+        List<String> images = SetHelpers.sortedUnion(docbookImages, htmlImages);
 
-        Arrays.sort(docbookImages);
-        Arrays.sort(htmlImages);
+        docbookImages.sort(null);
+        htmlImages.sort(null);
 
         int indexDocBook = 0;
         int indexHtml = 0;
@@ -196,13 +211,13 @@ public class ConsistencyChecks {
         ConsistencyResults cr = ConsistencyResults.fromNoError();
 
         for (final String imageName : images) {
-            if (!docbookImages[indexDocBook].equals(imageName)) {
+            if (!docbookImages.get(indexDocBook).equals(imageName)) {
                 cr.add(ConsistencyResults.fromMissingDocBookPages(1));
                 System.out.println(logPrefix + " No image in the DocBook version with name " +
                         imageName + " in the module " + moduleName + ".");
                 indexHtml += 1;
                 continue;
-            } else if (!htmlImages[indexHtml].equals(imageName)) {
+            } else if (!htmlImages.get(indexHtml).equals(imageName)) {
                 cr.add(ConsistencyResults.fromMissingHTMLPages(1));
                 System.out.println(logPrefix + " No image in the HTML version with name " +
                         imageName + " in the module " + moduleName + ".");
