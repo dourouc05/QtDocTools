@@ -17,28 +17,28 @@ public class QDocCommand implements Callable<Void> {
     @Option(names = {"-c", "--configuration-file"},
             description = "Configuration file, mostly useful in QDoc mode (default: " +
                     "${DEFAULT-VALUE})")
-    private final String configurationFile = "config.json";
+    private String configurationFile = "config.json";
     @Option(names = "--qt-version",
             description = "Version of Qt that is being processed")
-    private final QtVersion qtVersion = new QtVersion("1.0");
+    private QtVersion qtVersion = new QtVersion("1.0");
     @Option(names = "--qdoc-debug",
             description = "Run QDoc in debug mode")
-    private final boolean qdocDebug = false;
+    private boolean qdocDebug = false;
     @Option(names = "--no-validation",
             description = "Disables the validation of the output against a known XSD or RNG at " +
                     "all steps")
-    private final boolean validate = true;
+    private boolean validate = true;
     @Option(names = "--no-convert-docbook",
             description = "Disables the generation of the DocBook files (i.e. do not run QDoc)")
-    private final boolean convertToDocBook = true;
+    private boolean convertToDocBook = true;
     @Option(names = "--no-consistency-check",
             description = "Disables the consistency checks between the DocBook version and a" +
                     " given HTML version of the docs (passed with --html-folder)")
-    private final boolean checkConsistency = true;
+    private boolean checkConsistency = true;
     @Option(names = "--no-convert-dvpml",
             description = "Disables the generation of the DvpML files. " +
                     "This operation requires the prior generation of the DocBook files")
-    private final boolean convertToDvpML = true;
+    private boolean convertToDvpML = true;
     @Option(names = {"-s", "--source-folder"},
             description = "Folder to process (source code of Qt)", required = true)
     private String source;

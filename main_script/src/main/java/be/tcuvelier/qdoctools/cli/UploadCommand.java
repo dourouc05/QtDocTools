@@ -12,10 +12,10 @@ import java.util.concurrent.Callable;
 public class UploadCommand implements Callable<Void> {
     @Option(names = "--upload",
             description = "Uploads the generated files (default: ${DEFAULT-VALUE})")
-    private final boolean upload = true;
+    private boolean upload = true;
     @Option(names = {"-c", "--configuration-file"},
             description = "Configuration file (default: ${DEFAULT-VALUE})")
-    private final String configurationFile = "config.json";
+    private String configurationFile = "config.json";
     @Option(names = {"-i", "--input-file", "--input-folder"},
             description = "File or folder to generate and upload", required = true)
     private String input;

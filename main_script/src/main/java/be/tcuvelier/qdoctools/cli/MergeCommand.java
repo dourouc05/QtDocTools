@@ -20,10 +20,10 @@ public class MergeCommand implements Callable<Void> {
             description = "Result of merging the original and the altered file (by default, the " +
                     "original file is " +
                     "overwritten)")
-    private final String merged = null;
+    private String merged = null;
     @Option(names = {"-c", "--configuration-file"},
             description = "Configuration file (default: ${DEFAULT-VALUE})")
-    private final String configurationFile = "config.json";
+    private String configurationFile = "config.json";
     @Option(names = {"-t", "--type"},
             description = "Type of merge to perform. Allowed values: ${COMPLETION-CANDIDATES}. " +
                     "Default value: ${DEFAULT-VALUE}. \n" +
@@ -50,7 +50,7 @@ public class MergeCommand implements Callable<Void> {
                     "\"added\"; changed ones will have the out-of-date translation marked as " +
                     "\"deleted\", while the " +
                     "new version to translate will be \"changed\"). ")
-    private final MergeType type = MergeType.AFTER_PROOFREADING;
+    private MergeType type = MergeType.AFTER_PROOFREADING;
     @Option(names = {"-l", "--left", "--original-file"},
             description = "Original file, i.e. before proofreading", required = true)
     private String original;

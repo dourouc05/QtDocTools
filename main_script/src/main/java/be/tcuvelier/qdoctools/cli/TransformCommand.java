@@ -33,31 +33,31 @@ import java.util.concurrent.Callable;
 public class TransformCommand implements Callable<Void> {
     @Option(names = {"-c", "--configuration-file"},
             description = "Configuration file (default: ${DEFAULT-VALUE})")
-    private final String configurationFile = "config.json";
+    private String configurationFile = "config.json";
     @Option(names = "--no-validation",
             description = "Disables the validation of the output against a known XSD or RNG " +
                     "(default: ${DEFAULT-VALUE})")
-    private final boolean validate = true;
+    private boolean validate = true;
     @Option(names = {"--disable-sanity-checks"},
             description = "Perform the sanity checks, but continue with generation even in case " +
                     "of failure (default: ${DEFAULT-VALUE})")
-    private final boolean disableSanityChecks = false;
+    private boolean disableSanityChecks = false;
     @Option(names = {"--generate"},
             description = "Starts the standard DvpML tools to generate PHP/HTML files (default: " +
                     "${DEFAULT-VALUE})")
-    private final boolean generate = false;
+    private boolean generate = false;
     @Option(names = {"--upload"},
             description = "Uploads the generated (with the --generate option) files (default: " +
                     "${DEFAULT-VALUE})")
-    private final boolean upload = false;
+    private boolean upload = false;
     @Option(names = {"--clean"},
             description = "Cleans the generated file. This option is mostly useful with " +
                     "--generate and --upload (default: ${DEFAULT-VALUE})")
-    private final boolean clean = false;
+    private boolean clean = false;
     @Option(names = "--follow-links",
             description = "Follows the links in the files (default: ${DEFAULT-VALUE}). " +
                     "If true, for reference files, all linked files will be generated")
-    private final boolean followLinks = true;
+    private boolean followLinks = true;
     @Option(names = {"-i", "--input-file", "--input-folder"},
             description = "File or folder to process", required = true)
     private String input;
