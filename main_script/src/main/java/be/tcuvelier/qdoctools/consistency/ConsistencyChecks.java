@@ -18,6 +18,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ConsistencyChecks {
@@ -124,7 +125,8 @@ public class ConsistencyChecks {
         try (Stream<Path> paths = Files.walk(path)) {
             return paths.filter(isFileAndHasOneExtensionOf(extensions))
                     .map((Path p) -> path.relativize(p).toString())
-                    .toList();
+                    .collect(Collectors.toList());
+            // Don't use Stream::toList, as this list is immutable.
         }
     }
 
@@ -232,22 +234,41 @@ public class ConsistencyChecks {
         return cr;
     }
 
-    public ConsistencyResults checkPage(final String moduleName, final String pageName)
-            throws IOException, SaxonApiException {
+    public ConsistencyResults checkPage(final String moduleName, final String pageName) {
         final Path docbookFile = docbookFolder.resolve(moduleName).resolve(pageName + ".xml");
         final Path htmlFile = htmlFolder.resolve(moduleName).resolve(pageName + ".html");
 
         assert docbookFile.toFile().exists();
         assert htmlFile.toFile().exists();
 
-        final XdmNode xdm = processor.newDocumentBuilder().build(
-                new StreamSource(new FileReader(docbookFile.toFile())));
-        final Document html = Jsoup.parse(Files.readString(htmlFile));
+        XdmNode xdm;
+        try {
+            xdm = processor.newDocumentBuilder().build(
+                    new StreamSource(new FileReader(docbookFile.toFile())));
+        } catch (IOException ioe) {
+            String error = "Error while reading " + docbookFile;
+            System.out.println(">>> " + error);
+            return ConsistencyResults.fromMajorError(error);
+        } catch (SaxonApiException ioe) {
+            String error = "Error while parsing " + docbookFile;
+            System.out.println(">>> " + error);
+            return ConsistencyResults.fromMajorError(error);
+        }
+
+        Document html;
+        try {
+            html = Jsoup.parse(Files.readString(htmlFile));
+        } catch (IOException ioe) {
+            String error = "Error while reading " + docbookFile;
+            System.out.println(">>> " + error);
+            return ConsistencyResults.fromMajorError(error);
+        }
 
         ConsistencyChecker cc = new ConsistencyChecker(logPrefix, processor, docbookFile,
                 htmlFile, xdm, html, compiler);
         cc.perform(InheritedBy::checkInheritedBy);
         cc.perform(Items::checkItems);
+
 
         return cc.cr;
     }

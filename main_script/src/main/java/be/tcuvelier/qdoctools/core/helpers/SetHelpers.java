@@ -3,6 +3,7 @@ package be.tcuvelier.qdoctools.core.helpers;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class SetHelpers {
@@ -33,7 +34,8 @@ public class SetHelpers {
         for (List<T> b : lb) {
             stream = Stream.concat(stream, b.stream());
         }
-        return stream.distinct().toList();
+        // Don't use Stream::toList, as this list is immutable.
+        return stream.distinct().collect(Collectors.toList());
     }
 
     @SafeVarargs
