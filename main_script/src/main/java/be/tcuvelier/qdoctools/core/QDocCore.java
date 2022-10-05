@@ -44,8 +44,13 @@ public class QDocCore {
             Path mainQdocconfPath = q.makeMainQdocconf(modules);
             System.out.println("++> Main qdocconf written: " + mainQdocconfPath);
 
+            // Run QtAttributionScanner to generate some files.
+            System.out.println("++> Running QtAttributionScanner.");
+            q.runQtAttributionScanner(modules);
+            System.out.println("++> QtAttributionScanner done.");
+
             // Actually run qdoc on this new file.
-            System.out.println("++> Running qdoc.");
+            System.out.println("++> Running QDoc.");
             q.runQDoc(); // TODO: think about running moc to avoid too many errors while reading
             // the code.
             System.out.println("++> QDoc done.");

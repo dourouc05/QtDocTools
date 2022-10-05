@@ -33,6 +33,7 @@ public class QDocHandler {
     // subfolder, in which case the files are automatically moved to a flatter hierarchy).
     private final Path htmlFolder; // A preexisting copy of the HTML docs.
     private final Path mainQdocconfPath; // The qdocconf that lists all the other ones.
+    private final String qtAttributionScannerPath;
     private final String qdocPath;
     private final QtVersion qtVersion;
     private final boolean qdocDebug;
@@ -49,6 +50,11 @@ public class QDocHandler {
         mainQdocconfPath = outputFolder.resolve("qtdoctools-main.qdocconf");
 
         this.config = config;
+        this.qtAttributionScannerPath = Arrays.stream(
+                    Objects.requireNonNull(Paths.get(qdocPath).getParent().toFile().list()))
+                .filter((String path) -> path.contains("qtattributionsscanner"))
+                .findFirst()
+                .orElse("");
         this.qdocPath = qdocPath; // TODO: either read this from `config` or from `installed`.
         this.qtVersion = qtVersion;
         this.qdocDebug = qdocDebug;
@@ -360,6 +366,31 @@ public class QDocHandler {
             }
 
             System.out.println();
+        }
+    }
+
+    public void runQtAttributionScanner(@NotNull List<Pair<String, Path>> modules)
+            throws IOException, InterruptedException {
+        if (!new File(qtAttributionScannerPath).exists()) {
+            throw new IOException("Path to QtAttributionScanner wrong: file " +
+                    qtAttributionScannerPath + " does not exist!");
+        }
+
+        // Run the scanner once per module.
+        for (Pair<String, Path> module : modules) {
+            List<String> params = new ArrayList<>(Arrays.asList(qtAttributionScannerPath,
+                    "--outputdir", outputFolder.toString(),
+                    "--installdir", outputFolder.toString(),
+                    mainQdocconfPath.toString(),
+                    "--outputformat", "DocBook",
+                    "--single-exec",
+                    "--log-progress",
+                    "--timestamps",
+                    "--docbook-extensions"));
+            ProcessBuilder pb = new ProcessBuilder(params);
+
+            System.out.println("::> Running QtAttributionScanner with the following arguments: ");
+            printCommand(pb.command());
         }
     }
 
