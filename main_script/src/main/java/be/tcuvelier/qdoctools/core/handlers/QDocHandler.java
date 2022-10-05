@@ -347,9 +347,25 @@ public class QDocHandler {
         return count;
     }
 
+    private void printCommand(List<String> commands) {
+        System.out.println("        " + commands.get(0));
+        for (int i = 1; i < commands.size(); i++) {
+            String command = commands.get(i);
+            System.out.print("            " + command);
+
+            // If the parameter takes an argument, show it on the same line.
+            if (i + 1 < commands.size() && !commands.get(i + 1).startsWith("-")) {
+                System.out.print(" " + commands.get(i + 1));
+                i += 1;
+            }
+
+            System.out.println();
+        }
+    }
+
     public void runQDoc() throws IOException, InterruptedException {
         if (!new File(qdocPath).exists()) {
-            throw new IOException("Path to qdoc wrong: file " + qdocPath + " does not exist!");
+            throw new IOException("Path to QDoc wrong: file " + qdocPath + " does not exist!");
         }
 
         List<String> params = new ArrayList<>(Arrays.asList(qdocPath,
@@ -376,21 +392,8 @@ public class QDocHandler {
         }
         ProcessBuilder pb = new ProcessBuilder(params);
 
-        System.out.println("::> Running qdoc with the following arguments: ");
-        List<String> commands = pb.command();
-        System.out.println("        " + commands.get(0));
-        List<String> strings = pb.command();
-        for (int i = 1; i < strings.size(); i++) {
-            String command = strings.get(i);
-            System.out.print("            " + command);
-
-            if (i + 1 < strings.size() && !commands.get(i + 1).startsWith("-")) {
-                System.out.print(" " + commands.get(i + 1));
-                i += 1;
-            }
-
-            System.out.println();
-        }
+        System.out.println("::> Running QDoc with the following arguments: ");
+        printCommand(pb.command());
 
         // QDoc requires a series of environment variables.
         Map<String, String> env = pb.environment();
