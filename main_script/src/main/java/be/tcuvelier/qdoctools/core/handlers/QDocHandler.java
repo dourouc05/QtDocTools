@@ -50,9 +50,11 @@ public class QDocHandler {
         mainQdocconfPath = outputFolder.resolve("qtdoctools-main.qdocconf");
 
         this.config = config;
+        Path qdocContainingFolder = Paths.get(qdocPath).getParent();
         this.qtAttributionScannerPath = Arrays.stream(
-                    Objects.requireNonNull(Paths.get(qdocPath).getParent().toFile().list()))
+                    Objects.requireNonNull(qdocContainingFolder.toFile().list()))
                 .filter((String path) -> path.contains("qtattributionsscanner"))
+                .map((String fileName) -> qdocContainingFolder.resolve(fileName).toString())
                 .findFirst()
                 .orElse("");
         this.qdocPath = qdocPath; // TODO: either read this from `config` or from `installed`.
