@@ -437,6 +437,9 @@ public class QDocHandler {
         env.put("QT_VERSION", qtVersion.QT_VERSION());
 
         // Run qdoc and wait until it is done.
+        // TODO: the check for errors fails when qdoc.exe exists but loads the wrong DLLs (running it directly shows an
+        //  error message): this function ends with "::> QDoc ended with no errors." after showing the full call to
+        //  qdoc.
         Process qdoc = pb.start();
         StringBuffer sb = new StringBuffer(); // Will be written to from multiple threads, hence
         // StringBuffer instead of StringBuilder.
