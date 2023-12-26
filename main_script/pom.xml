@@ -14,7 +14,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <!-- Java 17 is required (current LTS version) -->
+                    <!-- Java 17 is required (previous LTS version) -->
                     <source>17</source>
                     <target>17</target>
                 </configuration>
@@ -64,7 +64,7 @@
         <dependency>
             <groupId>net.sf.saxon</groupId>
             <artifactId>Saxon-HE</artifactId>
-            <version>11.4</version>
+            <version>12.4</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains</groupId>
@@ -115,6 +115,12 @@
             <groupId>commons-net</groupId>
             <artifactId>commons-net</artifactId>
             <version>3.9.0</version>
+        </dependency>
+        <!-- Maven plugins that IntelliJ doesn't seem to find otherwise -->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-clean-plugin</artifactId>
+            <version>3.3.2</version>
         </dependency>
     </dependencies>
 </project>
