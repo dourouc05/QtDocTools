@@ -28,7 +28,7 @@ public class InheritedBy {
         Elements inheritedByTagHTML = cc.html.getElementsContainingText("Inherited By:");
         Set<String> inheritedBySetHTML = new HashSet<>();
 
-        if (inheritedByTagHTML != null && inheritedByTagHTML.size() > 0) {
+        if (inheritedByTagHTML != null && !inheritedByTagHTML.isEmpty()) {
             // inheritedByTagHTML contains all tags that contain a tag that has "Inherited by":
             // take the last one, the most precise of this collection.
             Elements inheritedByListHTML =

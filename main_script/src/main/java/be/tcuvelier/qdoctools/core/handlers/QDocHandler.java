@@ -288,7 +288,7 @@ public class QDocHandler {
                 .filter(f -> f.isDirectory() && QtModules.ignoredModules.stream().noneMatch(i -> f.toString().equals(i)))
                 .map(File::toPath).toList();
 
-        if (directories.size() == 0) {
+        if (directories.isEmpty()) {
             return includeDirs;
         }
 
@@ -465,8 +465,6 @@ public class QDocHandler {
             System.out.println("::>   - Return code: " + code);
             System.out.println(errors);
         }
-
-        throw new IOException("DONE?");
     }
 
     public void runQDoc() throws IOException, InterruptedException {
@@ -648,7 +646,7 @@ public class QDocHandler {
 
             nFiles += 1;
 
-            if (file.length() == 0) {
+            if (file.isEmpty()) {
                 abandon = true;
             }
 
