@@ -33,7 +33,7 @@ public class QDocHandler {
     // subfolder, in which case the files are automatically moved to a flatter hierarchy).
     private final Path htmlFolder; // A preexisting copy of the HTML docs.
     private final Path mainQdocconfPath; // The qdocconf that lists all the other ones.
-    private final String qtAttributionScannerPath;
+    private final String qtAttributionsScannerPath;
     private final String qdocPath;
     private final QtVersion qtVersion;
     private final boolean qdocDebug;
@@ -51,7 +51,7 @@ public class QDocHandler {
 
         this.config = config;
         Path qdocContainingFolder = Paths.get(qdocPath).getParent();
-        this.qtAttributionScannerPath = Arrays.stream(
+        this.qtAttributionsScannerPath = Arrays.stream(
                     Objects.requireNonNull(qdocContainingFolder.toFile().list()))
                 .filter((String path) -> path.contains("qtattributionsscanner"))
                 .map((String fileName) -> qdocContainingFolder.resolve(fileName).toString())
@@ -90,7 +90,7 @@ public class QDocHandler {
     /**
      * @return list of modules, in the form Pair[module name, .qdocconf file path]
      */
-    public List<Pair<String, Path>> findModules() {
+    public Pair<List<Pair<String, Path>>, List<String>> findModules() {
         // List all folders within Qt's sources that correspond to modules.
         String[] directories = sourceFolder.toFile().list((current, name) ->
                 name.startsWith("q")
@@ -205,7 +205,7 @@ public class QDocHandler {
                         srcDirectoryPath.resolve("imports").resolve(directory).resolve("doc").resolve(directory + ".qdocconf"), // Qt Quick modules.
                         modulePath.resolve("Source").resolve(directory + ".qdocconf"), // Qt WebKit.
                         modulePath.resolve("doc").resolve(directory.replace("-", "") + ".qdocconf"
-                        ), // Qt WebKit Examples (5.3-).
+                                ), // Qt WebKit Examples (5.3-).
                         modulePath.resolve("doc").resolve(directory.replaceAll("-a(.*)", "").replace("-", "") + ".qdocconf"), // Qt WebKit Examples and Demos (5.0).
                         docDirectoryPath.resolve(directory + ".qdocconf") // Base case. E.g.:
                         // doc\qtdeclarative.qdocconf
@@ -262,7 +262,7 @@ public class QDocHandler {
             }
         }
 
-        return modules;
+        return new Pair<>(modules, Arrays.asList(directories));
     }
 
     private List<String> findIncludes() {
@@ -330,6 +330,7 @@ public class QDocHandler {
     }
 
     public Path makeMainQdocconf(@NotNull List<Pair<String, Path>> modules) throws WriteQdocconfException {
+        // Write a list of the .qdocconf files that must be generated in the qdoc run.
         modules.sort(Comparator.comparing(a -> a.first));
         try {
             Files.write(mainQdocconfPath,
@@ -371,29 +372,94 @@ public class QDocHandler {
         }
     }
 
-    public void runQtAttributionScanner(@NotNull List<Pair<String, Path>> modules)
+    private Pair<Integer, String> runCommandAndReturnCodeAndLogs(ProcessBuilder pb, String logFileName) throws IOException, InterruptedException {
+        Process process = pb.start();
+        StringBuffer sb = new StringBuffer(); // Will be written to from multiple threads, hence
+        // StringBuffer instead of StringBuilder.
+        Consumer<String> errOutput = s -> {
+            if (qdocDebug || (!s.contains("warning: ") && !s.contains("note: "))) {
+                System.err.println(s);
+            }
+        };
+        Consumer<String> errAppend = s -> sb.append(s).append("\n");
+        StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream(), List.of(errOutput,
+                errAppend));
+        StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream(), List.of(errOutput,
+                errAppend));
+        new Thread(outputGobbler).start();
+        new Thread(errorGobbler).start();
+        int code = process.waitFor();
+
+        // Write down the log.
+        String errors = sb.toString();
+        if (outputFolder.resolve(logFileName).toFile().exists()) {
+            //noinspection ResultOfMethodCallIgnored
+            outputFolder.resolve(logFileName).toFile().delete();
+        }
+        Files.write(outputFolder.resolve(logFileName), errors.getBytes());
+
+        return new Pair<>(code, sb.toString());
+    }
+
+    public void runQtAttributionsScanner(@NotNull List<Pair<String, Path>> modules)
             throws IOException, InterruptedException {
-        if (!new File(qtAttributionScannerPath).exists()) {
-            throw new IOException("Path to QtAttributionScanner wrong: file " +
-                    qtAttributionScannerPath + " does not exist!");
+        if (!new File(qtAttributionsScannerPath).exists()) {
+            throw new IOException("Path to QtAttributionsScanner wrong: file " +
+                    qtAttributionsScannerPath + " does not exist!");
         }
 
-        // Run the scanner once per module.
+        // The target directory is that of the Git repository containing the module(s). Compute it as the only shared
+        // part in all the paths. Typically, this will end in Src/ if the sources are installed using Qt's installer.
+        List<Path> module_paths = modules.stream().map(pair -> pair.second).toList();
+        int min_path_length = module_paths.stream().map(Path::getNameCount).min(Comparator.comparingInt(i -> i)).orElse(0);
+        assert min_path_length > 0;
+
+        Path common_path = Paths.get("");
+        for (int i = 0; i < min_path_length; i++) {
+            int final_i = i;
+            Path first_path = module_paths.get(0);
+            boolean all_equal = module_paths.stream().map(path -> path.getName(final_i)).allMatch(name -> name.equals(first_path.getName(final_i)));
+            if (all_equal) {
+                common_path = common_path.resolve(first_path.getName(i));
+            } else {
+                break;
+            }
+        }
+
+        // Run the scanner once per Git repository, i.e. directory.
+        // Based on https://github.com/qt/qtbase/blob/dev/cmake/QtDocsHelpers.cmake,
+        // `add_custom_target(qattributionsscanner_${target}`.
         for (Pair<String, Path> module : modules) {
-            List<String> params = new ArrayList<>(Arrays.asList(qtAttributionScannerPath,
-                    "--outputdir", outputFolder.toString(),
-                    "--installdir", outputFolder.toString(),
-                    mainQdocconfPath.toString(),
-                    "--outputformat", "DocBook",
-                    "--single-exec",
-                    "--log-progress",
-                    "--timestamps",
-                    "--docbook-extensions"));
+            // The output file is one level above Qt's .qdocconf file (after analysing the generated build scripts, i.e.
+            // after CMake). This .qdocconf is typically in a doc folder.
+            Path destination_path = module.second.getParent();
+            assert destination_path != null;
+            if (destination_path.getFileName().toString().equals("doc")) {
+                destination_path = destination_path.getParent();
+            }
+            destination_path = destination_path.resolve("codeattributions.qdoc");
+
+            List<String> params = new ArrayList<>(Arrays.asList(qtAttributionsScannerPath,
+                    common_path.toString(),
+                    "--basedir", common_path.getParent().toString(),
+                    // "--filter", // TODO: how do I find this automatically? Qt's CMake configuration does it manually.
+                    // Or use the .qdocconf's file name? Works for qtqml, qtsql, qtcore, at least.
+                    "-o", destination_path.toString()));
             ProcessBuilder pb = new ProcessBuilder(params);
 
-            System.out.println("::> Running QtAttributionScanner with the following arguments: ");
+            System.out.println("::> Running QtAttributionsScanner for module " + module.first + " with the following arguments: ");
             printCommand(pb.command());
+
+            Pair<Integer, String> qdocResult = runCommandAndReturnCodeAndLogs(pb, "qtdoctools-qtattributionsscanner-log");
+            int code = qdocResult.first;
+            String errors = qdocResult.second;
+
+            System.out.println("::> QtAttributionsScanner ran into issues: ");
+            System.out.println("::>   - Return code: " + code);
+            System.out.println(errors);
         }
+
+        throw new IOException("DONE?");
     }
 
     public void runQDoc() throws IOException, InterruptedException {
@@ -440,31 +506,9 @@ public class QDocHandler {
         // TODO: the check for errors fails when qdoc.exe exists but loads the wrong DLLs (running it directly shows an
         //  error message): this function ends with "::> QDoc ended with no errors." after showing the full call to
         //  qdoc.
-        Process qdoc = pb.start();
-        StringBuffer sb = new StringBuffer(); // Will be written to from multiple threads, hence
-        // StringBuffer instead of StringBuilder.
-        Consumer<String> errOutput = s -> {
-            if (qdocDebug || (!s.contains("warning: ") && !s.contains("note: "))) {
-                System.err.println(s);
-            }
-        };
-        Consumer<String> errAppend = s -> sb.append(s).append("\n");
-        StreamGobbler outputGobbler = new StreamGobbler(qdoc.getInputStream(), List.of(errOutput,
-                errAppend));
-        StreamGobbler errorGobbler = new StreamGobbler(qdoc.getErrorStream(), List.of(errOutput,
-                errAppend));
-        new Thread(outputGobbler).start();
-        new Thread(errorGobbler).start();
-        int qdocCode = qdoc.waitFor();
-
-        // Write down the log.
-        String errors = sb.toString();
-
-        if (outputFolder.resolve("qtdoctools-qdoc-log").toFile().exists()) {
-            //noinspection ResultOfMethodCallIgnored
-            outputFolder.resolve("qtdoctools-qdoc-log").toFile().delete();
-        }
-        Files.write(outputFolder.resolve("qtdoctools-qdoc-log"), errors.getBytes());
+        Pair<Integer, String> qdocResult = runCommandAndReturnCodeAndLogs(pb, "qtdoctools-qdoc-log");
+        int qdocCode = qdocResult.first;
+        String errors = qdocResult.second;
 
         // Parse the results from qdoc to find errors.
         int nErrors = countString(errors, "error:");

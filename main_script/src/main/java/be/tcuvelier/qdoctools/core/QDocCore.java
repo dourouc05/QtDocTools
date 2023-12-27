@@ -35,7 +35,8 @@ public class QDocCore {
 
         // Explore the source directory for the qdocconf files.
         System.out.println("++> Looking for qdocconf files");
-        List<Pair<String, Path>> modules = q.findModules();
+        Pair<List<Pair<String, Path>>, List<String>> modules_and_directories = q.findModules();
+        List<Pair<String, Path>> modules = modules_and_directories.first;
         System.out.println("++> " + modules.size() + " modules found");
 
         // Run qdoc to get the DocBook output.
@@ -46,7 +47,7 @@ public class QDocCore {
 
             // Run QtAttributionScanner to generate some files.
             System.out.println("++> Running QtAttributionScanner.");
-            q.runQtAttributionScanner(modules);
+            q.runQtAttributionsScanner(modules);
             System.out.println("++> QtAttributionScanner done.");
 
             // Actually run qdoc on this new file.
