@@ -414,13 +414,15 @@ public class QDocHandler {
         int min_path_length = module_paths.stream().map(Path::getNameCount).min(Comparator.comparingInt(i -> i)).orElse(0);
         assert min_path_length > 0;
 
-        Path common_path = Paths.get("");
+        Path common_path = module_paths.get(0).getRoot();
+        final Path final_common_path = common_path;
+        assert module_paths.stream().map(Path::getRoot).allMatch(path -> path.equals(final_common_path));
         for (int i = 0; i < min_path_length; i++) {
-            int final_i = i;
-            Path first_path = module_paths.get(0);
-            boolean all_equal = module_paths.stream().map(path -> path.getName(final_i)).allMatch(name -> name.equals(first_path.getName(final_i)));
+            final int final_i = i;
+            Path first_path = module_paths.get(0).getName(final_i);
+            boolean all_equal = module_paths.stream().map(path -> path.getName(final_i)).allMatch(name -> name.equals(first_path));
             if (all_equal) {
-                common_path = common_path.resolve(first_path.getName(i));
+                common_path = common_path.resolve(first_path);
             } else {
                 break;
             }
@@ -439,9 +441,11 @@ public class QDocHandler {
             }
             destination_path = destination_path.resolve("codeattributions.qdoc");
 
+            Path module_path = common_path.resolve(module.second.getName(common_path.getNameCount()));
+
             List<String> params = new ArrayList<>(Arrays.asList(qtAttributionsScannerPath,
-                    common_path.toString(),
-                    "--basedir", common_path.getParent().toString(),
+                    module_path.toString(),
+                    "--basedir", common_path.toString(),
                      "--filter", "QDocModule=" + module.second.getFileName().toString().split("\\.")[0], // Use
                     // the name of the .qddocconf file as module.
                     "-o", destination_path.toString()));
