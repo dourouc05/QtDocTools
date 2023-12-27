@@ -442,8 +442,9 @@ public class QDocHandler {
             List<String> params = new ArrayList<>(Arrays.asList(qtAttributionsScannerPath,
                     common_path.toString(),
                     "--basedir", common_path.getParent().toString(),
-                    // "--filter", // TODO: how do I find this automatically? Qt's CMake configuration does it manually.
-                    // Or use the .qdocconf's file name? Works for qtqml, qtsql, qtcore, at least.
+                    // "--filter", "QDocModule=" + , // TODO: how do I find this automatically? Qt's CMake configuration
+                    // does it manually. Or use the .qdocconf's file name? Works for qtqml, qtsql, qtcore,
+                    // qtvirtualkeyboard, qtopcua, qtnetworkauth, qtuitools, qtassistant, qtquick, qtconcurrent, at least.
                     "-o", destination_path.toString()));
             ProcessBuilder pb = new ProcessBuilder(params);
 
