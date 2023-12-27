@@ -62,6 +62,9 @@ public class QDocHandler {
         this.qdocDebug = qdocDebug;
         this.cppCompilerIncludes = cppCompilerIncludes;
 
+        // TODO: for qtAttributionsScannerPath, qdocPath, test whether you can run these binaries (i.e. they don't
+        // merely exist, they have their required shared library accessible)?
+
         ensureOutputFolderExists();
         ensureIncludesExist();
     }
