@@ -457,7 +457,7 @@ public class QDocHandler {
             System.out.println("::> Running QtAttributionsScanner for module " + module.first + " with the following arguments: ");
             printCommand(pb.command());
 
-            Pair<Integer, String> qdocResult = runCommandAndReturnCodeAndLogs(pb, "qtdoctools-qtattributionsscanner-log");
+            Pair<Integer, String> qdocResult = runCommandAndReturnCodeAndLogs(pb, "qtdoctools-qtattributionsscanner-" + module.first + "-log");
             int code = qdocResult.first;
             String errors = qdocResult.second;
 
