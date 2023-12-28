@@ -15,7 +15,7 @@ public class QtModules {
     public static final List<String> ignoredModules; // A list of modules that have no
     // documentation, and should thus
     // qtdatavis3d: datavisualization).
-    public static final Map<String, Pair<Path, String>> qtTools; // Qt Tools follows no other
+    public static final Map<String, List<Pair<Path, String>>> qtTools; // Qt Tools follows no other
     // pattern.
     public static final Map<String, Pair<Path, String>> qtBaseTools; // Qt Tools follows no other
     // pattern, even within
@@ -113,14 +113,17 @@ public class QtModules {
                 "qtnetworkauth", "oauth"
         );
         qtTools = Map.of(
-                "assistant", new Pair<>(Paths.get("src/assistant/assistant/doc/"), "qtassistant"),
-                "help", new Pair<>(Paths.get("src/assistant/help/doc/"), "qthelp"),
-                "designer", new Pair<>(Paths.get("src/designer/src/designer/doc/"), "qtdesigner"),
-                "uitools", new Pair<>(Paths.get("src/designer/src/uitools/doc/"), "qtuitools"),
-                "linguist", new Pair<>(Paths.get("src/linguist/linguist/doc/"), "qtlinguist"),
-                "qdoc", new Pair<>(Paths.get("src/qdoc/doc/config/"), "qdoc"),
-                "qtdistancefieldgenerator", new Pair<>(Paths.get("src/distancefieldgenerator/doc" +
-                        "/"), "distancefieldgenerator")
+                "assistant", List.of(new Pair<>(Paths.get("src/assistant/assistant/doc/"), "qtassistant")),
+                "help", List.of(new Pair<>(Paths.get("src/assistant/help/doc/"), "qthelp")),
+                "designer", List.of(new Pair<>(Paths.get("src/designer/src/designer/doc/"), "qtdesigner")),
+                "uitools", List.of(
+                        new Pair<>(Paths.get("src/designer/src/uitools/doc/"), "qtuitools"),
+                        new Pair<>(Paths.get("src/uitools/doc/"), "qtuitools")
+                ),
+                "linguist", List.of(new Pair<>(Paths.get("src/linguist/linguist/doc/"), "qtlinguist")),
+                "qdoc", List.of(new Pair<>(Paths.get("src/qdoc/doc/config/"), "qdoc")),
+                "qtdistancefieldgenerator", List.of(new Pair<>(Paths.get("src/distancefieldgenerator/doc" +
+                        "/"), "distancefieldgenerator"))
         );
         qtBaseTools = Map.of(
                 "qlalr", new Pair<>(Paths.get("src/tools/qlalr/doc/"), "qlalr"),

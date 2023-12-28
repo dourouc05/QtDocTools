@@ -120,14 +120,15 @@ public class QDocHandler {
             Path srcDirectoryPath = modulePath.resolve("src");
 
             if (directory.equals("qttools")) {
-                // The most annoying case: Qt Tools, everything seems ad-hoc.
-                for (Map.Entry<String, Pair<Path, String>> entry : QtModules.qtTools.entrySet()) {
-                    Path docDirectoryPath = modulePath.resolve(entry.getValue().first);
-
-                    List<Path> potentialQdocconfPaths = Arrays.asList(
-                            docDirectoryPath.resolve(entry.getValue().second + ".qdocconf"),
-                            docDirectoryPath.resolve("qt" + entry.getValue().second + ".qdocconf")
-                    );
+                // The most annoying case: Qt Tools, everything seems ad-hoc, hence the huge list
+                // qtTools of hard-coded paths.
+                for (Map.Entry<String, List<Pair<Path, String>>> entry : QtModules.qtTools.entrySet()) {
+                    List<Path> potentialQdocconfPaths = new ArrayList<>();
+                    for (Pair<Path, String> possible_entry : entry.getValue()) {
+                        Path docDirectoryPath = modulePath.resolve(possible_entry.first);
+                        potentialQdocconfPaths.add(docDirectoryPath.resolve(possible_entry.second + ".qdocconf"));
+                        potentialQdocconfPaths.add(docDirectoryPath.resolve("qt" + possible_entry.second + ".qdocconf"));
+                    }
 
                     Optional<Path> qdocconfOptionalPath =
                             potentialQdocconfPaths.stream().filter(path -> path.toFile().isFile()).findAny();
