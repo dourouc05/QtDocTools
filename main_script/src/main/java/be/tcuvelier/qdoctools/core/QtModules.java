@@ -62,6 +62,7 @@ public class QtModules {
                                 new Pair<>("qmlworkerscript", "qmlworkerscript"),
                                 new Pair<>("qmlxmllistmodel", "qmlxmllistmodel"),
                                 new Pair<>("qmlmodels", "qmlmodels"),
+                                new Pair<>("quickcontrols", "qtquickcontrols"),
                                 new Pair<>("quickcontrols2", "quickcontrols"),
                                 new Pair<>("quickdialogs2", "quickdialogs"), // Disappeared with Qt 6.
                                 new Pair<>("labs/platform", "labsplatform"))),
@@ -91,6 +92,7 @@ public class QtModules {
                 Map.entry("qtdoc",
                         Arrays.asList(new Pair<>("qtdoc", "qtdoc"),
                                 new Pair<>("cmake", "qtcmake"),
+                                new Pair<>("edu", "qtforeducation"),
                                 new Pair<>("platformintegration", "qtplatformintegration"))),
                 Map.entry("qtquicktimeline", Collections.singletonList(new Pair<>("timeline",
                         "qtquicktimeline"))),
@@ -108,7 +110,13 @@ public class QtModules {
                 Map.entry("qtquick1", Collections.singletonList(new Pair<>("", "qtdeclarative"))),
                 Map.entry("qtenginio",
                         Arrays.asList(new Pair<>("enginio_client", "qtenginio"),
-                                new Pair<>("enginio_plugin", "qtenginioqml")))
+                                new Pair<>("enginio_plugin", "qtenginioqml"))),
+                Map.entry("qtmultimedia",
+                        Arrays.asList(new Pair<>("multimedia", "qtenginio"),
+                                new Pair<>("spatialaudio", "qtspatialaudio"))),
+                Map.entry("qtgrpc",
+                        Arrays.asList(new Pair<>("grpc", "qtgrpc"),
+                                new Pair<>("protobuf", "qtprotobuf")))
         );
         renamedSubfolder = Map.of(
                 "qtdatavis3d", "datavisualization",

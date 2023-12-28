@@ -119,6 +119,8 @@ public class QDocHandler {
             Path modulePath = sourceFolder.resolve(directory);
             Path srcDirectoryPath = modulePath.resolve("src");
 
+            boolean hasFoundQdocconfModule = false;
+
             if (directory.equals("qttools")) {
                 // The most annoying case: Qt Tools, everything seems ad-hoc, hence the huge list
                 // qtTools of hard-coded paths.
@@ -139,10 +141,15 @@ public class QDocHandler {
                         continue;
                     }
 
-                    System.out.println("--> Found submodule: qttools / " + entry.getKey() + "; " +
-                            "qdocconf: " + qdocconfOptionalPath.get());
-                    modules.add(new Pair<>(directory, qdocconfOptionalPath.get()));
+                    Pair<String, Path> moduleEntry = new Pair<>(directory, qdocconfOptionalPath.get());
+                    if (!modules.contains(moduleEntry)) {
+                        System.out.println("--> Found submodule: qttools / " + entry.getKey() + "; " +
+                                "qdocconf: " + qdocconfOptionalPath.get());
+                        modules.add(moduleEntry);
+                    }
                 }
+
+                hasFoundQdocconfModule = true;
             }
 
             if (QtModules.submodulesSpecificNames.containsKey(directory)) {
@@ -154,6 +161,7 @@ public class QDocHandler {
                             "doc");
                     Path docImportsDirectoryPath =
                             importsDirectoryPath.resolve(submodule.first).resolve("doc");
+                    Path directDocDirectoryPath = modulePath.resolve("doc");
 
                     // Find the exact qdocconf file.
                     List<Path> potentialQdocconfPaths = Arrays.asList(
@@ -162,6 +170,8 @@ public class QDocHandler {
                             // Qt Doc.
                             modulePath.resolve("doc").resolve("config").resolve(submodule.second + ".qdocconf"),
                             modulePath.resolve("doc").resolve("src").resolve(submodule.first).resolve(submodule.second + ".qdocconf"),
+                            // Qt for Education.
+                            directDocDirectoryPath.resolve(submodule.first).resolve("config").resolve(submodule.second + ".qdocconf"),
                             // Qt Speech.
                             srcDirectoryPath.resolve("doc").resolve(submodule.second + ".qdocconf"),
                             // Qt Quick modules like Controls 2.
@@ -185,14 +195,21 @@ public class QDocHandler {
                             potentialQdocconfPaths.stream().filter(path -> path.toFile().isFile()).findAny();
 
                     if (qdocconfOptionalPath.isEmpty()) {
-                        System.out.println("Skipped module \"" + directory + " / " + submodule.first + "\": no .qdocconf file");
+                        if (!hasFoundQdocconfModule) {
+                            System.out.println("Skipped module \"" + directory + " / " + submodule.first + "\": no .qdocconf file");
+                        }
                         continue;
                     }
 
                     // Everything seems OK: push this module so that it will be handled later on.
                     Path qdocconfPath = qdocconfOptionalPath.get();
-                    System.out.println("--> Found submodule: " + directory + " / " + submodule.first + "; qdocconf: " + qdocconfPath);
-                    modules.add(new Pair<>(directory, qdocconfPath));
+                    Pair<String, Path> moduleEntry = new Pair<>(directory, qdocconfPath);
+                    if (!modules.contains(moduleEntry)) {
+                        System.out.println("--> Found submodule: " + directory + " / " + submodule.first + "; qdocconf: " + qdocconfPath);
+                        modules.add(moduleEntry);
+                    }
+
+                    hasFoundQdocconfModule = true;
                 }
             }
 
@@ -223,14 +240,20 @@ public class QDocHandler {
                         potentialQdocconfPaths.stream().filter(path -> path.toFile().isFile()).findAny();
 
                 if (qdocconfOptionalPath.isEmpty()) {
-                    System.out.println("Skipped module \"" + directory + "\": no .qdocconf file");
+                    if (!hasFoundQdocconfModule) {
+                        System.out.println("Skipped module \"" + directory + "\": no .qdocconf file");
+                    }
                     continue;
                 }
 
                 // Everything seems OK: push this module so that it will be handled later on.
                 Path qdocconfPath = qdocconfOptionalPath.get();
-                System.out.println("--> Found module: " + directory + "; qdocconf: " + qdocconfPath);
-                modules.add(new Pair<>(directory, qdocconfPath));
+                Pair<String, Path> moduleEntry = new Pair<>(directory, qdocconfPath);
+                if (!modules.contains(moduleEntry)) {
+                    System.out.println("--> Found module: " + directory + "; qdocconf: " + qdocconfPath);
+                    modules.add(moduleEntry);
+                }
+                hasFoundQdocconfModule = true;
             }
         }
 
@@ -249,9 +272,12 @@ public class QDocHandler {
                     continue;
                 }
 
-                System.out.println("--> Found submodule: qtbase / " + entry.getKey() + "; " +
-                        "qdocconf: " + qdocconfPath);
-                modules.add(new Pair<>("qtbase", qdocconfPath));
+                Pair<String, Path> moduleEntry = new Pair<>("qtbase", qdocconfPath);
+                if (!modules.contains(moduleEntry)) {
+                    System.out.println("--> Found submodule: qtbase / " + entry.getKey() + "; " +
+                            "qdocconf: " + qdocconfPath);
+                    modules.add(moduleEntry);
+                }
             }
         }
 
@@ -264,9 +290,12 @@ public class QDocHandler {
             if (!qdocconfPath.toFile().isFile()) {
                 System.out.println("Skipped submodule: qtdoc / qmake (old Qt 5 only)");
             } else {
-                System.out.println("--> Found submodule: qtbase / qmake (old Qt 5 only); " +
-                        "qdocconf: " + qdocconfPath);
-                modules.add(new Pair<>("qtbase", qdocconfPath));
+                Pair<String, Path> moduleEntry = new Pair<>("qtbase", qdocconfPath);
+                if (!modules.contains(moduleEntry)) {
+                    System.out.println("--> Found submodule: qtbase / qmake (old Qt 5 only); " +
+                            "qdocconf: " + qdocconfPath);
+                    modules.add(moduleEntry);
+                }
             }
         }
 
