@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -130,46 +131,65 @@ public class ConsistencyChecks {
         }
     }
 
+    private List<String> getAllHtmlPagesSorted(final String moduleName) throws IOException,
+            SaxonApiException {
+        String[] pagesArray = htmlFolder.resolve(moduleName).toFile().list(
+                isFileAndHasExtension(".html"));
+        if (pagesArray == null || pagesArray.length == 0) {
+            return Collections.emptyList();
+        }
+
+        Stream<String> pages = Arrays.stream(pagesArray);
+
+        // Remove the extension ".html" so that comparisons can be performed with DocBook.
+        pages = pages.map((String pageName) -> pageName.substring(0, pageName.length() - 5));
+
+        // DocBook doesn't have "-members" or "-obsolete" pages, remove them from HTML so that they
+        // do not appear in the comparison.
+        pages = pages.filter((String pageName) ->
+                !pageName.endsWith("-members") && !pageName.endsWith("-obsolete"));
+
+        return pages.sorted().toList();
+    }
+
+    private List<String> getAllDocBookPagesSorted(final String moduleName) throws IOException,
+            SaxonApiException {
+        String[] pagesArray = htmlFolder.resolve(moduleName).toFile().list(
+                isFileAndHasExtension(".xml"));
+        if (pagesArray == null || pagesArray.length == 0) {
+            return Collections.emptyList();
+        }
+
+        Stream<String> pages = Arrays.stream(pagesArray);
+
+        // Remove the extension ".xml" so that comparisons can be performed with HTML.
+        pages = pages.map((String pageName) -> pageName.substring(0, pageName.length() - 4));
+
+        return pages.sorted().toList();
+    }
+
     public ConsistencyResults checkModulePages(final String moduleName) throws IOException,
             SaxonApiException {
         // List all files within the module.
-        List<String> docbookPages;
-        List<String> htmlPages;
-        {
-            String[] docbookPages_ = docbookFolder.resolve(moduleName).toFile().list(
-                    isFileAndHasExtension(".xml"));
-            String[] htmlPages_ = htmlFolder.resolve(moduleName).toFile().list(
-                    isFileAndHasExtension(".html"));
-
-            if (docbookPages_ == null || docbookPages_.length == 0) {
-                return ConsistencyResults.fromMajorError(
-                        "No DocBook pages within the module " + moduleName + ".");
-            }
-            if (htmlPages_ == null || htmlPages_.length == 0) {
-                return ConsistencyResults.fromMajorError(
-                        "No HTML pages within the module " + moduleName + ".");
-            }
-            docbookPages = Arrays.asList(docbookPages_);
-            htmlPages = Arrays.asList(htmlPages_);
-        }
-
-        // Remove extensions so that comparisons can be performed. DocBook: remove ".xml".
-        // HTML: remove ".html".
-        docbookPages = docbookPages.stream().map((String pageName) ->
-                pageName.substring(0, pageName.length() - 4)).sorted().toList();
-        htmlPages = htmlPages.stream().map((String pageName) ->
-                pageName.substring(0, pageName.length() - 5)).sorted().toList();
-
         // Operate on sorted arrays to ease the cases where the two versions do not have the same
         // pages.
-        List<String> pages = SetHelpers.sortedUnion(docbookPages, htmlPages);
+        List<String> docbookPages = getAllDocBookPagesSorted(moduleName);
+        List<String> htmlPages = getAllHtmlPagesSorted(moduleName);
+        if (docbookPages.isEmpty()) {
+            return ConsistencyResults.fromMajorError(
+                    "No DocBook pages within the module " + moduleName + ".");
+        }
+        if (htmlPages.isEmpty()) {
+            return ConsistencyResults.fromMajorError(
+                    "No HTML pages within the module " + moduleName + ".");
+        }
 
         int indexDocBook = 0;
         int indexHtml = 0;
 
         ConsistencyResults cr = ConsistencyResults.fromNoError();
 
-        for (final String pageName : pages) {
+        for (final String pageName : SetHelpers.sortedUnion(docbookPages, htmlPages)) {
             if (!docbookPages.get(indexDocBook).equals(pageName)) {
                 cr.add(ConsistencyResults.fromMissingDocBookPages(1));
                 System.out.println(logPrefix + " No DocBook page with name " + pageName +
