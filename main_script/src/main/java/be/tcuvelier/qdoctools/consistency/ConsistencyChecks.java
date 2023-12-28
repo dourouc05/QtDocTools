@@ -149,6 +149,9 @@ public class ConsistencyChecks {
         pages = pages.filter((String pageName) ->
                 !pageName.endsWith("-members") && !pageName.endsWith("-obsolete"));
 
+        // DocBook doesn't have examples-manifest.xml files.
+        pages = pages.filter((String pageName) -> pageName.equals("examples-manifest"));
+
         return pages.sorted().toList();
     }
 
