@@ -143,7 +143,9 @@ public class QDocHandler {
                             "qdocconf: " + qdocconfOptionalPath.get());
                     modules.add(new Pair<>(directory, qdocconfOptionalPath.get()));
                 }
-            } else if (QtModules.submodulesSpecificNames.containsKey(directory)) {
+            }
+
+            if (QtModules.submodulesSpecificNames.containsKey(directory)) {
                 // Find the path to the documentation folders for each of the submodule.
                 for (Pair<String, String> submodule :
                         QtModules.submodulesSpecificNames.get(directory)) {
@@ -192,7 +194,9 @@ public class QDocHandler {
                     System.out.println("--> Found submodule: " + directory + " / " + submodule.first + "; qdocconf: " + qdocconfPath);
                     modules.add(new Pair<>(directory, qdocconfPath));
                 }
-            } else {
+            }
+
+            {
                 // Find the path to the documentation folder.
                 Path docDirectoryPath =
                         srcDirectoryPath.resolve(directory.replaceFirst("qt", "")).resolve("doc");

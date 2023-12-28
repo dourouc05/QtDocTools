@@ -63,7 +63,7 @@ public class QtModules {
                                 new Pair<>("qmlxmllistmodel", "qmlxmllistmodel"),
                                 new Pair<>("qmlmodels", "qmlmodels"),
                                 new Pair<>("quickcontrols2", "quickcontrols"),
-                                new Pair<>("quickdialogs2", "quickdialogs"),
+                                new Pair<>("quickdialogs2", "quickdialogs"), // Disappeared with Qt 6.
                                 new Pair<>("labs/platform", "labsplatform"))),
                 Map.entry("qtbase",
                         Arrays.asList(new Pair<>("concurrent", "qtconcurrent"),
@@ -74,13 +74,13 @@ public class QtModules {
                                 new Pair<>("gui", "qtgui"),
                                 new Pair<>("network", "qtnetwork"),
                                 new Pair<>("opengl", "qtopengl"),
-                                new Pair<>("platformheaders", "qtplatformheaders"),
+                                new Pair<>("platformheaders", "qtplatformheaders"), // Disappeared with Qt 6.
                                 new Pair<>("printsupport", "qtprintsupport"),
                                 new Pair<>("sql", "qtsql"),
                                 new Pair<>("testlib", "qttestlib"),
                                 new Pair<>("widgets", "qtwidgets"),
                                 new Pair<>("xml", "qtxml"))),
-                Map.entry("qtquickcontrols2",
+                Map.entry("qtquickcontrols2", // Disappeared with Qt 6.
                         Arrays.asList(new Pair<>("calendar", "qtlabscalendar"),
                                 new Pair<>("controls", "qtquickcontrols2"),
                                 new Pair<>("platform", "qtlabsplatform"))),
@@ -97,6 +97,9 @@ public class QtModules {
                 Map.entry("qtscxml",
                         Arrays.asList(new Pair<>("scxml", "qtscxml"),
                                 new Pair<>("statemachine", "qtstatemachine"))),
+                Map.entry("qtspeech", // No submodules with Qt 5.
+                        Arrays.asList(new Pair<>("speech", "qtspeech"),
+                                new Pair<>("tts", "qttexttospeech"))),
                 Map.entry("qtwebengine",
                         Arrays.asList(new Pair<>("core", "qtwebengine"),
                                 new Pair<>("pdf", "qtpdf"))),
