@@ -543,6 +543,13 @@ public class QDocHandler {
         env.put("QT_VER", qtVersion.QT_VER());
         env.put("QT_VERSION", qtVersion.QT_VERSION());
 
+        System.out.println("::> Running QDoc with the following environment variables: ");
+        System.out.println("            QT_INSTALL_DOCS: " + env.get("QT_INSTALL_DOCS"));
+        System.out.println("            BUILDDIR: " + env.get("BUILDDIR"));
+        System.out.println("            QT_VERSION_TAG: " + env.get("QT_VERSION_TAG"));
+        System.out.println("            QT_VER: " + env.get("QT_VER"));
+        System.out.println("            QT_VERSION: " + env.get("QT_VERSION"));
+
         // Run qdoc and wait until it is done.
         // TODO: the check for errors fails when qdoc.exe exists but loads the wrong DLLs (running it directly shows an
         //  error message): this function ends with "::> QDoc ended with no errors." after showing the full call to
