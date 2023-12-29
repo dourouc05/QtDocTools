@@ -495,9 +495,11 @@ public class QDocHandler {
             int code = qdocResult.first;
             String errors = qdocResult.second;
 
-            System.out.println("::> QtAttributionsScanner ran into issues: ");
-            System.out.println("::>   - Return code: " + code);
-            System.out.println(errors);
+            if (code != 0) {
+                System.out.println("::> QtAttributionsScanner ran into issues: ");
+                System.out.println("::>   - Return code: " + code);
+                System.out.println(errors);
+            }
         }
     }
 
