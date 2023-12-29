@@ -561,9 +561,12 @@ public class QDocHandler {
             System.out.println("::>   - " + nErrors + " errors");
             System.out.println("::>   - " + nFatalErrors + " fatal errors");
 //            System.out.println("::>   - " + nMissingDepends + " missing QtModuleDepends files");
-            if (qdocCode != 0) {
-                throw new IOException("qdoc ran into errors");
-            }
+            // Not all qdoc errors are a reason to stop the process. Determining a good heuristic
+            // would be hard, just using the number of errors is not always meaningful. So, don't
+            // do it for now.
+//            if (qdocCode != 0) {
+//                throw new IOException("qdoc ran into errors");
+//            }
         } else {
             System.out.println("::> QDoc ended with no errors.");
         }
