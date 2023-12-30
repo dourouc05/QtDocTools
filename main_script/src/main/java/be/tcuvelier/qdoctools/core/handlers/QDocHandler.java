@@ -41,8 +41,8 @@ public class QDocHandler {
     private final GlobalConfiguration config;
 
     public QDocHandler(String source, String installed, String output, String htmlVersion, String qdocPath,
-            QtVersion qtVersion,
-            boolean qdocDebug, List<String> cppCompilerIncludes, GlobalConfiguration config) throws IOException {
+            QtVersion qtVersion, boolean qdocDebug, List<String> cppCompilerIncludes, GlobalConfiguration config)
+            throws IOException {
         sourceFolder = Paths.get(source);
         installedFolder = Paths.get(installed);
         outputFolder = Paths.get(output);
@@ -115,6 +115,7 @@ public class QDocHandler {
         // qdocconf files, but
         // only 12 of them are relevant.
         List<Pair<String, Path>> modules = new ArrayList<>(directories.length);
+        Set<Path> module_paths = new HashSet<>(directories.length);
         for (String directory : directories) {
             Path modulePath = sourceFolder.resolve(directory);
             Path srcDirectoryPath = modulePath.resolve("src");
@@ -141,11 +142,11 @@ public class QDocHandler {
                         continue;
                     }
 
-                    Pair<String, Path> moduleEntry = new Pair<>(directory, qdocconfOptionalPath.get());
-                    if (!modules.contains(moduleEntry)) {
+                    if (!module_paths.contains(qdocconfOptionalPath.get())) {
                         System.out.println("--> Found submodule: qttools / " + entry.getKey() + "; " +
                                 "qdocconf: " + qdocconfOptionalPath.get());
-                        modules.add(moduleEntry);
+                        modules.add(new Pair<>(directory, qdocconfOptionalPath.get()));
+                        module_paths.add(qdocconfOptionalPath.get());
                     }
                 }
 
@@ -202,11 +203,10 @@ public class QDocHandler {
                     }
 
                     // Everything seems OK: push this module so that it will be handled later on.
-                    Path qdocconfPath = qdocconfOptionalPath.get();
-                    Pair<String, Path> moduleEntry = new Pair<>(directory, qdocconfPath);
-                    if (!modules.contains(moduleEntry)) {
-                        System.out.println("--> Found submodule: " + directory + " / " + submodule.first + "; qdocconf: " + qdocconfPath);
-                        modules.add(moduleEntry);
+                    if (!module_paths.contains(qdocconfOptionalPath.get())) {
+                        System.out.println("--> Found submodule: " + directory + " / " + submodule.first + "; qdocconf: " + qdocconfOptionalPath.get());
+                        modules.add(new Pair<>(directory, qdocconfOptionalPath.get()));
+                        module_paths.add(qdocconfOptionalPath.get());
                     }
 
                     hasFoundQdocconfModule = true;
@@ -247,11 +247,10 @@ public class QDocHandler {
                 }
 
                 // Everything seems OK: push this module so that it will be handled later on.
-                Path qdocconfPath = qdocconfOptionalPath.get();
-                Pair<String, Path> moduleEntry = new Pair<>(directory, qdocconfPath);
-                if (!modules.contains(moduleEntry)) {
-                    System.out.println("--> Found module: " + directory + "; qdocconf: " + qdocconfPath);
-                    modules.add(moduleEntry);
+                if (!module_paths.contains(qdocconfOptionalPath.get())) {
+                    System.out.println("--> Found module: " + directory + "; qdocconf: " + qdocconfOptionalPath.get());
+                    modules.add(new Pair<>(directory, qdocconfOptionalPath.get()));
+                    module_paths.add(qdocconfOptionalPath.get());
                 }
                 hasFoundQdocconfModule = true;
             }
@@ -272,11 +271,11 @@ public class QDocHandler {
                     continue;
                 }
 
-                Pair<String, Path> moduleEntry = new Pair<>("qtbase", qdocconfPath);
-                if (!modules.contains(moduleEntry)) {
+                if (!module_paths.contains(qdocconfPath)) {
                     System.out.println("--> Found submodule: qtbase / " + entry.getKey() + "; " +
                             "qdocconf: " + qdocconfPath);
-                    modules.add(moduleEntry);
+                    modules.add(new Pair<>("qtbase", qdocconfPath));
+                    module_paths.add(qdocconfPath);
                 }
             }
         }
