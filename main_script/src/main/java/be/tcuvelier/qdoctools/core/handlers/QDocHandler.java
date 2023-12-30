@@ -365,9 +365,10 @@ public class QDocHandler {
         return includeDirs;
     }
 
+    // Write a list of the .qdocconf files that must be generated in the qdoc run.
     public Path makeMainQdocconf(@NotNull List<Pair<String, Path>> modules) throws WriteQdocconfException {
-        // Write a list of the .qdocconf files that must be generated in the qdoc run.
-        modules.sort(Comparator.comparing(a -> a.first));
+        // modules may be immutable, no way to tell, hence always make a copy.
+        modules = modules.stream().sorted(Comparator.comparing(a -> a.first)).toList();
         try {
             Files.write(mainQdocconfPath,
                     modules.stream().map(m -> m.second.toString()).collect(Collectors.joining("\n"

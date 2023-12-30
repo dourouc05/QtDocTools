@@ -35,9 +35,14 @@ public class QDocCore {
 
         // Explore the source directory for the qdocconf files.
         System.out.println("++> Looking for qdocconf files");
-        Pair<List<Pair<String, Path>>, List<String>> modules_and_directories = q.findModules();
-        List<Pair<String, Path>> modules = modules_and_directories.first;
+        List<Pair<String, Path>> modules = q.findModules().first;
         System.out.println("++> " + modules.size() + " modules found");
+
+        // Disable Qt for Education: qdoc fails with that one. Error message:
+        //     qdoc can't run; no project set in qdocconf file
+        System.out.println("++> Filtering problematic modules");
+        modules = modules.stream().filter(pair -> pair.second.toString().contains("qtforeducation.qdocconf")).toList();
+        System.out.println("++> " + modules.size() + " modules kept");
 
         // Run qdoc to get the DocBook output.
         if (convertToDocBook) {
