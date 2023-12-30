@@ -523,12 +523,10 @@ public class QDocHandler {
         for (String includePath : cppCompilerIncludes) {
             // https://bugreports.qt.io/browse/QTCREATORBUG-20903
             // Clang includes must come before GCC includes.
-            params.add("-I");
-            params.add(includePath);
+            params.add("-I" + includePath);
         }
         for (String includePath : findIncludes()) {
-            params.add("-I");
-            params.add(includePath);
+            params.add("-I" + includePath);
         }
         ProcessBuilder pb = new ProcessBuilder(params);
 
