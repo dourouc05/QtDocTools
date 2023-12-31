@@ -410,6 +410,20 @@ public class QDocHandler {
     }
 
     private Pair<Integer, String> runCommandAndReturnCodeAndLogs(ProcessBuilder pb, String logFileName) throws IOException, InterruptedException {
+        int commandLength = 0;
+        for (int i = 0; i < pb.command().size(); i++) {
+            // Arguments and quotes.
+            commandLength += pb.command().get(i).length() + 2;
+            // Space between arguments.
+            if (i > 0) {
+                commandLength += 1;
+            }
+        }
+        if (commandLength >= 32768) {
+            System.out.println("!!> Command and arguments are too long for some platforms! Number of characters: " + commandLength);
+            System.out.println("!!> Think about --reduce-include-list-size");
+        }
+
         Process process = pb.start();
         StringBuffer sb = new StringBuffer(); // Will be written to from multiple threads, hence
         // StringBuffer instead of StringBuilder.
