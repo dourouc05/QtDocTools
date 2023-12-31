@@ -44,7 +44,7 @@ public class QDocCore {
         // Disable Qt for Education: qdoc fails with that one. Error message:
         //     qdoc can't run; no project set in qdocconf file
         System.out.println("++> Filtering problematic modules");
-        modules = modules.stream().filter(pair -> pair.second.toString().contains("qtforeducation.qdocconf")).toList();
+        modules = modules.stream().filter(pair -> !pair.second.toString().contains("qtforeducation.qdocconf")).toList();
         System.out.println("++> " + modules.size() + " modules kept");
 
         // Run qdoc to get the DocBook output.
