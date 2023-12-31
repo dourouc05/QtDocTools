@@ -21,8 +21,10 @@ import java.util.List;
 
 public class QDocCore {
     public static void call(String source, String installed, String output, String htmlVersion,
-            QtVersion qtVersion, boolean qdocDebug, boolean validate, boolean convertToDocBook,
-            boolean convertToDvpML, boolean checkConsistency, GlobalConfiguration config)
+                            QtVersion qtVersion, boolean qdocDebug, boolean reduceIncludeListSize,
+                            boolean validate, boolean convertToDocBook,
+                            boolean convertToDvpML, boolean checkConsistency,
+                            GlobalConfiguration config)
             throws SaxonApiException, IOException, InterruptedException,
             ParserConfigurationException, SAXException {
         // Perform the conversion cycle, as complete as required.
@@ -31,7 +33,8 @@ public class QDocCore {
         List<String> includes = config.getCppCompilerIncludes();
         includes.addAll(config.getNdkIncludes());
         QDocHandler q = new QDocHandler(source, installed, output, htmlVersion,
-                config.getQDocLocation(), qtVersion, qdocDebug, includes, config);
+                config.getQDocLocation(), qtVersion, qdocDebug, reduceIncludeListSize,
+                includes, config);
 
         // Explore the source directory for the qdocconf files.
         System.out.println("++> Looking for qdocconf files");

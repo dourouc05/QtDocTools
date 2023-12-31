@@ -37,11 +37,12 @@ public class QDocHandler {
     private final String qdocPath;
     private final QtVersion qtVersion;
     private final boolean qdocDebug;
+    private final boolean reduceIncludeListSize;
     private final List<String> cppCompilerIncludes;
     private final GlobalConfiguration config;
 
     public QDocHandler(String source, String installed, String output, String htmlVersion, String qdocPath,
-            QtVersion qtVersion, boolean qdocDebug, List<String> cppCompilerIncludes, GlobalConfiguration config)
+            QtVersion qtVersion, boolean qdocDebug, boolean reduceIncludeListSize, List<String> cppCompilerIncludes, GlobalConfiguration config)
             throws IOException {
         sourceFolder = Paths.get(source);
         installedFolder = Paths.get(installed);
@@ -60,6 +61,7 @@ public class QDocHandler {
         this.qdocPath = qdocPath; // TODO: either read this from `config` or from `installed`.
         this.qtVersion = qtVersion;
         this.qdocDebug = qdocDebug;
+        this.reduceIncludeListSize = reduceIncludeListSize;
         this.cppCompilerIncludes = cppCompilerIncludes;
 
         // TODO: for qtAttributionsScannerPath, qdocPath, test whether you can run these binaries (i.e. they don't

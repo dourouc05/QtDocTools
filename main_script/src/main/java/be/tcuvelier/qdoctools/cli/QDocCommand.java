@@ -24,6 +24,11 @@ public class QDocCommand implements Callable<Void> {
     @Option(names = "--qdoc-debug",
             description = "Run QDoc in debug mode")
     private boolean qdocDebug = false;
+    @Option(names = "--reduce-include-list-size",
+            description = "Reduce the size of the include list. This is useful when the list of " +
+                    "arguments to QDoc starts getting out of control, as some platforms will " +
+                    "limit the size of the argument list")
+    private boolean reduceIncludeListSize = false;
     @Option(names = "--no-validation",
             description = "Disables the validation of the output against a known XSD or RNG at " +
                     "all steps")
@@ -59,7 +64,8 @@ public class QDocCommand implements Callable<Void> {
             ParserConfigurationException, SAXException {
         GlobalConfiguration config = new GlobalConfiguration(configurationFile);
         QDocCore.call(source, installed, output, htmlVersion, qtVersion, qdocDebug,
-                validate, convertToDocBook, checkConsistency, convertToDvpML, config);
+                reduceIncludeListSize, validate, convertToDocBook, checkConsistency,
+                convertToDvpML, config);
         return null;
     }
 }
