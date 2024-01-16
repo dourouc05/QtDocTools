@@ -700,24 +700,50 @@ public class QDocHandler {
         int nFilesIgnored = 0;
 
         for (Path filePath : findDocBook()) {
-            boolean abandon = false;
             boolean hasMatched = false;
             String file = Files.readString(filePath);
 
             nFiles += 1;
 
             if (file.isEmpty()) {
-                abandon = true;
-            }
-
-            // if (! abandon) {
-            //     ;
-            // }
-
-            if (abandon) {
                 nFilesIgnored += 1;
                 continue;
             }
+
+            // <db:img src="images/happy.gif"/>
+            // \inlineimage happy.gif
+            {
+                Pattern regex = Pattern.compile("<db:img src=\"images/happy.gif\"/>");
+                Matcher matches = regex.matcher(file);
+                if (matches.matches()) {
+                    hasMatched = true;
+                    //noinspection RedundantEscapeInRegexReplacement
+                    file = matches.replaceAll("\\inlineimage happy.gif");
+                }
+            }
+
+            // <db:emphasis&#246;/>
+            // <db:emphasis>&#246;</db:emphasis>
+            {
+                Pattern regex = Pattern.compile("<db:emphasis&#246;/>");
+                Matcher matches = regex.matcher(file);
+                if (matches.matches()) {
+                    hasMatched = true;
+                    file = matches.replaceAll("<db:emphasis>&#246;</db:emphasis>");
+                }
+            }
+
+            // xlink:to="Qt for QNX"
+            // xlink:to="qnx.xml"
+            {
+                Pattern regex = Pattern.compile("xlink:to=\"Qt for QNX\"");
+                Matcher matches = regex.matcher(file);
+                if (matches.matches()) {
+                    hasMatched = true;
+                    file = matches.replaceAll("xlink:to=\"qnx.xml\"");
+                }
+            }
+
             if (!hasMatched) {
                 // This file has not changed: no need to have a back-up file or to spend time
                 // writing on disk.
