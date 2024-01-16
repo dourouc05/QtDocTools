@@ -744,6 +744,25 @@ public class QDocHandler {
                 }
             }
 
+            // <db:section><db:title>Universal.accent : color</db:title><db:fieldsynopsis><db:type>color</db:type>
+            // <db:varname>Universal.accent</db:varname></db:fieldsynopsis>
+            // <db:anchor xml:id="universal-accent-attached-prop"/>
+            // ->
+            // <db:section xml:id="universal-accent-attached-prop"><db:title>Universal.accent : color</db:title>
+            // <db:fieldsynopsis><db:type>color</db:type><db:varname>Universal.accent</db:varname></db:fieldsynopsis>
+            // More generic!
+            {
+                Pattern regex = Pattern.compile(
+                        "<db:section><db:title>(.*) : (.*)</db:title><db:fieldsynopsis><db:type>(.*)</db:type><db:varname>(.*)</db:varname></db:fieldsynopsis><db:anchor xml:id=\"(.*)\"/>");
+                Matcher matches = regex.matcher(file);
+                if (matches.matches()) {
+                    hasMatched = true;
+                    // TODO: assert that $1 == $4 and $1 == $2.
+                    file = matches.replaceAll(
+                            "<db:section xml:id=\"$5\"><db:title>$1 : $2</db:title><db:fieldsynopsis><db:type>$3</db:type><db:varname>$4</db:varname></db:fieldsynopsis>");
+                }
+            }
+
             if (!hasMatched) {
                 // This file has not changed: no need to have a back-up file or to spend time
                 // writing on disk.
