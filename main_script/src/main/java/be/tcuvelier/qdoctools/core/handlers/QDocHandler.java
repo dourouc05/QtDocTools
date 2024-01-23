@@ -749,7 +749,7 @@ public class QDocHandler {
                 if (matches.find()) {
                     hasMatched = true;
                     //noinspection RedundantEscapeInRegexReplacement
-                    fileContents = matches.replaceAll("\\inlineimage happy.gif");
+                    fileContents = matches.replaceAll("\\\\inlineimage happy.gif");
                 }
             }
 
