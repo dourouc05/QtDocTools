@@ -702,24 +702,54 @@ public class QDocHandler {
 
         for (Path filePath : findDocBook()) {
             boolean hasMatched = false;
-            String file = Files.readString(filePath);
+            String fileContents = Files.readString(filePath);
 
             nFiles += 1;
 
-            if (file.isEmpty()) {
+            if (fileContents.isEmpty()) {
                 nFilesIgnored += 1;
                 continue;
+            }
+
+            // <db:para><db:para>QXmlStreamReader is part of <db:simplelist><db:member>xml-tools</db:member>
+            // <db:member>qtserialization</db:member></db:simplelist></db:para>
+            // </db:para>
+            // ->
+            // <db:para>QXmlStreamReader is part of <db:simplelist><db:member>xml-tools</db:member>
+            // <db:member>qtserialization</db:member></db:simplelist></db:para>
+            // More generic! Before https://codereview.qt-project.org/c/qt/qttools/+/527899.
+            {
+                Pattern regex = Pattern.compile(
+                        "<db:para><db:para>(.*) is part of <db:simplelist>(.*)</db:simplelist></db:para>\n" +
+                        "</db:para>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+
+                    fileContents = matches.replaceAll("<db:para>$1 is part of <db:simplelist>$2</db:simplelist></db:para>");
+                }
+            }
+
+            //  xml:id=""
+            // Nothing.
+            {
+                Pattern regex = Pattern.compile(" xml:id=\"\"");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("");
+                }
             }
 
             // <db:img src="images/happy.gif"/>
             // \inlineimage happy.gif
             {
-                Pattern regex = Pattern.compile("<db:img src=\"images/happy.gif\"/>");
-                Matcher matches = regex.matcher(file);
-                if (matches.matches()) {
+                Pattern regex = Pattern.compile("<db:img src=\"images/happy\\.gif\"/>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
                     hasMatched = true;
                     //noinspection RedundantEscapeInRegexReplacement
-                    file = matches.replaceAll("\\inlineimage happy.gif");
+                    fileContents = matches.replaceAll("\\inlineimage happy.gif");
                 }
             }
 
@@ -727,10 +757,10 @@ public class QDocHandler {
             // <db:emphasis>&#246;</db:emphasis>
             {
                 Pattern regex = Pattern.compile("<db:emphasis&#246;/>");
-                Matcher matches = regex.matcher(file);
-                if (matches.matches()) {
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
                     hasMatched = true;
-                    file = matches.replaceAll("<db:emphasis>&#246;</db:emphasis>");
+                    fileContents = matches.replaceAll("<db:emphasis>&#246;</db:emphasis>");
                 }
             }
 
@@ -738,10 +768,10 @@ public class QDocHandler {
             // xlink:to="qnx.xml"
             {
                 Pattern regex = Pattern.compile("xlink:to=\"Qt for QNX\"");
-                Matcher matches = regex.matcher(file);
-                if (matches.matches()) {
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
                     hasMatched = true;
-                    file = matches.replaceAll("xlink:to=\"qnx.xml\"");
+                    fileContents = matches.replaceAll("xlink:to=\"qnx.xml\"");
                 }
             }
 
@@ -755,11 +785,11 @@ public class QDocHandler {
             {
                 Pattern regex = Pattern.compile(
                         "<db:section><db:title>(.*) : (.*)</db:title><db:fieldsynopsis><db:type>(.*)</db:type><db:varname>(.*)</db:varname></db:fieldsynopsis><db:anchor xml:id=\"(.*)\"/>");
-                Matcher matches = regex.matcher(file);
-                if (matches.matches()) {
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
                     hasMatched = true;
                     // TODO: assert that $1 == $4 and $1 == $2.
-                    file = matches.replaceAll(
+                    fileContents = matches.replaceAll(
                             "<db:section xml:id=\"$5\"><db:title>$1 : $2</db:title><db:fieldsynopsis><db:type>$3</db:type><db:varname>$4</db:varname></db:fieldsynopsis>");
                 }
             }
@@ -774,11 +804,11 @@ public class QDocHandler {
             {
                 Pattern regex = Pattern.compile(
                         "<db:section xml:id=\"(.*)\"><db:title>(.*) : (.*)</db:title><db:fieldsynopsis><db:type>(.*)</db:type><db:varname>(.*)</db:varname></db:fieldsynopsis><db:anchor xml:id=\"(.*)\"/>");
-                Matcher matches = regex.matcher(file);
-                if (matches.matches()) {
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
                     hasMatched = true;
                     // TODO: assert that $1 == $6 and $2 == $5 and $2 == $3.
-                    file = matches.replaceAll(
+                    fileContents = matches.replaceAll(
                             "<db:section xml:id=\"$1\"><db:title>$2 : $3</db:title><db:fieldsynopsis><db:type>$4</db:type><db:varname>$5</db:varname></db:fieldsynopsis>");
                 }
             }
@@ -794,7 +824,7 @@ public class QDocHandler {
             if (!fileBackUp.toFile().exists()) {
                 Files.move(filePath, fileBackUp);
             }
-            Files.write(filePath, file.getBytes());
+            Files.write(filePath, fileContents.getBytes());
         }
 
         System.out.println("++> " + nFiles + " postprocessed, " +
@@ -805,18 +835,18 @@ public class QDocHandler {
         int nFiles = 0;
         int nEmptyFiles = 0;
         int nValidFiles = 0;
-        for (Path file : findDocBook()) {
+        for (Path filePath : findDocBook()) {
             nFiles += 1;
-            if (Files.size(file) == 0) {
+            if (Files.size(filePath) == 0) {
                 // Validation can only fail for empty files.
                 nEmptyFiles += 1;
                 continue;
             }
 
-            if (ValidationHelper.validateDocBook(file, config)) {
+            if (ValidationHelper.validateDocBook(filePath, config)) {
                 nValidFiles += 1;
             } else {
-                System.out.println("!!> Invalid file: " + file);
+                System.out.println("!!> Invalid file: " + filePath);
             }
         }
         System.out.println("++> " + nFiles + " validated, " +
