@@ -15,10 +15,7 @@ import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
@@ -644,8 +641,10 @@ public class QDocHandler {
                     try {
                         Files.copy(f.toPath(), destination);
                     } catch (FileAlreadyExistsException e) {
+                        // TODO: add a CLI option to control overwriting.
                         System.out.println("!!> File already exists: " + destination + ". Tried " +
-                                "to copy from: " + f);
+                                "to copy from: " + f + ". Retrying.");
+                        Files.copy(f.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
                     }
                 }
             }
@@ -687,7 +686,9 @@ public class QDocHandler {
             try {
                 Files.copy(f.toPath(), d);
             } catch (FileAlreadyExistsException e) {
-                System.out.println("!!> File already exists: " + d + ". Tried to copy from: " + f);
+                // TODO: add a CLI option to control overwriting.
+                System.out.println("!!> File already exists: " + d + ". Tried to copy from: " + f + ". Retrying.");
+                Files.copy(f.toPath(), d, StandardCopyOption.REPLACE_EXISTING);
             }
         }
     }
