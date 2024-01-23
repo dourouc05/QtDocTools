@@ -813,6 +813,25 @@ public class QDocHandler {
                 }
             }
 
+            // </db:abstract>
+            // </db:info>
+            // </db:article>
+            // ->
+            // </db:abstract>
+            // </db:info>
+            // <db:para/>
+            // </db:article>
+            {
+                Pattern regex = Pattern.compile(
+                        "</db:abstract>\n</db:info>\n</db:article>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll(
+                            "</db:abstract>\n</db:info>\n<db:para/>\n</db:article>");
+                }
+            }
+
             // QAbstract3DGraph only, two parts.
             // ----------------------------
             // </db:itemizedlist>
@@ -860,7 +879,6 @@ public class QDocHandler {
             // Hopefully, in overviews.xml and activeqt-tools.xml, there are no true <db:variablelist>s.
             // However, this pattern also appears in licenses-used-in-qt.xml and cmake-command-reference.xml, where true <db:variablelist>s also appear.
             // The only occurrence is in the middle of licenses-used-in-qt.xml (or at the end for cmake-command-reference.xml), with true <db:variablelist>s both before and after.
-            // Let a human deal with the cases other than overviews.xml (the most painful one to fix). Sorry future me.
             // https://codereview.qt-project.org/c/qt/qttools/+/527900
             if (filePath.toString().contains("overviews.xml") || filePath.toString().contains("activeqt-tools.xml")) {
                 Pattern regex = Pattern.compile(
@@ -869,6 +887,56 @@ public class QDocHandler {
                 if (matches.find()) {
                     hasMatched = true;
                     fileContents = fileContents.replaceAll("db:variablelist", "db:itemizedlist");
+                }
+            }
+            if (filePath.toString().contains("licenses-used-in-qt.xml")) {
+                Pattern regex = Pattern.compile(
+                        """
+                                <db:variablelist role="annotatedattributions">
+                                <db:listitem>
+                                <db:para><db:link xlink:href="qtsvg-svggenerator-example.xml" xlink:role="page">SVG Generator Example</db:link></db:para>
+                                </db:listitem>
+                                <db:listitem>
+                                <db:para><db:link xlink:href="qtsvg-svgviewer-example.xml" xlink:role="page">SVG Viewer Example</db:link></db:para>
+                                </db:listitem>
+                                <db:listitem>
+                                <db:para><db:link xlink:href="qtsvg-richtext-textobject-example.xml" xlink:role="page">Text Object Example</db:link></db:para>
+                                </db:listitem>
+                                </db:variablelist>""");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll(
+                            """
+                            <db:itemizedlist role="annotatedattributions">
+                            <db:listitem>
+                            <db:para><db:link xlink:href="qtsvg-svggenerator-example.xml" xlink:role="page">SVG Generator Example</db:link></db:para>
+                            </db:listitem>
+                            <db:listitem>
+                            <db:para><db:link xlink:href="qtsvg-svgviewer-example.xml" xlink:role="page">SVG Viewer Example</db:link></db:para>
+                            </db:listitem>
+                            <db:listitem>
+                            <db:para><db:link xlink:href="qtsvg-richtext-textobject-example.xml" xlink:role="page">Text Object Example</db:link></db:para>
+                            </db:listitem>
+                            </db:itemizedlist>""");
+                }
+            }
+            if (filePath.toString().contains("cmake-command-reference.xml")) {
+                Pattern regex = Pattern.compile("""
+                        <db:variablelist role="cmake-macros-qtscxml">
+                        <db:listitem>
+                        <db:para><db:link xlink:href="qtscxml-cmake-qt-add-statecharts.xml" xlink:role="page">qt_add_statecharts</db:link></db:para>
+                        </db:listitem>
+                        </db:variablelist>""");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("""
+                            <db:itemizedlist role="cmake-macros-qtscxml">
+                            <db:listitem>
+                            <db:para><db:link xlink:href="qtscxml-cmake-qt-add-statecharts.xml" xlink:role="page">qt_add_statecharts</db:link></db:para>
+                            </db:listitem>
+                            </db:itemizedlist>""");
                 }
             }
 
