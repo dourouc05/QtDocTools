@@ -813,6 +813,65 @@ public class QDocHandler {
                 }
             }
 
+            // QAbstract3DGraph only, two parts.
+            // ----------------------------
+            // </db:itemizedlist>
+            // </db:td>
+            // <db:tr>
+            // <db:td>
+            // <db:para>
+            // Add a </db:tr>.
+            // ----------------------------
+            // </db:tr>
+            // </db:tr>
+            // <db:para>The <db:code>SelectionFlags</db:code> type is a typedef for
+            // <db:code><db:link xlink:href="qflags.xml">QFlags</db:link>&lt;SelectionFlag&gt;. </db:code>
+            // It stores an OR combination of <db:code>SelectionFlag</db:code> values.</db:para>
+            // </db:informaltable>
+            // Replace a double </db:tr>, move </db:informaltable> before the paragraph.
+            // ----------------------------
+            // https://bugreports.qt.io/browse/QTBUG-120457
+            {
+                Pattern regex = Pattern.compile(
+                        "</db:itemizedlist>\n</db:td>\n<db:tr>\n<db:td>\n<db:para>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll(
+                            "</db:itemizedlist>\n</db:td>\n</db:tr>\n<db:tr>\n<db:td>\n<db:para>");
+                }
+            }
+            {
+                Pattern regex = Pattern.compile(
+                        "</db:tr>\n</db:tr>\n<db:para>(.*)</db:para>\n</db:informaltable>\n<db:section");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll(
+                            "</db:tr>\n</db:informaltable>\n<db:para>$1</db:para>\n<db:section");
+                }
+            }
+
+            // overviews.xml and licenses-used-in-qt.xml and cmake-command-reference.xml and activeqt-tools.xml.
+            // <db:variablelist role="explanations-positioning">
+            // <db:listitem>
+            // Replace by a <db:itemizedlist>, but also the closing tag
+            // Hence, a simple regex doesn't capture enough.
+            // Hopefully, in overviews.xml and activeqt-tools.xml, there are no true <db:variablelist>s.
+            // However, this pattern also appears in licenses-used-in-qt.xml and cmake-command-reference.xml, where true <db:variablelist>s also appear.
+            // The only occurrence is in the middle of licenses-used-in-qt.xml (or at the end for cmake-command-reference.xml), with true <db:variablelist>s both before and after.
+            // Let a human deal with the cases other than overviews.xml (the most painful one to fix). Sorry future me.
+            // https://codereview.qt-project.org/c/qt/qttools/+/527900
+            if (filePath.toString().contains("overviews.xml") || filePath.toString().contains("activeqt-tools.xml")) {
+                Pattern regex = Pattern.compile(
+                        "<db:variablelist role=\"(.*)\">\n<db:listitem>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = fileContents.replaceAll("db:variablelist", "db:itemizedlist");
+                }
+            }
+
             if (!hasMatched) {
                 // This file has not changed: no need to have a back-up file or to spend time
                 // writing on disk.
