@@ -122,7 +122,7 @@ public class QDocCore {
                 h.createTransformer(file, destination, os).transform();
 
                 String errors = os.toString(StandardCharsets.UTF_8);
-                if (errors.length() > 0) {
+                if (!errors.isEmpty()) {
                     System.out.println(errors);
                 }
 

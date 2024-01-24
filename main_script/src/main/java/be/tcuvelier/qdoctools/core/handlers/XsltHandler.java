@@ -104,7 +104,7 @@ public class XsltHandler {
 
         // If there were errors, print them out.
         String errors = os.toString(StandardCharsets.UTF_8);
-        if (errors.length() > 0) {
+        if (!errors.isEmpty()) {
             System.err.println(errors);
         }
     }
