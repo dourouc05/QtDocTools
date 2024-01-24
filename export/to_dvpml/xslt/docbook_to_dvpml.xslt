@@ -149,6 +149,7 @@
           <xsl:choose>
             <xsl:when test="$hasTextBeforeSection">
               <!-- A document must have a section in DvpML, not necessarily in DocBook. -->
+              <!-- TODO: the previous comment is wrong. -->
               <section id="{generate-id()}" noNumber="1">
                 <title>
                   <xsl:value-of select="

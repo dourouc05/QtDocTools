@@ -11,6 +11,6 @@
   </xsl:template>
 
   <xsl:template mode="content_para_no_formatting"
-    match="db:footnote | db:indexterm | db:biblioref | db:inlinemediaobject | db:xref | db:anchor | db:inlineequation"
+    match="db:footnote | db:indexterm | db:biblioref | db:inlinemediaobject | db:xref | db:anchor | db:inlineequation | db:titleabbrev"
   />
 </xsl:stylesheet>
