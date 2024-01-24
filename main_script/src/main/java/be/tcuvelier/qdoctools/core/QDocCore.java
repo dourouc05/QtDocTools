@@ -127,6 +127,7 @@ public class QDocCore {
                         }
                     } catch (SAXException e) {
                         System.out.println(FormattingHelpers.prefix(i, xml) + " Validation error!");
+                        //noinspection CallToPrintStackTrace
                         e.printStackTrace();
                     }
                 }

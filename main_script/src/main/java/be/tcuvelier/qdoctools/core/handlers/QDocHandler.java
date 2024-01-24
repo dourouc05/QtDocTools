@@ -748,7 +748,6 @@ public class QDocHandler {
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
                     hasMatched = true;
-                    //noinspection RedundantEscapeInRegexReplacement
                     fileContents = matches.replaceAll("\\\\inlineimage happy.gif");
                 }
             }
