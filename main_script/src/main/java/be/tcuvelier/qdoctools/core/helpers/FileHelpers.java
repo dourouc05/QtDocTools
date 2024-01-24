@@ -14,7 +14,7 @@ public class FileHelpers {
     }
 
     public static boolean isDocBook(String path) {
-        // Check the extension: it sometimes is sufficient to conclude.
+        // Check the extension: it is sometimes sufficient to conclude.
         boolean extensionOK = path.endsWith(".db") || path.endsWith(".dbk") || path.endsWith(
                 ".xml");
         if (extensionOK) {
@@ -107,13 +107,21 @@ public class FileHelpers {
         }
     }
 
+    public static String removeExtension(Path file) {
+        return removeExtension(file.getFileName().toString());
+    }
+
+    public static String removeExtension(String file) {
+        return file.replaceFirst("[.][^.]+$", "");
+    }
+
     public static String changeExtension(Path file, String extension) {
         return changeExtension(file.getFileName().toString(), extension);
     }
 
     public static String changeExtension(String file, String extension) {
         assert extension.startsWith(".");
-        return file.replaceFirst("[.][^.]+$", "") + extension;
+        return removeExtension(file) + extension;
     }
 
     public static String generateOutputFilename(Path input, TransformCore.Format outputFormat) {
