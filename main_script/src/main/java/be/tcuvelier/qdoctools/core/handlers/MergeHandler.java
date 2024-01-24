@@ -15,12 +15,12 @@ public class MergeHandler {
     public static void mergeAfterProofreading(String original, String altered, String merged,
             GlobalConfiguration config)
             throws SaxonApiException, MalformedURLException, ConfigurationMissingField {
-        XsltTransformer trans =
-                new XsltHandler(new QdtPaths(config).getXsltMergeAfterProofreading())
-                .createTransformer(altered, merged, null);
-        trans.setParameter(new QName("originalDocument"),
-                new XdmAtomicValue(new File(original).toURI().toURL().toString()));
-        trans.transform();
+//        XsltTransformer trans =
+//                new XsltHandler(new QdtPaths(config).getXsltMergeAfterProofreading())
+//                .createTransformer(altered, merged, null);
+//        trans.setParameter(new QName("originalDocument"),
+//                new XdmAtomicValue(new File(original).toURI().toURL().toString()));
+//        trans.transform();
     }
 
     public static void mergeUpdateQt() {

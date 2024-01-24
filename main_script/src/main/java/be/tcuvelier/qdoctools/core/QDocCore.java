@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 
 public class QDocCore {
     public static void call(String source, String installed, String output, String htmlVersion,
@@ -114,13 +115,7 @@ public class QDocCore {
                 System.out.println(FormattingHelpers.prefix(i, xml) + " " + file);
 
                 // Actually convert the DocBook into DvpML. This may print errors directly to stderr.
-                ByteArrayOutputStream os = new ByteArrayOutputStream();
-                h.createTransformer(file, destination, os).transform();
-
-                String errors = os.toString(StandardCharsets.UTF_8);
-                if (!errors.isEmpty()) {
-                    System.out.println(errors);
-                }
+                h.transform(file.toFile(), destination.toFile(), Map.of());
 
                 // Handle validation.
                 if (validate) {

@@ -15,6 +15,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -39,7 +40,7 @@ public class TransformHelpers {
             }
         }
 
-        new XsltHandler(new QdtPaths(config).getXsltFromDvpMLPath()).transform(input, output);
+        new XsltHandler(new QdtPaths(config).getXsltFromDvpMLPath()).transform(new File(input), new File(output), Map.of());
     }
 
     private static Map<String, Object> getTemplateParameters(ArticleConfiguration conf)
@@ -114,7 +115,7 @@ public class TransformHelpers {
             InconsistentConfiguration {
         try {
             ArticleConfiguration conf = new ArticleConfiguration(input);
-            new XsltHandler(new QdtPaths(config).getXsltToDvpMLPath()).transform(input, output,
+            new XsltHandler(new QdtPaths(config).getXsltToDvpMLPath()).transform(new File(input), new File(output),
                     getTemplateParameters(conf));
         } catch (FileNotFoundException e) {
             System.err.println("There is no configuration file for the article " + input);
