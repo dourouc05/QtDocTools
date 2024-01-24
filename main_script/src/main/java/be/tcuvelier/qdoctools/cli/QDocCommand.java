@@ -55,8 +55,8 @@ public class QDocCommand implements Callable<Void> {
             description = "Output folder (DocBook files)", required = true)
     private String output;
     @Option(names = {"-d", "--dvpml-output-folder"},
-            description = "Output folder (DvpML files)", required = true)
-    private String dvpmlOutput;
+            description = "Output folder (DvpML files)")
+    private String dvpmlOutput = output;
     @Option(names = {"-h", "--html-folder"},
             description = "HTML-version folder (already generated documentation; it will not be" +
                     " created by this tool), typically found near your Qt installation")
