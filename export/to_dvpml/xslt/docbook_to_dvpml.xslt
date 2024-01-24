@@ -9,8 +9,14 @@
   <xsl:output method="xml" indent="yes" suppress-indentation="inline link i b u paragraph code"/>
   <xsl:import-schema schema-location="../../../schemas/dvpml/article.xsd"
     use-when="system-property('xsl:is-schema-aware') = 'yes'"/>
+    
+  <!-- Global sheet parameters without document-specific defaults (e.g., from a configuration file). -->
+  <xsl:param name="configuration-file-name" as="xs:string" select="''"/>
+  <xsl:param name="document-file-name" as="xs:string" select="''"/>
+  <xsl:param name="doc-qt" as="xs:boolean" select="false()"/>
+  <xsl:param name="qt-version" select="''"/>
   
-  <!-- Load the configuration file. -->
+  <!-- Load the configuration file if there is one. -->
   <xsl:variable name="document" select="."/>
   <xsl:variable name="json-document-uri">
     <xsl:variable name="xml-uri" as="xs:string" select="base-uri()"/>
@@ -31,33 +37,43 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
-  <xsl:variable name="json-document" select="json-doc($json-document-uri)"/>
-
-  <!-- Global sheet parameters without document-specific defaults (e.g., from a configuration file). -->
-  <xsl:param name="configuration-file-name" as="xs:string" select="''"/>
-  <xsl:param name="document-file-name" as="xs:string" select="''"/>
-  <xsl:param name="doc-qt" as="xs:boolean" select="false()"/>
-  
-  <xsl:variable name="qt-url">
-    <xsl:variable name="document-qdt-name" select="tokenize(base-uri(), '/')[last()]"/>
-    <xsl:variable name="document-url" select="tokenize($document-qdt-name, '\.')[1]"/>
-    <xsl:value-of
-      select="concat(lower-case($document/db:article/db:info/db:productname), '/', $document/db:article/db:info/db:productnumber, '/', $document-url)"
-    />
+  <xsl:variable name="json-document" as="map(*)">
+    <xsl:choose>
+      <xsl:when test="doc-available($json-document-uri)"><xsl:copy-of select="parse-json($json-document-uri)"/></xsl:when>
+      <xsl:when test="$doc-qt">
+        <xsl:map>
+          <xsl:map-entry key="'section'" select="65"/>
+          <xsl:map-entry key="'license-number'" select="-1"/>
+          <xsl:map-entry key="'license-year'" select="-1"/>
+          <xsl:map-entry key="'license-author'" select="''"/>
+          <xsl:map-entry key="'license-text'">
+            Ce document est disponible sous la licence <link href="https://www.gnu.org/licenses/fdl-1.3.html">GNU Free Documentation License version 1.3</link> telle que publiée par la Free Software Foundation.
+          </xsl:map-entry>
+          <xsl:map-entry key="'forum-topic'" select="-1"/>
+          <xsl:map-entry key="'forum-post'" select="-1"/>
+          <xsl:map-entry key="'ftp-user'" select="'qt'"/>
+          <xsl:map-entry key="'ftp-folder'" select="concat('doc/', $qt-version, '/', $document-file-name, '/')"/>
+          <xsl:map-entry key="'google-analytics'" select="''"/>
+          <xsl:map-entry key="'related'" select="''"/>
+        </xsl:map>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:message terminate="yes">ERROR: No JSON file found! Expected path: <xsl:value-of select="$json-document-uri"/></xsl:message>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:variable>
 
   <!-- Global sheet parameters with default values from the JSON file. -->
-  <!-- TODO: think about storing these values within the XML file as processing instructions. -->
-  <!-- TODO: for Qt doc, to remove the special case, think of creating JSON docs too. -->
+  <!-- TODO: how about moving the JSON reading to Java? XSLT is not the best language to process it. -->
   <xsl:param name="section" as="xs:integer" select="if ($json-document?section) then xs:integer($json-document?section) else 1"/>
   <xsl:param name="license-number" as="xs:integer" select="if ($json-document?license-number) then xs:integer($json-document?license-number) else -1"/>
   <xsl:param name="license-year" as="xs:integer" select="if ($json-document?license-year) then xs:integer($json-document?license-year) else -1"/>
   <xsl:param name="license-author" as="xs:string" select="if ($json-document?license-author) then $json-document?license-author else ''"/>
-  <xsl:param name="license-text" as="xs:string" select="if ($json-document?license-text) then $json-document?license-text else ''"/>
+  <xsl:param name="license-text" select="if ($json-document?license-text) then $json-document?license-text else ''"/>
   <xsl:param name="forum-topic" as="xs:integer" select="if ($json-document?forum-topic) then xs:integer($json-document?forum-topic) else -1"/>
   <xsl:param name="forum-post" as="xs:integer" select="if ($json-document?forum-post) then xs:integer($json-document?forum-post) else -1"/>
-  <xsl:param name="ftp-user" as="xs:string" select="if ($json-document?ftp-user) then $json-document?ftp-user else if ($doc-qt) then 'Qt' else ''"/>
-  <xsl:param name="ftp-folder" as="xs:string" select="if ($json-document?ftp-folder) then $json-document?ftp-folder else if ($qt-url) then 'Qt' else ''"/>
+  <xsl:param name="ftp-user" as="xs:string" select="if ($json-document?ftp-user) then $json-document?ftp-user else ''"/>
+  <xsl:param name="ftp-folder" as="xs:string" select="if ($json-document?ftp-folder) then $json-document?ftp-folder else ''"/>
   <xsl:param name="http-url" as="xs:string" select="concat('https://', $ftp-user, '.developpez.com/', $ftp-folder)"/>
   <xsl:param name="google-analytics" as="xs:string" select="if ($json-document?google-analytics) then $json-document?google-analytics else ''"/>
   <xsl:param name="related" as="xs:string" select="if ($json-document?related) then $json-document?related else ''"/>
@@ -98,9 +114,9 @@
     <xsl:result-document validation="lax" href="{$document-file-name}_dvp.xml">
       <document>
         <xsl:call-template name="tc:document-entete"/>
-        <xsl:call-template name="tc:document-license"/>
         <xsl:call-template name="tc:document-see-also"/>
         <xsl:call-template name="tc:document-authors"/>
+        <xsl:call-template name="tc:document-license"/>
         <xsl:call-template name="tc:document-related"/>
 
         <synopsis>
@@ -253,8 +269,8 @@
         <!-- Avoid generating a table of contents, as this page only contains a table of contents for the whole book. -->
         <xsl:with-param name="generate-summary" select="false()"/>
       </xsl:call-template>
-      <xsl:call-template name="tc:document-license"/>
       <xsl:call-template name="tc:document-authors"/>
+      <xsl:call-template name="tc:document-license"/>
       <xsl:call-template name="tc:document-related"/>
 
       <synopsis>
@@ -396,8 +412,8 @@
       <xsl:call-template name="tc:document-entete">
         <xsl:with-param name="part-number" select="$part-number"/>
       </xsl:call-template>
-      <xsl:call-template name="tc:document-license"/>
       <xsl:call-template name="tc:document-authors"/>
+      <xsl:call-template name="tc:document-license"/>
       <xsl:call-template name="tc:document-related"/>
 
       <synopsis>
@@ -681,9 +697,10 @@
       test="string-length($license-author) = 0 and $license-number &lt; 0 and $license-year &lt; 0">
       <xsl:choose>
         <!-- When license-author and the others are set, the license information is within the <entete> tag. -->
-        <xsl:when test="string-length($license-text) > 0">
+        <!-- It may either be a string or a sequence (for instance, text with a link). -->
+        <xsl:when test="not(not($license-text))">
           <licence>
-            <xsl:value-of select="$license-text"/>
+            <xsl:copy-of select="$license-text"/>
           </licence>
         </xsl:when>
         <xsl:otherwise>
