@@ -765,12 +765,21 @@ public class QDocHandler {
 
             // xlink:to="Qt for QNX"
             // xlink:to="qnx.xml"
+            // And family.
             {
                 Pattern regex = Pattern.compile("xlink:to=\"Qt for QNX\"");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
                     hasMatched = true;
                     fileContents = matches.replaceAll("xlink:to=\"qnx.xml\"");
+                }
+            }
+            {
+                Pattern regex = Pattern.compile("xlink:to=\"Desktop Integration\"");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("xlink:to=\"desktop-integration.xml\"");
                 }
             }
 
@@ -936,6 +945,58 @@ public class QDocHandler {
                             <db:para><db:link xlink:href="qtscxml-cmake-qt-add-statecharts.xml" xlink:role="page">qt_add_statecharts</db:link></db:para>
                             </db:listitem>
                             </db:itemizedlist>""");
+                }
+            }
+
+            // qml-qt5compat-graphicaleffects-gaussianblur.xml
+            // https://codereview.qt-project.org/c/qt/qt5compat/+/527903
+            if (filePath.toString().contains("qml-qt5compat-graphicaleffects-gaussianblur.xml")) {
+                Pattern regex = Pattern.compile(
+                        """
+                    <db:para><db:inlinemediaobject>
+                    <db:imageobject>
+                    <db:imagedata fileref="images/GaussianBlur_deviation_graph\\.png"/>
+                    </db:imageobject>
+                    </db:inlinemediaobject></db:para>
+                    <db:title>The image above shows the Gaussian function with two different deviation values, yellow \\(1\\) and cyan \\(2\\.7\\)\\. The y-axis shows the weights, the x-axis shows the pixel distance.</db:title>""");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("""
+                            <db:figure>
+                            <db:title>The image above shows the Gaussian function with two different deviation values, yellow (1) and cyan (2.7). The y-axis shows the weights, the x-axis shows the pixel distance.</db:title>
+                            <db:mediaobject>
+                            <db:imageobject>
+                            <db:imagedata fileref="images/GaussianBlur_deviation_graph.png"/>
+                            </db:imageobject>
+                            </db:mediaobject>
+                            </db:figure>""");
+                }
+            }
+
+            // qml-color.xml, qcolorconstants.xml
+            // <div style="padding:10px;color:#fff;background:#000000;"></div>
+            // <db:phrase role="color:#000000">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</db:phrase>
+            // https://codereview.qt-project.org/c/qt/qtdeclarative/+/421106
+            if (filePath.toString().contains("qml-color.xml") || filePath.toString().contains("qcolorconstants.xml")) {
+                Pattern regex = Pattern.compile("<div style=\"padding:10px;color:#fff;background:#(.*);\"></div>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("<db:phrase role=\"color:#$1\">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</db:phrase>");
+                }
+            }
+
+            // licenses-used-in-qt.xml
+            // <db:bridgehead renderas="sect2" xml:id="additional-information">Additional Information</db:bridgehead><db:para>
+            // Transform to a real section, close it at the end of the document. Fixed at Qt 6.5.
+            if (filePath.toString().contains("licenses-used-in-qt.xml")) {
+                Pattern regex = Pattern.compile("<db:bridgehead renderas=\"sect2\" xml:id=\"additional-information\">Additional Information</db:bridgehead><db:para>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("<db:section xml:id=\"additional-information\"><db:title>Additional Information</db:title><db:para>");
+                    fileContents = fileContents.replaceAll("</db:variablelist>\n</db:article>", "</db:variablelist>\n</db:section>\n</db:article>");
                 }
             }
 
