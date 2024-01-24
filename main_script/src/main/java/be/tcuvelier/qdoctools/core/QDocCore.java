@@ -98,13 +98,13 @@ public class QDocCore {
             // Iterate through all the files.
             System.out.println("++> Starting DocBook-to-DvpML transformation.");
             List<Path> xml = q.findDocBook();
-            XsltHandler h = new XsltHandler(new QdtPaths(config).getXsltToDvpMLPath());
 
-            if (xml.size() == 0) {
+            if (xml.isEmpty()) {
                 System.out.println("??> Have DocBook files been generated in " +
                         q.getOutputFolder() + "? There are no DocBook files there.");
             }
 
+            XsltHandler h = new XsltHandler(new QdtPaths(config).getXsltToDvpMLPath());
             int i = 0;
             for (Path file : xml) {
                 // Output the result in the same folder as before, with the same file name, just add a "dvp_" prefix.
