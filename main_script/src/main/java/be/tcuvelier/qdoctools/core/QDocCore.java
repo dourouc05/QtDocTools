@@ -98,8 +98,12 @@ public class QDocCore {
         // Run Saxon to get the DvpML output.
         if (convertToDvpML) {
             System.out.println("++> Starting DocBook-to-DvpML transformation.");
-            List<Path> xml = q.findDocBook();
 
+            if (dvpmlOutput.isEmpty()) {
+                throw new RuntimeException("Argument --dvpml-output missing when generating DvpML files for Qt docs.");
+            }
+
+            List<Path> xml = q.findDocBook();
             if (xml.isEmpty()) {
                 System.out.println("??> Have DocBook files been generated in " +
                         q.getOutputFolder() + "? There are no DocBook files there.");
