@@ -31,6 +31,7 @@ public class QDocCore {
             throws SaxonApiException, IOException, InterruptedException,
             ParserConfigurationException, SAXException {
         // Perform the conversion cycle, as complete as required.
+        // TODO: add pubdate/date.
 
         // First, initialise global objects.
         List<String> includes = config.getCppCompilerIncludes();
