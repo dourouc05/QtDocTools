@@ -22,6 +22,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+// Backup extensions:
+// - fixQDocBugs: .bak
+// - addDates: .bak2
 public class QDocHandler {
     private final Path sourceFolder; // Containing Qt's sources.
     private final Path installedFolder; // Containing a compiled and installed version of Qt.
@@ -1016,6 +1019,27 @@ public class QDocHandler {
 
         System.out.println("++> " + nFiles + " postprocessed, " +
                 nFilesRewritten + " rewritten, " + nFilesIgnored + " ignored.");
+    }
+
+    public void addDates() throws IOException {
+        // The following patterns appears only once per file:
+        // </db:abstract>
+        // </db:info>
+        // Insert the dates just there.
+        Pattern regex = Pattern.compile("</db:abstract>\n</db:info>");
+        String replacement = "</db:abstract>\n<db:pubdate>" + java.time.LocalDate.now() + "</db:pubdate>\n<db:date>" + java.time.LocalDate.now() + "</db:date>\n</db:info>";
+
+        for (Path filePath : findDocBook()) {
+            String fileContents = Files.readString(filePath);
+
+            fileContents = regex.matcher(fileContents).replaceAll(replacement);
+
+            Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak2");
+            if (!fileBackUp.toFile().exists()) {
+                Files.move(filePath, fileBackUp);
+            }
+            Files.write(filePath, fileContents.getBytes());
+        }
     }
 
     public void validateDocBook() throws IOException, SAXException {

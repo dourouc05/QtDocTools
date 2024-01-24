@@ -31,7 +31,6 @@ public class QDocCore {
             throws SaxonApiException, IOException, InterruptedException,
             ParserConfigurationException, SAXException {
         // Perform the conversion cycle, as complete as required.
-        // TODO: add pubdate/date.
 
         // First, initialise global objects.
         List<String> includes = config.getCppCompilerIncludes();
@@ -73,6 +72,7 @@ public class QDocCore {
             // TODO: fix paths when moving files from one folder to the other. (xref: .
             //  ./qtwidgets/...)
             q.fixQDocBugs();
+            q.addDates();
             System.out.println("++> QDoc quirks fixed."); // At least, the ones I know about
             // right now.
 
