@@ -107,17 +107,13 @@ public class QDocCore {
 
             int i = 0;
             for (Path file : xml) {
-                // Output the result in the same folder as before, with the same file name, just
-                // replace
-                // the extension (.xml becomes .xml).
-                // TODO: problem, qdoc generates XML files, same extension as DvpML docs...
-                Path destination = root.resolve(FileHelpers.changeExtension(file, ".xml"));
+                // Output the result in the same folder as before, with the same file name, just add a "dvp_" prefix.
+                Path destination = root.resolve("dvp_" + file);
 
                 // Print the name of the file to process to ease debugging.
                 System.out.println(FormattingHelpers.prefix(i, xml) + " " + file);
 
-                // Actually convert the DocBook into DvpML. This may print errors directly to
-                // stderr.
+                // Actually convert the DocBook into DvpML. This may print errors directly to stderr.
                 ByteArrayOutputStream os = new ByteArrayOutputStream();
                 h.createTransformer(file, destination, os).transform();
 
