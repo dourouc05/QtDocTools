@@ -16,12 +16,14 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
 public class QDocCore {
-    public static void call(String source, String installed, String output, String htmlVersion,
+    public static void call(String source, String installed, String output, String dvpmlOutput, String htmlVersion,
                             QtVersion qtVersion, boolean qdocDebug, boolean reduceIncludeListSize,
                             boolean validate, boolean convertToDocBook,
                             boolean convertToDvpML, boolean checkConsistency,
@@ -94,9 +96,6 @@ public class QDocCore {
 
         // Run Saxon to get the DvpML output.
         if (convertToDvpML) {
-            Path root = q.getOutputFolder();
-
-            // Iterate through all the files.
             System.out.println("++> Starting DocBook-to-DvpML transformation.");
             List<Path> xml = q.findDocBook();
 
@@ -105,15 +104,20 @@ public class QDocCore {
                         q.getOutputFolder() + "? There are no DocBook files there.");
             }
 
+            Path dvpmlOutputFolder = Paths.get(dvpmlOutput);
+            Files.createDirectories(dvpmlOutputFolder);
+
+            // Iterate through all the files.
             XsltHandler h = new XsltHandler(new QdtPaths(config).getXsltToDvpMLPath());
             int i = 0;
             for (Path file : xml) {
                 System.out.println(FormattingHelpers.prefix(i, xml) + " " + file);
 
-                // Output the result in the same folder as before, with the same file name, just add a "_dvp" suffix
+                // Output the result in the right subfolder, with the same file name, just add a "_dvp" suffix
                 // (the same as in the XSLT sheets).
                 String baseFileName = FileHelpers.removeExtension(file);
-                Path destination = root.resolve(baseFileName + "_dvp.xml");
+                Path destinationFolder = dvpmlOutputFolder.resolve(baseFileName);
+                Path destination = destinationFolder.resolve(baseFileName + "_dvp.xml");
 
                 // Actually convert the DocBook into DvpML. This may print errors directly to stderr.
                 h.transform(file.toFile(), destination.toFile(), Map.of(

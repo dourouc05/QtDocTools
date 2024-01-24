@@ -52,8 +52,11 @@ public class QDocCommand implements Callable<Void> {
                     "(either precompiled or built from scratch and installed)", required = true)
     private String installed;
     @Option(names = {"-o", "--output-folder"},
-            description = "Output folder", required = true)
+            description = "Output folder (DocBook files)", required = true)
     private String output;
+    @Option(names = {"-d", "--dvpml-output-folder"},
+            description = "Output folder (DvpML files)", required = true)
+    private String dvpmlOutput;
     @Option(names = {"-h", "--html-folder"},
             description = "HTML-version folder (already generated documentation; it will not be" +
                     " created by this tool), typically found near your Qt installation")
@@ -63,7 +66,7 @@ public class QDocCommand implements Callable<Void> {
     public Void call() throws SaxonApiException, IOException, InterruptedException,
             ParserConfigurationException, SAXException {
         GlobalConfiguration config = new GlobalConfiguration(configurationFile);
-        QDocCore.call(source, installed, output, htmlVersion, qtVersion, qdocDebug,
+        QDocCore.call(source, installed, output, dvpmlOutput, htmlVersion, qtVersion, qdocDebug,
                 reduceIncludeListSize, validate, convertToDocBook, checkConsistency,
                 convertToDvpML, config);
         return null;
