@@ -185,7 +185,7 @@ public class QDocHandler {
                             // Qt Quick modules.
                             srcDirectoryPath.resolve("imports").resolve(submodule.second +
                                     ".qdocconf"),
-                            // Qt Quick Dialogs 2 (Qt 6)
+                            // Qt Quick Dialogs 2 (Qt 6).
                             srcDirectoryPath.resolve(submodule.first).resolve(submodule.first).resolve("doc").resolve("qt" + submodule.second + ".qdocconf"),
                             // Qt Quick Controls 1.
                             docDirectoryPath.resolve(submodule.second + "1.qdocconf"),

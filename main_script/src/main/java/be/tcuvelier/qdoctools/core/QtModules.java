@@ -64,6 +64,7 @@ public class QtModules {
                                 new Pair<>("qmlmodels", "qmlmodels"),
                                 new Pair<>("quickcontrols", "qtquickcontrols"),
                                 new Pair<>("quickcontrols2", "quickcontrols"),
+                                new Pair<>("quickdialogs", "quickdialogs"),
                                 new Pair<>("quickdialogs2", "quickdialogs"), // Disappeared with Qt 6.
                                 new Pair<>("labs/platform", "labsplatform"))),
                 Map.entry("qtbase",
