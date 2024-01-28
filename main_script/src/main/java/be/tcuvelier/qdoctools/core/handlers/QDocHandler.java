@@ -900,7 +900,7 @@ public class QDocHandler {
                     fileContents = fileContents.replaceAll("db:variablelist", "db:itemizedlist");
                 }
             }
-            if (filePath.toString().contains("licenses-used-in-qt.xml")) {
+            if (filePath.toString().contains("licenses-used-in-qt.xml")) { // Qt 6.5.
                 Pattern regex = Pattern.compile(
                         """
                                 <db:variablelist role="annotatedattributions">
@@ -930,6 +930,50 @@ public class QDocHandler {
                             <db:para><db:link xlink:href="qtsvg-richtext-textobject-example.xml" xlink:role="page">Text Object Example</db:link></db:para>
                             </db:listitem>
                             </db:itemizedlist>""");
+                }
+            }
+            if (filePath.toString().contains("licenses-used-in-qt.xml")) { // Qt 6.4.
+                Pattern regex = Pattern.compile(
+                        """
+                                <db:variablelist role="annotatedattributions">
+                                <db:listitem>
+                                <db:para><db:link xlink:href="qtremoteobjects-modelviewclient-example\\.xml" xlink:role="page">Model-View Client</db:link></db:para>
+                                </db:listitem>
+                                <db:listitem>
+                                <db:para><db:link xlink:href="qtremoteobjects-modelviewserver-example\\.xml" xlink:role="page">Model-View Server</db:link></db:para>
+                                </db:listitem>
+                                <db:listitem>
+                                <db:para><db:link xlink:href="qtremoteobjects-qmlmodelviewclient-example\\.xml" xlink:role="page">QML Model-View Client</db:link></db:para>
+                                </db:listitem>
+                                <db:listitem>
+                                <db:para><db:link xlink:href="qtremoteobjects-ssl-example\\.xml" xlink:role="page">QtRemoteObjects SSL Example</db:link></db:para>
+                                </db:listitem>
+                                <db:listitem>
+                                <db:para><db:link xlink:href="qtremoteobjects-websockets-example\\.xml" xlink:role="page">QtRemoteObjects WebSockets Example</db:link></db:para>
+                                </db:listitem>
+                                </db:variablelist>""");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll(
+                            """
+                                    <db:itemizedlist role="annotatedattributions">
+                                    <db:listitem>
+                                    <db:para><db:link xlink:href="qtremoteobjects-modelviewclient-example.xml" xlink:role="page">Model-View Client</db:link></db:para>
+                                    </db:listitem>
+                                    <db:listitem>
+                                    <db:para><db:link xlink:href="qtremoteobjects-modelviewserver-example.xml" xlink:role="page">Model-View Server</db:link></db:para>
+                                    </db:listitem>
+                                    <db:listitem>
+                                    <db:para><db:link xlink:href="qtremoteobjects-qmlmodelviewclient-example.xml" xlink:role="page">QML Model-View Client</db:link></db:para>
+                                    </db:listitem>
+                                    <db:listitem>
+                                    <db:para><db:link xlink:href="qtremoteobjects-ssl-example.xml" xlink:role="page">QtRemoteObjects SSL Example</db:link></db:para>
+                                    </db:listitem>
+                                    <db:listitem>
+                                    <db:para><db:link xlink:href="qtremoteobjects-websockets-example.xml" xlink:role="page">QtRemoteObjects WebSockets Example</db:link></db:para>
+                                    </db:listitem>
+                                    </db:itemizedlist>""");
                 }
             }
             if (filePath.toString().contains("cmake-command-reference.xml")) {
@@ -1000,6 +1044,40 @@ public class QDocHandler {
                     hasMatched = true;
                     fileContents = matches.replaceAll("<db:section xml:id=\"additional-information\"><db:title>Additional Information</db:title><db:para>");
                     fileContents = fileContents.replaceAll("</db:variablelist>\n</db:article>", "</db:variablelist>\n</db:section>\n</db:article>");
+                }
+            }
+
+            // 12-0-qdoc-commands-miscellaneous.xml
+            // The original text has indentation (eight spaces):
+            //        <blockquote>
+            //        <h1 class="title">Foo Namespace</h1>
+            //        <p>A namespace. <a>More...</a></p>
+            //        <div class="table"><table class="alignedsummary">
+            //        <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <span class="preprocessor">#include &lt;Bar&gt;</span></td></tr>
+            //        <tr><td class="memItemLeft rightAlign topAlign"> CMake:</td><td class="memItemRight bottomAlign"> find_package(Qt6 REQUIRED COMPONENTS Baz)</td></tr>
+            //        </table></div>
+            //        </blockquote>
+            // -> CDATA:
+            // <db:blockquote><db:programlisting role="raw-html"><![CDATA[<h1 class="title">Foo Namespace</h1>
+            //            <p>A namespace. <a>More...</a></p>
+            //            <div class="table"><table class="alignedsummary">
+            //            <tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <span class="preprocessor">#include &lt;Bar&gt;</span></td></tr>
+            //            <tr><td class="memItemLeft rightAlign topAlign"> CMake:</td><td class="memItemRight bottomAlign"> find_package(Qt6 REQUIRED COMPONENTS Baz)</td></tr>
+            //            </table></div>]]></db:programlisting>
+            // </db:blockquote>
+            if (filePath.toString().contains("12-0-qdoc-commands-miscellaneous.xml")) {
+                Pattern regex = Pattern.compile("        <blockquote>\n" +
+                        "        <h1 class=\"title\">Foo Namespace</h1>\n" +
+                        "        <p>A namespace. <a>More...</a></p>\n" +
+                        "        <div class=\"table\"><table class=\"alignedsummary\">\n" +
+                        "        <tr><td class=\"memItemLeft rightAlign topAlign\"> Header:</td><td class=\"memItemRight bottomAlign\"> <span class=\"preprocessor\">#include &lt;Bar&gt;</span></td></tr>\n" +
+                        "        <tr><td class=\"memItemLeft rightAlign topAlign\"> CMake:</td><td class=\"memItemRight bottomAlign\"> find_package\\(Qt6 REQUIRED COMPONENTS Baz\\)</td></tr>\n" +
+                        "        </table></div>\n" +
+                        "        </blockquote>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("<db:blockquote><db:programlisting role=\"raw-html\"><![CDATA[<h1 class=\"title\">Foo Namespace</h1>\n            <p>A namespace. <a>More...</a></p>\n            <div class=\"table\"><table class=\"alignedsummary\">\n            <tr><td class=\"memItemLeft rightAlign topAlign\"> Header:</td><td class=\"memItemRight bottomAlign\"> <span class=\"preprocessor\">#include &lt;Bar&gt;</span></td></tr>\n            <tr><td class=\"memItemLeft rightAlign topAlign\"> CMake:</td><td class=\"memItemRight bottomAlign\"> find_package(Qt6 REQUIRED COMPONENTS Baz)</td></tr>\n            </table></div>]]></db:programlisting>\n</db:blockquote>");
                 }
             }
 
