@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 // Backup extensions:
 // - fixQDocBugs: .bak
 // - addDates: .bak2
+// - fixLinks: .bak3
 public class QDocHandler {
     private final Path sourceFolder; // Containing Qt's sources.
     private final Path installedFolder; // Containing a compiled and installed version of Qt.
@@ -698,7 +699,6 @@ public class QDocHandler {
 
     public void fixQDocBugs() throws IOException {
         // Only the files in the root folder are considered.
-        // TODO: links to xml files
         int nFiles = 0;
         int nFilesRewritten = 0;
         int nFilesIgnored = 0;
@@ -1113,6 +1113,25 @@ public class QDocHandler {
             fileContents = regex.matcher(fileContents).replaceAll(replacement);
 
             Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak2");
+            if (!fileBackUp.toFile().exists()) {
+                Files.move(filePath, fileBackUp);
+            }
+            Files.write(filePath, fileContents.getBytes());
+        }
+    }
+
+    public void fixLinks() throws IOException {
+        // Update the links (but not the anchors):
+        //    xlink:href="../qtcore/qobject.xml"
+        //    xlink:href="../qdoc/22-qdoc-configuration-generalvariables.xml#headers-variable"
+        Pattern regex = Pattern.compile("xlink:href=\"\\.\\./[a-z]*/(.*)\\.xml");
+
+        for (Path filePath : findDocBook()) {
+            String fileContents = Files.readString(filePath);
+
+            fileContents = regex.matcher(fileContents).replaceAll("xlink:href=\"$1.xml");
+
+            Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak3");
             if (!fileBackUp.toFile().exists()) {
                 Files.move(filePath, fileBackUp);
             }

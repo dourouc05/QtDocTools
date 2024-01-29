@@ -73,6 +73,7 @@ public class QDocCore {
             //  ./qtwidgets/...)
             q.fixQDocBugs();
             q.addDates();
+            q.fixLinks();
             System.out.println("++> QDoc quirks fixed."); // At least, the ones I know about
             // right now.
 
