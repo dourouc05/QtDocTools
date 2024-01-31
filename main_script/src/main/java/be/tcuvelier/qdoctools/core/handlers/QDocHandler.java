@@ -786,6 +786,21 @@ public class QDocHandler {
                 }
             }
 
+            // <db:anchor xml:id="section-commands"/>
+            // <db:section xml:id="section-commands">
+            // ->
+            // <db:section xml:id="section-commands">
+            // Only if both IDs coincide! Otherwise, it's an alias that's perfectly allowed.
+            // Happily, Java regexes allow back-references to groups!
+            {
+                Pattern regex = Pattern.compile("<db:anchor xml:id=\"(.*)\"/>\n<db:section xml:id=\"\\1\">");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("<db:section xml:id=\"$1\">");
+                }
+            }
+
             // <db:section><db:title>Universal.accent : color</db:title><db:fieldsynopsis><db:type>color</db:type>
             // <db:varname>Universal.accent</db:varname></db:fieldsynopsis>
             // <db:anchor xml:id="universal-accent-attached-prop"/>
