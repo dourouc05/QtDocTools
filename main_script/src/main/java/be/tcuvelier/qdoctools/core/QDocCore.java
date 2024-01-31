@@ -55,50 +55,50 @@ public class QDocCore {
 
         // Run qdoc to get the DocBook output.
         if (convertToDocBook) {
-            // Write the list of qdocconf files.
-            Path mainQdocconfPath = q.makeMainQdocconf(modules);
-            System.out.println("++> Main qdocconf written: " + mainQdocconfPath);
-
-            // Run QtAttributionScanner to generate some files.
-            System.out.println("++> Running QtAttributionScanner.");
-            q.runQtAttributionsScanner(modules);
-            System.out.println("++> QtAttributionScanner done.");
-
-            // Actually run qdoc on this new file.
-            System.out.println("++> Running QDoc.");
-            q.runQDoc(); // TODO: think about running moc to avoid too many errors while reading
-            // the code.
-            System.out.println("++> QDoc done.");
-
-            System.out.println("++> Fixing some qdoc quirks.");
-            q.copyGeneratedFiles(); // Sometimes, qdoc outputs things in a strange folder. Ahoy!
-            // TODO: fix paths when moving files from one folder to the other. (xref: .
-            //  ./qtwidgets/...)
-            q.fixQDocBugs();
-            q.addDates();
-            q.fixLinks();
-            System.out.println("++> QDoc quirks fixed."); // At least, the ones I know about
-            // right now.
-
-            System.out.println("++> Validating DocBook output.");
-            q.validateDocBook();
-            System.out.println("++> DocBook output validated.");
+//            // Write the list of qdocconf files.
+//            Path mainQdocconfPath = q.makeMainQdocconf(modules);
+//            System.out.println("++> Main qdocconf written: " + mainQdocconfPath);
+//
+//            // Run QtAttributionScanner to generate some files.
+//            System.out.println("++> Running QtAttributionScanner.");
+//            q.runQtAttributionsScanner(modules);
+//            System.out.println("++> QtAttributionScanner done.");
+//
+//            // Actually run qdoc on this new file.
+//            System.out.println("++> Running QDoc.");
+//            q.runQDoc(); // TODO: think about running moc to avoid too many errors while reading
+//            // the code.
+//            System.out.println("++> QDoc done.");
+//
+//            System.out.println("++> Fixing some qdoc quirks.");
+//            q.copyGeneratedFiles(); // Sometimes, qdoc outputs things in a strange folder. Ahoy!
+//            // TODO: fix paths when moving files from one folder to the other. (xref: .
+//            //  ./qtwidgets/...)
+//            q.fixQDocBugs();
+//            q.addDates();
+//            q.fixLinks();
+//            System.out.println("++> QDoc quirks fixed."); // At least, the ones I know about
+//            // right now.
+//
+//            System.out.println("++> Validating DocBook output.");
+//            q.validateDocBook();
+//            System.out.println("++> DocBook output validated.");
         }
 
-        // Perform some consistency checks on the contents to ensure that there is no hidden major
-        // qdoc bug.
-        if (checkConsistency && htmlVersion.isEmpty()) {
-            System.out.println("!!> Cannot check consistency without an existing HTML version" +
-                    " (--html-version).");
-        } else if (checkConsistency) {
-            // As of Qt 5.15-6.4, the docs installed at the same time as Qt with the official
-            // installer have the same folder structure as output by QDoc: the copies done in
-            // copyGeneratedFiles() cannot yet be removed for this check to be performed!
-            System.out.println("++> Checking consistency of the DocBook output.");
-            q.checkDocBookConsistency();
-            System.out.println("++> DocBook consistency checked.");
-        }
-
+//        // Perform some consistency checks on the contents to ensure that there is no hidden major
+//        // qdoc bug.
+//        if (checkConsistency && htmlVersion.isEmpty()) {
+//            System.out.println("!!> Cannot check consistency without an existing HTML version" +
+//                    " (--html-version).");
+//        } else if (checkConsistency) {
+//            // As of Qt 5.15-6.4, the docs installed at the same time as Qt with the official
+//            // installer have the same folder structure as output by QDoc: the copies done in
+//            // copyGeneratedFiles() cannot yet be removed for this check to be performed!
+//            System.out.println("++> Checking consistency of the DocBook output.");
+//            q.checkDocBookConsistency();
+//            System.out.println("++> DocBook consistency checked.");
+//        }
+//
         // Run Saxon to get the DvpML output.
         if (convertToDvpML) {
             System.out.println("++> Starting DocBook-to-DvpML transformation.");
@@ -128,25 +128,25 @@ public class QDocCore {
                 Path destinationFolder = dvpmlOutputFolder.resolve(baseFileName);
                 Path destination = destinationFolder.resolve(baseFileName + "_dvp.xml");
 
-                // Actually convert the DocBook into DvpML. This may print errors directly to stderr.
-                h.transform(file.toFile(), destination.toFile(), Map.of(
-                        "doc-qt", true,
-                        "qt-version", qtVersion.QT_VER(),
-                        "document-file-name", baseFileName
-                ));
-
-                // Do a few manual transformations especially for Qt's doc: links (no longer .xml files).
-                // At some point, there should be a better implementation to map .xml links to online links.
-                // Just not now.
-                // No need for a backup here, the input files are not really expensive to generate (compared to
-                // running QDoc).
-                {
-                    String rootURL = "https://qt.developpez.com/doc/" + qtVersion.QT_VER() + "/";
-                    String fileContents = Files.readString(destination);
-                    Pattern regex = Pattern.compile("<link href=\"(.*)\\.xml");
-                    fileContents = regex.matcher(fileContents).replaceAll("<link href=\"" + rootURL + "$1/");
-                    Files.write(destination, fileContents.getBytes());
-                }
+//                // Actually convert the DocBook into DvpML. This may print errors directly to stderr.
+//                h.transform(file.toFile(), destination.toFile(), Map.of(
+//                        "doc-qt", true,
+//                        "qt-version", qtVersion.QT_VER(),
+//                        "document-file-name", baseFileName
+//                ));
+//
+//                // Do a few manual transformations especially for Qt's doc: links (no longer .xml files).
+//                // At some point, there should be a better implementation to map .xml links to online links.
+//                // Just not now.
+//                // No need for a backup here, the input files are not really expensive to generate (compared to
+//                // running QDoc).
+//                {
+//                    String rootURL = "https://qt.developpez.com/doc/" + qtVersion.QT_VER() + "/";
+//                    String fileContents = Files.readString(destination);
+//                    Pattern regex = Pattern.compile("<link href=\"(.*)\\.xml");
+//                    fileContents = regex.matcher(fileContents).replaceAll("<link href=\"" + rootURL + "$1/");
+//                    Files.write(destination, fileContents.getBytes());
+//                }
 
                 // Copy the image at the right place.
                 {
@@ -176,6 +176,14 @@ public class QDocCore {
                             Files.copy(oldPath, newPath, StandardCopyOption.REPLACE_EXISTING);
                         } while (matcher.find());
                     }
+                }
+
+                // Final touch: move the index/ page to the root. After all, it's the index.
+                {
+                    Path indexFolder = dvpmlOutputFolder.resolve("index");
+                    Files.move(indexFolder.resolve("index_dvp.xml"), dvpmlOutputFolder.resolve("index_dvp.xml"));
+                    Files.move(indexFolder.resolve("images"), dvpmlOutputFolder.resolve("images"));
+                    Files.delete(indexFolder);
                 }
 
                 // Handle validation.
