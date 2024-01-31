@@ -126,25 +126,25 @@ public class QDocCore {
                 Path destinationFolder = dvpmlOutputFolder.resolve(baseFileName);
                 Path destination = destinationFolder.resolve(baseFileName + "_dvp.xml");
 
-//                // Actually convert the DocBook into DvpML. This may print errors directly to stderr.
-//                h.transform(file.toFile(), destination.toFile(), Map.of(
-//                        "doc-qt", true,
-//                        "qt-version", qtVersion.QT_VER(),
-//                        "document-file-name", baseFileName
-//                ));
-//
-//                // Do a few manual transformations especially for Qt's doc: links (no longer .xml files).
-//                // At some point, there should be a better implementation to map .xml links to online links.
-//                // Just not now.
-//                // No need for a backup here, the input files are not really expensive to generate (compared to
-//                // running QDoc).
-//                {
-//                    String rootURL = "https://qt.developpez.com/doc/" + qtVersion.QT_VER() + "/";
-//                    String fileContents = Files.readString(destination);
-//                    Pattern regex = Pattern.compile("<link href=\"(.*)\\.xml");
-//                    fileContents = regex.matcher(fileContents).replaceAll("<link href=\"" + rootURL + "$1/");
-//                    Files.write(destination, fileContents.getBytes());
-//                }
+                // Actually convert the DocBook into DvpML. This may print errors directly to stderr.
+                h.transform(file.toFile(), destination.toFile(), Map.of(
+                        "doc-qt", true,
+                        "qt-version", qtVersion.QT_VER(),
+                        "document-file-name", baseFileName
+                ));
+
+                // Do a few manual transformations especially for Qt's doc: links (no longer .xml files).
+                // At some point, there should be a better implementation to map .xml links to online links.
+                // Just not now.
+                // No need for a backup here, the input files are not really expensive to generate (compared to
+                // running QDoc).
+                {
+                    String rootURL = "https://qt.developpez.com/doc/" + qtVersion.QT_VER() + "/";
+                    String fileContents = Files.readString(destination);
+                    Pattern regex = Pattern.compile("<link href=\"(.*)\\.xml");
+                    fileContents = regex.matcher(fileContents).replaceAll("<link href=\"" + rootURL + "$1/");
+                    Files.write(destination, fileContents.getBytes());
+                }
 
                 // Copy the image at the right place.
                 {
