@@ -19,8 +19,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class QDocCore {
@@ -144,6 +146,36 @@ public class QDocCore {
                     Pattern regex = Pattern.compile("<link href=\"(.*)\\.xml");
                     fileContents = regex.matcher(fileContents).replaceAll("<link href=\"" + rootURL + "$1/");
                     Files.write(destination, fileContents.getBytes());
+                }
+
+                // Copy the image at the right place.
+                {
+                    String fileContents = Files.readString(destination);
+                    Pattern regex = Pattern.compile("<image src=\"([^\"]*)\"");
+                    Matcher matcher = regex.matcher(fileContents);
+                    if (matcher.find()) {
+                        // Create the image folder for this page.
+                        Path pageFolder = destination.getParent();
+                        Path imageFolder = pageFolder.resolve("images");
+                        if (!imageFolder.toFile().exists()) {
+                            if (!imageFolder.toFile().mkdirs()) {
+                                throw new IOException("Could not create directories: " + imageFolder);
+                            }
+                        }
+
+                        // Copy the right images. do-while: consume the first match before moving on to the others.
+                        do {
+                            String path = matcher.group(1);
+                            if (!path.startsWith("images/")) {
+                                throw new IOException("Unexpected image URI: " + path);
+                            }
+
+                            Path oldPath = file.getParent().resolve(path);
+                            Path newPath = pageFolder.resolve(path);
+                            System.out.println("++> Copying image: from " + oldPath + " to " + newPath);
+                            Files.copy(oldPath, newPath, StandardCopyOption.REPLACE_EXISTING);
+                        } while (matcher.find());
+                    }
                 }
 
                 // Handle validation.
