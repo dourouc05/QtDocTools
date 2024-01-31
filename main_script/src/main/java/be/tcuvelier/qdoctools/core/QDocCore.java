@@ -21,6 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class QDocCore {
     public static void call(String source, String installed, String output, String dvpmlOutput, String htmlVersion,
@@ -131,6 +132,19 @@ public class QDocCore {
                         "qt-version", qtVersion.QT_VER(),
                         "document-file-name", baseFileName
                 ));
+
+                // Do a few manual transformations especially for Qt's doc: links (no longer .xml files).
+                // At some point, there should be a better implementation to map .xml links to online links.
+                // Just not now.
+                // No need for a backup here, the input files are not really expensive to generate (compared to
+                // running QDoc).
+                {
+                    String rootURL = "https://qt.developpez.com/doc/" + qtVersion.QT_VER() + "/";
+                    String fileContents = Files.readString(destination);
+                    Pattern regex = Pattern.compile("<link href=\"(.*)\\.xml");
+                    fileContents = regex.matcher(fileContents).replaceAll("<link href=\"" + rootURL + "$1/");
+                    Files.write(destination, fileContents.getBytes());
+                }
 
                 // Handle validation.
                 if (validate) {
