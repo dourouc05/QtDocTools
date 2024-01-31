@@ -69,20 +69,18 @@ public class QDocCore {
 //            q.runQDoc(); // TODO: think about running moc to avoid too many errors while reading
 //            // the code.
 //            System.out.println("++> QDoc done.");
-//
-//            System.out.println("++> Fixing some qdoc quirks.");
-//            q.copyGeneratedFiles(); // Sometimes, qdoc outputs things in a strange folder. Ahoy!
-//            // TODO: fix paths when moving files from one folder to the other. (xref: .
-//            //  ./qtwidgets/...)
-//            q.fixQDocBugs();
-//            q.addDates();
-//            q.fixLinks();
-//            System.out.println("++> QDoc quirks fixed."); // At least, the ones I know about
-//            // right now.
-//
-//            System.out.println("++> Validating DocBook output.");
-//            q.validateDocBook();
-//            System.out.println("++> DocBook output validated.");
+
+            System.out.println("++> Fixing some qdoc quirks.");
+            q.copyGeneratedFiles(); // Sometimes, qdoc outputs things in a strange folder. Ahoy!
+            q.fixQDocBugs();
+            q.addDates();
+            q.fixLinks();
+            System.out.println("++> QDoc quirks fixed."); // At least, the ones I know about
+            // right now.
+
+            System.out.println("++> Validating DocBook output.");
+            q.validateDocBook();
+            System.out.println("++> DocBook output validated.");
         }
 
 //        // Perform some consistency checks on the contents to ensure that there is no hidden major
