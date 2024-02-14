@@ -176,14 +176,6 @@ public class QDocCore {
                     }
                 }
 
-                // Final touch: move the index/ page to the root. After all, it's the index.
-                {
-                    Path indexFolder = dvpmlOutputFolder.resolve("index");
-                    Files.move(indexFolder.resolve("index_dvp.xml"), dvpmlOutputFolder.resolve("index_dvp.xml"));
-                    Files.move(indexFolder.resolve("images"), dvpmlOutputFolder.resolve("images"));
-                    Files.delete(indexFolder);
-                }
-
                 // Handle validation.
                 if (validate) {
                     try {
@@ -202,6 +194,15 @@ public class QDocCore {
                 ++i;
             }
             System.out.println("++> DocBook-to-DvpML transformation done.");
+
+            // Final touch: move the index/ page to the root. After all, it's the index.
+            {
+                Path indexFolder = dvpmlOutputFolder.resolve("index");
+                Files.move(indexFolder.resolve("index_dvp.xml"), dvpmlOutputFolder.resolve("index_dvp.xml"));
+                Files.move(indexFolder.resolve("images"), dvpmlOutputFolder.resolve("images"));
+                Files.delete(indexFolder);
+            }
+            System.out.println("++> DvpML index moved.");
         }
     }
 }
