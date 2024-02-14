@@ -1096,6 +1096,35 @@ public class QDocHandler {
                 }
             }
 
+            // YouTube video:
+            // <db:videodata fileref="...">
+            // ->
+            // <?db video="iframe"?>
+            // <db:videodata format="youtube" fileref="...">
+            // A YouTube ID is mostly composed of letters and digits, plus hyphens and underscores. As of Qt 6, all
+            // videos are hosted on YouTube.
+            // https://codereview.qt-project.org/c/qt/qtbase/+/540084
+            {
+                Pattern regex = Pattern.compile("<db:videodata fileref=\"(.*)\">");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("<?db video=\"iframe\"?>\n<db:videodata format=\"youtube\" fileref=\"$1\">");
+                }
+            }
+
+            // <db:emphasis&#246;/>
+            // ->
+            // <db:emphasis>&#246;</db:emphasis>
+            {
+                Pattern regex = Pattern.compile("<db:emphasis&#246;/>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("<db:emphasis>&#246;</db:emphasis>");
+                }
+            }
+
             if (!hasMatched) {
                 // This file has not changed: no need to have a back-up file or to spend time
                 // writing on disk.
