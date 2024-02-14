@@ -55,20 +55,20 @@ public class QDocCore {
 
         // Run qdoc to get the DocBook output.
         if (convertToDocBook) {
-//            // Write the list of qdocconf files.
-//            Path mainQdocconfPath = q.makeMainQdocconf(modules);
-//            System.out.println("++> Main qdocconf written: " + mainQdocconfPath);
-//
-//            // Run QtAttributionScanner to generate some files.
-//            System.out.println("++> Running QtAttributionScanner.");
-//            q.runQtAttributionsScanner(modules);
-//            System.out.println("++> QtAttributionScanner done.");
-//
-//            // Actually run qdoc on this new file.
-//            System.out.println("++> Running QDoc.");
-//            q.runQDoc(); // TODO: think about running moc to avoid too many errors while reading
-//            // the code.
-//            System.out.println("++> QDoc done.");
+            // Write the list of qdocconf files.
+            Path mainQdocconfPath = q.makeMainQdocconf(modules);
+            System.out.println("++> Main qdocconf written: " + mainQdocconfPath);
+
+            // Run QtAttributionScanner to generate some files.
+            System.out.println("++> Running QtAttributionScanner.");
+            q.runQtAttributionsScanner(modules);
+            System.out.println("++> QtAttributionScanner done.");
+
+            // Actually run qdoc on this new file.
+            System.out.println("++> Running QDoc.");
+            q.runQDoc(); // TODO: think about running moc to avoid too many errors while reading
+            // the code.
+            System.out.println("++> QDoc done.");
 
             System.out.println("++> Fixing some qdoc quirks.");
             q.copyGeneratedFiles(); // Sometimes, qdoc outputs things in a strange folder. Ahoy!
@@ -83,20 +83,20 @@ public class QDocCore {
             System.out.println("++> DocBook output validated.");
         }
 
-//        // Perform some consistency checks on the contents to ensure that there is no hidden major
-//        // qdoc bug.
-//        if (checkConsistency && htmlVersion.isEmpty()) {
-//            System.out.println("!!> Cannot check consistency without an existing HTML version" +
-//                    " (--html-version).");
-//        } else if (checkConsistency) {
-//            // As of Qt 5.15-6.4, the docs installed at the same time as Qt with the official
-//            // installer have the same folder structure as output by QDoc: the copies done in
-//            // copyGeneratedFiles() cannot yet be removed for this check to be performed!
-//            System.out.println("++> Checking consistency of the DocBook output.");
-//            q.checkDocBookConsistency();
-//            System.out.println("++> DocBook consistency checked.");
-//        }
-//
+        // Perform some consistency checks on the contents to ensure that there is no hidden major
+        // qdoc bug.
+        if (checkConsistency && htmlVersion.isEmpty()) {
+            System.out.println("!!> Cannot check consistency without an existing HTML version" +
+                    " (--html-version).");
+        } else if (checkConsistency) {
+            // As of Qt 5.15-6.4, the docs installed at the same time as Qt with the official
+            // installer have the same folder structure as output by QDoc: the copies done in
+            // copyGeneratedFiles() cannot yet be removed for this check to be performed!
+            System.out.println("++> Checking consistency of the DocBook output.");
+            q.checkDocBookConsistency();
+            System.out.println("++> DocBook consistency checked.");
+        }
+
         // Run Saxon to get the DvpML output.
         if (convertToDvpML) {
             System.out.println("++> Starting DocBook-to-DvpML transformation.");
