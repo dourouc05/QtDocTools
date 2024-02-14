@@ -97,8 +97,8 @@
     
     <xsl:variable name="svg-filename" as="xs:string?">
       <xsl:if test="$mediaobject/db:imageobject[1]/db:imagedata[1]//@version">
-        <xsl:variable name="svg-id" as="xs:int" select="$mediaobject/db:imageobject[1]/db:imagedata[1]/child::*[1]/count(preceding::db:imagedata)"/>
-        <xsl:value-of select="concat('./images/svg_', $svg-id, '.svg')"/>
+        <xsl:variable name="svg-id" as="xs:integer" select="$mediaobject/db:imageobject[1]/db:imagedata[1]/child::*[1]/count(preceding::db:imagedata)"/>
+        <xsl:value-of select="concat('images/svg_', $document-file-name, '_', $svg-id, '.svg')"/>
       </xsl:if>
     </xsl:variable>
     <xsl:if test="$svg-filename">
