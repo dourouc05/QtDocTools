@@ -95,8 +95,21 @@
       </xsl:choose>
     </xsl:variable>
     
+    <xsl:variable name="svg-filename" as="xs:string?">
+      <xsl:if test="$mediaobject/db:imageobject[1]/db:imagedata[1]//@version">
+        <xsl:variable name="svg-id" as="xs:int" select="$mediaobject/db:imageobject[1]/db:imagedata[1]/child::*[1]/count(preceding::db:imagedata)"/>
+        <xsl:value-of select="concat('./images/svg_', $svg-id, '.svg')"/>
+      </xsl:if>
+    </xsl:variable>
+    <xsl:if test="$svg-filename">
+      <xsl:result-document method="xml" href="{$svg-filename}">
+        <xsl:copy-of select="$mediaobject/db:imageobject[1]/db:imagedata[1]/child::*[1]"></xsl:copy-of>
+      </xsl:result-document>
+    </xsl:if>
+    
     <xsl:variable name="filename_" as="xs:string">
       <xsl:choose>
+        <xsl:when test="$svg-filename"><xsl:value-of select="$svg-filename"/></xsl:when>
         <xsl:when test="$mediaobject/db:videoobject"><xsl:value-of select="$mediaobject/db:videoobject[1]/db:videodata[1]/@fileref"/></xsl:when>
         <xsl:when test="$mediaobject/db:audioobject"><xsl:value-of select="$mediaobject/db:audioobject[1]/db:audiodata[1]/@fileref"/></xsl:when>
         <xsl:when test="$mediaobject/db:imageobject"><xsl:value-of select="$mediaobject/db:imageobject[1]/db:imagedata[1]/@fileref"/></xsl:when>
