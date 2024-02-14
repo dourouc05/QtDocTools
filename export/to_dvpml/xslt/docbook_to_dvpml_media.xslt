@@ -12,6 +12,7 @@
     <xsl:param name="link"/>
     <xsl:param name="alt"/>
     <xsl:param name="extension"/>
+    <xsl:param name="format"/>
     
     <xsl:if test="not($mediaobject[self::db:mediaobject]) and not($mediaobject[self::db:inlinemediaobject])">
       <xsl:message terminate="yes">ASSERTION FAILED: not a mediaobject or inlinemediaobject.</xsl:message>
@@ -102,7 +103,13 @@
       </xsl:choose>
     </xsl:variable>
     
-    <xsl:variable name="extension_" select="if ($extension) then $extension else tokenize($filename_, '\.')[last()]"/>
+    <xsl:variable name="video-type" as="xs:string">
+      <xsl:choose>
+        <xsl:when test="$format = 'youtube'"><xsl:value-of select="'youtube'"/></xsl:when>
+        <xsl:when test="$extension"><xsl:value-of select="$extension"/></xsl:when>
+        <xsl:otherwise><xsl:value-of select="tokenize($filename_, '\.')[last()]"/></xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
     
     <xsl:choose>
       <xsl:when test="$mediaobject/db:imageobject and not($mediaobject/db:videoobject) and not($mediaobject/db:audioobject)">        
@@ -128,7 +135,7 @@
         <xsl:variable name="width" select="if ($mediaobject/db:videoobject[1]/db:videodata[1]/@width) then $mediaobject/db:videoobject[1]/db:videodata[1]/@width else if ($mediaobject/db:videoobject[1]/db:videodata[1]/@width) then $mediaobject/db:videoobject[1]/db:videodata[1]/@contentwidth else -1"/>
         <xsl:variable name="height" select="if ($mediaobject/db:videoobject[1]/db:videodata[1]/@depth) then $mediaobject/db:videoobject[1]/db:videodata[1]/@depth else if ($mediaobject/db:videoobject[1]/db:videodata[1]/@contentdepth) then $mediaobject/db:videoobject[1]/db:videodata[1]/@contentdepth else -1"/>
         
-        <animation type="{$extension_}">
+        <animation type="{$video-type}">
           <xsl:if test="$mediaobject/db:videoobject">
             <xsl:if test="$width &gt; 0">
               <width><xsl:value-of select="$width"/></width>
@@ -142,7 +149,16 @@
             <title><xsl:value-of select="$title_"/></title>
           </xsl:if>
           
-          <param-movie><xsl:value-of select="$filename_"/></param-movie>
+          <param-movie>
+            <xsl:choose>
+              <xsl:when test="$video-type = 'youtube'">
+                <!-- If you have: https://www.youtube.com/watch?v=XXXX&feature=related -->
+                <!-- Output: https://www.youtube.com/v/XXXX -->
+                <xsl:value-of select="tokenize(replace($filename_, 'watch?v=', 'v/'), '&amp;')[1]"/>
+              </xsl:when>
+              <xsl:otherwise><xsl:value-of select="$filename_"/></xsl:otherwise>
+            </xsl:choose>
+          </param-movie>
         </animation>
       </xsl:when>
     </xsl:choose>

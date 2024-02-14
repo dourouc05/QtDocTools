@@ -156,6 +156,7 @@
       <xsl:with-param name="link" select="@xlink:href"/>
       <xsl:with-param name="title" select="db:title"/>
       <xsl:with-param name="extension" select=".//db:videodata/@role"/>
+      <xsl:with-param name="format" select=".//db:videodata/@format"/>
     </xsl:call-template>
   </xsl:template>
   
