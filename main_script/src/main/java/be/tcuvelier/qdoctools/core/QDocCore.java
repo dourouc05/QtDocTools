@@ -162,16 +162,24 @@ public class QDocCore {
                         }
 
                         // Copy the right images. do-while: consume the first match before moving on to the others.
+                        // Don't copy if this is an SVG file that the XSLT moved to the right place.
                         do {
                             String path = matcher.group(1);
                             if (!path.startsWith("images/")) {
                                 throw new IOException("Unexpected image URI: " + path);
                             }
 
-                            Path oldPath = file.getParent().resolve(path);
                             Path newPath = pageFolder.resolve(path);
-                            System.out.println("++> Copying image: from " + oldPath + " to " + newPath);
-                            Files.copy(oldPath, newPath, StandardCopyOption.REPLACE_EXISTING);
+                            if (path.endsWith(".svg") && path.contains("svg_")) {
+                                if (!newPath.toFile().exists()) {
+                                    throw new IOException("Copying SVG image: " + newPath + " should have been done by the XSLT sheets, but was not");
+                                }
+                                System.out.println("++> Copying SVG image: " + newPath + " already done");
+                            } else {
+                                Path oldPath = file.getParent().resolve(path);
+                                System.out.println("++> Copying image: from " + oldPath + " to " + newPath);
+                                Files.copy(oldPath, newPath, StandardCopyOption.REPLACE_EXISTING);
+                            }
                         } while (matcher.find());
                     }
                 }
