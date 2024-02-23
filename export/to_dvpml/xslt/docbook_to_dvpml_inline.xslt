@@ -112,21 +112,6 @@
       <xsl:message>WARNING: The xlink:type attribute is not supported for links.</xsl:message>
     </xsl:if>
     
-    <!-- For Qt's documentation, translate the file-system-level link to a true URL. -->
-    <xsl:variable name="translated-link" as="xs:string">
-      <xsl:choose>
-        <xsl:when test="$doc-qt and (ends-with(string(@xlink:href), '.webxml') or ends-with(string(@xlink:href), '.qdt'))">
-          <xsl:variable name="filename" select="substring-before(substring-before(string(@xlink:href), '.webxml'), '.qdt')"/>
-          <xsl:value-of
-            select="concat('https://qt.developpez.com/doc/', lower-case(//db:info/db:productname), '/', //db:info/db:productnumber, '/', $filename)"
-          />
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="@xlink:href"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    
     <!-- Check the role, as it can match a "langue" in DvpML. -->
     <xsl:variable name="langue" as="xs:string?">
       <xsl:choose>
@@ -156,7 +141,7 @@
     
     <!-- Generate the link. -->
     <xsl:variable name="generated-link">
-      <link href="{$translated-link}">
+      <link href="{@xlink:href}">
         <xsl:if test="@xlink:title">
           <xsl:attribute name="title" select="@xlink:title"/>
         </xsl:if>
