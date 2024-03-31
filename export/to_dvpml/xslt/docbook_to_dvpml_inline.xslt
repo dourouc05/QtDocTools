@@ -58,7 +58,7 @@
     <xsl:choose>
       <!-- To annoy people, <link>s cannot appear within <inline>. -->
       <!-- Handled within links, hence just let through here. -->
-      <xsl:when test="db:link">
+      <xsl:when test="db:link or db:emphasis/db:link">
         <xsl:apply-templates mode="content_para"/>
       </xsl:when>
       <xsl:otherwise>
