@@ -74,6 +74,7 @@ public class QDocCore {
             q.copyGeneratedFiles(); // Sometimes, qdoc outputs things in a strange folder. Ahoy!
             q.fixQDocBugs();
             q.addDates();
+            q.addAuthors();
             q.fixLinks();
             System.out.println("++> QDoc quirks fixed."); // At least, the ones I know about
             // right now.

@@ -1164,6 +1164,31 @@ public class QDocHandler {
         }
     }
 
+    public void addAuthors() throws IOException {
+        // Insert the following authorship information just before </db:info> -- which means that this function MUST be
+        // called after `addDates()`. Use an `authorgroup` with just one entry to make room for translators. The check
+        // for `</db:date>` in the regex ensures that this function can be called several times on the same XML files.
+        //     <db:authorgroup>
+        //        <db:author>
+        //            <db:orgname class="corporation">The Qt Company Ltd.</db:orgname>
+        //        </db:author>
+        //    </db:authorgroup>
+        Pattern regex = Pattern.compile("</db:date>\n</db:info>");
+        String replacement = "</db:date>\n<db:authorgroup>\n<db:author>\n<db:orgname class=\"corporation\">The Qt Company Ltd.</db:orgname>\n</db:author>\n</db:authorgroup>\n</db:info>";
+
+        for (Path filePath : findDocBook()) {
+            String fileContents = Files.readString(filePath);
+
+            fileContents = regex.matcher(fileContents).replaceAll(replacement);
+
+            Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak2");
+            if (!fileBackUp.toFile().exists()) {
+                Files.move(filePath, fileBackUp);
+            }
+            Files.write(filePath, fileContents.getBytes());
+        }
+    }
+
     public void fixLinks() throws IOException {
         // Update the links (but not the anchors):
         //    xlink:href="../qtcore/qobject.xml"
