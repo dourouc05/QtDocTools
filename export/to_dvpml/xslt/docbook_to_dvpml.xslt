@@ -1060,7 +1060,7 @@
   </xsl:template>
   <xsl:template match="*" mode="content_para" priority="-1">
     <xsl:choose>
-      <xsl:when test="db:guilabel | db:accel | db:prompt | db:keysym">
+      <xsl:when test="name(.) = 'db:guilabel' or name(.) = 'db:accel' or name(.) = 'db:prompt' or name(.) = 'db:keysym' or name(.) = 'db:type'">
         <xsl:message>WARNING: Tag <xsl:value-of select="name(.)"/> has no matching construct in the
           target format. Content is not lost, but is not marked either.</xsl:message>
         <xsl:apply-templates/>
