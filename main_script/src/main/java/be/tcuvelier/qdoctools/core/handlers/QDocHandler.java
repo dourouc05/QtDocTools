@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 // - fixQDocBugs: .bak
 // - addDates: .bak2
 // - fixLinks: .bak3
+// - addAuthors: .bak4
 public class QDocHandler {
     private final Path sourceFolder; // Containing Qt's sources.
     private final Path installedFolder; // Containing a compiled and installed version of Qt.
@@ -1181,7 +1182,7 @@ public class QDocHandler {
 
             fileContents = regex.matcher(fileContents).replaceAll(replacement);
 
-            Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak2");
+            Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak4");
             if (!fileBackUp.toFile().exists()) {
                 Files.move(filePath, fileBackUp);
             }
