@@ -149,14 +149,21 @@
         <xsl:variable name="height" select="if ($mediaobject/db:videoobject[1]/db:videodata[1]/@depth) then $mediaobject/db:videoobject[1]/db:videodata[1]/@depth else if ($mediaobject/db:videoobject[1]/db:videodata[1]/@contentdepth) then $mediaobject/db:videoobject[1]/db:videodata[1]/@contentdepth else -1"/>
         
         <animation type="{$video-type}">
-          <xsl:if test="$mediaobject/db:videoobject">
-            <xsl:if test="$width &gt; 0">
-              <width><xsl:value-of select="$width"/></width>
-            </xsl:if>
-            <xsl:if test="$height &gt; 0">
-              <height><xsl:value-of select="$height"/></height>
-            </xsl:if>
-          </xsl:if>
+          <xsl:choose>
+            <xsl:when test="$mediaobject/db:videoobject">
+              <xsl:if test="$width &gt; 0">
+                <width><xsl:value-of select="$width"/></width>
+              </xsl:if>
+              <xsl:if test="$height &gt; 0">
+                <height><xsl:value-of select="$height"/></height>
+              </xsl:if>
+            </xsl:when>
+            <xsl:otherwise>
+              <!-- No information available for YouTube and others, but DvpML requires it. -->
+              <width>640</width>
+              <height>480</height>
+            </xsl:otherwise>
+          </xsl:choose>
           
           <xsl:if test="$title_">
             <title><xsl:value-of select="$title_"/></title>
