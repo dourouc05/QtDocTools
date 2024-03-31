@@ -827,6 +827,9 @@
         <xsl:when test="db:personname/db:firstname and db:personname/db:surname">
           <xsl:value-of select="concat(db:personname/db:firstname, ' ', db:personname/db:surname)"/>
         </xsl:when>
+        <xsl:when test="db:orgname">
+          <xsl:value-of select="db:orgname"/>
+        </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="generate-id()"/>
         </xsl:otherwise>
@@ -845,6 +848,9 @@
           <xsl:when test="db:personname/db:firstname and db:personname/db:surname">
             <xsl:value-of select="concat(db:personname/db:firstname, ' ', db:personname/db:surname)"
             />
+          </xsl:when>
+          <xsl:when test="db:orgname">
+            <xsl:value-of select="db:orgname"/>
           </xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="db:personname/db:othername[@role = 'pseudonym']"/>
