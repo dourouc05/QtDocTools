@@ -686,7 +686,7 @@
         <xsl:otherwise>
           <authorDescription name="Dummy" role="auteur">
             <fullname>Dummy</fullname>
-            <url>https://www.developpez.net/forums/u1/dummy/</url>
+            <url>https://www.developpez.net/forums/u0/dummy-does-not-exist/</url>
           </authorDescription>
         </xsl:otherwise>
       </xsl:choose>
