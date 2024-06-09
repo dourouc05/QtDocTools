@@ -603,11 +603,6 @@
         <xsl:value-of select="tc:format-date(db:info/db:date, 'date')"/>
       </miseajour>
 
-      <xsl:if test="$doc-qt">
-        <includebas>include($_SERVER['DOCUMENT_ROOT'] . '/doc/pied.php');
-          include($_SERVER['DOCUMENT_ROOT'] . '/template/pied.php');</includebas>
-      </xsl:if>
-
       <xsl:if test="string-length($google-analytics) > 0">
         <google-analytics>
           <xsl:value-of select="$google-analytics"/>
