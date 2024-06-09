@@ -128,6 +128,22 @@
             <xsl:with-param name="info" select="db:info"/>
           </xsl:call-template>
           <xsl:call-template name="tc:document-abstract-forum-link"/>
+        
+          <!-- The current DvpML processor removes all anchors if they are not referred to within the document. -->
+          <!-- Hence, use an empty paragraph whose colour is the one of the box behind it (section#SectionSynopsis): -->
+          <!-- rgba(155, 177, 188, 0.3) == "#9bb1bc4c" (with transparency) == "#e1e7eb" -->
+          <xsl:if test="//@xml:id">
+            <paragraph>
+              <font color="#E1E7EB">
+                <xsl:for-each select="//@xml:id">
+                  <xsl:if test="position() > 1">, </xsl:if>
+                  <renvoi>
+                    <xsl:attribute name="id" select="."/>
+                  </renvoi>
+                </xsl:for-each>
+              </font>
+            </paragraph>
+          </xsl:if>
         </synopsis>
 
         <summary>
@@ -260,6 +276,8 @@
         <xsl:if test="db:bibliography">
           <xsl:apply-templates select="db:bibliography"/>
         </xsl:if>
+        
+        <!-- TODO: is anything required for anchors? -->
       </summary>
     </document>
   </xsl:template>
