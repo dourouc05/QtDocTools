@@ -103,7 +103,8 @@ public class QDocCore {
             System.out.println("++> Starting DocBook-to-DvpML transformation.");
 
             if (dvpmlOutput.isEmpty()) {
-                throw new RuntimeException("Argument --dvpml-output missing when generating DvpML files for Qt docs.");
+                throw new RuntimeException("Argument --dvpml-output missing when generating DvpML files for Qt docs; " +
+                        "in which folder should the output be located?");
             }
 
             List<Path> xml = q.findDocBook();
