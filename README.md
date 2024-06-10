@@ -1,4 +1,4 @@
-## A journey from QDoc 5 to DocBook
+## A journey from QDoc 5/6 to DocBook
 
 This tool works around the DocBook 5.2 format. It was first built to allow a 
 more modern toolkit to work with Qt qdoc's generated output, and grew to offer
