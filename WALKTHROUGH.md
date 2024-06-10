@@ -5,8 +5,10 @@ All classes belong to a package within `be.tcuvelier.qdoctools`, except the main
 
 The package `core` contains the core functionality (i.e. something that does not belong
 to `consistency` or to `io`). Within it: 
-  * the package `handlers` implement most of the functionalities, with a fine-grained level
-  * the classes `*Core` implement a higher-level interface on top of the `handlers` package
+  * the package `handlers` implement most of the functionalities, with a fine-grained level;
+    these functions do not log anything
+  * the classes `*Core` implement a higher-level interface on top of the `handlers` package;
+    they take care of logging useful information to the user
   * the package `helpers` contains very small methods that make the rest of the code easier to read
   * the package `utils` contains all sorts of methods and classes that may be of use anywhere
 
