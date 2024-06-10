@@ -2,7 +2,9 @@ package be.tcuvelier.qdoctools.core;
 
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.config.QdtPaths;
-import be.tcuvelier.qdoctools.core.handlers.QDocHandler;
+import be.tcuvelier.qdoctools.core.handlers.QDocPostProcessingHandler;
+import be.tcuvelier.qdoctools.core.handlers.QDocRunningHandler;
+import be.tcuvelier.qdoctools.core.handlers.QDocToDvpMLHandler;
 import be.tcuvelier.qdoctools.core.handlers.XsltHandler;
 import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
 import be.tcuvelier.qdoctools.core.helpers.FormattingHelpers;
@@ -13,9 +15,7 @@ import net.sf.saxon.s9api.SaxonApiException;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -38,13 +38,17 @@ public class QDocCore {
         // First, initialise global objects.
         List<String> includes = config.getCppCompilerIncludes();
         includes.addAll(config.getNdkIncludes());
-        QDocHandler q = new QDocHandler(source, installed, output, htmlVersion,
+
+        QDocRunningHandler qrh = new QDocRunningHandler(source, installed, output,
                 config.getQDocLocation(), qtVersion, qdocDebug, reduceIncludeListSize,
                 includes, config);
+        QDocPostProcessingHandler qpph = new QDocPostProcessingHandler(output, htmlVersion, config);
+        QDocToDvpMLHandler qdh = new QDocToDvpMLHandler(output, config);
+        // TODO: think of a way to avoid too many arguments to these constructors.
 
         // Explore the source directory for the qdocconf files.
         System.out.println("++> Looking for qdocconf files");
-        List<Pair<String, Path>> modules = q.findModules().first;
+        List<Pair<String, Path>> modules = qrh.findModules().first;
         System.out.println("++> " + modules.size() + " modules found");
 
         // Disable Qt for Education: qdoc fails with that one. Error message:
@@ -56,31 +60,31 @@ public class QDocCore {
         // Run qdoc to get the DocBook output.
         if (convertToDocBook) {
             // Write the list of qdocconf files.
-            Path mainQdocconfPath = q.makeMainQdocconf(modules);
+            Path mainQdocconfPath = qrh.makeMainQdocconf(modules);
             System.out.println("++> Main qdocconf written: " + mainQdocconfPath);
 
             // Run QtAttributionScanner to generate some files.
             System.out.println("++> Running QtAttributionScanner.");
-            q.runQtAttributionsScanner(modules);
+            qrh.runQtAttributionsScanner(modules);
             System.out.println("++> QtAttributionScanner done.");
 
             // Actually run qdoc on this new file.
             System.out.println("++> Running QDoc.");
-            q.runQDoc(); // TODO: think about running moc to avoid too many errors while reading
+            qrh.runQDoc(); // TODO: think about running moc to avoid too many errors while reading
             // the code.
             System.out.println("++> QDoc done.");
 
             System.out.println("++> Fixing some qdoc quirks.");
-            q.copyGeneratedFiles(); // Sometimes, qdoc outputs things in a strange folder. Ahoy!
-            q.fixQDocBugs();
-            q.addDates();
-            q.addAuthors();
-            q.fixLinks();
+            qrh.copyGeneratedFiles(); // Sometimes, qdoc outputs things in a strange folder. Ahoy!
+            qpph.fixQDocBugs();
+            qpph.addDates();
+            qpph.addAuthors();
+            qpph.fixLinks();
             System.out.println("++> QDoc quirks fixed."); // At least, the ones I know about
             // right now.
 
             System.out.println("++> Validating DocBook output.");
-            q.validateDocBook();
+            qpph.validateDocBook();
             System.out.println("++> DocBook output validated.");
         }
 
@@ -94,7 +98,7 @@ public class QDocCore {
             // installer have the same folder structure as output by QDoc: the copies done in
             // copyGeneratedFiles() cannot yet be removed for this check to be performed!
             System.out.println("++> Checking consistency of the DocBook output.");
-            q.checkDocBookConsistency();
+            qpph.checkDocBookConsistency();
             System.out.println("++> DocBook consistency checked.");
         }
 
@@ -107,10 +111,10 @@ public class QDocCore {
                         "in which folder should the output be located?");
             }
 
-            List<Path> xml = q.findDocBook();
+            List<Path> xml = qpph.findDocBook();
             if (xml.isEmpty()) {
                 System.out.println("??> Have DocBook files been generated in " +
-                        q.getOutputFolder() + "? There are no DocBook files there.");
+                        qrh.getOutputFolder() + "? There are no DocBook files there.");
             }
 
             Path dvpmlOutputFolder = Paths.get(dvpmlOutput);
