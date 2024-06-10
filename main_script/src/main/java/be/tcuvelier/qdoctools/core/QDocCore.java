@@ -117,6 +117,9 @@ public class QDocCore {
             Files.createDirectories(dvpmlOutputFolder);
 
             // Iterate through all the files.
+            // Not using TransformHelpers.fromDocBookToDvpML to avoid building one XsltHandler per file. As Qt's doc is
+            // roughly 4,000 pages, that would mean loading the XSLT 4,000 times. Plus, there is some specific
+            // postprocessing for Qt's doc.
             XsltHandler h = new XsltHandler(new QdtPaths(config).getXsltToDvpMLPath());
             int i = 0;
             for (Path file : xml) {
