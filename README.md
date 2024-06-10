@@ -15,7 +15,8 @@ many DocBook-related functionalities. Its capabilities:
   metadata was lost, or because a new version of Qt was released and the 
   existing documentation translation should be updated) {WIP}.
 - Run qdoc to generate Qt's documentation (requires qdoc 5.15, as it is the 
-  first version able to generate DocBook) {WIP}. 
+  first version able to generate DocBook, but the later the better; 6.4 is a
+  better minimum, 6.5+ should give the best results). 
   
 ### Repository organisation
 
