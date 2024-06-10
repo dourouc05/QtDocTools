@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+// A configuration that is read from a local file.
 public class GlobalConfiguration extends AbstractConfiguration {
     private final String configName;
 
