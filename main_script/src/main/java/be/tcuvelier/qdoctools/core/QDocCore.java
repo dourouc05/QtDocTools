@@ -79,8 +79,7 @@ public class QDocCore {
             qpph.addDates();
             qpph.addAuthors();
             qpph.fixLinks();
-            System.out.println("++> QDoc quirks fixed."); // At least, the ones I know about
-            // right now.
+            System.out.println("++> QDoc quirks fixed."); // At least, the ones I know about right now.
 
             System.out.println("++> Validating DocBook output.");
             qpph.validateDocBook();
@@ -121,27 +120,22 @@ public class QDocCore {
             // Not using TransformHelpers.fromDocBookToDvpML to avoid building one XsltHandler per file. As Qt's doc is
             // roughly 4,000 pages, that would mean loading the XSLT 4,000 times. Plus, there is some specific
             // postprocessing for Qt's doc.
-            XsltHandler h = new XsltHandler(new QdtPaths(config).getXsltToDvpMLPath());
             int i = 0;
             for (Path dbFile : xml) {
                 System.out.println(FormattingHelpers.prefix(i, xml) + " " + dbFile);
 
                 // Actually convert the DocBook into DvpML. This may print errors directly to stderr.
-                Path destination = qdh.rewritePath(dbFile);
-                h.transform(dbFile.toFile(), destination.toFile(), Map.of(
-                        "doc-qt", true,
-                        "qt-version", qtVersion.QT_VER(),
-                        "document-file-name", FileHelpers.removeExtension(dbFile)
-                ));
+                Path dvpmlFile = qdh.rewritePath(dbFile);
+                qdh.transformDocBookToDvpML(dbFile, dvpmlFile);
 
                 // Do a few manual transformations.
-                qdh.fixURLs(destination);
-                qdh.copyImages(dbFile, destination);
+                qdh.fixURLs(dvpmlFile);
+                qdh.copyImages(dbFile, dvpmlFile);
 
                 // Handle validation.
                 if (validate) {
                     try {
-                        if (!qdh.isValid(destination)) {
+                        if (!qdh.isValid(dvpmlFile)) {
                             System.err.println(FormattingHelpers.prefix(i, xml) + "There were " +
                                     "validation errors. See the above exception for details.");
                         }

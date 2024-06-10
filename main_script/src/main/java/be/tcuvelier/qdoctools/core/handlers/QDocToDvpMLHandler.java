@@ -1,9 +1,11 @@
 package be.tcuvelier.qdoctools.core.handlers;
 
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
+import be.tcuvelier.qdoctools.core.config.QdtPaths;
 import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
 import be.tcuvelier.qdoctools.core.helpers.ValidationHelper;
 import be.tcuvelier.qdoctools.core.utils.QtVersion;
+import net.sf.saxon.s9api.SaxonApiException;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
@@ -14,6 +16,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -25,13 +28,16 @@ public class QDocToDvpMLHandler {
     private final Path dvpmlOutputFolder; // Where the DvpML files should be put.
     private final QtVersion qtVersion;
     private final GlobalConfiguration config;
+    private final XsltHandler xsltHandler;
 
     public QDocToDvpMLHandler(String output, String dvpmlOutput, QtVersion qtVersion, GlobalConfiguration config)
-            throws IOException {
+            throws IOException, SaxonApiException {
         outputFolder = Paths.get(output);
         dvpmlOutputFolder = Paths.get(dvpmlOutput);
         this.qtVersion = qtVersion;
         this.config = config;
+
+        xsltHandler = new XsltHandler(new QdtPaths(config).getXsltToDvpMLPath());
 
         ensureDvpMLOutputFolderExists();
     }
@@ -60,6 +66,14 @@ public class QDocToDvpMLHandler {
         String baseFileName = FileHelpers.removeExtension(dbFile);
         Path destinationFolder = dvpmlOutputFolder.resolve(baseFileName);
         return destinationFolder.resolve(baseFileName + "_dvp.xml");
+    }
+
+    public void transformDocBookToDvpML(Path dbFile, Path dvpmlFile) throws SaxonApiException {
+        xsltHandler.transform(dbFile.toFile(), dvpmlFile.toFile(), Map.of(
+                "doc-qt", true,
+                "qt-version", qtVersion.QT_VER(),
+                "document-file-name", FileHelpers.removeExtension(dbFile)
+        ));
     }
 
     // Links should no longer point to .xml files. This is expected for DocBook, this is wrong for DvpML (and it's too
