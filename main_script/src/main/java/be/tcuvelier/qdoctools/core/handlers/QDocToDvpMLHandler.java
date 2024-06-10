@@ -23,17 +23,16 @@ import java.util.stream.Collectors;
 
 // Handler for transforming QDoc's DocBook output into DvpML.
 public class QDocToDvpMLHandler {
-    private final Path outputFolder; // Where all the generated files should be put (QDoc may
-    // also output in a subfolder, in which case the files are automatically moved to a flatter hierarchy).
-    private final Path dvpmlOutputFolder; // Where the DvpML files should be put.
+    private final Path inputFolder; // Where QDoc generated all the DocBook files.
+    private final Path outputFolder; // Where the DvpML files should be put.
     private final QtVersion qtVersion;
     private final GlobalConfiguration config;
     private final XsltHandler xsltHandler;
 
-    public QDocToDvpMLHandler(String output, String dvpmlOutput, QtVersion qtVersion, GlobalConfiguration config)
+    public QDocToDvpMLHandler(String input, String output, QtVersion qtVersion, GlobalConfiguration config)
             throws IOException, SaxonApiException {
+        inputFolder = Paths.get(input);
         outputFolder = Paths.get(output);
-        dvpmlOutputFolder = Paths.get(dvpmlOutput);
         this.qtVersion = qtVersion;
         this.config = config;
 
@@ -43,16 +42,16 @@ public class QDocToDvpMLHandler {
     }
 
     private void ensureDvpMLOutputFolderExists() throws IOException {
-        Files.createDirectories(dvpmlOutputFolder);
+        Files.createDirectories(outputFolder);
     }
 
     private List<Path> findWithExtension(@SuppressWarnings("SameParameterValue") String extension) {
         String[] fileNames =
-                outputFolder.toFile().list((current, name) -> name.endsWith(extension));
+                inputFolder.toFile().list((current, name) -> name.endsWith(extension));
         if (fileNames == null || fileNames.length == 0) {
             return Collections.emptyList();
         } else {
-            return Arrays.stream(fileNames).map(outputFolder::resolve).collect(Collectors.toList());
+            return Arrays.stream(fileNames).map(inputFolder::resolve).collect(Collectors.toList());
         }
     }
 
@@ -64,7 +63,7 @@ public class QDocToDvpMLHandler {
         // Output the result in the right subfolder, with the same file name, just add a "_dvp" suffix
         // (the same as in the XSLT sheets).
         String baseFileName = FileHelpers.removeExtension(dbFile);
-        Path destinationFolder = dvpmlOutputFolder.resolve(baseFileName);
+        Path destinationFolder = outputFolder.resolve(baseFileName);
         return destinationFolder.resolve(baseFileName + "_dvp.xml");
     }
 
@@ -132,9 +131,9 @@ public class QDocToDvpMLHandler {
     }
 
     public void moveIndex() throws IOException {
-        Path indexFolder = dvpmlOutputFolder.resolve("index");
-        Files.move(indexFolder.resolve("index_dvp.xml"), dvpmlOutputFolder.resolve("index_dvp.xml"));
-        Files.move(indexFolder.resolve("images"), dvpmlOutputFolder.resolve("images"));
+        Path indexFolder = outputFolder.resolve("index");
+        Files.move(indexFolder.resolve("index_dvp.xml"), outputFolder.resolve("index_dvp.xml"));
+        Files.move(indexFolder.resolve("images"), outputFolder.resolve("images"));
         Files.delete(indexFolder);
     }
 }
