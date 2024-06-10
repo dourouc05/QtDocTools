@@ -43,8 +43,7 @@ public class QDocCore {
                 config.getQDocLocation(), qtVersion, qdocDebug, reduceIncludeListSize,
                 includes, config);
         QDocPostProcessingHandler qpph = new QDocPostProcessingHandler(output, htmlVersion, config);
-        QDocToDvpMLHandler qdh = new QDocToDvpMLHandler(output, config);
-        // TODO: think of a way to avoid too many arguments to these constructors.
+        // TODO: think of a way to avoid too many arguments to the QDoc*Handler constructors.
 
         // Explore the source directory for the qdocconf files.
         System.out.println("++> Looking for qdocconf files");
@@ -111,14 +110,14 @@ public class QDocCore {
                         "in which folder should the output be located?");
             }
 
-            List<Path> xml = qpph.findDocBook();
+            QDocToDvpMLHandler qdh = new QDocToDvpMLHandler(output, dvpmlOutput, qtVersion, config);
+            List<Path> xml = qdh.findDocBook();
             if (xml.isEmpty()) {
                 System.out.println("??> Have DocBook files been generated in " +
                         qrh.getOutputFolder() + "? There are no DocBook files there.");
             }
 
             Path dvpmlOutputFolder = Paths.get(dvpmlOutput);
-            Files.createDirectories(dvpmlOutputFolder);
 
             // Iterate through all the files.
             // Not using TransformHelpers.fromDocBookToDvpML to avoid building one XsltHandler per file. As Qt's doc is
@@ -142,62 +141,14 @@ public class QDocCore {
                         "document-file-name", baseFileName
                 ));
 
-                // Do a few manual transformations especially for Qt's doc: links (no longer .xml files).
-                // At some point, there should be a better implementation to map .xml links to online links.
-                // Just not now.
-                // No need for a backup here, the input files are not really expensive to generate (compared to
-                // running QDoc).
-                {
-                    String rootURL = "https://qt.developpez.com/doc/" + qtVersion.QT_VER() + "/";
-                    String fileContents = Files.readString(destination);
-                    Pattern regex = Pattern.compile("<link href=\"(.*)\\.xml");
-                    fileContents = regex.matcher(fileContents).replaceAll("<link href=\"" + rootURL + "$1/");
-                    Files.write(destination, fileContents.getBytes());
-                }
-
-                // Copy the image at the right place.
-                {
-                    String fileContents = Files.readString(destination);
-                    Pattern regex = Pattern.compile("<image src=\"([^\"]*)\"");
-                    Matcher matcher = regex.matcher(fileContents);
-                    if (matcher.find()) {
-                        // Create the image folder for this page.
-                        Path pageFolder = destination.getParent();
-                        Path imageFolder = pageFolder.resolve("images");
-                        if (!imageFolder.toFile().exists()) {
-                            if (!imageFolder.toFile().mkdirs()) {
-                                throw new IOException("Could not create directories: " + imageFolder);
-                            }
-                        }
-
-                        // Copy the right images. do-while: consume the first match before moving on to the others.
-                        // Don't copy if this is an SVG file that the XSLT moved to the right place.
-                        do {
-                            String path = matcher.group(1);
-                            if (!path.startsWith("images/")) {
-                                throw new IOException("Unexpected image URI: " + path);
-                            }
-
-                            Path newPath = pageFolder.resolve(path);
-                            if (path.endsWith(".svg") && path.contains("svg_")) {
-                                if (!newPath.toFile().exists()) {
-                                    throw new IOException("Copying SVG image: " + newPath + " should have been done by the XSLT sheets, but was not");
-                                }
-                                System.out.println("++> Copying SVG image: " + newPath + " already done");
-                            } else {
-                                Path oldPath = file.getParent().resolve(path);
-                                System.out.println("++> Copying image: from " + oldPath + " to " + newPath);
-                                Files.copy(oldPath, newPath, StandardCopyOption.REPLACE_EXISTING);
-                            }
-                        } while (matcher.find());
-                    }
-                }
+                // Do a few manual transformations.
+                qdh.fixURLs(destination);
+                qdh.copyImages(file, destination);
 
                 // Handle validation.
                 if (validate) {
                     try {
-                        boolean isValid = ValidationHelper.validateDvpML(destination, config);
-                        if (!isValid) {
+                        if (!qdh.isValid(destination)) {
                             System.err.println(FormattingHelpers.prefix(i, xml) + "There were " +
                                     "validation errors. See the above exception for details.");
                         }
@@ -213,12 +164,7 @@ public class QDocCore {
             System.out.println("++> DocBook-to-DvpML transformation done.");
 
             // Final touch: move the index/ page to the root. After all, it's the index.
-            {
-                Path indexFolder = dvpmlOutputFolder.resolve("index");
-                Files.move(indexFolder.resolve("index_dvp.xml"), dvpmlOutputFolder.resolve("index_dvp.xml"));
-                Files.move(indexFolder.resolve("images"), dvpmlOutputFolder.resolve("images"));
-                Files.delete(indexFolder);
-            }
+            qdh.moveIndex();
             System.out.println("++> DvpML index moved.");
         }
     }
