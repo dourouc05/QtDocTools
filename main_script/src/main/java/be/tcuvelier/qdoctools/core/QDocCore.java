@@ -117,8 +117,6 @@ public class QDocCore {
                         qrh.getOutputFolder() + "? There are no DocBook files there.");
             }
 
-            Path dvpmlOutputFolder = Paths.get(dvpmlOutput);
-
             // Iterate through all the files.
             // Not using TransformHelpers.fromDocBookToDvpML to avoid building one XsltHandler per file. As Qt's doc is
             // roughly 4,000 pages, that would mean loading the XSLT 4,000 times. Plus, there is some specific
