@@ -1,6 +1,7 @@
 package be.tcuvelier.qdoctools.core.handlers;
 
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
+import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
 import be.tcuvelier.qdoctools.core.helpers.ValidationHelper;
 import be.tcuvelier.qdoctools.core.utils.QtVersion;
 import org.xml.sax.SAXException;
@@ -51,6 +52,14 @@ public class QDocToDvpMLHandler {
 
     public List<Path> findDocBook() {
         return findWithExtension(".xml");
+    }
+
+    public Path rewritePath(Path dbFile) {
+        // Output the result in the right subfolder, with the same file name, just add a "_dvp" suffix
+        // (the same as in the XSLT sheets).
+        String baseFileName = FileHelpers.removeExtension(dbFile);
+        Path destinationFolder = dvpmlOutputFolder.resolve(baseFileName);
+        return destinationFolder.resolve(baseFileName + "_dvp.xml");
     }
 
     // Links should no longer point to .xml files. This is expected for DocBook, this is wrong for DvpML (and it's too

@@ -125,25 +125,20 @@ public class QDocCore {
             // postprocessing for Qt's doc.
             XsltHandler h = new XsltHandler(new QdtPaths(config).getXsltToDvpMLPath());
             int i = 0;
-            for (Path file : xml) {
-                System.out.println(FormattingHelpers.prefix(i, xml) + " " + file);
-
-                // Output the result in the right subfolder, with the same file name, just add a "_dvp" suffix
-                // (the same as in the XSLT sheets).
-                String baseFileName = FileHelpers.removeExtension(file);
-                Path destinationFolder = dvpmlOutputFolder.resolve(baseFileName);
-                Path destination = destinationFolder.resolve(baseFileName + "_dvp.xml");
+            for (Path dbFile : xml) {
+                System.out.println(FormattingHelpers.prefix(i, xml) + " " + dbFile);
 
                 // Actually convert the DocBook into DvpML. This may print errors directly to stderr.
-                h.transform(file.toFile(), destination.toFile(), Map.of(
+                Path destination = qdh.rewritePath(dbFile);
+                h.transform(dbFile.toFile(), destination.toFile(), Map.of(
                         "doc-qt", true,
                         "qt-version", qtVersion.QT_VER(),
-                        "document-file-name", baseFileName
+                        "document-file-name", FileHelpers.removeExtension(dbFile)
                 ));
 
                 // Do a few manual transformations.
                 qdh.fixURLs(destination);
-                qdh.copyImages(file, destination);
+                qdh.copyImages(dbFile, destination);
 
                 // Handle validation.
                 if (validate) {
