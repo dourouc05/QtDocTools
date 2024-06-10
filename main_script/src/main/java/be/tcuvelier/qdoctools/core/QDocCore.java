@@ -1,14 +1,10 @@
 package be.tcuvelier.qdoctools.core;
 
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
-import be.tcuvelier.qdoctools.core.config.QdtPaths;
 import be.tcuvelier.qdoctools.core.handlers.QDocPostProcessingHandler;
 import be.tcuvelier.qdoctools.core.handlers.QDocRunningHandler;
 import be.tcuvelier.qdoctools.core.handlers.QDocToDvpMLHandler;
-import be.tcuvelier.qdoctools.core.handlers.XsltHandler;
-import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
 import be.tcuvelier.qdoctools.core.helpers.FormattingHelpers;
-import be.tcuvelier.qdoctools.core.helpers.ValidationHelper;
 import be.tcuvelier.qdoctools.core.utils.Pair;
 import be.tcuvelier.qdoctools.core.utils.QtVersion;
 import net.sf.saxon.s9api.SaxonApiException;
@@ -16,16 +12,11 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class QDocCore {
+    // Perform the conversion cycle, as complete as required.
     public static void call(String source, String installed, String output, String dvpmlOutput, String htmlVersion,
                             QtVersion qtVersion, boolean qdocDebug, boolean reduceIncludeListSize,
                             boolean validate, boolean convertToDocBook,
@@ -33,8 +24,6 @@ public class QDocCore {
                             GlobalConfiguration config)
             throws SaxonApiException, IOException, InterruptedException,
             ParserConfigurationException, SAXException {
-        // Perform the conversion cycle, as complete as required.
-
         // First, initialise global objects.
         List<String> includes = config.getCppCompilerIncludes();
         includes.addAll(config.getNdkIncludes());
@@ -88,16 +77,18 @@ public class QDocCore {
 
         // Perform some consistency checks on the contents to ensure that there is no hidden major
         // qdoc bug.
-        if (checkConsistency && htmlVersion.isEmpty()) {
-            System.out.println("!!> Cannot check consistency without an existing HTML version" +
-                    " (--html-version).");
-        } else if (checkConsistency) {
-            // As of Qt 5.15-6.4, the docs installed at the same time as Qt with the official
-            // installer have the same folder structure as output by QDoc: the copies done in
-            // copyGeneratedFiles() cannot yet be removed for this check to be performed!
-            System.out.println("++> Checking consistency of the DocBook output.");
-            qpph.checkDocBookConsistency();
-            System.out.println("++> DocBook consistency checked.");
+        if (checkConsistency) {
+            if (htmlVersion.isEmpty()) {
+                System.out.println("!!> Cannot check consistency without an existing HTML version" +
+                        " (--html-version).");
+            } else {
+                // As of Qt 5.15-6.5, the docs installed at the same time as Qt with the official
+                // installer have the same folder structure as output by QDoc: the copies done in
+                // copyGeneratedFiles() cannot yet be removed for this check to be performed!
+                System.out.println("++> Checking consistency of the DocBook output.");
+                qpph.checkDocBookConsistency();
+                System.out.println("++> DocBook consistency checked.");
+            }
         }
 
         // Run Saxon to get the DvpML output.
