@@ -136,9 +136,9 @@
             <paragraph>
               <font color="#E1E7EB">
                 <xsl:for-each select="//@xml:id">
-                  <xsl:if test="position() > 1">, </xsl:if>
                   <renvoi>
                     <xsl:attribute name="id" select="."/>
+                    <xsl:text> </xsl:text>
                   </renvoi>
                 </xsl:for-each>
               </font>
