@@ -82,8 +82,10 @@ public class QDocToDvpMLHandler {
         // (compared to running QDoc).
         String rootURL = "https://qt.developpez.com/doc/" + qtVersion.QT_VER() + "/";
         String fileContents = Files.readString(dvpmlFile);
-        Pattern regex = Pattern.compile("<link href=\"(.*)\\.xml");
+
+        Pattern regex = Pattern.compile("<link href=\"([^.:]*)\\.xml");
         fileContents = regex.matcher(fileContents).replaceAll("<link href=\"" + rootURL + "$1/");
+
         Files.write(dvpmlFile, fileContents.getBytes());
 
         // TODO: at some point, there should be a better implementation to map .xml links to online links.
