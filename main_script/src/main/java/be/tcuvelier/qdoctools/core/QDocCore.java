@@ -32,14 +32,15 @@ public class QDocCore {
                 config.getQDocLocation(), qtVersion, qdocDebug, reduceIncludeListSize,
                 includes, config);
         QDocPostProcessingHandler qpph = new QDocPostProcessingHandler(output, htmlVersion, config);
-        // TODO: think of a way to avoid too many arguments to the QDoc*Handler constructors.
+        // TODO: think of a way to avoid too many arguments to the QDoc*Handler constructors. config is only read from
+        // a file.
 
         // Explore the source directory for the qdocconf files.
         System.out.println("++> Looking for qdocconf files");
         List<Pair<String, Path>> modules = qrh.findModules().first;
         System.out.println("++> " + modules.size() + " modules found");
 
-        // Disable Qt for Education: qdoc fails with that one. Error message:
+        // Disable Qt for Education: qdoc fails with that one, around Qt 6.4 and 6.5. Error message:
         //     qdoc can't run; no project set in qdocconf file
         System.out.println("++> Filtering problematic modules");
         modules = modules.stream().filter(pair -> !pair.second.toString().contains("qtforeducation.qdocconf")).toList();
@@ -91,13 +92,16 @@ public class QDocCore {
             }
         }
 
+        // TODO: rather call QDocGitHubCore.call instead of duplicating the code? Is there any value to the duplication?
+        // Moving more code to the handler would make them output logs.
+
         // Run Saxon to get the DvpML output.
         if (convertToDvpML) {
             System.out.println("++> Starting DocBook-to-DvpML transformation.");
 
             if (dvpmlOutput.isEmpty()) {
                 throw new RuntimeException("Argument --dvpml-output missing when generating DvpML files for Qt docs; " +
-                        "in which folder should the output be located?");
+                        "in which folder should the DvpML output be located?");
             }
 
             QDocToDvpMLHandler qdh = new QDocToDvpMLHandler(output, dvpmlOutput, qtVersion, config);
@@ -126,7 +130,7 @@ public class QDocCore {
                 // Handle validation.
                 if (validate) {
                     try {
-                        if (!qdh.isValid(dvpmlFile)) {
+                        if (!qdh.isValidDvpML(dvpmlFile)) {
                             System.err.println(FormattingHelpers.prefix(i, xml) + "There were " +
                                     "validation errors. See the above exception for details.");
                         }

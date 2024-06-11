@@ -126,7 +126,7 @@ public class QDocToDvpMLHandler {
         }
     }
 
-    public boolean isValid(Path dvpmlFile) throws IOException, SAXException {
+    public boolean isValidDvpML(Path dvpmlFile) throws IOException, SAXException {
         return ValidationHelper.validateDvpML(dvpmlFile, config);
     }
 
