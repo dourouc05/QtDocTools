@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
-public class QDocGitHubCore {
+public class QDocPublishCore {
     public static void call(String input, String output, QtVersion qtVersion, boolean validate,
                             boolean convertToDvpML, GlobalConfiguration config) throws SaxonApiException, IOException {
         if (input.isEmpty()) {

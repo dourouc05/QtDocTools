@@ -1,7 +1,6 @@
 package be.tcuvelier.qdoctools.cli;
 
-import be.tcuvelier.qdoctools.core.QDocCore;
-import be.tcuvelier.qdoctools.core.QDocGitHubCore;
+import be.tcuvelier.qdoctools.core.QDocPublishCore;
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.utils.QtVersion;
 import net.sf.saxon.s9api.SaxonApiException;
@@ -13,8 +12,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 
-@Command(name = "qdoc", description = "Transform the result from QDoc into a publication-ready version")
-public class QDocGitHubCommand implements Callable<Void> {
+@Command(name = "qdocpub", description = "Transform the result from QDoc into a publication-ready version")
+public class QDocPublishCommand implements Callable<Void> {
     @Option(names = {"-c", "--configuration-file"},
             description = "Configuration file, mostly useful in QDoc mode (default: " +
                     "${DEFAULT-VALUE})")
@@ -30,7 +29,7 @@ public class QDocGitHubCommand implements Callable<Void> {
             description = "Disables the generation of the DvpML files")
     private boolean convertToDvpML = true;
     @Option(names = {"-i", "--input-folder"},
-            description = "Input folder (DocBook files)", required = true)
+            description = "Input folder (DocBook files, typically from a Git repository)", required = true)
     private String input;
     @Option(names = {"-d", "--dvpml-output-folder"},
             description = "Output folder (DvpML files)", required = true)
@@ -40,7 +39,7 @@ public class QDocGitHubCommand implements Callable<Void> {
     public Void call() throws SaxonApiException, IOException, InterruptedException,
             ParserConfigurationException, SAXException {
         GlobalConfiguration config = new GlobalConfiguration(configurationFile);
-        QDocGitHubCore.call(input, dvpmlOutput, qtVersion, validate, convertToDvpML, config);
+        QDocPublishCore.call(input, dvpmlOutput, qtVersion, validate, convertToDvpML, config);
         return null;
     }
 }
