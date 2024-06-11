@@ -8,6 +8,7 @@ import be.tcuvelier.qdoctools.core.utils.QtVersion;
 import net.sf.saxon.s9api.SaxonApiException;
 import org.xml.sax.SAXException;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -137,7 +138,21 @@ public class QDocToDvpMLHandler {
     public void moveIndex() throws IOException {
         Path indexFolder = outputFolder.resolve("index");
         Files.move(indexFolder.resolve("index_dvp.xml"), outputFolder.resolve("index_dvp.xml"), REPLACE_EXISTING);
-        Files.move(indexFolder.resolve("images"), outputFolder.resolve("images"), REPLACE_EXISTING);
+
+        Path originalImages = indexFolder.resolve("images");
+        Path destinationImages = outputFolder.resolve("images");
+        if (! Files.exists(destinationImages)) {
+            // If the destination folder exists, Files.move throws DirectoryNotEmptyException.
+            Files.move(/*source=*/originalImages, /*target=*/destinationImages);
+        } else {
+            // Thus, move all files one by one.
+            File[] images = originalImages.toFile().listFiles();
+            if (images != null) {
+                for (File f : images) {
+                    Files.move(f.toPath(), destinationImages.resolve(f.getName()));
+                }
+            }
+        }
         Files.delete(indexFolder);
     }
 }
