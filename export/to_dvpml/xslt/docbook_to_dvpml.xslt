@@ -134,14 +134,12 @@
           <!-- rgba(155, 177, 188, 0.3) == "#9bb1bc4c" (with transparency) == "#e1e7eb" -->
           <xsl:if test="//@xml:id">
             <paragraph>
-              <font color="#E1E7EB">
-                <xsl:for-each select="//@xml:id">
-                  <renvoi>
-                    <xsl:attribute name="id" select="."/>
-                    <xsl:text> </xsl:text>
-                  </renvoi>
-                </xsl:for-each>
-              </font>
+              <xsl:for-each select="//@xml:id">
+                <renvoi>
+                  <xsl:attribute name="id" select="."/>
+                  <xsl:text> </xsl:text>
+                </renvoi>
+              </xsl:for-each>
             </paragraph>
           </xsl:if>
         </synopsis>
