@@ -21,6 +21,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
 // Handler for transforming QDoc's DocBook output into DvpML.
 public class QDocToDvpMLHandler {
     private final Path inputFolder; // Where QDoc generated all the DocBook files.
@@ -122,7 +124,7 @@ public class QDocToDvpMLHandler {
                 } else {
                     Path oldPath = dbFile.getParent().resolve(path);
                     System.out.println("++> Copying image: from " + oldPath + " to " + newPath);
-                    Files.copy(oldPath, newPath, StandardCopyOption.REPLACE_EXISTING);
+                    Files.copy(oldPath, newPath, REPLACE_EXISTING);
                 }
             } while (matcher.find());
         }
@@ -134,8 +136,8 @@ public class QDocToDvpMLHandler {
 
     public void moveIndex() throws IOException {
         Path indexFolder = outputFolder.resolve("index");
-        Files.move(indexFolder.resolve("index_dvp.xml"), outputFolder.resolve("index_dvp.xml"));
-        Files.move(indexFolder.resolve("images"), outputFolder.resolve("images"));
+        Files.move(indexFolder.resolve("index_dvp.xml"), outputFolder.resolve("index_dvp.xml"), REPLACE_EXISTING);
+        Files.move(indexFolder.resolve("images"), outputFolder.resolve("images"), REPLACE_EXISTING);
         Files.delete(indexFolder);
     }
 }
