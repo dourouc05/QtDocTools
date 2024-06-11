@@ -156,10 +156,12 @@
                 <xsl:value-of select="false()"/>
               </xsl:when>
               <!-- Other cases? -->
-              <xsl:otherwise><xsl:value-of select="true()"/></xsl:otherwise>
+              <xsl:otherwise>
+                <xsl:value-of select="true()"/>
+              </xsl:otherwise>
             </xsl:choose>
           </xsl:variable>
-          
+
           <xsl:choose>
             <xsl:when test="$hasTextBeforeSection">
               <!-- A document must have a section in DvpML, not necessarily in DocBook. -->
@@ -173,16 +175,65 @@
                         db:title"/>
                 </title>
 
-                <xsl:apply-templates mode="content" select="./*[not(self::db:info) and not(self::db:title)]"/>
+                <xsl:apply-templates mode="content"
+                  select="./*[not(self::db:info) and not(self::db:title)]"/>
               </section>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:apply-templates mode="content" select="./*[not(self::db:info) and not(self::db:title)]"/>
+              <xsl:apply-templates mode="content"
+                select="./*[not(self::db:info) and not(self::db:title)]"/>
             </xsl:otherwise>
           </xsl:choose>
 
           <xsl:if test="db:bibliography">
             <xsl:apply-templates select="db:bibliography"/>
+          </xsl:if>
+
+          <!-- Links to the previous or the next page. -->
+          <!-- For simplicity, only check whether there is at least one link that has a @to and a @title. -->
+          <!-- For the actual output, only care about @arcrole, consider @to and @title always filled. -->
+          <xsl:if
+            test="db:info/db:extendedlink[@xlink:type = 'extended']/db:link[@xlink:to and @xlink:title and @xlink:type = 'arc' and (@xlink:arcrole = 'prev' or @xlink:arcrole = 'next' or @xlink:arcrole = 'start')]">
+            <section noNumber="1" id="LINKS">
+              <tableau width="80%" border="0">
+                <ligne>
+                  <colonne align="left">
+                    <xsl:variable name="prev" as="node()?" select="db:info/db:extendedlink[@xlink:type = 'extended']/db:link[@xlink:arcrole = 'prev']"/>
+                    <xsl:choose>
+                      <xsl:when test="$prev">
+                        <link href="{$prev/@xlink:to}">
+                          &lt;&#160;<xsl:value-of select="$prev/@xlink:title"/>
+                        </link>
+                      </xsl:when>
+                      <xsl:otherwise>&#160;</xsl:otherwise>
+                    </xsl:choose>
+                  </colonne>
+                  <colonne align="center">
+                    <!-- Currently not shown in Qt's documentation (ca. June 2024), but still present in the HTML. -->
+                    <!-- This output is similar to what was shown in previous versions of the doc. -->
+                    <xsl:variable name="start" as="node()?" select="db:info/db:extendedlink[@xlink:type = 'extended']/db:link[@xlink:arcrole = 'start']"/>
+                    <xsl:choose>
+                      <xsl:when test="$start">
+                        <link href="{$start/@xlink:to}">
+                          ^&#160;<xsl:value-of select="$start/@xlink:title"/>&#160;^
+                        </link>
+                      </xsl:when>
+                      <xsl:otherwise>&#160;</xsl:otherwise>
+                    </xsl:choose>
+                  </colonne>
+                  <colonne align="right">
+                    <xsl:variable name="next" as="node()?" select="db:info/db:extendedlink[@xlink:type = 'extended']/db:link[@xlink:arcrole = 'next']"/>
+                    <xsl:choose>
+                      <xsl:when test="$next">
+                        <link href="{$next/@xlink:to}">
+                          <xsl:value-of select="$next/@xlink:title"/>&#160;&gt;
+                        </link>
+                      </xsl:when>
+                      <xsl:otherwise>&#160;</xsl:otherwise>
+                    </xsl:choose></colonne>
+                </ligne>
+              </tableau>
+            </section>
           </xsl:if>
         </summary>
       </document>
