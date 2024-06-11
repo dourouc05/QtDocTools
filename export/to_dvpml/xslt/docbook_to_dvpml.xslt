@@ -195,6 +195,7 @@
           <xsl:if
             test="db:info/db:extendedlink[@xlink:type = 'extended']/db:link[@xlink:to and @xlink:title and @xlink:type = 'arc' and (@xlink:arcrole = 'prev' or @xlink:arcrole = 'next' or @xlink:arcrole = 'start')]">
             <section noNumber="1" id="LINKS">
+              <title>&#0160;</title>
               <tableau width="80%" border="0">
                 <ligne>
                   <colonne align="left">
