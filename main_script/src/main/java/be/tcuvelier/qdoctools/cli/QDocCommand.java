@@ -65,6 +65,15 @@ public class QDocCommand implements Callable<Void> {
     @Override
     public Void call() throws SaxonApiException, IOException, InterruptedException,
             ParserConfigurationException, SAXException {
+        if (checkConsistency && htmlVersion.isEmpty()) {
+            System.out.println("!!> Cannot check consistency without an existing HTML version" +
+                    " (--html-version).");
+        }
+        if (convertToDvpML && dvpmlOutput.isEmpty()) {
+            throw new RuntimeException("Argument --dvpml-output missing when generating DvpML files for Qt docs; " +
+                    "in which folder should the DvpML output be located?");
+        }
+
         GlobalConfiguration config = new GlobalConfiguration(configurationFile);
         QDocCore.call(source, installed, output, dvpmlOutput, htmlVersion, qtVersion, qdocDebug,
                 reduceIncludeListSize, validate, convertToDocBook, checkConsistency,

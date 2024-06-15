@@ -79,30 +79,22 @@ public class QDocCore {
         // Perform some consistency checks on the contents to ensure that there is no hidden major
         // qdoc bug.
         if (checkConsistency) {
-            if (htmlVersion.isEmpty()) {
-                System.out.println("!!> Cannot check consistency without an existing HTML version" +
-                        " (--html-version).");
-            } else {
-                // As of Qt 5.15-6.5, the docs installed at the same time as Qt with the official
-                // installer have the same folder structure as output by QDoc: the copies done in
-                // copyGeneratedFiles() cannot yet be removed for this check to be performed!
-                System.out.println("++> Checking consistency of the DocBook output.");
-                qpph.checkDocBookConsistency();
-                System.out.println("++> DocBook consistency checked.");
-            }
+            System.out.println("++> Checking consistency of the DocBook output.");
+            assert !htmlVersion.isEmpty();
+
+            // As of Qt 5.15-6.5, the docs installed at the same time as Qt with the official
+            // installer have the same folder structure as output by QDoc: the copies done in
+            // copyGeneratedFiles() cannot yet be removed for this check to be performed!
+            qpph.checkDocBookConsistency();
+            System.out.println("++> DocBook consistency checked.");
         }
 
-        // TODO: rather call QDocGitHubCore.call instead of duplicating the code? Is there any value to the duplication?
-        // Moving more code to the handler would make them output logs.
+//        QDocPublishCore.call(); TODO
 
         // Run Saxon to get the DvpML output.
         if (convertToDvpML) {
             System.out.println("++> Starting DocBook-to-DvpML transformation.");
-
-            if (dvpmlOutput.isEmpty()) {
-                throw new RuntimeException("Argument --dvpml-output missing when generating DvpML files for Qt docs; " +
-                        "in which folder should the DvpML output be located?");
-            }
+            assert !dvpmlOutput.isEmpty();
 
             QDocToDvpMLHandler qdh = new QDocToDvpMLHandler(output, dvpmlOutput, qtVersion, config);
             List<Path> xml = qdh.findDocBook();

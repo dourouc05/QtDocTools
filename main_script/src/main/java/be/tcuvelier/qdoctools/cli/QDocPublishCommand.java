@@ -38,6 +38,15 @@ public class QDocPublishCommand implements Callable<Void> {
     @Override
     public Void call() throws SaxonApiException, IOException, InterruptedException,
             ParserConfigurationException, SAXException {
+        if (input.isEmpty()) {
+            throw new RuntimeException("Argument --input missing when generating DvpML files for Qt docs; " +
+                    "where is the Git repository holding the DocBook source?");
+        }
+        if (dvpmlOutput.isEmpty()) {
+            throw new RuntimeException("Argument --dvpml-output missing when generating DvpML files for Qt docs; " +
+                    "in which folder should the DvpML output be located?");
+        }
+
         GlobalConfiguration config = new GlobalConfiguration(configurationFile);
         QDocPublishCore.call(input, dvpmlOutput, qtVersion, validate, convertToDvpML, config);
         return null;
