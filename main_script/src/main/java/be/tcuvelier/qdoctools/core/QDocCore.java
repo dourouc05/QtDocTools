@@ -24,6 +24,8 @@ public class QDocCore {
                             GlobalConfiguration config)
             throws SaxonApiException, IOException, InterruptedException,
             ParserConfigurationException, SAXException {
+        // TODO: move the first part of this method to a new command that only calls QDoc and converts into DocBook?
+
         // First, initialise global objects.
         List<String> includes = config.getCppCompilerIncludes();
         includes.addAll(config.getNdkIncludes());
@@ -89,57 +91,6 @@ public class QDocCore {
             System.out.println("++> DocBook consistency checked.");
         }
 
-//        QDocPublishCore.call(); TODO
-
-        // Run Saxon to get the DvpML output.
-        if (convertToDvpML) {
-            System.out.println("++> Starting DocBook-to-DvpML transformation.");
-            assert !dvpmlOutput.isEmpty();
-
-            QDocToDvpMLHandler qdh = new QDocToDvpMLHandler(output, dvpmlOutput, qtVersion, config);
-            List<Path> xml = qdh.findDocBook();
-            if (xml.isEmpty()) {
-                System.out.println("??> Have DocBook files been generated in " +
-                        qrh.getOutputFolder() + "? There are no DocBook files there.");
-            }
-
-            // Iterate through all the files.
-            // Not using TransformHelpers.fromDocBookToDvpML to avoid building one XsltHandler per file. As Qt's doc is
-            // roughly 4,000 pages, that would mean loading the XSLT 4,000 times. Plus, there is some specific
-            // postprocessing for Qt's doc.
-            int i = 0;
-            for (Path dbFile : xml) {
-                System.out.println(FormattingHelpers.prefix(i, xml) + " " + dbFile);
-
-                // Actually convert the DocBook into DvpML. This may print errors directly to stderr.
-                Path dvpmlFile = qdh.rewritePath(dbFile);
-                qdh.transformDocBookToDvpML(dbFile, dvpmlFile);
-
-                // Do a few manual transformations.
-                qdh.fixURLs(dvpmlFile);
-                qdh.copyImages(dbFile, dvpmlFile);
-
-                // Handle validation.
-                if (validate) {
-                    try {
-                        if (!qdh.isValidDvpML(dvpmlFile)) {
-                            System.err.println(FormattingHelpers.prefix(i, xml) + "There were " +
-                                    "validation errors. See the above exception for details.");
-                        }
-                    } catch (SAXException e) {
-                        System.out.println(FormattingHelpers.prefix(i, xml) + " Validation error!");
-                        //noinspection CallToPrintStackTrace
-                        e.printStackTrace();
-                    }
-                }
-
-                ++i;
-            }
-            System.out.println("++> DocBook-to-DvpML transformation done.");
-
-            // Final touch: move the index/ page to the root. After all, it's the index.
-            qdh.moveIndex();
-            System.out.println("++> DvpML index moved.");
-        }
+        QDocPublishCore.call(output, dvpmlOutput, qtVersion, validate, convertToDvpML, config);
     }
 }
