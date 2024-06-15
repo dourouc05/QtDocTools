@@ -14,13 +14,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiPredicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
@@ -48,18 +51,22 @@ public class QDocToDvpMLHandler {
         Files.createDirectories(outputFolder);
     }
 
-    private List<Path> findWithExtension(@SuppressWarnings("SameParameterValue") String extension) {
-        String[] fileNames =
-                inputFolder.toFile().list((current, name) -> name.endsWith(extension));
-        if (fileNames == null || fileNames.length == 0) {
-            return Collections.emptyList();
-        } else {
-            return Arrays.stream(fileNames).map(inputFolder::resolve).collect(Collectors.toList());
+    private List<Path> findWithExtension(Path folder,
+                                         @SuppressWarnings("SameParameterValue") String extension)
+            throws IOException {
+        BiPredicate<Path, BasicFileAttributes> matcher =
+                (filePath, fileAttr) -> fileAttr.isRegularFile() && filePath.getFileName().toString().endsWith(".xml");
+        try (Stream<Path> pathStream = Files.find(folder, 2, matcher)) {
+            return pathStream.toList();
         }
     }
 
-    public List<Path> findDocBook() {
-        return findWithExtension(".xml");
+    public List<Path> findDocBook() throws IOException {
+        return findWithExtension(inputFolder, ".xml");
+    }
+
+    public List<Path> findDvpML() throws IOException {
+        return findWithExtension(outputFolder, ".xml");
     }
 
     public Path rewritePath(Path dbFile) {

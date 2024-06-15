@@ -12,16 +12,23 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class QDocPublishCore {
-    public static void call(String input, String output, QtVersion qtVersion, boolean validate,
+    public static void call(String input, String output, QtVersion qtVersion, boolean validateDvpML,
                             boolean convertToDvpML, GlobalConfiguration config) throws SaxonApiException, IOException {
         assert !input.isEmpty();
         assert !output.isEmpty();
+
+        if (!convertToDvpML && !validateDvpML) {
+            // Nothing to do.
+            return;
+        }
+
+        QDocToDvpMLHandler qdh = new QDocToDvpMLHandler(input, output, qtVersion, config);
 
         // Run Saxon to get the DvpML output.
         if (convertToDvpML) {
             System.out.println("++> Starting DocBook-to-DvpML transformation.");
 
-            QDocToDvpMLHandler qdh = new QDocToDvpMLHandler(input, output, qtVersion, config);
+            // Gather the list of DocBook files.
             List<Path> xml = qdh.findDocBook();
             if (xml.isEmpty()) {
                 System.out.println("??> There are no DocBook files in " + input);
@@ -43,20 +50,6 @@ public class QDocPublishCore {
                 qdh.fixURLs(dvpmlFile);
                 qdh.copyImages(dbFile, dvpmlFile);
 
-                // Handle validation.
-                if (validate) {
-                    try {
-                        if (!qdh.isValidDvpML(dvpmlFile)) {
-                            System.err.println(FormattingHelpers.prefix(i, xml) + "There were " +
-                                    "validation errors. See the above exception for details.");
-                        }
-                    } catch (SAXException e) {
-                        System.out.println(FormattingHelpers.prefix(i, xml) + " Validation error!");
-                        //noinspection CallToPrintStackTrace
-                        e.printStackTrace();
-                    }
-                }
-
                 ++i;
             }
             System.out.println("++> DocBook-to-DvpML transformation done.");
@@ -64,6 +57,35 @@ public class QDocPublishCore {
             // Final touch: move the index/ page to the root. After all, it's the index.
             qdh.moveIndex();
             System.out.println("++> DvpML index moved.");
+        }
+
+        // Handle validation.
+        if (validateDvpML) {
+            // Gather the list of DvpML files.
+            List<Path> dvpml = qdh.findDvpML();
+            if (dvpml.isEmpty()) {
+                System.out.println("??> There are no DvpML files in " + output);
+            }
+
+            int i = 0;
+            for (Path dbFile : dvpml) {
+                System.out.println(FormattingHelpers.prefix(i, dvpml) + " " + dbFile);
+
+                try {
+                    Path dvpmlFile = qdh.rewritePath(dbFile);
+
+                    if (!qdh.isValidDvpML(dvpmlFile)) {
+                        System.err.println(FormattingHelpers.prefix(i, dvpml) + "There were " +
+                                "validation errors. See the above exception for details.");
+                    }
+                } catch (SAXException e) {
+                    System.out.println(FormattingHelpers.prefix(i, dvpml) + " Validation error!");
+                    //noinspection CallToPrintStackTrace
+                    e.printStackTrace();
+                }
+
+                ++i;
+            }
         }
     }
 }
