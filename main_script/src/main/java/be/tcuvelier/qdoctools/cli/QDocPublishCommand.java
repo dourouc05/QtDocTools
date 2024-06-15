@@ -12,6 +12,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 
+// TODO: make this a subcommand of QDocCommand?
 @Command(name = "qdocpub", description = "Transform the result from QDoc into a publication-ready version")
 public class QDocPublishCommand implements Callable<Void> {
     @Option(names = {"-c", "--configuration-file"},
