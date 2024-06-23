@@ -1,6 +1,7 @@
 package be.tcuvelier.qdoctools.core;
 
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
+import be.tcuvelier.qdoctools.core.handlers.QDocMovingHandler;
 import be.tcuvelier.qdoctools.core.handlers.QDocPostProcessingHandler;
 import be.tcuvelier.qdoctools.core.handlers.QDocRunningHandler;
 import be.tcuvelier.qdoctools.core.handlers.QDocToDvpMLHandler;
@@ -33,6 +34,7 @@ public class QDocCore {
         QDocRunningHandler qrh = new QDocRunningHandler(source, installed, output,
                 config.getQDocLocation(), qtVersion, qdocDebug, reduceIncludeListSize,
                 includes, config);
+        QDocMovingHandler qmh = new QDocMovingHandler(output);
         QDocPostProcessingHandler qpph = new QDocPostProcessingHandler(output, htmlVersion, config);
         // TODO: think of a way to avoid too many arguments to the QDoc*Handler constructors. config is only read from
         // a file.
@@ -65,13 +67,7 @@ public class QDocCore {
             // the code.
             System.out.println("++> QDoc done.");
 
-            System.out.println("++> Fixing some qdoc quirks.");
-            qrh.copyGeneratedFiles(); // Sometimes, qdoc outputs things in a strange folder. Ahoy!
-            qpph.fixQDocBugs();
-            qpph.addDates();
-            qpph.addAuthors();
-            qpph.fixLinks();
-            System.out.println("++> QDoc quirks fixed."); // At least, the ones I know about right now.
+            QDocPostProcessCore.call(output, htmlVersion, config);
 
             System.out.println("++> Validating DocBook output.");
             qpph.validateDocBook();
