@@ -23,13 +23,14 @@ import java.util.stream.Collectors;
 // - addAuthors: .bak4
 public class QDocPostProcessingHandler {
     private final Path outputFolder; // Where all the generated files should be put (QDoc may
-    // also output in a
-    // subfolder, in which case the files are automatically moved to a flatter hierarchy).
+    // also output in a subfolder, in which case the files are automatically moved to a flatter hierarchy).
+    private final Path htmlFolder; // A preexisting copy of the HTML docs.
     private final GlobalConfiguration config;
 
-    public QDocPostProcessingHandler(String output, GlobalConfiguration config)
+    public QDocPostProcessingHandler(String output, String htmlFolder, GlobalConfiguration config)
             throws IOException {
         outputFolder = Paths.get(output);
+        this.htmlFolder = Paths.get(htmlFolder);
         this.config = config;
 
         ensureOutputFolderExists();
