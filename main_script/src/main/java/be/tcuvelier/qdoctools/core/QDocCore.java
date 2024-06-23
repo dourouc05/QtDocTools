@@ -33,7 +33,7 @@ public class QDocCore {
         QDocRunningHandler qrh = new QDocRunningHandler(source, installed, output,
                 config.getQDocLocation(), qtVersion, qdocDebug, reduceIncludeListSize,
                 includes, config);
-        QDocPostProcessingHandler qpph = new QDocPostProcessingHandler(output, htmlVersion, config);
+        QDocPostProcessingHandler qpph = new QDocPostProcessingHandler(output, config);
         // TODO: think of a way to avoid too many arguments to the QDoc*Handler constructors. config is only read from
         // a file.
 

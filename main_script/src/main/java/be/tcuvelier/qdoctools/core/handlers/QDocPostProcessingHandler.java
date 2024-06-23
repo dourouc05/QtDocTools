@@ -25,13 +25,11 @@ public class QDocPostProcessingHandler {
     private final Path outputFolder; // Where all the generated files should be put (QDoc may
     // also output in a
     // subfolder, in which case the files are automatically moved to a flatter hierarchy).
-    private final Path htmlFolder; // A preexisting copy of the HTML docs.
     private final GlobalConfiguration config;
 
-    public QDocPostProcessingHandler(String output, String htmlVersion, GlobalConfiguration config)
+    public QDocPostProcessingHandler(String output, GlobalConfiguration config)
             throws IOException {
         outputFolder = Paths.get(output);
-        htmlFolder = Paths.get(htmlVersion);
         this.config = config;
 
         ensureOutputFolderExists();
