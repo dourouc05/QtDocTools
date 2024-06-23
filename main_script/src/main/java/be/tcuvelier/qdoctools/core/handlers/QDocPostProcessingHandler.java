@@ -472,6 +472,21 @@ public class QDocPostProcessingHandler {
                 }
             }
 
+            // classes.xml and similar lists, with just one letter
+            // <db:member><db:link xlink:href="a">A</db:link></db:member>
+            // ->
+            // <db:member><db:link xlink:href="#a">A</db:link></db:member>
+            {
+                Pattern regex = Pattern.compile("""
+                        <db:member><db:link xlink:href="[a-z]">[A-Z]</db:link></db:member>""");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("""
+                            <db:member><db:link xlink:href="#\1">\2</db:link></db:member>""");
+                }
+            }
+
             if (!hasMatched) {
                 // This file has not changed: no need to have a back-up file or to spend time
                 // writing on disk.
