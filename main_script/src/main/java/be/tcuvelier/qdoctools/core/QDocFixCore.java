@@ -15,9 +15,9 @@ public class QDocFixCore {
             ParserConfigurationException, SAXException {
         System.out.println("++> Fixing some qdoc quirks.");
         QDocFixHandler qfh = new QDocFixHandler(outputFolder, config, true);
-        qfh.fixQDocBugs();
-        qfh.addDates();
-        qfh.addAuthors();
+//        qfh.fixQDocBugs();
+//        qfh.addDates();
+//        qfh.addAuthors();
         qfh.fixLinks();
         System.out.println("++> QDoc quirks fixed."); // At least, the ones I know about right now.
     }

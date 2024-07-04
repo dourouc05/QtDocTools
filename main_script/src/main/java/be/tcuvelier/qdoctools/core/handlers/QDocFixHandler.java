@@ -558,7 +558,8 @@ public class QDocFixHandler {
         // Update the links (but not the anchors):
         //    xlink:href="../qtcore/qobject.xml"
         //    xlink:href="../qdoc/22-qdoc-configuration-generalvariables.xml#headers-variable"
-        Pattern regex = Pattern.compile("xlink:href=\"\\.\\./[a-z]*/(.*)\\.xml");
+        //    <db:para><db:link xlink:href="../qtdatavis3d/q3dbars.xml" role="class">Q3DBars</db:link></db:para>
+        Pattern regex = Pattern.compile("xlink:href=\"\\.\\./[a-z0-9]*/(.*)\\.xml");
 
         for (Path filePath : findDocBook()) {
             String fileContents = Files.readString(filePath);
