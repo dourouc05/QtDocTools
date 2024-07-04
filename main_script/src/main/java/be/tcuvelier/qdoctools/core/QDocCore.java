@@ -63,7 +63,7 @@ public class QDocCore {
             // the code.
             System.out.println("++> QDoc done.");
 
-            QDocPostProcessCore.call(output, htmlVersion, config);
+            QDocPostProcessCore.call(output, config);
 
             System.out.println("++> Validating DocBook output.");
             qpph.validateDocBook();
