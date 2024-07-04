@@ -483,14 +483,11 @@ public class QDocFixHandler {
             }
             nFilesRewritten += 1;
 
-            // TODO: extract this feature to a method.
-            if (keepBackups) {
-                Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak");
-                if (!fileBackUp.toFile().exists()) {
-                    Files.move(filePath, fileBackUp);
-                }
-                Files.write(filePath, fileContents.getBytes());
+            Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak");
+            if (!fileBackUp.toFile().exists()) {
+                Files.move(filePath, fileBackUp);
             }
+            Files.write(filePath, fileContents.getBytes());
         }
 
         System.out.println("++> " + nFiles + " postprocessed, " +
