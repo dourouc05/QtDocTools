@@ -467,12 +467,12 @@ public class QDocFixHandler {
             // <db:member><db:link xlink:href="#a">A</db:link></db:member>
             {
                 Pattern regex = Pattern.compile("""
-                        <db:member><db:link xlink:href="[a-z]">[A-Z]</db:link></db:member>""");
+                        <db:member><db:link xlink:href="([a-z])">([A-Z])</db:link></db:member>""");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
                     hasMatched = true;
                     fileContents = matches.replaceAll("""
-                            <db:member><db:link xlink:href="#\1">\2</db:link></db:member>""");
+                            <db:member><db:link xlink:href="#$1">$2</db:link></db:member>""");
                 }
             }
 
