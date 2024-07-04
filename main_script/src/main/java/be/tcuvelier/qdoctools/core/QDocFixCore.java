@@ -19,6 +19,7 @@ public class QDocFixCore {
 //        qfh.addDates();
 //        qfh.addAuthors();
         qfh.fixLinks();
+        qfh.removeBackupsIfNeeded();
         System.out.println("++> QDoc quirks fixed."); // At least, the ones I know about right now.
     }
 }

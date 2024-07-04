@@ -26,6 +26,7 @@ public class QDocFixHandler {
     private final Path outputFolder; // Where all the generated files are put.
     private final GlobalConfiguration config;
     private final boolean keepBackups;
+    private final boolean generateBackups;
 
     public QDocFixHandler(String output, GlobalConfiguration config, boolean keepBackups) {
         outputFolder = Paths.get(output);
@@ -35,7 +36,8 @@ public class QDocFixHandler {
         //     java.nio.file.FileSystemException: C:\Users\Thibaut\Documents\GitHub\QtDvpDoc\qtquick3d-qmlmodule.xml:
         //     The requested operation cannot be performed on a file with a user-mapped section open
         // Of course, the file is no longer opened at this point.
-        // Possible workaround: remove the files after generation.
+        // Implemented workaround: remove the files after generation.
+        this.generateBackups = false;
     }
 
     public void fixQDocBugs() throws IOException {
@@ -489,7 +491,7 @@ public class QDocFixHandler {
             nFilesRewritten += 1;
 
             // TODO: extract this feature to a method.
-            if (keepBackups) {
+            if (generateBackups) {
                 Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak");
                 if (!fileBackUp.toFile().exists()) {
                     Files.move(filePath, fileBackUp);
@@ -516,7 +518,7 @@ public class QDocFixHandler {
             fileContents = regex.matcher(fileContents).replaceAll(replacement);
 
             // TODO: extract this feature to a method.
-            if (keepBackups) {
+            if (generateBackups) {
                 Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak2");
                 if (!fileBackUp.toFile().exists()) {
                     Files.move(filePath, fileBackUp);
@@ -544,7 +546,7 @@ public class QDocFixHandler {
             fileContents = regex.matcher(fileContents).replaceAll(replacement);
 
             // TODO: extract this feature to a method.
-            if (keepBackups) {
+            if (generateBackups) {
                 Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak4");
                 if (!fileBackUp.toFile().exists()) {
                     Files.move(filePath, fileBackUp);
@@ -567,13 +569,27 @@ public class QDocFixHandler {
             fileContents = regex.matcher(fileContents).replaceAll("xlink:href=\"$1.xml");
 
             // TODO: extract this feature to a method.
-            if (keepBackups) {
+            if (generateBackups) {
                 Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak3");
                 if (!fileBackUp.toFile().exists()) {
                     Files.move(filePath, fileBackUp);
                 }
             }
             Files.write(filePath, fileContents.getBytes());
+        }
+    }
+
+    public void removeBackupsIfNeeded() throws IOException {
+        if (!keepBackups) {
+            for (Path filePath : findDocBook()) {
+                for (int i = 1; i <= 4; i++) {
+                    String fileNameBackUp = filePath.getFileName() + ".bak" + (i == 1 ? "" : i);
+                    Path fileBackUp = filePath.getParent().resolve(fileNameBackUp);
+                    if (fileBackUp.toFile().exists()) {
+                        Files.delete(fileBackUp);
+                    }
+                }
+            }
         }
     }
 
