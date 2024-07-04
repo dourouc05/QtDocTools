@@ -29,8 +29,7 @@ public class QDocFixHandler {
     private final Path outputFolder; // Where all the generated files are put.
     private final GlobalConfiguration config;
 
-    public QDocFixHandler(String output, GlobalConfiguration config)
-            throws IOException {
+    public QDocFixHandler(String output, GlobalConfiguration config) {
         outputFolder = Paths.get(output);
         this.config = config;
     }
