@@ -483,9 +483,12 @@ public class QDocFixHandler {
             }
             nFilesRewritten += 1;
 
-            Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak");
-            if (!fileBackUp.toFile().exists()) {
-                Files.move(filePath, fileBackUp);
+            // TODO: extract this feature to a method.
+            if (keepBackups) {
+                Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak");
+                if (!fileBackUp.toFile().exists()) {
+                    Files.move(filePath, fileBackUp);
+                }
             }
             Files.write(filePath, fileContents.getBytes());
         }
@@ -513,8 +516,8 @@ public class QDocFixHandler {
                 if (!fileBackUp.toFile().exists()) {
                     Files.move(filePath, fileBackUp);
                 }
-                Files.write(filePath, fileContents.getBytes());
             }
+            Files.write(filePath, fileContents.getBytes());
         }
     }
 
@@ -541,8 +544,8 @@ public class QDocFixHandler {
                 if (!fileBackUp.toFile().exists()) {
                     Files.move(filePath, fileBackUp);
                 }
-                Files.write(filePath, fileContents.getBytes());
             }
+            Files.write(filePath, fileContents.getBytes());
         }
     }
 
@@ -563,8 +566,8 @@ public class QDocFixHandler {
                 if (!fileBackUp.toFile().exists()) {
                     Files.move(filePath, fileBackUp);
                 }
-                Files.write(filePath, fileContents.getBytes());
             }
+            Files.write(filePath, fileContents.getBytes());
         }
     }
 
