@@ -10,8 +10,6 @@ import org.xml.sax.SAXException;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 // Handler for postprocessing QDoc's DocBook output, including validation.

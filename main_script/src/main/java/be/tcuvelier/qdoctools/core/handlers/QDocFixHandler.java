@@ -1,10 +1,7 @@
 package be.tcuvelier.qdoctools.core.handlers;
 
-import be.tcuvelier.qdoctools.consistency.ConsistencyChecks;
-import be.tcuvelier.qdoctools.consistency.ConsistencyResults;
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.helpers.ValidationHelper;
-import net.sf.saxon.s9api.SaxonApiException;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
