@@ -25,10 +25,12 @@ import java.util.stream.Collectors;
 public class QDocFixHandler {
     private final Path outputFolder; // Where all the generated files are put.
     private final GlobalConfiguration config;
+    private final boolean keepBackups;
 
-    public QDocFixHandler(String output, GlobalConfiguration config) {
+    public QDocFixHandler(String output, GlobalConfiguration config, boolean keepBackups) {
         outputFolder = Paths.get(output);
         this.config = config;
+        this.keepBackups = keepBackups;
     }
 
     public void fixQDocBugs() throws IOException {
@@ -481,11 +483,14 @@ public class QDocFixHandler {
             }
             nFilesRewritten += 1;
 
-            Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak");
-            if (!fileBackUp.toFile().exists()) {
-                Files.move(filePath, fileBackUp);
+            // TODO: extract this feature to a method.
+            if (keepBackups) {
+                Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak");
+                if (!fileBackUp.toFile().exists()) {
+                    Files.move(filePath, fileBackUp);
+                }
+                Files.write(filePath, fileContents.getBytes());
             }
-            Files.write(filePath, fileContents.getBytes());
         }
 
         System.out.println("++> " + nFiles + " postprocessed, " +
@@ -505,11 +510,14 @@ public class QDocFixHandler {
 
             fileContents = regex.matcher(fileContents).replaceAll(replacement);
 
-            Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak2");
-            if (!fileBackUp.toFile().exists()) {
-                Files.move(filePath, fileBackUp);
+            // TODO: extract this feature to a method.
+            if (keepBackups) {
+                Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak2");
+                if (!fileBackUp.toFile().exists()) {
+                    Files.move(filePath, fileBackUp);
+                }
+                Files.write(filePath, fileContents.getBytes());
             }
-            Files.write(filePath, fileContents.getBytes());
         }
     }
 
@@ -530,11 +538,14 @@ public class QDocFixHandler {
 
             fileContents = regex.matcher(fileContents).replaceAll(replacement);
 
-            Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak4");
-            if (!fileBackUp.toFile().exists()) {
-                Files.move(filePath, fileBackUp);
+            // TODO: extract this feature to a method.
+            if (keepBackups) {
+                Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak4");
+                if (!fileBackUp.toFile().exists()) {
+                    Files.move(filePath, fileBackUp);
+                }
+                Files.write(filePath, fileContents.getBytes());
             }
-            Files.write(filePath, fileContents.getBytes());
         }
     }
 
@@ -549,11 +560,14 @@ public class QDocFixHandler {
 
             fileContents = regex.matcher(fileContents).replaceAll("xlink:href=\"$1.xml");
 
-            Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak3");
-            if (!fileBackUp.toFile().exists()) {
-                Files.move(filePath, fileBackUp);
+            // TODO: extract this feature to a method.
+            if (keepBackups) {
+                Path fileBackUp = filePath.getParent().resolve(filePath.getFileName() + ".bak3");
+                if (!fileBackUp.toFile().exists()) {
+                    Files.move(filePath, fileBackUp);
+                }
+                Files.write(filePath, fileContents.getBytes());
             }
-            Files.write(filePath, fileContents.getBytes());
         }
     }
 
