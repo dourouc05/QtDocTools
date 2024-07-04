@@ -17,29 +17,19 @@ public class QDocPostProcessCommand implements Callable<Void> {
             description = "Configuration file, mostly useful in QDoc mode (default: " +
                     "${DEFAULT-VALUE})")
     private String configurationFile = "config.json";
-    @Option(names = {"-s", "--source-folder"},
-            description = "Folder to process (source code of Qt)", required = true)
-    private String source;
-    @Option(names = {"-i", "--installed-folder"},
-            description = "Folder with a complete Qt installation " +
-                    "(either precompiled or built from scratch and installed)", required = true)
-    private String installed;
     @Option(names = {"-o", "--output-folder"},
-            description = "Output folder (DocBook files)", required = true)
+            description = "QDoc output folder (DocBook files)", required = true)
     private String output;
-    @Option(names = {"-d", "--dvpml-output-folder"},
-            description = "Output folder (DvpML files)")
-    private String dvpmlOutput = output;
     @Option(names = {"-h", "--html-folder"},
             description = "HTML-version folder (already generated documentation; it will not be" +
                     " created by this tool), typically found near your Qt installation")
-    private String htmlVersion;
+    private String htmlFolder;
 
     @Override
     public Void call() throws SaxonApiException, IOException, InterruptedException,
             ParserConfigurationException, SAXException {
         GlobalConfiguration config = new GlobalConfiguration(configurationFile);
-        QDocPostProcessCore.call(output, htmlVersion, config);
+        QDocPostProcessCore.call(output, htmlFolder, config);
         return null;
     }
 }
