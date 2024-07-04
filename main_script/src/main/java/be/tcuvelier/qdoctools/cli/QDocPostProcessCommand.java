@@ -11,7 +11,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 
-@Command(name = "qdoc", description = "Run QDoc and the associated transformations")
+// TODO: make this a subcommand of QDocCommand?
+@Command(name = "qdocpost", description = "Run QDoc and the associated transformations")
 public class QDocPostProcessCommand implements Callable<Void> {
     @Option(names = {"-c", "--configuration-file"},
             description = "Configuration file, mostly useful in QDoc mode (default: " +
