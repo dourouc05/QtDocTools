@@ -38,8 +38,6 @@ public class QDocFixHandler {
         int nFilesIgnored = 0;
 
         for (Path filePath : findDocBook()) {
-            if (!filePath.toString().endsWith("classes.xml")) {continue;}
-
             boolean hasMatched = false;
             String fileContents = Files.readString(filePath);
 
