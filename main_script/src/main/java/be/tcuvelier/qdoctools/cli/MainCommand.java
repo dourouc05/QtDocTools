@@ -13,7 +13,7 @@ import java.util.concurrent.Callable;
         QDocCommand.class,
         QDocPublishCommand.class,
         QDocPostProcessCommand.class
-}, mixinStandardHelpOptions = true, version = "QDocTools 0.1.0")
+}, mixinStandardHelpOptions = true, version = "QDocTools 0.3.0")
 public class MainCommand implements Callable<Void> {
     @CommandLine.Spec
     CommandLine.Model.CommandSpec spec;
