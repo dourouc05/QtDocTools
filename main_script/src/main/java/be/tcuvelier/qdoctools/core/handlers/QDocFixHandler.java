@@ -31,6 +31,11 @@ public class QDocFixHandler {
         outputFolder = Paths.get(output);
         this.config = config;
         this.keepBackups = keepBackups;
+        // TODO: bug when this is true. For instance:
+        //     java.nio.file.FileSystemException: C:\Users\Thibaut\Documents\GitHub\QtDvpDoc\qtquick3d-qmlmodule.xml:
+        //     The requested operation cannot be performed on a file with a user-mapped section open
+        // Of course, the file is no longer opened at this point.
+        // Possible workaround: remove the files after generation.
     }
 
     public void fixQDocBugs() throws IOException {

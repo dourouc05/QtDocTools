@@ -14,7 +14,7 @@ public class QDocFixCore {
             throws SaxonApiException, IOException, InterruptedException,
             ParserConfigurationException, SAXException {
         System.out.println("++> Fixing some qdoc quirks.");
-        QDocFixHandler qfh = new QDocFixHandler(outputFolder, config, false);
+        QDocFixHandler qfh = new QDocFixHandler(outputFolder, config, true);
         qfh.fixQDocBugs();
         qfh.addDates();
         qfh.addAuthors();
