@@ -21,10 +21,6 @@ public class QDocFixCommand implements Callable<Void> {
     @Option(names = {"-o", "--output-folder"},
             description = "QDoc output folder (DocBook files)", required = true)
     private String output;
-    @Option(names = {"-h", "--html-folder"},
-            description = "HTML-version folder (already generated documentation; it will not be" +
-                    " created by this tool), typically found near your Qt installation")
-    private String htmlFolder;
 
     @Override
     public Void call() throws SaxonApiException, IOException, InterruptedException,
