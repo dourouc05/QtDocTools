@@ -4,8 +4,6 @@ import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.handlers.QDocMovingHandler;
 import be.tcuvelier.qdoctools.core.handlers.QDocPostProcessingHandler;
 import be.tcuvelier.qdoctools.core.handlers.QDocRunningHandler;
-import be.tcuvelier.qdoctools.core.handlers.QDocToDvpMLHandler;
-import be.tcuvelier.qdoctools.core.helpers.FormattingHelpers;
 import be.tcuvelier.qdoctools.core.utils.Pair;
 import be.tcuvelier.qdoctools.core.utils.QtVersion;
 import net.sf.saxon.s9api.SaxonApiException;
