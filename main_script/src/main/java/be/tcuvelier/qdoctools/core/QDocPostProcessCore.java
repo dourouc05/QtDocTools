@@ -18,6 +18,6 @@ public class QDocPostProcessCore {
         qrh.copyGeneratedFiles(); // Sometimes, qdoc outputs things in a strange folder. Ahoy!
         System.out.println("++> QDoc output copied.");
 
-        QDocFixCore.call(outputFolder, config);
+        QDocFixCore.call(outputFolder);
     }
 }

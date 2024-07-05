@@ -10,11 +10,11 @@ import java.io.IOException;
 
 public class QDocFixCore {
     // Perform the fixing part of the conversion cycle to get rid of QDoc quirks.
-    public static void call(String outputFolder, GlobalConfiguration config)
+    public static void call(String outputFolder)
             throws SaxonApiException, IOException, InterruptedException,
             ParserConfigurationException, SAXException {
         System.out.println("++> Fixing some QDoc quirks.");
-        QDocFixHandler qfh = new QDocFixHandler(outputFolder, config, true);
+        QDocFixHandler qfh = new QDocFixHandler(outputFolder, true);
         System.out.println("++>   Step 1: bugs.");
         qfh.fixQDocBugs();
         System.out.println("++>   Step 2: dates.");

@@ -14,10 +14,6 @@ import java.util.concurrent.Callable;
 // TODO: make this a subcommand of QDocCommand?
 @Command(name = "qdocfix", description = "Fix QDoc quirks in a set of DocBook files")
 public class QDocFixCommand implements Callable<Void> {
-    @Option(names = {"-c", "--configuration-file"},
-            description = "Configuration file, mostly useful in QDoc mode (default: " +
-                    "${DEFAULT-VALUE})")
-    private String configurationFile = "config.json";
     @Option(names = {"-o", "--output-folder"},
             description = "QDoc output folder (DocBook files)", required = true)
     private String output;
@@ -25,8 +21,7 @@ public class QDocFixCommand implements Callable<Void> {
     @Override
     public Void call() throws SaxonApiException, IOException, InterruptedException,
             ParserConfigurationException, SAXException {
-        GlobalConfiguration config = new GlobalConfiguration(configurationFile);
-        QDocFixCore.call(output, config);
+        QDocFixCore.call(output);
         return null;
     }
 }

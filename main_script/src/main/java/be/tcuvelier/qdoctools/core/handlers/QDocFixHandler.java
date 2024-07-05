@@ -1,7 +1,5 @@
 package be.tcuvelier.qdoctools.core.handlers;
 
-import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -22,13 +20,11 @@ import java.util.stream.Collectors;
 // - addAuthors: .bak4
 public class QDocFixHandler {
     private final Path outputFolder; // Where all the generated files are put.
-    private final GlobalConfiguration config;
     private final boolean keepBackups;
     private final boolean generateBackups;
 
-    public QDocFixHandler(String output, GlobalConfiguration config, boolean keepBackups) {
+    public QDocFixHandler(String output, boolean keepBackups) {
         outputFolder = Paths.get(output);
-        this.config = config;
         this.keepBackups = keepBackups;
         // TODO: bug when this is true. For instance:
         //     java.nio.file.FileSystemException: C:\Users\Thibaut\Documents\GitHub\QtDvpDoc\qtquick3d-qmlmodule.xml:
