@@ -567,6 +567,7 @@ public class QDocFixHandler {
             String fileContents = Files.readString(filePath);
 
             fileContents = regex.matcher(fileContents).replaceAll("xlink:href=\"$1.xml");
+            fileContents = regex.matcher(fileContents).replaceAll("xlink:href=\"$1.xml");
 
             // TODO: extract this feature to a method.
             if (generateBackups) {
