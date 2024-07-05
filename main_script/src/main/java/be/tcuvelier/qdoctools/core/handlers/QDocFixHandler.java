@@ -512,10 +512,24 @@ public class QDocFixHandler {
         Pattern regex = Pattern.compile("</db:abstract>\n</db:info>");
         String replacement = "</db:abstract>\n<db:pubdate>" + java.time.LocalDate.now() + "</db:pubdate>\n<db:date>" + java.time.LocalDate.now() + "</db:date>\n</db:info>";
 
+        int nFiles = 0;
+        int nFilesRewritten = 0;
+        int nFilesIgnored = 0;
+
         for (Path filePath : findDocBook()) {
+            nFiles += 1;
             String fileContents = Files.readString(filePath);
 
-            fileContents = regex.matcher(fileContents).replaceAll(replacement);
+            if (fileContents.isEmpty()) {
+                nFilesIgnored += 1;
+                continue;
+            }
+
+            Matcher matches = regex.matcher(fileContents);
+            if (matches.matches()) {
+                fileContents = matches.replaceAll(replacement);
+                nFilesRewritten += 1;
+            }
 
             // TODO: extract this feature to a method.
             if (generateBackups) {
@@ -526,6 +540,9 @@ public class QDocFixHandler {
             }
             Files.write(filePath, fileContents.getBytes());
         }
+
+        System.out.println("++> " + nFiles + " postprocessed, " +
+                nFilesRewritten + " rewritten, " + nFilesIgnored + " ignored.");
     }
 
     public void addAuthors() throws IOException {
@@ -540,10 +557,24 @@ public class QDocFixHandler {
         Pattern regex = Pattern.compile("</db:date>\n</db:info>");
         String replacement = "</db:date>\n<db:authorgroup>\n<db:author>\n<db:orgname class=\"corporation\">The Qt Company Ltd.</db:orgname>\n</db:author>\n</db:authorgroup>\n</db:info>";
 
+        int nFiles = 0;
+        int nFilesRewritten = 0;
+        int nFilesIgnored = 0;
+
         for (Path filePath : findDocBook()) {
+            nFiles += 1;
             String fileContents = Files.readString(filePath);
 
-            fileContents = regex.matcher(fileContents).replaceAll(replacement);
+            if (fileContents.isEmpty()) {
+                nFilesIgnored += 1;
+                continue;
+            }
+
+            Matcher matches = regex.matcher(fileContents);
+            if (matches.matches()) {
+                fileContents = matches.replaceAll(replacement);
+                nFilesRewritten += 1;
+            }
 
             // TODO: extract this feature to a method.
             if (generateBackups) {
@@ -554,6 +585,9 @@ public class QDocFixHandler {
             }
             Files.write(filePath, fileContents.getBytes());
         }
+
+        System.out.println("++> " + nFiles + " postprocessed, " +
+                nFilesRewritten + " rewritten, " + nFilesIgnored + " ignored.");
     }
 
     public void fixLinks() throws IOException {
