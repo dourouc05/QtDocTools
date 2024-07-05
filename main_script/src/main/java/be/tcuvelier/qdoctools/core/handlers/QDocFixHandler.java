@@ -562,15 +562,28 @@ public class QDocFixHandler {
         //    xlink:href="../qtwidgets/qwidget.xml#sizeHint-prop"
         //    xlink:href="../qdoc/22-qdoc-configuration-generalvariables.xml#headers-variable"
         //    xlink:href="../qtdatavis3d/q3dbars.xml"
-        Pattern regex = Pattern.compile("xlink:href=\"\\.\\./[a-z0-9]*/(.*)\\.xml");
+        // Avoid that the regex consumes more than one link if there are several on the same line,
+        // hence the complex pattern for file names. The only present characters are: lower-case
+        // letters, numbers, hyphens.
+        Pattern regex = Pattern.compile("xlink:href=\"\\.\\./[a-z0-9]*/([a-z0-9\\-]*)\\.xml");
+
+        int nFiles = 0;
+        int nFilesRewritten = 0;
+        int nFilesIgnored = 0;
 
         for (Path filePath : findDocBook()) {
+            nFiles += 1;
             String fileContents = Files.readString(filePath);
 
+            if (fileContents.isEmpty()) {
+                nFilesIgnored += 1;
+                continue;
+            }
+
             Matcher matches = regex.matcher(fileContents);
-            while (matches.matches()) {
+            if (matches.matches()) {
                 fileContents = matches.replaceAll("xlink:href=\"$1.xml");
-                matches = regex.matcher(fileContents);
+                nFilesRewritten += 1;
             }
 
             // TODO: extract this feature to a method.
@@ -582,6 +595,9 @@ public class QDocFixHandler {
             }
             Files.write(filePath, fileContents.getBytes());
         }
+
+        System.out.println("++> " + nFiles + " postprocessed, " +
+                nFilesRewritten + " rewritten, " + nFilesIgnored + " ignored.");
     }
 
     public void removeBackupsIfNeeded() throws IOException {
@@ -602,6 +618,7 @@ public class QDocFixHandler {
         int nFiles = 0;
         int nEmptyFiles = 0;
         int nValidFiles = 0;
+
         for (Path filePath : findDocBook()) {
             nFiles += 1;
             if (Files.size(filePath) == 0) {
