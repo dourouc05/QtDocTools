@@ -559,15 +559,19 @@ public class QDocFixHandler {
     public void fixLinks() throws IOException {
         // Update the links (but not the anchors):
         //    xlink:href="../qtcore/qobject.xml"
+        //    xlink:href="../qtwidgets/qwidget.xml#sizeHint-prop"
         //    xlink:href="../qdoc/22-qdoc-configuration-generalvariables.xml#headers-variable"
-        //    <db:para><db:link xlink:href="../qtdatavis3d/q3dbars.xml" role="class">Q3DBars</db:link></db:para>
+        //    xlink:href="../qtdatavis3d/q3dbars.xml"
         Pattern regex = Pattern.compile("xlink:href=\"\\.\\./[a-z0-9]*/(.*)\\.xml");
 
         for (Path filePath : findDocBook()) {
             String fileContents = Files.readString(filePath);
 
-            fileContents = regex.matcher(fileContents).replaceAll("xlink:href=\"$1.xml");
-            fileContents = regex.matcher(fileContents).replaceAll("xlink:href=\"$1.xml");
+            Matcher matches = regex.matcher(fileContents);
+            while (matches.matches()) {
+                fileContents = matches.replaceAll("xlink:href=\"$1.xml");
+                matches = regex.matcher(fileContents);
+            }
 
             // TODO: extract this feature to a method.
             if (generateBackups) {
