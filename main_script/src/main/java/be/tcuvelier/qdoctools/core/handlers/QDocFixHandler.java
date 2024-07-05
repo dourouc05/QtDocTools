@@ -648,30 +648,6 @@ public class QDocFixHandler {
         }
     }
 
-    public void validateDocBook() throws IOException, SAXException {
-        int nFiles = 0;
-        int nEmptyFiles = 0;
-        int nValidFiles = 0;
-
-        for (Path filePath : findDocBook()) {
-            nFiles += 1;
-            if (Files.size(filePath) == 0) {
-                // Validation can only fail for empty files.
-                nEmptyFiles += 1;
-                continue;
-            }
-
-            if (ValidationHelper.validateDocBook(filePath, config)) {
-                nValidFiles += 1;
-            } else {
-                System.out.println("!!> Invalid file: " + filePath);
-            }
-        }
-        System.out.println("++> " + nFiles + " validated, " +
-                nValidFiles + " valid, " + (nFiles - nValidFiles) + " invalid, " + nEmptyFiles +
-                " empty.");
-    }
-
     // TODO: this does not belong to a handler.
     private List<Path> findWithExtension(@SuppressWarnings("SameParameterValue") String extension) {
         String[] fileNames =
