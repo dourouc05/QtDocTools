@@ -477,6 +477,20 @@ public class QDocFixHandler {
                 }
             }
 
+            // &amp;quot;
+            // ->
+            // &quot;
+            // This fix may have unexpected consequences! But it seems to do more good than harm.
+            // https://bugreports.qt.io/browse/QTBUG-126994
+            {
+                Pattern regex = Pattern.compile("&amp;quot;");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("&quot;");
+                }
+            }
+
             if (!hasMatched) {
                 // This file has not changed: no need to have a back-up file or to spend time
                 // writing on disk.
