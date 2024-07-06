@@ -491,6 +491,19 @@ public class QDocFixHandler {
                 }
             }
 
+            // <db:link xlink:href="">CallType</db:link>
+            // ->
+            // CallType
+            // https://bugreports.qt.io/browse/QTBUG-126995
+            {
+                Pattern regex = Pattern.compile("<db:link xlink:href=\"\">([a-zA-Z0-9]+)</db:link>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("$1");
+                }
+            }
+
             if (!hasMatched) {
                 // This file has not changed: no need to have a back-up file or to spend time
                 // writing on disk.
