@@ -312,7 +312,11 @@
             <xsl:text>, </xsl:text>
           </xsl:if>
         </xsl:for-each>
-        <xsl:text>&#0160;: </xsl:text>
+        <!-- Based on the xml:lang attribute, decide whether to output a space before the colon. By default, don't assume anything about the language of the document. -->
+        <xsl:choose>
+          <xsl:when test="/child::node()/@xml:lang = 'fr'"><xsl:text>&#0160;: </xsl:text></xsl:when>
+          <xsl:otherwise><xsl:text>: </xsl:text></xsl:otherwise>
+        </xsl:choose>
         
         <!-- Simple case: only one paragraph in the listitem, reuse the same paragraph. -->
         <xsl:if test="count(db:listitem/node()[not(self::text())]) = 1">
