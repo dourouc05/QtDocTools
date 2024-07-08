@@ -120,8 +120,9 @@ public class QDocMovingHandler {
 
         for (File outf : outfs) {
             if (outf.getName().contains(prefix_path)) {
-                prefix_path = outf.getName();
-                break;
+                String new_name = outf.getName().replaceAll(prefix_path + "-[a-z0-9]+-examples-[a-z0-9]+", "");
+                Path destination = outputFolder.resolve(new_name);
+                Files.move(outf.toPath(), destination);
             }
         }
     }
