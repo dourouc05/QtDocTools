@@ -84,6 +84,46 @@ public class QDocMovingHandler {
                 }
             }
         }
+
+        // Examples may have weird names. For instance:
+        //   qtquick3d-d-qt-6-5-3-src-qtquick3d-examples-quick3d-antialiasing-antialiasing-pro.xml ->
+        //     qtquick3d-antialiasing-antialiasing-pro.xml
+        //     https://doc.qt.io/qt-6/qtquick3d-antialiasing-example.html
+        //   qtcoap-d-qt-6-5-3-src-qtcoap-examples-coap-quickmulticastclient-cmakelists-txt.xml ->
+        //     qtcoap-quickmulticastclient-cmakelists-txt.xml
+        //     https://doc.qt.io/qt-6/qtcoap-quickmulticastclient-cmakelists-txt.html
+        //   qthttpserver-d-qt-6-5-3-src-qthttpserver-examples-httpserver-colorpalette-apibehavior-h.xml
+        //   qtmqtt-d-qt-6-5-3-src-qtmqtt-examples-mqtt-quicksubscription-cmakelists-txt.xml
+        //   qtopcua-d-qt-6-5-3-src-qtopcua-examples-opcua-opcuaviewer-certificatedialog-cpp.xml
+        //   qtquick3dphysics-d-qt-6-5-3-src-qtquick3dphysics-examples-quick3dphysics-cannon-box-qml.xml
+        //   qtquickeffectmaker-d-qt-6-5-3-src-qtquickeffectmaker-examples-quickeffectmaker-wiggly-cmakelists-txt.xml
+        // First, find the prefix that must be removed; then, move the files within the output folder.
+        File[] outfs = outputFolder.toFile().listFiles();
+        assert outfs != null;
+        assert outfs.length > 0;
+
+        String prefix_path = "";
+        for (File outf : outfs) {
+            if (outf.getName().contains("qtquick3d-examples-quick3d-antialiasing-antialiasing-pro")) {
+                // outf.getName() is something like
+                // "qtquick3d-d-qt-6-5-3-src-qtquick3d-examples-quick3d-antialiasing-antialiasing-pro.xml"
+                String[] parts = outf.getName().split("-", 2); // qtquick3d, d-qt-6-5-3-src-qtquick3d-examples-antialiasing
+                parts = parts[1].split("qtquick3d-examples-", 2); // d-qt-6-5-3-src, antialiasing...
+                prefix_path = parts[0];
+                break;
+            }
+        }
+        if (prefix_path.isEmpty()) {
+            // This example wasn't found. Not much to do, apart from testing other file names.
+            return;
+        }
+
+        for (File outf : outfs) {
+            if (outf.getName().contains(prefix_path)) {
+                prefix_path = outf.getName();
+                break;
+            }
+        }
     }
 
     private void moveGeneratedImagesRecursively(File folder, Path destination) throws IOException {
