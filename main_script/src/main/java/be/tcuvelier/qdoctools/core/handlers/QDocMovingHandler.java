@@ -108,7 +108,7 @@ public class QDocMovingHandler {
                 // outf.getName() is something like
                 // "qtquick3d-d-qt-6-5-3-src-qtquick3d-examples-quick3d-antialiasing-antialiasing-pro.xml"
                 String[] parts = outf.getName().split("-", 2); // qtquick3d, d-qt-6-5-3-src-qtquick3d-examples-antialiasing
-                parts = parts[1].split("qtquick3d-examples-", 2); // d-qt-6-5-3-src, antialiasing...
+                parts = parts[1].split("-qtquick3d-examples-", 2); // d-qt-6-5-3-src, antialiasing...
                 prefix_path = parts[0];
                 break;
             }
@@ -120,7 +120,7 @@ public class QDocMovingHandler {
 
         for (File outf : outfs) {
             if (outf.getName().contains(prefix_path)) {
-                String new_name = outf.getName().replaceAll(prefix_path + "-[a-z0-9]+-examples-[a-z0-9]+", "");
+                String new_name = outf.getName().replaceAll(prefix_path + "-[a-z0-9]+-examples-[a-z0-9]+-", "");
                 Path destination = outputFolder.resolve(new_name);
                 Files.move(outf.toPath(), destination);
             }
