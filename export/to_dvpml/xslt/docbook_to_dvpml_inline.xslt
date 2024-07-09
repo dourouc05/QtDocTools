@@ -26,9 +26,17 @@
         <!-- Nesting tags this way is not allowed (just text within <inline>). -->
         <xsl:choose>
           <xsl:when test="@role = 'bold' or @role = 'strong'">
-            <b>
-              <xsl:apply-templates mode="content_para"/>
-            </b>
+            <!-- Special case: db:variablelist/db:db:term already has bold output in the db:varlistentry template. -->
+            <xsl:choose>
+              <xsl:when test="parent::node()/parent::node()[self::db:varlistentry] and parent::node()[self::db:term]">
+                <xsl:apply-templates mode="content_para"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <b>
+                  <xsl:apply-templates mode="content_para"/>
+                </b>
+              </xsl:otherwise>
+            </xsl:choose>
           </xsl:when>
           <xsl:when test="@role = 'underline'">
             <u>
