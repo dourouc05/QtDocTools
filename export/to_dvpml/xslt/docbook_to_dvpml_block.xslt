@@ -302,6 +302,8 @@
   </xsl:template>
   
   <xsl:template mode="content" match="db:varlistentry">
+    <xsl:variable name="is-item-complex" as="xs:boolean" select="count(db:listitem/node()[not(self::text())]) > 1 or count(db:listitem/db:para) = 0"/>
+    
     <element useText="0">
       <paragraph>
         <xsl:for-each select="db:term">
@@ -319,13 +321,13 @@
         </xsl:choose>
         
         <!-- Simple case: only one paragraph in the listitem, reuse the same paragraph. -->
-        <xsl:if test="count(db:listitem/node()[not(self::text())]) = 1">
+        <xsl:if test="not($is-item-complex)">
           <xsl:apply-templates mode="content_para" select="db:listitem/db:para"/>
         </xsl:if>
       </paragraph>
       
       <!-- Complex case: several paragraphs in the listitem. Output several paragraphs. -->
-      <xsl:if test="count(db:listitem/node()[not(self::text())]) > 1">
+      <xsl:if test="$is-item-complex">
         <xsl:apply-templates mode="content" select="db:listitem/*"/>
       </xsl:if>
     </element>
