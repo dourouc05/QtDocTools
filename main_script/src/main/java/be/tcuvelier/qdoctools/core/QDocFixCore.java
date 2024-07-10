@@ -1,6 +1,5 @@
 package be.tcuvelier.qdoctools.core;
 
-import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.handlers.QDocFixHandler;
 import net.sf.saxon.s9api.SaxonApiException;
 import org.xml.sax.SAXException;
