@@ -619,7 +619,7 @@ public class QDocFixHandler {
             }
 
             Matcher matches = regex.matcher(fileContents);
-            if (matches.matches()) {
+            if (matches.find()) {
                 fileContents = matches.replaceAll("xlink:href=\"$1.xml");
                 nFilesRewritten += 1;
             }
