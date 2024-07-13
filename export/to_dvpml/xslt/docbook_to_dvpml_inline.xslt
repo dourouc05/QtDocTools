@@ -296,18 +296,36 @@
   <xsl:template mode="content_para" match="db:simplelist">
     <xsl:message>WARNING: the current simplelist encoding implies losses in the target format,
       i.e. round tripping will not be exact.</xsl:message>
+    <!-- If links are given as an xlink:href attribute, they will get converted back as link tags. -->
     
     <xsl:for-each select="db:member">
-      <xsl:variable name="test">
+      <xsl:variable name="member-as-docbook" select="."/>
+      <xsl:variable name="member-as-dvpml">
         <xsl:apply-templates mode="content_para"/>
       </xsl:variable>
-      <xsl:for-each select="$test/child::node()">
+      <xsl:for-each select="$member-as-dvpml/child::node()">
         <xsl:choose>
-          <xsl:when test=". instance of text()">
-            <xsl:value-of select="normalize-space(.)"/>
+          <xsl:when test="$member-as-docbook/@xlink:href">
+            <link href="{$member-as-docbook/@xlink:href}">
+              <xsl:choose>
+                <xsl:when test=". instance of text()">
+                  <xsl:value-of select="normalize-space(.)"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:copy-of select="."/>
+                </xsl:otherwise>
+              </xsl:choose>
+            </link>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:copy-of select="."/>
+            <xsl:choose>
+              <xsl:when test=". instance of text()">
+                <xsl:value-of select="normalize-space(.)"/>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:copy-of select="."/>
+              </xsl:otherwise>
+            </xsl:choose>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:for-each>
