@@ -73,7 +73,7 @@ public class QDocPublishCore {
 
                 try {
                     if (!qdh.isValidDvpML(dvpmlFile)) {
-                        System.err.println(FormattingHelpers.prefix(i, dvpml) + "There were " +
+                        System.err.println(FormattingHelpers.prefix(i, dvpml) + " There were " +
                                 "validation errors. See the above exception for details.");
                     }
                 } catch (SAXException e) {
