@@ -495,12 +495,15 @@ public class QDocFixHandler {
             // ->
             // CallType
             // https://bugreports.qt.io/browse/QTBUG-126995
+            //
+            // Other kind of instance:
+            //      <db:link xlink:href="" xlink:role="namespace">global</db:link>
             {
-                Pattern regex = Pattern.compile("<db:link xlink:href=\"\">([a-zA-Z0-9]+)</db:link>");
+                Pattern regex = Pattern.compile("<db:link xlink:href=\"\"( xlink:role=\"[a-z]*\")?>([a-zA-Z0-9]+)</db:link>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
                     hasMatched = true;
-                    fileContents = matches.replaceAll("$1");
+                    fileContents = matches.replaceAll("$2");
                 }
             }
 
