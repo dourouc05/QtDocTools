@@ -68,12 +68,10 @@ public class QDocPublishCore {
             }
 
             int i = 0;
-            for (Path dbFile : dvpml) {
-                System.out.println(FormattingHelpers.prefix(i, dvpml) + " " + dbFile);
+            for (Path dvpmlFile : dvpml) {
+                System.out.println(FormattingHelpers.prefix(i, dvpml) + " " + dvpmlFile);
 
                 try {
-                    Path dvpmlFile = qdh.rewritePath(dbFile);
-
                     if (!qdh.isValidDvpML(dvpmlFile)) {
                         System.err.println(FormattingHelpers.prefix(i, dvpml) + "There were " +
                                 "validation errors. See the above exception for details.");
