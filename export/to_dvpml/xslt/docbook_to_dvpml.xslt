@@ -77,6 +77,9 @@
   <xsl:param name="http-url" as="xs:string" select="concat('https://', $ftp-user, '.developpez.com/', $ftp-folder)"/>
   <xsl:param name="google-analytics" as="xs:string" select="if ($json-document?google-analytics) then $json-document?google-analytics else ''"/>
   <xsl:param name="related" as="xs:string" select="if ($json-document?related) then $json-document?related else ''"/>
+  
+  <!-- Parametrise the generation. -->
+  <xsl:param name="sections-have-numbers" as="xs:boolean" select="not($doc-qt)" />
 
   <!-- Import other modules. -->
   <xsl:include href="docbook_to_dvpml_media.xslt"/>

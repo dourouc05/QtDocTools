@@ -17,6 +17,9 @@
     </xsl:variable>
     
     <section id="{$sectionId}">
+      <xsl:if test="not($sections-have-numbers)">
+        <xsl:attribute name="noNumber" select="'1'"></xsl:attribute>
+      </xsl:if>
       <xsl:choose>
         <xsl:when test="@xml:id">
           <!-- First the title, then some raw HTML to encode the ID, then the rest of the section/chapter. -->
