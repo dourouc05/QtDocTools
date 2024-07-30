@@ -156,7 +156,7 @@ public class QDocToDvpMLHandler {
             File[] images = originalImages.toFile().listFiles();
             if (images != null) {
                 for (File f : images) {
-                    Files.move(f.toPath(), destinationImages.resolve(f.getName()));
+                    Files.move(f.toPath(), destinationImages.resolve(f.getName()), StandardCopyOption.REPLACE_EXISTING);
                 }
             }
         }
