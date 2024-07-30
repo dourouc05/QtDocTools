@@ -692,6 +692,17 @@
         </licannee>
         <!-- When $license-text is set, the license is output just after the <entete> tag. -->
       </xsl:if>
+      
+      <xsl:if test="$doc-qt">
+        <xsl:choose>
+          <xsl:when test="/child::node()/@xml:lang = 'fr'">
+            <includehaut>include($_SERVER["DOCUMENT_ROOT"]."/template/entete.php");include("../entete.fr.php");</includehaut>
+          </xsl:when>
+          <xsl:otherwise>
+            <includehaut>include($_SERVER["DOCUMENT_ROOT"]."/template/entete.php");include("../entete.en.php");</includehaut>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:if>
 
       <xsl:choose>
         <xsl:when test="string-length($ftp-user) > 0 and string-length($ftp-folder) > 0">
