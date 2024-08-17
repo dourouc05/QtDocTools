@@ -324,16 +324,15 @@ public class QDocRunningHandler {
         // and Qt/5.13.0/include/MODULE/VERSION/MODULE
         // and Qt/5.13.0/include/MODULE/VERSION/MODULE/private.
         for (Path directory : directories) {
+            if (!directory.toFile().exists()) {
+                continue;
+            }
             File[] subDirs = directory.toFile().listFiles();
             if (subDirs == null || subDirs.length == 0) {
                 continue;
             }
 
-            if (directory.toFile().exists()) {
-                includeDirs.add(directory.toString());
-            } else {
-                continue;
-            }
+            includeDirs.add(directory.toString());
 
             List<Path> subDirectories = Arrays.stream(subDirs)
                     .filter(File::isDirectory)
@@ -344,12 +343,11 @@ public class QDocRunningHandler {
 
                 String moduleName = sd.getParent().toFile().getName();
                 Path ssd = sd.resolve(moduleName);
-                if (ssd.toFile().exists()) {
-                    includeDirs.add(ssd.toString());
-                } else {
+                if (!ssd.toFile().exists()) {
                     continue;
                 }
 
+                includeDirs.add(ssd.toString());
                 if (ssd.resolve("private").toFile().exists()) {
                     includeDirs.add(ssd.resolve("private").toString());
                 }
