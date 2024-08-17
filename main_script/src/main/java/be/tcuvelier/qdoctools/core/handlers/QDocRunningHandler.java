@@ -321,8 +321,8 @@ public class QDocRunningHandler {
 
         // Up to now: Qt/5.13.0/include.
         // Add paths: Qt/5.13.0/include/MODULE and Qt/5.13.0/include/MODULE/VERSION
-        // and Qt/5.13.0/include/MODULE/VERSION/MODULE and Qt/5.13
-        // .0/include/MODULE/VERSION/MODULE/private.
+        // and Qt/5.13.0/include/MODULE/VERSION/MODULE
+        // and Qt/5.13.0/include/MODULE/VERSION/MODULE/private.
         for (Path directory : directories) {
             File[] subDirs = directory.toFile().listFiles();
             if (subDirs == null || subDirs.length == 0) {
