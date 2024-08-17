@@ -297,7 +297,8 @@ public class QDocRunningHandler {
 
     private List<String> findIncludes() {
         // Accumulate the `include` folders. Base case: just the `include` folder of an installed
-        // Qt.
+        // Qt (which is a much easier way to find all the includes in one place, instead of
+        // scattered across all modules).
         List<String> includeDirs =
                 new ArrayList<>(List.of(installedFolder.resolve("include").toString()));
 
@@ -319,10 +320,12 @@ public class QDocRunningHandler {
             return includeDirs;
         }
 
-        // Up to now: Qt/5.13.0/include.
-        // Add paths: Qt/5.13.0/include/MODULE and Qt/5.13.0/include/MODULE/VERSION
-        // and Qt/5.13.0/include/MODULE/VERSION/MODULE
-        // and Qt/5.13.0/include/MODULE/VERSION/MODULE/private.
+        // Up to now: <Qt>/VERSION/include, such as <Qt>/5.13.0/include.
+        // Add paths:
+        // - <Qt>/VERSION/include/MODULE
+        // - <Qt>/VERSION/include/MODULE/VERSION
+        // - <Qt>/VERSION/include/MODULE/VERSION/MODULE
+        // - <Qt>/VERSION/include/MODULE/VERSION/MODULE/private
         for (Path directory : directories) {
             if (!directory.toFile().exists()) {
                 continue;
