@@ -80,10 +80,6 @@ public class QDocRunningHandler {
         }
     }
 
-    public Path getOutputFolder() {
-        return outputFolder;
-    }
-
     /**
      * @return list of modules, in the form Pair[module name, .qdocconf file path]
      */
@@ -246,6 +242,7 @@ public class QDocRunningHandler {
                     modules.add(new Pair<>(directory, qdocconfOptionalPath.get()));
                     module_paths.add(qdocconfOptionalPath.get());
                 }
+                //noinspection UnusedAssignment
                 hasFoundQdocconfModule = true;
             }
         }
