@@ -42,7 +42,7 @@ public class QDocRunningHandler {
         outputFolder = Paths.get(output);
         mainQdocconfPath = outputFolder.resolve("qtdoctools-main.qdocconf");
 
-        this.config = config; // TODO: remove or use!
+        this.config = config; // TODO: remove or use! (e.g., to determine qdocPath)
         Path qdocContainingFolder = Paths.get(qdocPath).getParent();
         this.qtAttributionsScannerPath = Arrays.stream(
                     Objects.requireNonNull(qdocContainingFolder.toFile().list()))
