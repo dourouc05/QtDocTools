@@ -28,7 +28,7 @@ public class QDocCommand implements Callable<Void> {
             description = "Reduce the size of the include list. This is useful when the list of " +
                     "arguments to QDoc starts getting out of control, as some platforms will " +
                     "limit the size of the argument list")
-    private boolean reduceIncludeListSize = false;
+    private boolean reduceIncludeListSize = true;
     @Option(names = "--no-validation",
             description = "Disables the validation of the output against a known XSD or RNG at " +
                     "all steps")

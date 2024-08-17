@@ -320,9 +320,10 @@ public class QDocRunningHandler {
         // Up to now: <Qt>/VERSION/include, such as <Qt>/5.13.0/include.
         // Add paths:
         // - <Qt>/VERSION/include/MODULE
-        // - <Qt>/VERSION/include/MODULE/VERSION
         // - <Qt>/VERSION/include/MODULE/VERSION/MODULE
         // - <Qt>/VERSION/include/MODULE/VERSION/MODULE/private
+        // However, do not add <Qt>/VERSION/include/MODULE/VERSION: it is not used
+        // (But only if reduceIncludeListSize, just in case.)
         for (Path directory : directories) {
             if (!directory.toFile().exists()) {
                 continue;
@@ -339,7 +340,9 @@ public class QDocRunningHandler {
                     .filter(f -> f.getName().split("\\.").length == 3)
                     .map(File::toPath).toList();
             for (Path sd : subDirectories) {
-                includeDirs.add(sd.toString());
+                if (!reduceIncludeListSize) {
+                    includeDirs.add(sd.toString());
+                }
 
                 String moduleName = sd.getParent().toFile().getName();
                 Path ssd = sd.resolve(moduleName);
