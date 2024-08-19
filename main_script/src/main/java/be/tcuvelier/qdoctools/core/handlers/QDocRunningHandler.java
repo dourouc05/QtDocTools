@@ -546,6 +546,7 @@ public class QDocRunningHandler {
         Map<String, String> env = pb.environment();
         env.put("QT_INSTALL_DOCS", sourceFolder.resolve("qtbase").resolve("doc").toString());
         env.put("BUILDDIR", sourceFolder.resolve("qtbase").resolve("doc").toString());
+        env.put("QT_INSTALL_HEADERS", installedFolder.resolve("include").toString());
         env.put("QT_VERSION_TAG", qtVersion.QT_VERSION_TAG());
         env.put("QT_VER", qtVersion.QT_VER());
         env.put("QT_VERSION", qtVersion.QT_VERSION());
@@ -553,6 +554,7 @@ public class QDocRunningHandler {
         System.out.println("::> Running QDoc with the following environment variables: ");
         System.out.println("            QT_INSTALL_DOCS: " + env.get("QT_INSTALL_DOCS"));
         System.out.println("            BUILDDIR: " + env.get("BUILDDIR"));
+        System.out.println("            QT_INSTALL_HEADERS: " + env.get("QT_INSTALL_HEADERS"));
         System.out.println("            QT_VERSION_TAG: " + env.get("QT_VERSION_TAG"));
         System.out.println("            QT_VER: " + env.get("QT_VER"));
         System.out.println("            QT_VERSION: " + env.get("QT_VERSION"));
