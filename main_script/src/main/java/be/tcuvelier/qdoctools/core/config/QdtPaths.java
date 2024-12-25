@@ -3,7 +3,8 @@ package be.tcuvelier.qdoctools.core.config;
 import be.tcuvelier.qdoctools.core.exceptions.ConfigurationMissingField;
 
 public class QdtPaths {
-    // TODO: move these files into the JAR, when building one? Far from trivial: https://stackoverflow.com/questions/20389255/reading-a-resource-file-from-within-jar
+    // TODO: move these files into the JAR, when building one? Far from trivial:
+    // https://stackoverflow.com/questions/20389255/reading-a-resource-file-from-within-jar
     private final GlobalConfiguration config;
 
     public QdtPaths(GlobalConfiguration config) {
