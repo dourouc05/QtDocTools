@@ -31,7 +31,6 @@ public class QDocCore {
         QDocRunningHandler qrh = new QDocRunningHandler(source, installed, output,
                 config.getQDocLocation(), qtVersion, qdocDebug, reduceIncludeListSize,
                 includes, config);
-        QDocPostProcessingHandler qpph = new QDocPostProcessingHandler(output, htmlVersion, config);
         // TODO: think of a way to avoid too many arguments to the QDoc*Handler constructors. config is only read from
         // a file.
 
@@ -64,10 +63,7 @@ public class QDocCore {
             System.out.println("++> QDoc done.");
 
             QDocPostProcessCore.call(output, config);
-
-            System.out.println("++> Validating DocBook output.");
-            qpph.validateDocBook();
-            System.out.println("++> DocBook output validated.");
+            QDocValidateCore.call(output, config);
         }
 
         // Perform some consistency checks on the contents to ensure that there is no hidden major
@@ -79,6 +75,7 @@ public class QDocCore {
             // As of Qt 5.15-6.5, the docs installed at the same time as Qt with the official
             // installer have the same folder structure as output by QDoc: the copies done in
             // copyGeneratedFiles() cannot yet be removed for this check to be performed!
+            QDocPostProcessingHandler qpph = new QDocPostProcessingHandler(output, htmlVersion);
             qpph.checkDocBookConsistency();
             System.out.println("++> DocBook consistency checked.");
         }
