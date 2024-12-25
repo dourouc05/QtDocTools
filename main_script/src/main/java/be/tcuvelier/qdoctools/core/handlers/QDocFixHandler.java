@@ -554,10 +554,10 @@ public class QDocFixHandler {
             // <db:section> for tabs
             // ->
             // <db:bridgehead>
+            // As the macros use section headers where it makes no sense (within lists, potentially), some corrections
+            // are quite hard, because the rest of the list is messed up.
             // https://codereview.qt-project.org/c/qt/qtbase/+/613771
             if (filePath.toString().contains("porting-to-ios.xml")) {
-                // This file also has a paragraph in the listitem/section that shouldn't be there,
-                // hence its move outside the second sidebar and a few more things afterwards.
                 Pattern regex = Pattern.compile("<db:section xml:id=\"using-cmake\">\n" +
                         "<db:title>Using CMake</db:title>\n" +
                         "<db:programlisting language=\"cpp\" role=\"bad\">find_package(Qt6 REQUIRED COMPONENTS Multimedia)\n" +
@@ -597,6 +597,98 @@ public class QDocFixHandler {
                             "</db:listitem>\n" +
                             "</db:orderedlist>\n" +
                             "<db:para>Qt Creator deploys your application on the iOS device, if the device is detected and configured correctly in Xcode. It is also possible to test the application in iOS Simulator. For more information, see <db:link xlink:href=\"http://doc.qt.io/qtcreator/creator-developing-ios.html\">Connecting iOS Devices</db:link>.</db:para>");
+                }
+            }
+            if (filePath.toString().contains("qtquickcontrols-customize.xml")) {
+                Pattern regex = Pattern.compile("<db:section xml:id=\"using-cmake\">\n" +
+                        "<db:title>Using CMake</db:title>\n" +
+                        "<db:programlisting language=\"cpp\" role=\"bad\">qt_add_qml_module(ACoolItem\n" +
+                        "    URI MyItems\n" +
+                        "    VERSION 1.0\n" +
+                        "    SOURCES\n" +
+                        "        acoolcppitem.cpp acoolcppitem.h\n" +
+                        ")\n" +
+                        "</db:programlisting>\n" +
+                        "</db:section>\n" +
+                        "<db:section xml:id=\"using-qmake\">\n" +
+                        "<db:title>Using QMake</db:title>\n" +
+                        "<db:programlisting language=\"cpp\">CONFIG += qmltypes\n" +
+                        "QML_IMPORT_NAME = MyItems\n" +
+                        "QML_IMPORT_MAJOR_VERSION = 1\n" +
+                        "</db:programlisting>\n" +
+                        "<db:para>If the header the class is declared in is not accessible from your project's include path, you may have to amend the include path so that the generated registration code can be compiled.</db:para>\n" +
+                        "<db:programlisting language=\"cpp\">INCLUDEPATH += MyItems\n" +
+                        "</db:programlisting>\n" +
+                        "<db:para>See <db:link xlink:href=\"qtqml-cppintegration-definetypes.xml\">Defining QML Types from C++</db:link> and <db:link xlink:href=\"cmake-build-qml-application.xml\">Building a QML application</db:link> for more information.</db:para>\n" +
+                        "</db:section>\n" +
+                        "<db:listitem>\n" +
+                        "<db:para>If the style that uses the type is one of many styles used by an application, consider putting each style into a separate module. The modules will then be loaded on demand.</db:para>\n" +
+                        "</db:listitem>\n" +
+                        "</db:listitem>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("<db:bridgehead xml:id=\"tab-cmake\" renderas=\"sect5\" role=\"tabbed checked tab-group_tabs_expose-cpp-to-qml\" xlink:href=\"#tab-cmake_contents\">CMake</db:bridgehead>\n" +
+                            "<db:bridgehead xml:id=\"tab-qmake\" renderas=\"sect5\" role=\"tabbed checked tab-group_tabs_expose-cpp-to-qml\" xlink:href=\"#tab-qmake_contents\">qmake</db:bridgehead>\n" +
+                            "<db:sidebar xml:id=\"tab-cmake_contents\">\n" +
+                            "<db:programlisting language=\"cpp\" role=\"bad\">qt_add_qml_module(ACoolItem\n" +
+                            "    URI MyItems\n" +
+                            "    VERSION 1.0\n" +
+                            "    SOURCES\n" +
+                            "        acoolcppitem.cpp acoolcppitem.h\n" +
+                            ")\n" +
+                            "</db:programlisting>\n" +
+                            "</db:sidebar>\n" +
+                            "<db:sidebar xml:id=\"tab-qmake_contents\">\n" +
+                            "<db:programlisting language=\"cpp\">CONFIG += qmltypes\n" +
+                            "QML_IMPORT_NAME = MyItems\n" +
+                            "QML_IMPORT_MAJOR_VERSION = 1\n" +
+                            "</db:programlisting>\n" +
+                            "<db:para>If the header the class is declared in is not accessible from your project's include path, you may have to amend the include path so that the generated registration code can be compiled.</db:para>\n" +
+                            "<db:programlisting language=\"cpp\">INCLUDEPATH += MyItems\n" +
+                            "</db:programlisting>\n" +
+                            "</db:sidebar>\n" +
+                            "<db:para>See <db:link xlink:href=\"qtqml-cppintegration-definetypes.xml\">Defining QML Types from C++</db:link> and <db:link xlink:href=\"cmake-build-qml-application.xml\">Building a QML application</db:link> for more information.</db:para>\n" +
+                            "</db:listitem>\n" +
+                            "<db:listitem>\n" +
+                            "<db:para>If the style that uses the type is one of many styles used by an application, consider putting each style into a separate module. The modules will then be loaded on demand.</db:para>\n" +
+                            "</db:listitem>");
+                }
+            }
+
+            // https://codereview.qt-project.org/c/qt/qtdeclarative/+/613814
+            if (filePath.toString().contains("qtquickcontrols-universal.xml")) {
+                Pattern regex = Pattern.compile("<db:imagedata fileref=\"images/qtquickcontrols-universal-foreground.png\"/>\n" +
+                        "</db:imageobject>\n" +
+                        "</db:mediaobject>\n" +
+                        "</db:td>\n" +
+                        "</db:tr>\n" +
+                        "</db:informaltable>\n" +
+                        "<db:section xml:id=\"universal-theme-attached-prop\"><db:title>Universal.theme : enumeration</db:title><db:fieldsynopsis><db:type>enumeration</db:type><db:varname>Universal.theme</db:varname></db:fieldsynopsis>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("<db:imagedata fileref=\"images/qtquickcontrols-universal-foreground.png\"/>\n" +
+                            "</db:imageobject>\n" +
+                            "</db:mediaobject>\n" +
+                            "</db:td>\n" +
+                            "</db:tr>\n" +
+                            "</db:informaltable>\n" +
+                            "</db:section>\n" +
+                            "<db:section xml:id=\"universal-theme-attached-prop\"><db:title>Universal.theme : enumeration</db:title><db:fieldsynopsis><db:type>enumeration</db:type><db:varname>Universal.theme</db:varname></db:fieldsynopsis>");
+                }
+            }
+
+            // Twice the anchor.
+            // <db:section xml:id="color-attached-method"><db:title>color color(enumeration <db:emphasis>predefined</db:emphasis>)</db:title><db:methodsynopsis><db:type>color</db:type><db:methodname>color</db:methodname><db:methodparam><db:type>enumeration</db:type><db:parameter>predefined</db:parameter></db:methodparam></db:methodsynopsis><db:anchor xml:id="color-attached-method"/>
+            // ->
+            // The same without <db:anchor>
+            if (filePath.toString().contains("qtquickcontrols-universal.xml")) {
+                Pattern regex = Pattern.compile("<db:section xml:id=\"color-attached-method\"><db:title>color color(enumeration <db:emphasis>predefined</db:emphasis>)</db:title><db:methodsynopsis><db:type>color</db:type><db:methodname>color</db:methodname><db:methodparam><db:type>enumeration</db:type><db:parameter>predefined</db:parameter></db:methodparam></db:methodsynopsis><db:anchor xml:id=\"color-attached-method\"/>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("<db:section xml:id=\"color-attached-method\"><db:title>color color(enumeration <db:emphasis>predefined</db:emphasis>)</db:title><db:methodsynopsis><db:type>color</db:type><db:methodname>color</db:methodname><db:methodparam><db:type>enumeration</db:type><db:parameter>predefined</db:parameter></db:methodparam></db:methodsynopsis>");
                 }
             }
 
