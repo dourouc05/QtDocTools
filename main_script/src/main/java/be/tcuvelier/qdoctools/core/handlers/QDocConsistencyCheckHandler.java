@@ -8,12 +8,12 @@ import java.io.IOException;
 import java.nio.file.*;
 
 // Handler for postprocessing QDoc's DocBook output, including validation.
-public class QDocPostProcessingHandler {
+public class QDocConsistencyCheckHandler {
     private final Path outputFolder; // Where all the generated files should be put (QDoc may
     // also output in a subfolder, in which case the files are automatically moved to a flatter hierarchy).
     private final Path htmlFolder; // A preexisting copy of the HTML docs.
 
-    public QDocPostProcessingHandler(String output, String htmlFolder)
+    public QDocConsistencyCheckHandler(String output, String htmlFolder)
             throws IOException {
         outputFolder = Paths.get(output);
         this.htmlFolder = Paths.get(htmlFolder);
@@ -30,7 +30,6 @@ public class QDocPostProcessingHandler {
         }
     }
 
-    // TODO: move this to another handler.
     public void checkDocBookConsistency() throws IOException, SaxonApiException {
         ConsistencyResults cr = new ConsistencyChecks(outputFolder, htmlFolder, ">>> ").checkAll();
         if (! cr.hasErrors()) {

@@ -1,7 +1,7 @@
 package be.tcuvelier.qdoctools.core;
 
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
-import be.tcuvelier.qdoctools.core.handlers.QDocPostProcessingHandler;
+import be.tcuvelier.qdoctools.core.handlers.QDocConsistencyCheckHandler;
 import be.tcuvelier.qdoctools.core.handlers.QDocRunningHandler;
 import be.tcuvelier.qdoctools.core.utils.Pair;
 import be.tcuvelier.qdoctools.core.utils.QtVersion;
@@ -75,7 +75,7 @@ public class QDocCore {
             // As of Qt 5.15-6.5, the docs installed at the same time as Qt with the official
             // installer have the same folder structure as output by QDoc: the copies done in
             // copyGeneratedFiles() cannot yet be removed for this check to be performed!
-            QDocPostProcessingHandler qpph = new QDocPostProcessingHandler(output, htmlVersion);
+            QDocConsistencyCheckHandler qpph = new QDocConsistencyCheckHandler(output, htmlVersion);
             qpph.checkDocBookConsistency();
             System.out.println("++> DocBook consistency checked.");
         }
