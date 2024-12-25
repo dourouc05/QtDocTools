@@ -23,7 +23,7 @@ public class DocBookSanityCheckHandler {
         Processor processor = new Processor(false);
         DocumentBuilder db = processor.newDocumentBuilder();
         db.setLineNumbering(true);
-        xdm = db.build(new StreamSource(new FileReader(new File(fileName))));
+        xdm = db.build(new StreamSource(new FileReader(fileName)));
         compiler = processor.newXPathCompiler();
         compiler.declareNamespace("db", "http://docbook.org/ns/docbook");
         compiler.declareNamespace("xlink", "http://www.w3.org/1999/xlink");
@@ -74,7 +74,7 @@ public class DocBookSanityCheckHandler {
         // No list within a paragraph (Word-to-XML outputs them outside the paragraph).
         {
             XdmValue listInPara = xpath("//db:para/db:itemizedlist union //para/itemizedlist");
-            if (listInPara.size() > 0) {
+            if (!listInPara.isEmpty()) {
                 System.out.println("SANITY WARNING: found " + listInPara.size() + " list(s) " +
                         "within paragraphs: ");
                 signalElements(listInPara);
@@ -88,7 +88,7 @@ public class DocBookSanityCheckHandler {
                     "//db:para/db:programlisting union //para/programlisting " +
                             "union //db:para/db:screen union //para/screen"
             );
-            if (codeInPara.size() > 0) {
+            if (!codeInPara.isEmpty()) {
                 System.out.println("SANITY WARNING: found " + codeInPara.size() + " code blocks" +
                         "(s) within paragraphs: ");
                 signalElements(codeInPara);
@@ -121,7 +121,7 @@ public class DocBookSanityCheckHandler {
             List<XdmValue> errors =
                     textAfterInfo.stream().filter(Predicate.not(isCode)).collect(Collectors.toList());
 
-            if (warnings.size() > 0) {
+            if (!warnings.isEmpty()) {
                 System.out.println("SANITY WARNING: found " + textAfterInfo.size() + " block " +
                         "elements between " +
                         "the title and the main content (all content should be either in the " +
@@ -133,7 +133,7 @@ public class DocBookSanityCheckHandler {
                 // No change in result: this is just a warning.
             }
 
-            if (errors.size() > 0) {
+            if (!errors.isEmpty()) {
                 System.out.println("SANITY CHECK: found " + textAfterInfo.size() + " block " +
                         "elements between the title " +
                         "and the main content (all content should be either in the abstract or in" +
@@ -150,7 +150,7 @@ public class DocBookSanityCheckHandler {
                             "union //db:informaltable/(db:row, db:entry) union //db:table/" +
                             "(db:row, db:entry)"
             );
-            if (calsTable.size() > 0) {
+            if (!calsTable.isEmpty()) {
                 System.out.println("SANITY WARNING: found " + calsTable.size() + " CALS tables, " +
                         "which will be converted to HTML tables after" +
                         "round tripping: ");
@@ -165,7 +165,7 @@ public class DocBookSanityCheckHandler {
                     "//informaltable[not(/tbody/tr/count(td) > 1)] " +
                             "union //db:informaltable[not(/db:tbody/db:tr/count(db:td) > 1)]"
             );
-            if (nColumns.size() > 0) {
+            if (!nColumns.isEmpty()) {
                 System.out.println("SANITY WARNING: found " + nColumns.size() + " tables with " +
                         "just one column, which will be " +
                         "converted to simple lists after round tripping: ");

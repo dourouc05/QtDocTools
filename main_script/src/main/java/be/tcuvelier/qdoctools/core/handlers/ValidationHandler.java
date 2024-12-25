@@ -14,7 +14,6 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 
 public class ValidationHandler {
     // Low-level API.
