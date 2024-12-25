@@ -125,38 +125,45 @@ public class QDocMovingHandler {
                         .replaceAll(prefix_path + "-[a-z0-9]+-examples-[a-z0-9]+-", "")
                         .replace("--", "-");
                 Path destination = outputFolder.resolve(new_name);
-                Files.move(outf.toPath(), destination);
+
+                try {
+                    Files.move(outf.toPath(), destination);
+                } catch (FileAlreadyExistsException e) {
+                    // TODO: add a CLI option to control overwriting.
+                    System.out.println("!!> File already exists: " + destination + ". Tried to copy from: " + outf.toPath() + ". Retrying.");
+                    Files.move(outf.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
+                }
             }
         }
     }
 
-    private void moveGeneratedImagesRecursively(File folder, Path destination) throws IOException {
+    private void moveGeneratedImagesRecursively(File folder, Path destinationFolder) throws IOException {
         File[] files = folder.listFiles();
         if (files == null || files.length == 0) {
             return;
         }
 
-        if (!destination.toFile().exists()) {
-            if (!destination.toFile().mkdirs()) {
-                throw new IOException("Could not create directories: " + destination);
+        if (!destinationFolder.toFile().exists()) {
+            if (!destinationFolder.toFile().mkdirs()) {
+                throw new IOException("Could not create directories: " + destinationFolder);
             }
         }
 
-        for (File f : files) {
-            String name = f.getName();
+        for (File file : files) {
+            String name = file.getName();
 
-            if (f.isDirectory()) {
-                moveGeneratedImagesRecursively(f, destination.resolve(name));
+            if (file.isDirectory()) {
+                moveGeneratedImagesRecursively(file, destinationFolder.resolve(name));
                 continue;
             }
 
-            Path d = destination.resolve(name);
+            Path destination = destinationFolder.resolve(name);
             try {
-                Files.copy(f.toPath(), d);
+                Files.copy(file.toPath(), destination);
             } catch (FileAlreadyExistsException e) {
                 // TODO: add a CLI option to control overwriting.
-                System.out.println("!!> File already exists: " + d + ". Tried to copy from: " + f + ". Retrying.");
-                Files.copy(f.toPath(), d, StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("!!> File already exists: " + destination + ". Tried to copy from: " + file + ". Retrying.");
+                Files.copy(file.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
             }
         }
     }
