@@ -15,9 +15,7 @@ public class FileHelpers {
 
     public static boolean isDocBook(String path) {
         // Check the extension: it is sometimes sufficient to conclude.
-        boolean extensionOK = path.endsWith(".db") || path.endsWith(".dbk") || path.endsWith(
-                ".xml");
-        if (extensionOK) {
+        if (path.endsWith(".db") || path.endsWith(".dbk")) {
             return true;
         }
 
