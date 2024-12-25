@@ -1,9 +1,6 @@
 package be.tcuvelier.qdoctools.cli;
 
-import be.tcuvelier.qdoctools.core.QDocCore;
-import be.tcuvelier.qdoctools.core.QDocFixCore;
-import be.tcuvelier.qdoctools.core.QDocPostProcessCore;
-import be.tcuvelier.qdoctools.core.QDocPublishCore;
+import be.tcuvelier.qdoctools.core.*;
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.utils.QtVersion;
 import net.sf.saxon.s9api.SaxonApiException;
@@ -95,16 +92,19 @@ public class QDocCommand implements Callable<Void> {
     }
 
     @Command(name = "post")
-    public void post() throws SaxonApiException, IOException, InterruptedException,
-            ParserConfigurationException, SAXException {
+    public void post() throws IOException {
+        QDocCore.postprocess(output);
+    }
+
+    @Command(name = "validate")
+    public void validate() throws IOException, SAXException {
         GlobalConfiguration config = new GlobalConfiguration(configurationFile);
-        QDocPostProcessCore.call(output, config);
+        QDocCore.validate(output, config);
     }
 
     @Command(name = "fix")
-    public void fix() throws SaxonApiException, IOException, InterruptedException,
-            ParserConfigurationException, SAXException {
-        QDocFixCore.call(output);
+    public void fix() throws IOException {
+        QDocCore.fix(output);
     }
 
     @Command(name = "publish")
@@ -119,6 +119,6 @@ public class QDocCommand implements Callable<Void> {
         }
 
         GlobalConfiguration config = new GlobalConfiguration(configurationFile);
-        QDocPublishCore.call(output, dvpmlOutput, qtVersion, validate, convertToDvpML, config);
+        QDocCore.publish(output, dvpmlOutput, qtVersion, validate, convertToDvpML, config);
     }
 }

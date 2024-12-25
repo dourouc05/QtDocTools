@@ -44,8 +44,4 @@ public class SetHelpers {
         array.sort(null);
         return array;
     }
-
-    public static <T> boolean compareSets(Set<T> a, Set<T> b) {
-        return a.size() == b.size() && difference(a, b).size() == 0;
-    }
 }
