@@ -13,24 +13,16 @@ public class QDocConsistencyCheckHandler {
     // also output in a subfolder, in which case the files are automatically moved to a flatter hierarchy).
     private final Path htmlFolder; // A preexisting copy of the HTML docs.
 
-    public QDocConsistencyCheckHandler(String output, String htmlFolder)
-            throws IOException {
+    public QDocConsistencyCheckHandler(String output, String htmlFolder) {
         outputFolder = Paths.get(output);
         this.htmlFolder = Paths.get(htmlFolder);
-
-        ensureOutputFolderExists();
-    }
-
-    private void ensureOutputFolderExists() throws IOException {
-        if (!outputFolder.toFile().isDirectory()) {
-            Files.createDirectories(outputFolder);
-        }
-        if (!outputFolder.resolve("images").toFile().isDirectory()) {
-            Files.createDirectories(outputFolder.resolve("images"));
-        }
     }
 
     public void checkDocBookConsistency() throws IOException, SaxonApiException {
+        if (!outputFolder.toFile().isDirectory()) {
+            throw new IOException("Invalid output folder: " + outputFolder);
+        }
+
         ConsistencyResults cr = new ConsistencyChecks(outputFolder, htmlFolder, ">>> ").checkAll();
         if (! cr.hasErrors()) {
             System.out.println("++> Consistency checks revealed no discrepancy.");
