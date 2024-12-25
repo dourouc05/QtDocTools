@@ -8,7 +8,6 @@ import net.sf.saxon.s9api.SaxonApiException;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -70,18 +69,23 @@ public class QDocCore {
         // Perform some consistency checks on the contents to ensure that there is no hidden major
         // qdoc bug.
         if (checkConsistency) {
-            System.out.println("++> Checking consistency of the DocBook output.");
-            assert !htmlVersion.isEmpty();
-
-            // As of Qt 5.15-6.5, the docs installed at the same time as Qt with the official
-            // installer have the same folder structure as output by QDoc: the copies done in
-            // copyGeneratedFiles() cannot yet be removed for this check to be performed!
-            QDocConsistencyCheckHandler qpph = new QDocConsistencyCheckHandler(output, htmlVersion);
-            qpph.checkDocBookConsistency();
-            System.out.println("++> DocBook consistency checked.");
+            QDocCore.checkConsistency(output, htmlVersion);
         }
 
         QDocCore.publish(output, dvpmlOutput, qtVersion, validate, convertToDvpML, config);
+    }
+
+    public static void checkConsistency(String output, String htmlVersion) throws IOException, SaxonApiException {
+        System.out.println("++> Checking consistency of the DocBook output.");
+        assert !output.isEmpty();
+        assert !htmlVersion.isEmpty();
+
+        // As of Qt 5.15-6.5, the docs installed at the same time as Qt with the official
+        // installer have the same folder structure as output by QDoc: the copies done in
+        // copyGeneratedFiles() cannot yet be removed for this check to be performed!
+        QDocConsistencyCheckHandler qpph = new QDocConsistencyCheckHandler(output, htmlVersion);
+        qpph.checkDocBookConsistency();
+        System.out.println("++> DocBook consistency checked.");
     }
 
     // Performs a formal DocBook validation step
