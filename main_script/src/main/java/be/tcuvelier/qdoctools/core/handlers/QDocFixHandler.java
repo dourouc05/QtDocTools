@@ -349,6 +349,7 @@ public class QDocFixHandler {
                 }
             }
 
+            // \inlineimage with \caption instead of \image
             // qml-qt5compat-graphicaleffects-gaussianblur.xml
             // https://codereview.qt-project.org/c/qt/qt5compat/+/527903
             if (filePath.toString().contains("qml-qt5compat-graphicaleffects-gaussianblur.xml")) {
@@ -372,6 +373,51 @@ public class QDocFixHandler {
                             </db:imageobject>
                             </db:mediaobject>
                             </db:figure>""");
+                }
+            }
+            // qcombobox.xml
+            // https://codereview.qt-project.org/c/qt/qtbase/+/613813
+            if (filePath.toString().contains("qcombobox.xml")) {
+                Pattern regex = Pattern.compile(
+                        "<db:td>\n" +
+                                "<db:para><db:inlinemediaobject>\n" +
+                                "<db:imageobject>\n" +
+                                "<db:imagedata fileref=\"images/collapsed_combobox.png\"/>\n" +
+                                "</db:imageobject>\n" +
+                                "</db:inlinemediaobject></db:para>\n" +
+                                "<db:title>Collapsed QCombobox</db:title>\n" +
+                                "</db:td>\n" +
+                                "<db:td>\n" +
+                                "<db:para><db:inlinemediaobject>\n" +
+                                "<db:imageobject>\n" +
+                                "<db:imagedata fileref=\"images/expanded_combobox.png\"/>\n" +
+                                "</db:imageobject>\n" +
+                                "</db:inlinemediaobject></db:para>\n" +
+                                "<db:title>Expanded QCombobox</db:title>\n" +
+                                "</db:td>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("<db:td>\n" +
+                            "<db:figure>\n" +
+                            "<db:title>Collapsed QCombobox</db:title>\n" +
+                            "<db:mediaobject>\n" +
+                            "<db:imageobject>\n" +
+                            "<db:imagedata fileref=\"images/collapsed_combobox.png\"/>\n" +
+                            "</db:imageobject>\n" +
+                            "</db:mediaobject>\n" +
+                            "</db:figure>\n" +
+                            "</db:td>\n" +
+                            "<db:td>\n" +
+                            "<db:figure>\n" +
+                            "<db:title>Expanded QCombobox</db:title>\n" +
+                            "<db:mediaobject>\n" +
+                            "<db:imageobject>\n" +
+                            "<db:imagedata fileref=\"images/expanded_combobox.png\"/>\n" +
+                            "</db:imageobject>\n" +
+                            "</db:mediaobject>\n" +
+                            "</db:figure>\n" +
+                            "</db:td>");
                 }
             }
 
@@ -506,6 +552,55 @@ public class QDocFixHandler {
                 if (matches.find()) {
                     hasMatched = true;
                     fileContents = matches.replaceAll("$2");
+                }
+            }
+
+            // <db:section> for tabs
+            // ->
+            // <db:bridgehead>
+            // https://codereview.qt-project.org/c/qt/qtbase/+/613771
+            if (filePath.toString().contains("porting-to-ios.xml")) {
+                // This file also has a paragraph in the listitem/section that shouldn't be there,
+                // hence its move outside the second sidebar and a few more things afterwards.
+                Pattern regex = Pattern.compile("<db:section xml:id=\"using-cmake\">\n" +
+                        "<db:title>Using CMake</db:title>\n" +
+                        "<db:programlisting language=\"cpp\" role=\"bad\">find_package(Qt6 REQUIRED COMPONENTS Multimedia)\n" +
+                        "target_link_libraries(my_project PRIVATE Qt6::Multimedia)\n" +
+                        "</db:programlisting>\n" +
+                        "</db:section>\n" +
+                        "<db:section xml:id=\"using-qmake\">\n" +
+                        "<db:title>Using qmake</db:title>\n" +
+                        "<db:programlisting language=\"cpp\" role=\"bad\">QT += multimedia\n" +
+                        "</db:programlisting>\n" +
+                        "<db:para>In Qt for iOS, everything is compiled statically and placed into the application bundle. The applications are &quot;sandboxed&quot; inside their bundles and cannot make use of shared object files. Because of this, also the plugins used by the Qt modules need to be statically linked. To do this, define the required plugins using the <db:link xlink:href=\"qmake-variable-reference.xml#qtplugin\">QTPLUGIN</db:link> variable.</db:para>\n" +
+                        "</db:section>\n" +
+                        "<db:listitem>\n" +
+                        "<db:para>Save the changes to your project and run the application.</db:para>\n" +
+                        "</db:listitem>\n" +
+                        "</db:listitem>\n" +
+                        "<db:para>Qt Creator deploys your application on the iOS device, if the device is detected and configured correctly in Xcode. It is also possible to test the application in iOS Simulator. For more information, see <db:link xlink:href=\"http://doc.qt.io/qtcreator/creator-developing-ios.html\">Connecting iOS Devices</db:link>.</db:para>\n" +
+                        "</db:orderedlist>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("<db:bridgehead xml:id=\"tab-cmake\" renderas=\"sect5\" role=\"tabbed checked tab-group_build-ios-app\" xlink:href=\"#tab-cmake_contents\">CMake</db:bridgehead>\n" +
+                            "<db:bridgehead xml:id=\"tab-qmake\" renderas=\"sect5\" role=\"tabbed checked tab-group_build-ios-app\" xlink:href=\"#tab-qmake_contents\">qake</db:bridgehead>\n" +
+                            "<db:sidebar xml:id=\"tab-cmake_contents\">\n" +
+                            "<db:programlisting language=\"cpp\" role=\"bad\">find_package(Qt6 REQUIRED COMPONENTS Multimedia)\n" +
+                            "  target_link_libraries(my_project PRIVATE Qt6::Multimedia)\n" +
+                            "</db:programlisting>\n" +
+                            "</db:sidebar>\n" +
+                            "<db:sidebar xml:id=\"tab-qmake_contents\">\n" +
+                            "<db:programlisting language=\"cpp\" role=\"bad\">QT += multimedia\n" +
+                            "</db:programlisting>\n" +
+                            "</db:sidebar>\n" +
+                            "<db:para>In Qt for iOS, everything is compiled statically and placed into the application bundle. The applications are &quot;sandboxed&quot; inside their bundles and cannot make use of shared object files. Because of this, also the plugins used by the Qt modules need to be statically linked. To do this, define the required plugins using the <db:link xlink:href=\"qmake-variable-reference.xml#qtplugin\">QTPLUGIN</db:link> variable.</db:para>\n" +
+                            "</db:listitem>\n" +
+                            "<db:listitem>\n" +
+                            "<db:para>Save the changes to your project and run the application.</db:para>\n" +
+                            "</db:listitem>\n" +
+                            "</db:orderedlist>\n" +
+                            "<db:para>Qt Creator deploys your application on the iOS device, if the device is detected and configured correctly in Xcode. It is also possible to test the application in iOS Simulator. For more information, see <db:link xlink:href=\"http://doc.qt.io/qtcreator/creator-developing-ios.html\">Connecting iOS Devices</db:link>.</db:para>");
                 }
             }
 
