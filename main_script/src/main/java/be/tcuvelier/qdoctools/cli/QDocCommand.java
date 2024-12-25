@@ -1,6 +1,9 @@
 package be.tcuvelier.qdoctools.cli;
 
 import be.tcuvelier.qdoctools.core.QDocCore;
+import be.tcuvelier.qdoctools.core.QDocFixCore;
+import be.tcuvelier.qdoctools.core.QDocPostProcessCore;
+import be.tcuvelier.qdoctools.core.QDocPublishCore;
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.utils.QtVersion;
 import net.sf.saxon.s9api.SaxonApiException;
@@ -45,15 +48,16 @@ public class QDocCommand implements Callable<Void> {
                     "This operation requires the prior generation of the DocBook files")
     private boolean convertToDvpML = true;
     @Option(names = {"-s", "--source-folder"},
-            description = "Folder to process (source code of Qt)", required = true)
+            description = "Folder to process (source code of Qt)")
     private String source;
     @Option(names = {"-i", "--installed-folder"},
             description = "Folder with a complete Qt installation " +
-                    "(either precompiled or built from scratch and installed)", required = true)
+                    "(either precompiled or built from scratch and installed)")
     private String installed;
     @Option(names = {"-o", "--output-folder"},
-            description = "QDoc output folder (DocBook files)", required = true)
-    private String output;
+            description = "QDoc output folder (DocBook files); " +
+                    "for the publish command, where the DocBook files reside", required = true)
+    private String output; // Only parameter required by all subcommands.
     @Option(names = {"-d", "--dvpml-output-folder"},
             description = "QtDocTools output folder (DvpML files)")
     private String dvpmlOutput = output;
@@ -65,9 +69,18 @@ public class QDocCommand implements Callable<Void> {
     @Override
     public Void call() throws SaxonApiException, IOException, InterruptedException,
             ParserConfigurationException, SAXException {
+        if (source.isEmpty()) {
+            throw new RuntimeException("Argument --source missing when generating Qt docs; " +
+                    "what are Qt's sources located?");
+        }
+        if (installed.isEmpty()) {
+            throw new RuntimeException("Argument --installed-folder missing when generating Qt docs; " +
+                    "what is the path of an installed version of Qt?");
+        }
         if (checkConsistency && htmlFolder.isEmpty()) {
             System.out.println("!!> Cannot check consistency without an existing HTML version" +
                     " (--html-version).");
+            checkConsistency = false;
         }
         if (convertToDvpML && dvpmlOutput.isEmpty()) {
             throw new RuntimeException("Argument --dvpml-output missing when generating DvpML files for Qt docs; " +
@@ -79,5 +92,33 @@ public class QDocCommand implements Callable<Void> {
                 reduceIncludeListSize, validate, convertToDocBook, checkConsistency,
                 convertToDvpML, config);
         return null;
+    }
+
+    @Command(name = "post")
+    public void post() throws SaxonApiException, IOException, InterruptedException,
+            ParserConfigurationException, SAXException {
+        GlobalConfiguration config = new GlobalConfiguration(configurationFile);
+        QDocPostProcessCore.call(output, config);
+    }
+
+    @Command(name = "fix")
+    public void fix() throws SaxonApiException, IOException, InterruptedException,
+            ParserConfigurationException, SAXException {
+        QDocFixCore.call(output);
+    }
+
+    @Command(name = "publish")
+    public void publish() throws SaxonApiException, IOException {
+        if (output.isEmpty()) {
+            throw new RuntimeException("Argument --output missing when generating DvpML files for Qt docs; " +
+                    "where is the Git repository holding the DocBook source?");
+        }
+        if (dvpmlOutput.isEmpty()) {
+            throw new RuntimeException("Argument --dvpml-output missing when generating DvpML files for Qt docs; " +
+                    "in which folder should the DvpML output be located?");
+        }
+
+        GlobalConfiguration config = new GlobalConfiguration(configurationFile);
+        QDocPublishCore.call(output, dvpmlOutput, qtVersion, validate, convertToDvpML, config);
     }
 }

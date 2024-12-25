@@ -10,11 +10,7 @@ import java.util.concurrent.Callable;
         TransformCommand.class,
         MergeCommand.class,
         UploadCommand.class,
-        QDocCommand.class,
-        QDocPublishCommand.class,
-        QDocPostProcessCommand.class,
-        QDocValidateCommand.class,
-        QDocFixCommand.class
+        QDocCommand.class
 }, mixinStandardHelpOptions = true, version = "QDocTools 0.3.0")
 public class MainCommand implements Callable<Void> {
     @CommandLine.Spec
