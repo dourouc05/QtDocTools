@@ -1,7 +1,6 @@
 package be.tcuvelier.qdoctools.core.handlers;
 
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
-import be.tcuvelier.qdoctools.core.helpers.ValidationHelper;
 import org.xml.sax.SAXException;
 
 import java.io.IOException;
@@ -39,7 +38,7 @@ public class QDocValidateHandler {
                 continue;
             }
 
-            if (ValidationHelper.validateDocBook(filePath, config)) {
+            if (ValidationHandler.validateDocBook(filePath.toFile(), config)) {
                 nValidFiles += 1;
             } else {
                 System.out.println("!!> Invalid file: " + filePath);

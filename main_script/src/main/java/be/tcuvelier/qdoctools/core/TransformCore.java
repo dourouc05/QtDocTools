@@ -2,8 +2,8 @@ package be.tcuvelier.qdoctools.core;
 
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.handlers.DocBookSanityCheckHandler;
+import be.tcuvelier.qdoctools.core.handlers.ValidationHandler;
 import be.tcuvelier.qdoctools.core.helpers.TransformHelpers;
-import be.tcuvelier.qdoctools.core.helpers.ValidationHelper;
 import net.sf.saxon.s9api.SaxonApiException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.xml.sax.SAXException;
@@ -85,9 +85,9 @@ public class TransformCore {
         if (validate) {
             boolean isValid;
             if (outputFormat == Format.DocBook) {
-                isValid = ValidationHelper.validateDocBook(output, config);
+                isValid = ValidationHandler.validateDocBook(new File(output), config);
             } else if (outputFormat == Format.DvpML) {
-                isValid = ValidationHelper.validateDvpML(output, config);
+                isValid = ValidationHandler.validateDvpML(new File(output), config);
             } else {
                 // No easy check to perform. Could use OpenXML SDK for DOCX, but that's C#.
                 isValid = true;

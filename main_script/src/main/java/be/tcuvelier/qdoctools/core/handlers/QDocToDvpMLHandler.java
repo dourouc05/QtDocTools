@@ -3,7 +3,6 @@ package be.tcuvelier.qdoctools.core.handlers;
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.config.QdtPaths;
 import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
-import be.tcuvelier.qdoctools.core.helpers.ValidationHelper;
 import be.tcuvelier.qdoctools.core.utils.QtVersion;
 import net.sf.saxon.s9api.SaxonApiException;
 import org.xml.sax.SAXException;
@@ -139,7 +138,7 @@ public class QDocToDvpMLHandler {
     }
 
     public boolean isValidDvpML(Path dvpmlFile) throws IOException, SAXException {
-        return ValidationHelper.validateDvpML(dvpmlFile, config);
+        return ValidationHandler.validateDvpML(dvpmlFile.toFile(), config);
     }
 
     public void moveIndex() throws IOException {

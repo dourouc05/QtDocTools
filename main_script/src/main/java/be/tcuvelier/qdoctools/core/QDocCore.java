@@ -2,7 +2,6 @@ package be.tcuvelier.qdoctools.core;
 
 import be.tcuvelier.qdoctools.core.config.GlobalConfiguration;
 import be.tcuvelier.qdoctools.core.handlers.*;
-import be.tcuvelier.qdoctools.core.helpers.FormattingHelpers;
 import be.tcuvelier.qdoctools.core.utils.Pair;
 import be.tcuvelier.qdoctools.core.utils.QtVersion;
 import net.sf.saxon.s9api.SaxonApiException;
@@ -149,7 +148,7 @@ public class QDocCore {
             // postprocessing for Qt's doc.
             int i = 0;
             for (Path dbFile : xml) {
-                System.out.println(FormattingHelpers.prefix(i, xml) + " " + dbFile);
+                System.out.println(prefix(i, xml) + " " + dbFile);
 
                 // Actually convert the DocBook into DvpML. This may print errors directly to stderr.
                 Path dvpmlFile = qdh.rewritePath(dbFile);
@@ -178,15 +177,15 @@ public class QDocCore {
 
             int i = 0;
             for (Path dvpmlFile : dvpml) {
-                System.out.println(FormattingHelpers.prefix(i, dvpml) + " " + dvpmlFile);
+                System.out.println(prefix(i, dvpml) + " " + dvpmlFile);
 
                 try {
                     if (!qdh.isValidDvpML(dvpmlFile)) {
-                        System.err.println(FormattingHelpers.prefix(i, dvpml) + " There were " +
+                        System.err.println(prefix(i, dvpml) + " There were " +
                                 "validation errors. See the above exception for details.");
                     }
                 } catch (SAXException e) {
-                    System.out.println(FormattingHelpers.prefix(i, dvpml) + " Validation error!");
+                    System.out.println(prefix(i, dvpml) + " Validation error!");
                     //noinspection CallToPrintStackTrace
                     e.printStackTrace();
                 }
@@ -194,5 +193,10 @@ public class QDocCore {
                 ++i;
             }
         }
+    }
+
+    private static String prefix(int i, List<?> list) {
+        String iFormat = "%0" + Integer.toString(list.size()).length() + "d";
+        return "[" + String.format(iFormat, i + 1) + "/" + list.size() + "]";
     }
 }
