@@ -91,7 +91,7 @@ public class QDocCore {
     // Performs a formal DocBook validation step
     public static void validate(String output, GlobalConfiguration config)
             throws IOException, SAXException {
-        System.out.println("++> Validating DocBook output.");
+        System.out.println("++> Validating DocBook output: " + output + ".");
         QDocValidateHandler qvh = new QDocValidateHandler(output, config);
         qvh.validateDocBook();
         System.out.println("++> DocBook output validated.");
@@ -100,7 +100,7 @@ public class QDocCore {
     // Perform the fixing part of the conversion cycle to get rid of QDoc quirks.
     public static void fix(String outputFolder)
             throws IOException {
-        System.out.println("++> Fixing some QDoc quirks.");
+        System.out.println("++> Fixing some QDoc quirks: " + outputFolder + ".");
         QDocFixHandler qfh = new QDocFixHandler(outputFolder, true);
         System.out.println("++>   Step 1: bugs.");
         qfh.fixQDocBugs();
