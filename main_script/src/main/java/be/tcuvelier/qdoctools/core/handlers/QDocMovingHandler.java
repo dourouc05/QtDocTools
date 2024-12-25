@@ -104,6 +104,7 @@ public class QDocMovingHandler {
 
         String prefix_path = "";
         for (File outf : outfs) {
+            // Just look for one specific example that has existed in many versions of Qt to find the prefix.
             if (outf.getName().contains("qtquick3d-examples-quick3d-antialiasing-antialiasing-pro")) {
                 // outf.getName() is something like
                 // "qtquick3d-d-qt-6-5-3-src-qtquick3d-examples-quick3d-antialiasing-antialiasing-pro.xml"
