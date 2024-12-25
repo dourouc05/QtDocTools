@@ -110,7 +110,7 @@ public class QDocCommand implements Callable<Void> {
     @Command(name = "publish")
     public void publish() throws SaxonApiException, IOException {
         if (output.isEmpty()) {
-            throw new RuntimeException("Argument --output missing when generating DvpML files for Qt docs; " +
+            throw new RuntimeException("Argument --output-folder missing when generating DvpML files for Qt docs; " +
                     "where is the Git repository holding the DocBook source?");
         }
         if (dvpmlOutput.isEmpty()) {
