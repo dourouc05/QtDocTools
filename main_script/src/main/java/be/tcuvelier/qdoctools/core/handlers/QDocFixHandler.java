@@ -1,5 +1,7 @@
 package be.tcuvelier.qdoctools.core.handlers;
 
+import be.tcuvelier.qdoctools.core.helpers.FileHelpers;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -40,7 +42,7 @@ public class QDocFixHandler {
         int nFilesRewritten = 0;
         int nFilesIgnored = 0;
 
-        for (Path filePath : findDocBook()) {
+        for (Path filePath : FileHelpers.findWithExtension(outputFolder, ".xml")) {
             boolean hasMatched = false;
             String fileContents = Files.readString(filePath);
 
@@ -534,7 +536,7 @@ public class QDocFixHandler {
         int nFilesRewritten = 0;
         int nFilesIgnored = 0;
 
-        for (Path filePath : findDocBook()) {
+        for (Path filePath : FileHelpers.findWithExtension(outputFolder, ".xml")) {
             nFiles += 1;
             String fileContents = Files.readString(filePath);
 
@@ -573,7 +575,7 @@ public class QDocFixHandler {
         int nFilesRewritten = 0;
         int nFilesIgnored = 0;
 
-        for (Path filePath : findDocBook()) {
+        for (Path filePath : FileHelpers.findWithExtension(outputFolder, ".xml")) {
             nFiles += 1;
             String fileContents = Files.readString(filePath);
 
@@ -612,7 +614,7 @@ public class QDocFixHandler {
         int nFilesRewritten = 0;
         int nFilesIgnored = 0;
 
-        for (Path filePath : findDocBook()) {
+        for (Path filePath : FileHelpers.findWithExtension(outputFolder, ".xml")) {
             nFiles += 1;
             String fileContents = Files.readString(filePath);
 
@@ -637,7 +639,7 @@ public class QDocFixHandler {
 
     public void removeBackupsIfNeeded() throws IOException {
         if (!keepBackups) {
-            for (Path filePath : findDocBook()) {
+            for (Path filePath : FileHelpers.findWithExtension(outputFolder, ".xml")) {
                 for (int i = 1; i <= 4; i++) {
                     String fileNameBackUp = filePath.getFileName() + ".bak" + i;
                     Path fileBackUp = filePath.getParent().resolve(fileNameBackUp);
@@ -656,21 +658,5 @@ public class QDocFixHandler {
                 Files.move(filePath, fileBackUp);
             }
         }
-    }
-
-    // TODO: this does not belong to a handler.
-    private List<Path> findWithExtension(@SuppressWarnings("SameParameterValue") String extension) {
-        String[] fileNames =
-                outputFolder.toFile().list((current, name) -> name.endsWith(extension));
-        if (fileNames == null || fileNames.length == 0) {
-            return Collections.emptyList();
-        } else {
-            return Arrays.stream(fileNames).map(outputFolder::resolve).collect(Collectors.toList());
-        }
-    }
-
-    // TODO: this does not belong to a handler.
-    public List<Path> findDocBook() {
-        return findWithExtension(".xml");
     }
 }

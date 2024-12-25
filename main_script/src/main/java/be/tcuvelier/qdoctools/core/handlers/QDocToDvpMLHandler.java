@@ -11,7 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
@@ -31,10 +30,10 @@ public class QDocToDvpMLHandler {
     private final GlobalConfiguration config;
     private final XsltHandler xsltHandler;
 
-    public QDocToDvpMLHandler(String input, String output, QtVersion qtVersion, GlobalConfiguration config)
+    public QDocToDvpMLHandler(Path inputFolder, Path outputFolder, QtVersion qtVersion, GlobalConfiguration config)
             throws IOException, SaxonApiException {
-        inputFolder = Paths.get(input);
-        outputFolder = Paths.get(output);
+        this.inputFolder = inputFolder;
+        this.outputFolder = outputFolder;
         this.qtVersion = qtVersion;
         this.config = config;
 
@@ -47,7 +46,7 @@ public class QDocToDvpMLHandler {
         Files.createDirectories(outputFolder);
     }
 
-    private List<Path> findWithExtension(Path folder,
+    public List<Path> findWithExtension(Path folder,
                                          @SuppressWarnings("SameParameterValue") String extension)
             throws IOException {
         BiPredicate<Path, BasicFileAttributes> matcher =
@@ -55,14 +54,6 @@ public class QDocToDvpMLHandler {
         try (Stream<Path> pathStream = Files.find(folder, 2, matcher)) {
             return pathStream.toList();
         }
-    }
-
-    public List<Path> findDocBook() throws IOException {
-        return findWithExtension(inputFolder, ".xml");
-    }
-
-    public List<Path> findDvpML() throws IOException {
-        return findWithExtension(outputFolder, ".xml");
     }
 
     public Path rewritePath(Path dbFile) {

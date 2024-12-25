@@ -8,8 +8,10 @@ import net.sf.saxon.s9api.SaxonApiException;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 public class QDocCore {
@@ -130,14 +132,16 @@ public class QDocCore {
             return;
         }
 
-        QDocToDvpMLHandler qdh = new QDocToDvpMLHandler(input, output, qtVersion, config);
+        Path inputFolder = Paths.get(input);
+        Path outputFolder = Paths.get(output);
+        QDocToDvpMLHandler qdh = new QDocToDvpMLHandler(inputFolder, outputFolder, qtVersion, config);
 
         // Run Saxon to get the DvpML output.
         if (convertToDvpML) {
             System.out.println("++> Starting DocBook-to-DvpML transformation.");
 
             // Gather the list of DocBook files.
-            List<Path> xml = qdh.findDocBook();
+            List<Path> xml = qdh.findWithExtension(inputFolder, ".xml");
             if (xml.isEmpty()) {
                 System.out.println("??> There are no DocBook files in " + input);
             }
@@ -170,7 +174,7 @@ public class QDocCore {
         // Handle validation.
         if (validateDvpML) {
             // Gather the list of DvpML files.
-            List<Path> dvpml = qdh.findDvpML();
+            List<Path> dvpml = qdh.findWithExtension(outputFolder, ".xml");
             if (dvpml.isEmpty()) {
                 System.out.println("??> There are no DvpML files in " + output);
             }

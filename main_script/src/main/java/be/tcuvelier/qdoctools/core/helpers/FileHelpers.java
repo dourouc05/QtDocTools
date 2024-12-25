@@ -7,6 +7,10 @@ import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class FileHelpers {
     public static boolean isDvpML(String path) {
@@ -167,5 +171,16 @@ public class FileHelpers {
         // Format not found. This is mostly a Java requirement...
         throw new IllegalArgumentException("Format not recognised when generating a new file name" +
                 ".");
+    }
+
+    public static List<Path> findWithExtension(Path folder, String extension) {
+        // For instance, extension = ".xml".
+        String[] fileNames =
+                folder.toFile().list((current, name) -> name.endsWith(extension));
+        if (fileNames == null || fileNames.length == 0) {
+            return Collections.emptyList();
+        } else {
+            return Arrays.stream(fileNames).map(folder::resolve).collect(Collectors.toList());
+        }
     }
 }
