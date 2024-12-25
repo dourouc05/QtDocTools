@@ -162,7 +162,7 @@ public class QDocMovingHandler {
                 Files.copy(file.toPath(), destination);
             } catch (FileAlreadyExistsException e) {
                 // TODO: add a CLI option to control overwriting.
-                System.out.println("!!> File already exists: " + destination + ". Tried to copy from: " + file + ". Retrying.");
+                System.out.println("!!> Image already exists: " + destination + ". Tried to copy from: " + file + ". Retrying.");
                 Files.copy(file.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
             }
         }
