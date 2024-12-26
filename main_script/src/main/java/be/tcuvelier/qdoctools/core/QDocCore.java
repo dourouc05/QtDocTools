@@ -9,6 +9,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -138,6 +139,31 @@ public class QDocCore {
 
         Path inputFolder = Paths.get(input);
         Path outputFolder = Paths.get(output);
+
+        if (!qtVersion.isPresent()) {
+            // Guess the version based on the input DocBook files.
+            Path index = inputFolder.resolve("index.xml");
+            if (!index.toFile().exists() || !index.toFile().isFile()) {
+                throw new IOException("Couldn't find index file " + index + ". " +
+                        "Is this a DocBook copy of the documentation?");
+            }
+
+            List<String> indexContents = Files.readAllLines(index);
+            String title = null;
+            for (int i = 0; i < indexContents.size(); ++i) {
+                if (indexContents.get(i).contains("<db:title>")) {
+                    title = indexContents.get(i);
+                    break;
+                }
+            }
+            if (title == null || title.isEmpty()) {
+                throw new IOException("Couldn't find the title in the index file " + index + ". " +
+                        "Is this a DocBook copy of the documentation?");
+            }
+
+            qtVersion = new QtVersion(title.replace("<db:title>", "").replace("</db:title>", "").replace("Qt", "").strip());
+        }
+
         QDocToDvpMLHandler qdh = new QDocToDvpMLHandler(inputFolder, outputFolder, qtVersion, config);
 
         // Run Saxon to get the DvpML output.
