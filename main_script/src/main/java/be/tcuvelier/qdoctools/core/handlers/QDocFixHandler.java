@@ -747,6 +747,377 @@ public class QDocFixHandler {
                 }
             }
 
+            // Raw HTML.
+            if (filePath.toString().contains("qt5-intro.xml")) {
+                Pattern regex = Pattern.compile("    <div class=\"table\">\n" +
+                        "     <table style=\"background:transparent; border: none\">\n" +
+                        "      <tr><td style=\"width:50%; border: none; vertical-align: top\">\n" +
+                        "    <db:para>Qt now comes with production-ready ports for Android, iOS, and WinRT. Extensive work has gone into these platform ports, which now extend Qt’s multi-platform promise to cover desktop, embedded, and mobile platforms.</db:para>\n" +
+                        "     <br>\n" +
+                        "    <db:para>With full support for Android, iOS, and WinRT, Qt is a great solution for targeting the mobile markets with a single codebase. It is fast and easy to bring existing desktop or embedded application to mobile, by simply recompiling it.</db:para>\n" +
+                        "     <br>\n" +
+                        "    <db:para>You can install several demo applications that showcase the power of Qt on these mobile platforms. Here is a small list of such applications:</db:para>\n" +
+                        "     <br>\n" +
+                        "    <db:para>Demo applications:</db:para>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("<db:informaltable style=\"background:transparent; border: none\">\n" +
+                            "<db:tr>\n" +
+                            "<db:td style=\"width:50%; border: none; vertical-align: top\">\n" +
+                            "<db:para>Qt now comes with production-ready ports for Android, iOS, and WinRT. Extensive work has gone into these platform ports, which now extend Qt’s multi-platform promise to cover desktop, embedded, and mobile platforms.</db:para>\n" +
+                            "<db:para>With full support for Android, iOS, and WinRT, Qt is a great solution for targeting the mobile markets with a single codebase. It is fast and easy to bring existing desktop or embedded application to mobile, by simply recompiling it.</db:para>\n" +
+                            "<db:para>You can install several demo applications that showcase the power of Qt on these mobile platforms. Here is a small list of such applications:</db:para>\n" +
+                            "<db:para>Demo applications:</db:para>");
+                }
+            }
+            if (filePath.toString().contains("qt5-intro.xml")) {
+                // The pattern ends with <db:figure> for disambiguation.
+                Pattern regex = Pattern.compile("      </db:td><td style=\"width:50%; vertical-align:top;border: none;\">\n" +
+                        "    <db:figure>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("</db:td>\n" +
+                            "<db:td style=\"width:50%; vertical-align:top;border: none;\">\n" +
+                            "<db:figure>");
+                }
+            }
+            if (filePath.toString().contains("qt5-intro.xml")) {
+                // The pattern ends with <db:figure> for disambiguation.
+                Pattern regex = Pattern.compile("    <div class=\"table\">\n" +
+                        "     <table style=\"background:transparent; border: none\">\n" +
+                        "      <tr><td style=\"width:50%; vertical-align:top;border: none;\">\n" +
+                        "    <db:figure>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("<db:informaltable style=\"background:transparent; border: none\">\n" +
+                            "<db:tr>\n" +
+                            "<db:td style=\"width:50%; vertical-align:top;border: none;\">\n" +
+                            "<db:figure>");
+                }
+            }
+            if (filePath.toString().contains("qt5-intro.xml")) {
+                Pattern regex = Pattern.compile("      </db:td><td style=\"width:50%; border: none; vertical-align: top\">\n" +
+                        "    <db:para>Qt 5 uses an OpenGL-based scene graph to accelerate the graphics of Qt Quick, making it possible to do visually appealing user interfaces with animations, impressive graphical effects and particle systems, even on the constrained hardware environments of mobile and embedded devices.</db:para>\n" +
+                        "     <br>\n" +
+                        "    <db:para>The benefits of this architectural change in the rendering engine are well demonstrated by the following projects:</db:para>\n" +
+                        "<db:itemizedlist>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("</db:td>\n" +
+                            "<db:td style=\"width:50%; border: none; vertical-align: top\">\n" +
+                            "<db:para>Qt 5 uses an OpenGL-based scene graph to accelerate the graphics of Qt Quick, making it possible to do visually appealing user interfaces with animations, impressive graphical effects and particle systems, even on the constrained hardware environments of mobile and embedded devices.</db:para>\n" +
+                            "<db:para>The benefits of this architectural change in the rendering engine are well demonstrated by the following projects:</db:para>\n" +
+                            "<db:itemizedlist>");
+                }
+            }
+            if (filePath.toString().contains("qt5-intro.xml")) {
+                Pattern regex = Pattern.compile("      </db:td><td style=\"width:50%; border: none; vertical-align: top\">\n" +
+                        "    <db:para>Qt 5 uses an OpenGL-based scene graph to accelerate the graphics of Qt Quick, making it possible to do visually appealing user interfaces with animations, impressive graphical effects and particle systems, even on the constrained hardware environments of mobile and embedded devices.</db:para>\n" +
+                        "     <br>\n" +
+                        "    <db:para>The benefits of this architectural change in the rendering engine are well demonstrated by the following projects:</db:para>\n" +
+                        "<db:itemizedlist>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("</db:td>\n" +
+                            "<db:td style=\"width:50%; border: none; vertical-align: top\">\n" +
+                            "<db:para>Qt 5 uses an OpenGL-based scene graph to accelerate the graphics of Qt Quick, making it possible to do visually appealing user interfaces with animations, impressive graphical effects and particle systems, even on the constrained hardware environments of mobile and embedded devices.</db:para>\n" +
+                            "<db:para>The benefits of this architectural change in the rendering engine are well demonstrated by the following projects:</db:para>\n" +
+                            "<db:itemizedlist>");
+                }
+            }
+            if (filePath.toString().contains("qt5-intro.xml")) {
+                Pattern regex = Pattern.compile("    <div class=\"table\">\n" +
+                        "     <table style=\"background:transparent; border: none;\">\n" +
+                        "      <tr><td style=\"width:50%; vertical-align:top;\">\n" +
+                        "    <db:para><db:link xlink:href=\"qtquick-index.xml\">Qt Quick</db:link> provides the necessary infrastructure to develop QML applications. The latest version (v2.0) of this technology also introduces a set of new C++ classes as a replacement for the QDeclarative* equivalents in Qt Quick 1. New features in Qt Quick include:</db:para>\n" +
+                        "<db:itemizedlist>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("<db:informaltable style=\"background:transparent; border: none;\">\n" +
+                            "<db:tr><db:td style=\"width:50%; vertical-align:top;\">\n" +
+                            "<db:para><db:link xlink:href=\"qtquick-index.xml\">Qt Quick</db:link> provides the necessary infrastructure to develop QML applications. The latest version (v2.0) of this technology also introduces a set of new C++ classes as a replacement for the QDeclarative* equivalents in Qt Quick 1. New features in Qt Quick include:</db:para>\n" +
+                            "<db:itemizedlist>");
+                }
+            }
+            if (filePath.toString().contains("qt5-intro.xml")) {
+                Pattern regex = Pattern.compile("</db:itemizedlist>\n" +
+                        "      </db:td><td style=\"width:50%; vertical-align:top;border: none;\">\n" +
+                        "    <db:figure>\n" +
+                        "<db:title>Qt Quick's <db:link xlink:href=\"qtquick-particles-qmlmodule.xml\">Particle System</db:link></db:title>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("</db:td>\n" +
+                            "<db:td style=\"width:50%; vertical-align:top;border: none;\">\n" +
+                            "<db:figure>\n" +
+                            "<db:title>Qt Quick's <db:link xlink:href=\"qtquick-particles-qmlmodule.xml\">Particle System</db:link></db:title>");
+                }
+            }
+            if (filePath.toString().contains("qt5-intro.xml")) {
+                Pattern regex = Pattern.compile("      </db:td></db:tr><tr><td style=\"width:50%; vertical-align:top;border: none;\">\n" +
+                        "    <db:para>The <db:link xlink:href=\"qtgraphicaleffects-index.xml\">Qt Graphical Effects</db:link> module provides a number of ready-made effects for use in Qt Quick applications, including soft drop shadow, blur, glow and colorize.</db:para>\n" +
+                        "      </td><td style=\"width:50%; vertical-align:top;border: none;\">\n" +
+                        "    <db:figure>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("</db:td>\n" +
+                            "</db:tr>\n" +
+                            "<db:tr>\n" +
+                            "<db:td style=\"width:50%; vertical-align:top;border: none;\">\n" +
+                            "<db:para>The <db:link xlink:href=\"qtgraphicaleffects-index.xml\">Qt Graphical Effects</db:link> module provides a number of ready-made effects for use in Qt Quick applications, including soft drop shadow, blur, glow and colorize.</db:para>\n" +
+                            "</db:td>\n" +
+                            "<db:td style=\"width:50%; vertical-align:top;border: none;\">\n" +
+                            "<db:figure>");
+                }
+            }
+            if (filePath.toString().contains("qt5-intro.xml")) {
+                Pattern regex = Pattern.compile("      </db:td></db:tr>\n" +
+                        "     </db:informaltable>\n" +
+                        "    </db:section>\n" +
+                        "<db:section xml:id=\"designing-ui-made-simpler\">\n" +
+                        "<db:title>Designing UI Made Simpler</db:title>\n" +
+                        "    <div class=\"table\">\n" +
+                        "     <table style=\"background:transparent; border: none\">\n" +
+                        "      <tr><td style=\"width:50%; border: none; vertical-align: top\">\n" +
+                        "    <db:figure>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("</db:td>\n" +
+                            "</db:tr>\n" +
+                            "</db:informaltable>\n" +
+                            "</db:section>\n" +
+                            "<db:section xml:id=\"designing-ui-made-simpler\">\n" +
+                            "<db:title>Designing UI Made Simpler</db:title>\n" +
+                            "<db:informaltable style=\"background:transparent; border: none\">\n" +
+                            "<db:tr><db:td style=\"width:50%; border: none; vertical-align: top\">\n" +
+                            "<db:figure>");
+                }
+            }
+            if (filePath.toString().contains("qt5-intro.xml")) {
+                Pattern regex = Pattern.compile("      </db:td><td style=\"width:50%; border: none; vertical-align: top\">\n" +
+                        "    <db:para>UI designing can be time consuming if there are not enough tools to help. Qt Quick reduces the effort considerably compared to the traditional native (C or C++) approach, especially if the <db:link xlink:href=\"qtquickcontrols-index.xml\">Qt Quick Controls</db:link> or <db:link xlink:href=\"qtquickcontrols-index.xml\">Qt Quick Controls 2</db:link> and <db:link xlink:href=\"qtquicklayouts-index.xml\">Qt Quick Layouts</db:link> modules are used. These modules provide ready-to-use UI controls and layouts to enable faster application development with less code. For a comparison of the two sets of controls, see <db:link xlink:href=\"\">Differences between Qt Quick Controls</db:link>.</db:para>\n" +
+                        "      <br>\n" +
+                        "    <db:para>Qt Quick Controls and Qt Quick Layouts provide a vast set of UI controls ranging from the most basic text field and button to the more complex stack view and tumbler. The controls are also made available in <db:link xlink:href=\"\">Qt Quick Designer</db:link>.</db:para>\n" +
+                        "      </td></db:tr>\n" +
+                        "     </db:informaltable>\n" +
+                        "    </db:section>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("</db:td>\n" +
+                            "<db:td style=\"width:50%; border: none; vertical-align: top\">\n" +
+                            "<db:para>UI designing can be time consuming if there are not enough tools to help. Qt Quick reduces the effort considerably compared to the traditional native (C or C++) approach, especially if the <db:link xlink:href=\"qtquickcontrols-index.xml\">Qt Quick Controls</db:link> or <db:link xlink:href=\"qtquickcontrols-index.xml\">Qt Quick Controls 2</db:link> and <db:link xlink:href=\"qtquicklayouts-index.xml\">Qt Quick Layouts</db:link> modules are used. These modules provide ready-to-use UI controls and layouts to enable faster application development with less code. For a comparison of the two sets of controls, see <db:link xlink:href=\"\">Differences between Qt Quick Controls</db:link>.</db:para>\n" +
+                            "<db:para>Qt Quick Controls and Qt Quick Layouts provide a vast set of UI controls ranging from the most basic text field and button to the more complex stack view and tumbler. The controls are also made available in <db:link xlink:href=\"\">Qt Quick Designer</db:link>.</db:para>\n" +
+                            "</db:td>\n" +
+                            "</db:tr>\n" +
+                            "</db:informaltable>\n" +
+                            "</db:section>");
+                }
+            }
+            if (filePath.toString().contains("qt5-intro.xml")) {
+                // title at the end of the pattern for disambiguation.
+                Pattern regex = Pattern.compile("    <div class=\"table\">\n" +
+                        "     <table style=\"background:transparent; border: none\">\n" +
+                        "      <tr><td style=\"width:50%; vertical-align:top;border: none;\">\n" +
+                        "    <db:figure>\n" +
+                        "<db:title>Accelerating SVG image</db:title>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("<db:informaltable style=\"background:transparent; border: none\">\n" +
+                            "<db:tr>\n" +
+                            "<db:td style=\"width:50%; vertical-align:top;border: none;\">\n" +
+                            "<db:figure>\n" +
+                            "<db:title>Accelerating SVG image</db:title>");
+                }
+            }
+            if (filePath.toString().contains("qt5-intro.xml")) {
+                // title at the end of the pattern for disambiguation.
+                Pattern regex = Pattern.compile("      </db:td><td style=\"width:50%; vertical-align:top;border: none;\">\n" +
+                        "    <db:figure>\n" +
+                        "<db:title>Location-based weather information</db:title>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("</db:td>\n" +
+                            "<db:td style=\"width:50%; vertical-align:top;border: none;\">\n" +
+                            "<db:figure>");
+                }
+            }
+            if (filePath.toString().contains("qt5-intro.xml")) {
+                // title at the end of the pattern for disambiguation.
+                Pattern regex = Pattern.compile("    <div class=\"table\">\n" +
+                        "     <table style=\"background:transparent; border: none\">\n" +
+                        "      <tr><td colspan=2 style=\"width:50%; border: none; vertical-align: top\">\n" +
+                        "    <db:figure>\n" +
+                        "<db:title>Qt Quick nano browser</db:title>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("<db:informaltable style=\"background:transparent; border: none\">\n" +
+                            "<db:tr>\n" +
+                            "<db:td colspan=\"2\" style=\"width:50%; border: none; vertical-align: top\">\n" +
+                            "<db:figure>\n" +
+                            "<db:title>Qt Quick nano browser</db:title>");
+                }
+            }
+            if (filePath.toString().contains("qt5-intro.xml")) {
+                // link at the end of the pattern for disambiguation.
+                Pattern regex = Pattern.compile("      </td><td style=\"width:50%; border: none; vertical-align: top\">\n" +
+                        "    <db:para><db:link xlink:href=\"qtwebengine-index.xml\">Qt WebEngine</db:link>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("</db:td>\n" +
+                            "<db:td style=\"width:50%; border: none; vertical-align: top\">\n" +
+                            "<db:para><db:link xlink:href=\"qtwebengine-index.xml\">Qt WebEngine</db:link>");
+                }
+            }
+            if (filePath.toString().contains("qt5-intro.xml")) {
+                Pattern regex = Pattern.compile("     <br>\n" +
+                        "    <db:para>This Chromium-based Web Engine support in Qt is complemented with <db:link xlink:href=\"qtwebchannel-index.xml\">Qt WebChannel</db:link>, which bridges the gap between QML/C++ and HTML/JavaScript. It enables sharing QObjects from QML/C++ with HTML/JavaScript-based clients.</db:para>\n" +
+                        "      </db:td></db:tr>\n" +
+                        "     </db:informaltable>\n" +
+                        "    </db:section>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("<db:para>This Chromium-based Web Engine support in Qt is complemented with <db:link xlink:href=\"qtwebchannel-index.xml\">Qt WebChannel</db:link>, which bridges the gap between QML/C++ and HTML/JavaScript. It enables sharing QObjects from QML/C++ with HTML/JavaScript-based clients.</db:para>\n" +
+                            "</db:td>\n" +
+                            "</db:tr>\n" +
+                            "</db:informaltable>\n" +
+                            "</db:section>");
+                }
+            }
+            if (filePath.toString().contains("qt5-intro.xml")) {
+                // link at the end of the pattern for disambiguation.
+                Pattern regex = Pattern.compile("<db:title>Multimedia</db:title>\n" +
+                        "    <div class=\"table\">\n" +
+                        "     <table style=\"background:transparent; border: none\">\n" +
+                        "      <tr><td colspan=2 style=\"width:50%; border: none; vertical-align: top\">\n" +
+                        "    <db:para><db:link xlink:href=\"qtmultimedia-index.xml\">Qt Multimedia</db:link>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("<db:title>Multimedia</db:title>\n" +
+                            "<db:informaltable style=\"background:transparent; border: none\">\n" +
+                            "<db:tr><db:td colspan=\"2\" style=\"width:50%; border: none; vertical-align: top\">\n" +
+                            "<db:para><db:link xlink:href=\"qtmultimedia-index.xml\">Qt Multimedia</db:link>");
+                }
+            }
+            if (filePath.toString().contains("qt5-intro.xml")) {
+                // title at the end of the pattern for disambiguation.
+                Pattern regex = Pattern.compile("      </db:td><td style=\"width:50%; border: none;\">\n" +
+                        "    <db:figure>\n" +
+                        "<db:title>Video embedded into a Qt Quick application with a displacement effect</db:title>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("</db:td>\n" +
+                            "<db:td style=\"width:50%; border: none;\">\n" +
+                            "<db:figure>\n" +
+                            "<db:title>Video embedded into a Qt Quick application with a displacement effect</db:title>");
+                }
+            }
+            if (filePath.toString().contains("qt5-intro.xml")) {
+                // title at the end of the pattern for disambiguation.
+                Pattern regex = Pattern.compile("    <div class=\"table\">\n" +
+                        "     <table style=\"background:transparent; border: none\">\n" +
+                        "      <tr><td colspan=2 style=\"width:50%; border: none; vertical-align: top\">\n" +
+                        "    <db:figure>\n" +
+                        "<db:title>Screen capture of a widget application.</db:title>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("<db:informaltable style=\"background:transparent; border: none\">\n" +
+                            "<db:tr>\n" +
+                            "<db:td colspan=\"2\" style=\"width:50%; border: none; vertical-align: top\">\n" +
+                            "<db:figure>\n" +
+                            "<db:title>Screen capture of a widget application.</db:title>");
+                }
+            }
+            if (filePath.toString().contains("qt5-intro.xml")) {
+                Pattern regex = Pattern.compile("      </td></db:tr>\n" +
+                        "     </db:informaltable>\n" +
+                        "    <db:para>Designing the UI for widget-based applications can be quick with <db:link xlink:href=\"qtdesigner-manual.xml\">Qt Designer</db:link>.</db:para>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("</db:td>\n" +
+                            "</db:tr>\n" +
+                            "</db:informaltable>\n" +
+                            "<db:para>Designing the UI for widget-based applications can be quick with <db:link xlink:href=\"qtdesigner-manual.xml\">Qt Designer</db:link>.</db:para>");
+                }
+            }
+            if (filePath.toString().contains("qt5-intro.xml")) {
+                Pattern regex = Pattern.compile("    <div class=\"table\">\n" +
+                        "     <table style=\"background:transparent; border: none\">\n" +
+                        "      <tr><td style=\"width:50%; vertical-align:top;border: none;\">\n" +
+                        "    <db:para>In today's world, location and maps information is more widely used, be it to look up nearby restaurants or plan commute to the office. With Qt, it is now possible to cater to these use cases by consuming map data provided by the third-party vendors. The <db:link xlink:href=\"qtlocation-module.xml\">Qt Location</db:link> module provides the APIs and the necessary backend to fetch map data from some of the popular third-party mapping solutions. Here is a snapshot of the demo application running on Android, presenting OpenStreetMap data from <db:link xlink:href=\"http://www.mapquest.com/\">www.mapquest.com</db:link>.</db:para>\n" +
+                        "      </td><td style=\"width:50%; border: none; vertical-align: top\">\n" +
+                        "    <db:figure>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("<db:informaltable style=\"background:transparent; border: none\">\n" +
+                            "<db:tr>\n" +
+                            "<db:td style=\"width:50%; vertical-align:top;border: none;\">\n" +
+                            "<db:para>In today's world, location and maps information is more widely used, be it to look up nearby restaurants or plan commute to the office. With Qt, it is now possible to cater to these use cases by consuming map data provided by the third-party vendors. The <db:link xlink:href=\"qtlocation-module.xml\">Qt Location</db:link> module provides the APIs and the necessary backend to fetch map data from some of the popular third-party mapping solutions. Here is a snapshot of the demo application running on Android, presenting OpenStreetMap data from <db:link xlink:href=\"http://www.mapquest.com/\">www.mapquest.com</db:link>.</db:para>\n" +
+                            "</db:td>\n" +
+                            "<db:td style=\"width:50%; border: none; vertical-align: top\">\n" +
+                            "<db:figure>");
+                }
+            }
+            if (filePath.toString().contains("qt5-intro.xml") && hasMatched) {
+                // Fix some remaining issues.
+                Pattern regex;
+                Matcher matches;
+
+                regex = Pattern.compile("<tr");
+                matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    fileContents = matches.replaceAll("<db:tr");
+                }
+
+                regex = Pattern.compile("</tr");
+                matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    fileContents = matches.replaceAll("</db:tr");
+                }
+
+                regex = Pattern.compile("<td");
+                matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    fileContents = matches.replaceAll("<db:td");
+                }
+
+                regex = Pattern.compile("</td");
+                matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    fileContents = matches.replaceAll("</db:td");
+                }
+
+                regex = Pattern.compile("<table");
+                matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    fileContents = matches.replaceAll("<db:informaltable");
+                }
+
+                regex = Pattern.compile("</table");
+                matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    fileContents = matches.replaceAll("</db:informaltable");
+                }
+            }
+
             if (!hasMatched) {
                 // This file has not changed: no need to have a back-up file or to spend time
                 // writing on disk.
