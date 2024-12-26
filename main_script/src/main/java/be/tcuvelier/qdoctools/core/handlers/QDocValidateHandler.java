@@ -29,6 +29,10 @@ public class QDocValidateHandler {
         int nValidFiles = 0;
         for (Path filePath : FileHelpers.findWithExtension(outputFolder, ".xml")) {
             nFiles += 1;
+            if (nFiles % 1000 == 0) {
+                System.out.println("++> " + nFiles + " validated");
+            }
+
             if (Files.size(filePath) == 0) {
                 // Validation can only fail for empty files.
                 nEmptyFiles += 1;
