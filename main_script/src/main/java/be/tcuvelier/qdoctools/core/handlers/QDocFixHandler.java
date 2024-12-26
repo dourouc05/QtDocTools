@@ -692,6 +692,61 @@ public class QDocFixHandler {
                 }
             }
 
+            // I5jasWrsxT0.jpg" title="Click to play in a browser" /></a>
+            // </iframe></div>
+            // ->
+            // (Shouldn't be present.)
+            if (filePath.toString().contains("gettingstarted.xml")) {
+                Pattern regex = Pattern.compile("I5jasWrsxT0.jpg\" title=\"Click to play in a browser\" /></a>\n" +
+                        "</iframe></div>\n");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("");
+                }
+            }
+            if (filePath.toString().contains("qtquick-modelviewsdata-cppmodels.xml")) {
+                Pattern regex = Pattern.compile("9BcAYDlpuT8.jpg\" title=\"Click to play in a browser\" /></a>\n" +
+                        "</iframe></div>\n");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("");
+                }
+            }
+
+            // I5jasWrsxT0.jpg" title="Click to play in a browser" /></a>
+            // </iframe></div>
+            // ->
+            // Fix the content to match the HTML version, not to be correct.
+            // Other nearby problems: paragraphs within list item when they should be outside; definition list as a list
+            // of intertwined words and definitions.
+            if (filePath.toString().contains("highdpi.xml")) {
+                Pattern regex = Pattern.compile("</db:listitem>\n" +
+                        "<db:section xml:id=\"glossary\">\n" +
+                        "<db:title>Glossary</db:title>\n" +
+                        "</db:section>\n" +
+                        "<db:listitem>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("</db:listitem>\n" +
+                            "</db:itemizedlist>\n" +
+                            "<db:section xml:id=\"glossary\">\n" +
+                            "<db:title>Glossary</db:title>\n" +
+                            "<db:itemizedlist>\n" +
+                            "<db:listitem>");
+                }
+            }
+            if (filePath.toString().contains("highdpi.xml")) {
+                Pattern regex = Pattern.compile("</db:itemizedlist></db:section></db:article>");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll("</db:itemizedlist></db:section></db:section></db:article>");
+                }
+            }
+
             if (!hasMatched) {
                 // This file has not changed: no need to have a back-up file or to spend time
                 // writing on disk.
