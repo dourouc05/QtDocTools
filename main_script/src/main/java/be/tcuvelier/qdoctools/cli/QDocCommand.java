@@ -139,11 +139,11 @@ public class QDocCommand implements Callable<Void> {
 
     @Command(name = "publish")
     public void publish() throws SaxonApiException, IOException {
-        if (output.isEmpty()) {
+        if (output == null || output.isEmpty()) {
             throw new RuntimeException("Argument --output-folder missing when generating Qt docs; " +
                     "where is located the DocBook version of the Qt docs (for instance, a Git repository)?");
         }
-        if (dvpmlOutput.isEmpty()) {
+        if (dvpmlOutput == null || dvpmlOutput.isEmpty()) {
             throw new RuntimeException("Argument --dvpml-output missing when generating DvpML files for Qt docs; " +
                     "in which folder should the DvpML output be located?");
         }
