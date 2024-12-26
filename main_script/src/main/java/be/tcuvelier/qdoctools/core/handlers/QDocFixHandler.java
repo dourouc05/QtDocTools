@@ -1120,35 +1120,35 @@ public class QDocFixHandler {
 
             // https://codereview.qt-project.org/c/qt/qttools/+/613815
             {
-                Pattern regex = Pattern.compile(">Since:<");
+                Pattern regex = Pattern.compile("<db:term>Since:</db:term>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
                     hasMatched = true;
-                    fileContents = matches.replaceAll(">Since<");
+                    fileContents = matches.replaceAll("<db:term>Since</db:term>");
                 }
             }
             {
-                Pattern regex = Pattern.compile(">Inherits:<");
+                Pattern regex = Pattern.compile("<db:term>Inherits:</db:term>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
                     hasMatched = true;
-                    fileContents = matches.replaceAll(">Inherits<");
+                    fileContents = matches.replaceAll("<db:term>Inherits</db:term>");
                 }
             }
             {
-                Pattern regex = Pattern.compile(">In C\\+\\+:<");
+                Pattern regex = Pattern.compile("<db:term>In C>\\+\\+:</db:term");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
                     hasMatched = true;
-                    fileContents = matches.replaceAll(">In C++<");
+                    fileContents = matches.replaceAll("<db:term>In C>++</db:term");
                 }
             }
             {
-                Pattern regex = Pattern.compile(">Status:<");
+                Pattern regex = Pattern.compile("<db:term>Status:</db:term>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
                     hasMatched = true;
-                    fileContents = matches.replaceAll(">Status<");
+                    fileContents = matches.replaceAll("<db:term>Status</db:term>");
                 }
             }
 
