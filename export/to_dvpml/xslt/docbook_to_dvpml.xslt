@@ -694,12 +694,15 @@
       </xsl:if>
       
       <xsl:if test="$doc-qt">
+        <!-- Two paths where the include might reside: -->
+        <!-- * For the index: in the current folder. (Only one page.) -->
+        <!-- * Otherwise: in the parent folder. (All pages but one.) -->
         <xsl:choose>
           <xsl:when test="/child::node()/@xml:lang = 'fr'">
-            <includehaut>include($_SERVER["DOCUMENT_ROOT"]."/template/entete.php");include("../entete.fr.php");</includehaut>
+            <includehaut>include($_SERVER["DOCUMENT_ROOT"]."/template/entete.php");if(file_exists("../entete.fr.php")){include("../entete.fr.php");}else{include("entete.fr.php");}</includehaut>
           </xsl:when>
           <xsl:otherwise>
-            <includehaut>include($_SERVER["DOCUMENT_ROOT"]."/template/entete.php");include("../entete.en.php");</includehaut>
+            <includehaut>include($_SERVER["DOCUMENT_ROOT"]."/template/entete.php");if(file_exists("../entete.en.php")){include("../entete.en.php");}else{include("entete.en.php");}</includehaut>
           </xsl:otherwise>
         </xsl:choose>
       </xsl:if>
