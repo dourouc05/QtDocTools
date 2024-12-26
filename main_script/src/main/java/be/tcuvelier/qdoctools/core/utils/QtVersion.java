@@ -1,12 +1,14 @@
 package be.tcuvelier.qdoctools.core.utils;
 
 public class QtVersion {
+    private final boolean isPresent;
     private final int major;
     private final int minor;
     private final int patch;
 
     @SuppressWarnings("WeakerAccess")
     public QtVersion(int major, int minor, int patch) {
+        this.isPresent = true;
         this.major = major;
         this.minor = minor;
         this.patch = patch;
@@ -18,6 +20,15 @@ public class QtVersion {
     }
 
     public QtVersion(String str) {
+        if (str == null || str.isEmpty()) {
+            this.isPresent = false;
+            this.major = -1;
+            this.minor = -1;
+            this.patch = -1;
+            return;
+        }
+
+        this.isPresent = true;
         String[] parts = str.split("\\.");
         if (parts.length < 2) {
             throw new RuntimeException("Qt version has too few parts, must have at least two, " +
@@ -34,6 +45,17 @@ public class QtVersion {
             throw new RuntimeException("Qt version has too many parts, must have at most three, " +
                     "has only " + parts.length + " in " + str);
         }
+    }
+
+    public QtVersion() {
+        this.isPresent = false;
+        this.major = -1;
+        this.minor = -1;
+        this.patch = -1;
+    }
+
+    public boolean isPresent() {
+        return isPresent;
     }
 
     @SuppressWarnings("WeakerAccess")

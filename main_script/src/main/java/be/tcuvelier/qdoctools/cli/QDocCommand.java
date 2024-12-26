@@ -23,7 +23,7 @@ public class QDocCommand implements Callable<Void> {
     @Option(names = "--qt-version",
             description = "Version of Qt that is being processed",
             scope = CommandLine.ScopeType.INHERIT)
-    private QtVersion qtVersion = new QtVersion("1.0");
+    private QtVersion qtVersion = new QtVersion();
     @Option(names = "--qdoc-debug",
             description = "Run QDoc in debug mode",
             scope = CommandLine.ScopeType.INHERIT)
