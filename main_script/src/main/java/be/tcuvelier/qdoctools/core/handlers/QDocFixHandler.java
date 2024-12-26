@@ -1118,6 +1118,40 @@ public class QDocFixHandler {
                 }
             }
 
+            // https://codereview.qt-project.org/c/qt/qttools/+/613815
+            {
+                Pattern regex = Pattern.compile(">Since:<");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll(">Since<");
+                }
+            }
+            {
+                Pattern regex = Pattern.compile(">Inherits:<");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll(">Inherits<");
+                }
+            }
+            {
+                Pattern regex = Pattern.compile(">In C\\+\\+:<");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll(">In C++<");
+                }
+            }
+            {
+                Pattern regex = Pattern.compile(">Status:<");
+                Matcher matches = regex.matcher(fileContents);
+                if (matches.find()) {
+                    hasMatched = true;
+                    fileContents = matches.replaceAll(">Status<");
+                }
+            }
+
             if (!hasMatched) {
                 // This file has not changed: no need to have a back-up file or to spend time
                 // writing on disk.
