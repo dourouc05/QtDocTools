@@ -44,6 +44,10 @@ public class QDocFixHandler {
 
             nFiles += 1;
 
+            if (nFiles % 1000 == 0) {
+                System.out.println("++> " + nFiles + " fixed");
+            }
+
             if (fileContents.isEmpty()) {
                 nFilesIgnored += 1;
                 continue;
@@ -1181,6 +1185,11 @@ public class QDocFixHandler {
 
         for (Path filePath : FileHelpers.findWithExtension(outputFolder, ".xml")) {
             nFiles += 1;
+
+            if (nFiles % 1000 == 0) {
+                System.out.println("++> " + nFiles + " fixed");
+            }
+
             String fileContents = Files.readString(filePath);
 
             if (fileContents.isEmpty()) {
@@ -1220,6 +1229,11 @@ public class QDocFixHandler {
 
         for (Path filePath : FileHelpers.findWithExtension(outputFolder, ".xml")) {
             nFiles += 1;
+
+            if (nFiles % 1000 == 0) {
+                System.out.println("++> " + nFiles + " fixed");
+            }
+
             String fileContents = Files.readString(filePath);
 
             if (fileContents.isEmpty()) {
@@ -1259,6 +1273,11 @@ public class QDocFixHandler {
 
         for (Path filePath : FileHelpers.findWithExtension(outputFolder, ".xml")) {
             nFiles += 1;
+
+            if (nFiles % 1000 == 0) {
+                System.out.println("++> " + nFiles + " fixed");
+            }
+
             String fileContents = Files.readString(filePath);
 
             if (fileContents.isEmpty()) {
