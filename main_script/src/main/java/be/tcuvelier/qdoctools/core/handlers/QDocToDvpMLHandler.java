@@ -64,12 +64,12 @@ public class QDocToDvpMLHandler {
         return destinationFolder.resolve(baseFileName + "_dvp.xml");
     }
 
-    public void transformDocBookToDvpML(Path dbFile, Path dvpmlFile) throws SaxonApiException {
+    public void transformDocBookToDvpML(Path dbFile, Path dvpmlFile, boolean printLogs) throws SaxonApiException {
         xsltHandler.transform(dbFile.toFile(), dvpmlFile.toFile(), Map.of(
                 "doc-qt", true,
                 "qt-version", qtVersion.QT_VER(),
                 "document-file-name", FileHelpers.removeExtension(dbFile)
-        ));
+        ), printLogs);
     }
 
     // Links should no longer point to .xml files. This is expected for DocBook, this is wrong for DvpML (and it's too

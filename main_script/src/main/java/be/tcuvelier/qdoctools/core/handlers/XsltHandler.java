@@ -3,7 +3,10 @@ package be.tcuvelier.qdoctools.core.handlers;
 import net.sf.saxon.lib.StandardErrorReporter;
 import net.sf.saxon.lib.StandardLogger;
 import net.sf.saxon.s9api.*;
+import org.apache.commons.io.output.NullPrintStream;
 
+import javax.xml.transform.ErrorListener;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -31,7 +34,21 @@ public class XsltHandler {
         return ser;
     }
 
-    public void transform(File input, File output, Map<String, Object> parameters) throws SaxonApiException {
+    private StandardErrorReporter createNullLogger() {
+        StandardErrorReporter ser = new StandardErrorReporter();
+        ser.setLogger(new StandardLogger(NullPrintStream.INSTANCE));
+        return ser;
+    }
+
+    private ErrorListener createNullListener() {
+        return new ErrorListener() {
+            public void warning(TransformerException exception) {}
+            public void error(TransformerException exception) {}
+            public void fatalError(TransformerException exception) {}
+        };
+    }
+
+    public void transform(File input, File output, Map<String, Object> parameters, boolean printLogs) throws SaxonApiException {
         // Using an Object in the parameters allow passing more information to Saxon without many risks: if it was
         // forced to be a String, no Integer could be passed to Saxon; parsing the String to find out if it is an
         // Integer could create false positives (e.g.: the stylesheets expects a String, but a special case is an
@@ -39,10 +56,20 @@ public class XsltHandler {
 
         // Prepare the transformation.
         ByteArrayOutputStream os = new ByteArrayOutputStream();
-        saxonCompiler.setErrorReporter(createLogger(os));
+        if (printLogs) {
+            saxonCompiler.setErrorReporter(createLogger(os));
+        } else {
+            saxonCompiler.setErrorReporter(createNullLogger());
+        }
 
         XsltTransformer transformer = saxonExecutable.load();
         transformer.setInitialContextNode(saxonProcessor.newDocumentBuilder().build(new StreamSource(input)));
+
+        if (!printLogs) {
+            transformer.setErrorReporter(createNullLogger());
+            transformer.setErrorListener(createNullListener());
+            transformer.setMessageHandler((message -> {}));
+        }
 
         Serializer out = saxonProcessor.newSerializer();
         out.setOutputFile(output);
@@ -56,7 +83,7 @@ public class XsltHandler {
             } else if (entry.getValue() instanceof Boolean) {
                 transformer.setParameter(new QName(entry.getKey()), new XdmAtomicValue((Boolean) entry.getValue()));
             } else {
-                throw new IllegalArgumentException("Only objects of type Integer, Boolean, or String are allowed " +
+                throw new IllegalArgumentException("Only objects of type Integer, Boolean, or String are supported " +
                         "as parameters");
             }
         }
@@ -65,9 +92,11 @@ public class XsltHandler {
         transformer.transform();
 
         // If there were errors, print them out.
-        String errors = os.toString(StandardCharsets.UTF_8);
-        if (!errors.isEmpty()) {
-            System.err.println(errors);
+        if (printLogs) {
+            String errors = os.toString(StandardCharsets.UTF_8);
+            if (!errors.isEmpty()) {
+                System.err.println(errors);
+            }
         }
     }
 }

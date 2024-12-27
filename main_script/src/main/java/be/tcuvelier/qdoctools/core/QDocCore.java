@@ -19,7 +19,7 @@ public class QDocCore {
     public static void call(String source, String installed, String output, String dvpmlOutput, String htmlVersion,
                             QtVersion qtVersion, boolean qdocDebug, boolean reduceIncludeListSize,
                             boolean validate, boolean convertToDocBook,
-                            boolean convertToDvpML, boolean checkConsistency,
+                            boolean convertToDvpML, boolean checkConsistency, boolean printXsltLogs,
                             GlobalConfiguration config)
             throws SaxonApiException, IOException, InterruptedException,
             ParserConfigurationException, SAXException {
@@ -73,7 +73,7 @@ public class QDocCore {
             QDocCore.checkConsistency(output, htmlVersion);
         }
 
-        QDocCore.publish(output, dvpmlOutput, qtVersion, validate, convertToDvpML, config);
+        QDocCore.publish(output, dvpmlOutput, qtVersion, validate, convertToDvpML, printXsltLogs, config);
     }
 
     public static void checkConsistency(String output, String htmlVersion) throws IOException, SaxonApiException {
@@ -128,7 +128,7 @@ public class QDocCore {
     }
 
     public static void publish(String input, String output, QtVersion qtVersion, boolean validateDvpML,
-                            boolean convertToDvpML, GlobalConfiguration config) throws SaxonApiException, IOException {
+                            boolean convertToDvpML, boolean printXsltLogs, GlobalConfiguration config) throws SaxonApiException, IOException {
         assert !input.isEmpty();
         assert !output.isEmpty();
 
@@ -186,7 +186,7 @@ public class QDocCore {
 
                 // Actually convert the DocBook into DvpML. This may print errors directly to stderr.
                 Path dvpmlFile = qdh.rewritePath(dbFile);
-                qdh.transformDocBookToDvpML(dbFile, dvpmlFile);
+                qdh.transformDocBookToDvpML(dbFile, dvpmlFile, printXsltLogs);
 
                 // Do a few manual transformations.
                 qdh.fixURLs(dvpmlFile);

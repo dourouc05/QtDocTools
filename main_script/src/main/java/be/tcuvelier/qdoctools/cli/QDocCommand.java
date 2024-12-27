@@ -28,6 +28,10 @@ public class QDocCommand implements Callable<Void> {
             description = "Run QDoc in debug mode",
             scope = CommandLine.ScopeType.INHERIT)
     private boolean qdocDebug = false;
+    @Option(names = "--xslt-debug",
+            description = "Run XSLT conversions in debug mode (show logs)",
+            scope = CommandLine.ScopeType.INHERIT)
+    private boolean xsltDebug = false;
     @Option(names = "--reduce-include-list-size",
             description = "Reduce the size of the include list. This is useful when the list of " +
                     "arguments to QDoc starts getting out of control, as some platforms will " +
@@ -105,7 +109,7 @@ public class QDocCommand implements Callable<Void> {
         GlobalConfiguration config = new GlobalConfiguration(configurationFile);
         QDocCore.call(source, installed, output, dvpmlOutput, htmlFolder, qtVersion, qdocDebug,
                 reduceIncludeListSize, validate, convertToDocBook, checkConsistency,
-                convertToDvpML, config);
+                convertToDvpML, xsltDebug, config);
         return null;
     }
 
@@ -149,6 +153,6 @@ public class QDocCommand implements Callable<Void> {
         }
 
         GlobalConfiguration config = new GlobalConfiguration(configurationFile);
-        QDocCore.publish(output, dvpmlOutput, qtVersion, validate, convertToDvpML, config);
+        QDocCore.publish(output, dvpmlOutput, qtVersion, validate, convertToDvpML, xsltDebug, config);
     }
 }

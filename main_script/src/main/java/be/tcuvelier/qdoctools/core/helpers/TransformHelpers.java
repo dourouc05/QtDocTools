@@ -40,7 +40,7 @@ public class TransformHelpers {
             }
         }
 
-        new XsltHandler(new QdtPaths(config).getXsltFromDvpMLPath()).transform(new File(input), new File(output), Map.of());
+        new XsltHandler(new QdtPaths(config).getXsltFromDvpMLPath()).transform(new File(input), new File(output), Map.of(), true);
     }
 
     private static Map<String, Object> getTemplateParameters(ArticleConfiguration conf)
@@ -116,7 +116,7 @@ public class TransformHelpers {
         try {
             ArticleConfiguration conf = new ArticleConfiguration(input);
             new XsltHandler(new QdtPaths(config).getXsltToDvpMLPath()).transform(new File(input), new File(output),
-                    getTemplateParameters(conf));
+                    getTemplateParameters(conf), true);
         } catch (FileNotFoundException e) {
             System.err.println("There is no configuration file for the article " + input);
             System.err.println("Here is an example of such a file: ");
