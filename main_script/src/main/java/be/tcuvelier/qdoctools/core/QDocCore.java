@@ -150,13 +150,13 @@ public class QDocCore {
 
             List<String> indexContents = Files.readAllLines(index);
             String title = null;
-            for (int i = 0; i < indexContents.size(); ++i) {
-                if (indexContents.get(i).contains("<db:title>")) {
-                    title = indexContents.get(i);
+            for (String indexContent : indexContents) {
+                if (indexContent.contains("<db:title>")) {
+                    title = indexContent;
                     break;
                 }
             }
-            if (title == null || title.isEmpty()) {
+            if (title == null) {
                 throw new IOException("Couldn't find the title in the index file " + index + ". " +
                         "Is this a DocBook copy of the documentation?");
             }
