@@ -60,4 +60,20 @@ public class GlobalConfiguration extends AbstractConfiguration {
     public String getQtDocToolsRoot() throws ConfigurationMissingField {
         return getStringAttribute("qdoctools_root");
     }
+
+    public String getQtDocFtpServer() throws ConfigurationMissingField {
+        return getStringAttribute("qtdoc_ftp_server");
+    }
+
+    public int getQtDocFtpPort() throws ConfigurationMissingField {
+        return getOptionalIntegerAttribute("qtdoc_ftp_port").orElse(21);
+    }
+
+    public String getQtDocFtpUsername() throws ConfigurationMissingField {
+        return getStringAttribute("qtdoc_ftp_username");
+    }
+
+    public String getQtDocFtpPassword() throws ConfigurationMissingField {
+        return getStringAttribute("qtdoc_ftp_password");
+    }
 }
