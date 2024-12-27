@@ -1198,7 +1198,7 @@ public class QDocFixHandler {
             }
 
             Matcher matches = regex.matcher(fileContents);
-            if (matches.matches()) {
+            if (matches.find()) {
                 fileContents = matches.replaceAll(replacement);
                 nFilesRewritten += 1;
             }
@@ -1242,7 +1242,7 @@ public class QDocFixHandler {
             }
 
             Matcher matches = regex.matcher(fileContents);
-            if (matches.matches()) {
+            if (matches.find()) {
                 fileContents = matches.replaceAll(replacement);
                 nFilesRewritten += 1;
             }
