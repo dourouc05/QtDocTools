@@ -62,7 +62,7 @@ public class QDocFixHandler {
             // More generic! Before https://codereview.qt-project.org/c/qt/qttools/+/527899.
             {
                 Pattern regex = Pattern.compile(
-                        "<db:para><db:para>(.*) is part of <db:simplelist>(.*)</db:simplelist></db:para>\n" +
+                        "<db:para><db:para>(.*) is part of <db:simplelist>(.*)</db:simplelist></db:para>\\R" +
                         "</db:para>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -132,7 +132,7 @@ public class QDocFixHandler {
             // Only if both IDs coincide! Otherwise, it's an alias that's perfectly allowed.
             // Happily, Java regexes allow back-references to groups!
             {
-                Pattern regex = Pattern.compile("<db:anchor xml:id=\"(.*)\"/>\n<db:section xml:id=\"\\1\">");
+                Pattern regex = Pattern.compile("<db:anchor xml:id=\"(.*)\"/>\\R<db:section xml:id=\"\\1\">");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
                     hasMatched = true;
@@ -188,7 +188,7 @@ public class QDocFixHandler {
             // </db:article>
             {
                 Pattern regex = Pattern.compile(
-                        "</db:abstract>\n</db:info>\n</db:article>");
+                        "</db:abstract>\\R</db:info>\\R</db:article>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
                     hasMatched = true;
@@ -217,7 +217,7 @@ public class QDocFixHandler {
             // https://bugreports.qt.io/browse/QTBUG-120457
             {
                 Pattern regex = Pattern.compile(
-                        "</db:itemizedlist>\n</db:td>\n<db:tr>\n<db:td>\n<db:para>");
+                        "</db:itemizedlist>\\R</db:td>\\R<db:tr>\\R<db:td>\\R<db:para>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
                     hasMatched = true;
@@ -227,7 +227,7 @@ public class QDocFixHandler {
             }
             {
                 Pattern regex = Pattern.compile(
-                        "</db:tr>\n</db:tr>\n<db:para>(.*)</db:para>\n</db:informaltable>\n<db:section");
+                        "</db:tr>\\R</db:tr>\\R<db:para>(.*)</db:para>\\R</db:informaltable>\\R<db:section");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
                     hasMatched = true;
@@ -247,7 +247,7 @@ public class QDocFixHandler {
             // https://codereview.qt-project.org/c/qt/qttools/+/527900
             if (filePath.toString().contains("overviews.xml") || filePath.toString().contains("activeqt-tools.xml")) {
                 Pattern regex = Pattern.compile(
-                        "<db:variablelist role=\"(.*)\">\n<db:listitem>");
+                        "<db:variablelist role=\"(.*)\">\\R<db:listitem>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
                     hasMatched = true;
@@ -379,21 +379,21 @@ public class QDocFixHandler {
             // https://codereview.qt-project.org/c/qt/qtbase/+/613813
             if (filePath.toString().contains("qcombobox.xml")) {
                 Pattern regex = Pattern.compile(
-                        "<db:td>\n" +
-                                "<db:para><db:inlinemediaobject>\n" +
-                                "<db:imageobject>\n" +
-                                "<db:imagedata fileref=\"images/collapsed_combobox.png\"/>\n" +
-                                "</db:imageobject>\n" +
-                                "</db:inlinemediaobject></db:para>\n" +
-                                "<db:title>Collapsed QCombobox</db:title>\n" +
-                                "</db:td>\n" +
-                                "<db:td>\n" +
-                                "<db:para><db:inlinemediaobject>\n" +
-                                "<db:imageobject>\n" +
-                                "<db:imagedata fileref=\"images/expanded_combobox.png\"/>\n" +
-                                "</db:imageobject>\n" +
-                                "</db:inlinemediaobject></db:para>\n" +
-                                "<db:title>Expanded QCombobox</db:title>\n" +
+                        "<db:td>\\R" +
+                                "<db:para><db:inlinemediaobject>\\R" +
+                                "<db:imageobject>\\R" +
+                                "<db:imagedata fileref=\"images/collapsed_combobox.png\"/>\\R" +
+                                "</db:imageobject>\\R" +
+                                "</db:inlinemediaobject></db:para>\\R" +
+                                "<db:title>Collapsed QCombobox</db:title>\\R" +
+                                "</db:td>\\R" +
+                                "<db:td>\\R" +
+                                "<db:para><db:inlinemediaobject>\\R" +
+                                "<db:imageobject>\\R" +
+                                "<db:imagedata fileref=\"images/expanded_combobox.png\"/>\\R" +
+                                "</db:imageobject>\\R" +
+                                "</db:inlinemediaobject></db:para>\\R" +
+                                "<db:title>Expanded QCombobox</db:title>\\R" +
                                 "</db:td>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -443,7 +443,7 @@ public class QDocFixHandler {
                 if (matches.find()) {
                     hasMatched = true;
                     fileContents = matches.replaceAll("<db:section xml:id=\"additional-information\"><db:title>Additional Information</db:title><db:para>");
-                    fileContents = fileContents.replaceAll("</db:variablelist>\n</db:article>", "</db:variablelist>\n</db:section>\n</db:article>");
+                    fileContents = fileContents.replaceAll("</db:variablelist>\\R</db:article>", "</db:variablelist>\n</db:section>\n</db:article>");
                 }
             }
 
@@ -466,13 +466,13 @@ public class QDocFixHandler {
             //            </table></div>]]></db:programlisting>
             // </db:blockquote>
             if (filePath.toString().contains("12-0-qdoc-commands-miscellaneous.xml")) {
-                Pattern regex = Pattern.compile("        <blockquote>\n" +
-                        "        <h1 class=\"title\">Foo Namespace</h1>\n" +
-                        "        <p>A namespace. <a>More...</a></p>\n" +
-                        "        <div class=\"table\"><table class=\"alignedsummary\">\n" +
-                        "        <tr><td class=\"memItemLeft rightAlign topAlign\"> Header:</td><td class=\"memItemRight bottomAlign\"> <span class=\"preprocessor\">#include &lt;Bar&gt;</span></td></tr>\n" +
-                        "        <tr><td class=\"memItemLeft rightAlign topAlign\"> CMake:</td><td class=\"memItemRight bottomAlign\"> find_package\\(Qt6 REQUIRED COMPONENTS Baz\\)</td></tr>\n" +
-                        "        </table></div>\n" +
+                Pattern regex = Pattern.compile("        <blockquote>\\R" +
+                        "        <h1 class=\"title\">Foo Namespace</h1>\\R" +
+                        "        <p>A namespace. <a>More...</a></p>\\R" +
+                        "        <div class=\"table\"><table class=\"alignedsummary\">\\R" +
+                        "        <tr><td class=\"memItemLeft rightAlign topAlign\"> Header:</td><td class=\"memItemRight bottomAlign\"> <span class=\"preprocessor\">#include &lt;Bar&gt;</span></td></tr>\\R" +
+                        "        <tr><td class=\"memItemLeft rightAlign topAlign\"> CMake:</td><td class=\"memItemRight bottomAlign\"> find_package\\(Qt6 REQUIRED COMPONENTS Baz\\)</td></tr>\\R" +
+                        "        </table></div>\\R" +
                         "        </blockquote>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -562,23 +562,23 @@ public class QDocFixHandler {
             // are quite hard, because the rest of the list is messed up.
             // https://codereview.qt-project.org/c/qt/qtbase/+/613771
             if (filePath.toString().contains("porting-to-ios.xml")) {
-                Pattern regex = Pattern.compile("<db:section xml:id=\"using-cmake\">\n" +
-                        "<db:title>Using CMake</db:title>\n" +
-                        "<db:programlisting language=\"cpp\" role=\"bad\">find_package(Qt6 REQUIRED COMPONENTS Multimedia)\n" +
-                        "target_link_libraries(my_project PRIVATE Qt6::Multimedia)\n" +
-                        "</db:programlisting>\n" +
-                        "</db:section>\n" +
-                        "<db:section xml:id=\"using-qmake\">\n" +
-                        "<db:title>Using qmake</db:title>\n" +
-                        "<db:programlisting language=\"cpp\" role=\"bad\">QT += multimedia\n" +
-                        "</db:programlisting>\n" +
-                        "<db:para>In Qt for iOS, everything is compiled statically and placed into the application bundle. The applications are &quot;sandboxed&quot; inside their bundles and cannot make use of shared object files. Because of this, also the plugins used by the Qt modules need to be statically linked. To do this, define the required plugins using the <db:link xlink:href=\"qmake-variable-reference.xml#qtplugin\">QTPLUGIN</db:link> variable.</db:para>\n" +
-                        "</db:section>\n" +
-                        "<db:listitem>\n" +
-                        "<db:para>Save the changes to your project and run the application.</db:para>\n" +
-                        "</db:listitem>\n" +
-                        "</db:listitem>\n" +
-                        "<db:para>Qt Creator deploys your application on the iOS device, if the device is detected and configured correctly in Xcode. It is also possible to test the application in iOS Simulator. For more information, see <db:link xlink:href=\"http://doc.qt.io/qtcreator/creator-developing-ios.html\">Connecting iOS Devices</db:link>.</db:para>\n" +
+                Pattern regex = Pattern.compile("<db:section xml:id=\"using-cmake\">\\R" +
+                        "<db:title>Using CMake</db:title>\\R" +
+                        "<db:programlisting language=\"cpp\" role=\"bad\">find_package(Qt6 REQUIRED COMPONENTS Multimedia)\\R" +
+                        "target_link_libraries(my_project PRIVATE Qt6::Multimedia)\\R" +
+                        "</db:programlisting>\\R" +
+                        "</db:section>\\R" +
+                        "<db:section xml:id=\"using-qmake\">\\R" +
+                        "<db:title>Using qmake</db:title>\\R" +
+                        "<db:programlisting language=\"cpp\" role=\"bad\">QT += multimedia\\R" +
+                        "</db:programlisting>\\R" +
+                        "<db:para>In Qt for iOS, everything is compiled statically and placed into the application bundle. The applications are &quot;sandboxed&quot; inside their bundles and cannot make use of shared object files. Because of this, also the plugins used by the Qt modules need to be statically linked. To do this, define the required plugins using the <db:link xlink:href=\"qmake-variable-reference.xml#qtplugin\">QTPLUGIN</db:link> variable.</db:para>\\R" +
+                        "</db:section>\\R" +
+                        "<db:listitem>\\R" +
+                        "<db:para>Save the changes to your project and run the application.</db:para>\\R" +
+                        "</db:listitem>\\R" +
+                        "</db:listitem>\\R" +
+                        "<db:para>Qt Creator deploys your application on the iOS device, if the device is detected and configured correctly in Xcode. It is also possible to test the application in iOS Simulator. For more information, see <db:link xlink:href=\"http://doc.qt.io/qtcreator/creator-developing-ios.html\">Connecting iOS Devices</db:link>.</db:para>\\R" +
                         "</db:orderedlist>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -604,30 +604,30 @@ public class QDocFixHandler {
                 }
             }
             if (filePath.toString().contains("qtquickcontrols-customize.xml")) {
-                Pattern regex = Pattern.compile("<db:section xml:id=\"using-cmake\">\n" +
-                        "<db:title>Using CMake</db:title>\n" +
-                        "<db:programlisting language=\"cpp\" role=\"bad\">qt_add_qml_module(ACoolItem\n" +
-                        "    URI MyItems\n" +
-                        "    VERSION 1.0\n" +
-                        "    SOURCES\n" +
-                        "        acoolcppitem.cpp acoolcppitem.h\n" +
-                        ")\n" +
-                        "</db:programlisting>\n" +
-                        "</db:section>\n" +
-                        "<db:section xml:id=\"using-qmake\">\n" +
-                        "<db:title>Using QMake</db:title>\n" +
-                        "<db:programlisting language=\"cpp\">CONFIG += qmltypes\n" +
-                        "QML_IMPORT_NAME = MyItems\n" +
-                        "QML_IMPORT_MAJOR_VERSION = 1\n" +
-                        "</db:programlisting>\n" +
-                        "<db:para>If the header the class is declared in is not accessible from your project's include path, you may have to amend the include path so that the generated registration code can be compiled.</db:para>\n" +
-                        "<db:programlisting language=\"cpp\">INCLUDEPATH += MyItems\n" +
-                        "</db:programlisting>\n" +
-                        "<db:para>See <db:link xlink:href=\"qtqml-cppintegration-definetypes.xml\">Defining QML Types from C++</db:link> and <db:link xlink:href=\"cmake-build-qml-application.xml\">Building a QML application</db:link> for more information.</db:para>\n" +
-                        "</db:section>\n" +
-                        "<db:listitem>\n" +
-                        "<db:para>If the style that uses the type is one of many styles used by an application, consider putting each style into a separate module. The modules will then be loaded on demand.</db:para>\n" +
-                        "</db:listitem>\n" +
+                Pattern regex = Pattern.compile("<db:section xml:id=\"using-cmake\">\\R" +
+                        "<db:title>Using CMake</db:title>\\R" +
+                        "<db:programlisting language=\"cpp\" role=\"bad\">qt_add_qml_module(ACoolItem\\R" +
+                        "    URI MyItems\\R" +
+                        "    VERSION 1.0\\R" +
+                        "    SOURCES\\R" +
+                        "        acoolcppitem.cpp acoolcppitem.h\\R" +
+                        ")\\R" +
+                        "</db:programlisting>\\R" +
+                        "</db:section>\\R" +
+                        "<db:section xml:id=\"using-qmake\">\\R" +
+                        "<db:title>Using QMake</db:title>\\R" +
+                        "<db:programlisting language=\"cpp\">CONFIG += qmltypes\\R" +
+                        "QML_IMPORT_NAME = MyItems\\R" +
+                        "QML_IMPORT_MAJOR_VERSION = 1\\R" +
+                        "</db:programlisting>\\R" +
+                        "<db:para>If the header the class is declared in is not accessible from your project's include path, you may have to amend the include path so that the generated registration code can be compiled.</db:para>\\R" +
+                        "<db:programlisting language=\"cpp\">INCLUDEPATH += MyItems\\R" +
+                        "</db:programlisting>\\R" +
+                        "<db:para>See <db:link xlink:href=\"qtqml-cppintegration-definetypes.xml\">Defining QML Types from C++</db:link> and <db:link xlink:href=\"cmake-build-qml-application.xml\">Building a QML application</db:link> for more information.</db:para>\\R" +
+                        "</db:section>\\R" +
+                        "<db:listitem>\\R" +
+                        "<db:para>If the style that uses the type is one of many styles used by an application, consider putting each style into a separate module. The modules will then be loaded on demand.</db:para>\\R" +
+                        "</db:listitem>\\R" +
                         "</db:listitem>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -662,12 +662,12 @@ public class QDocFixHandler {
 
             // https://codereview.qt-project.org/c/qt/qtdeclarative/+/613814
             if (filePath.toString().contains("qtquickcontrols-universal.xml")) {
-                Pattern regex = Pattern.compile("<db:imagedata fileref=\"images/qtquickcontrols-universal-foreground.png\"/>\n" +
-                        "</db:imageobject>\n" +
-                        "</db:mediaobject>\n" +
-                        "</db:td>\n" +
-                        "</db:tr>\n" +
-                        "</db:informaltable>\n" +
+                Pattern regex = Pattern.compile("<db:imagedata fileref=\"images/qtquickcontrols-universal-foreground.png\"/>\\R" +
+                        "</db:imageobject>\\R" +
+                        "</db:mediaobject>\\R" +
+                        "</db:td>\\R" +
+                        "</db:tr>\\R" +
+                        "</db:informaltable>\\R" +
                         "<db:section xml:id=\"universal-theme-attached-prop\"><db:title>Universal.theme : enumeration</db:title><db:fieldsynopsis><db:type>enumeration</db:type><db:varname>Universal.theme</db:varname></db:fieldsynopsis>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -701,8 +701,8 @@ public class QDocFixHandler {
             // ->
             // (Shouldn't be present.)
             if (filePath.toString().contains("gettingstarted.xml")) {
-                Pattern regex = Pattern.compile("I5jasWrsxT0.jpg\" title=\"Click to play in a browser\" /></a>\n" +
-                        "</iframe></div>\n");
+                Pattern regex = Pattern.compile("I5jasWrsxT0.jpg\" title=\"Click to play in a browser\" /></a>\\R" +
+                        "</iframe></div>\\R");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
                     hasMatched = true;
@@ -710,8 +710,8 @@ public class QDocFixHandler {
                 }
             }
             if (filePath.toString().contains("qtquick-modelviewsdata-cppmodels.xml")) {
-                Pattern regex = Pattern.compile("9BcAYDlpuT8.jpg\" title=\"Click to play in a browser\" /></a>\n" +
-                        "</iframe></div>\n");
+                Pattern regex = Pattern.compile("9BcAYDlpuT8.jpg\" title=\"Click to play in a browser\" /></a>\\R" +
+                        "</iframe></div>\\R");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
                     hasMatched = true;
@@ -726,10 +726,10 @@ public class QDocFixHandler {
             // Other nearby problems: paragraphs within list item when they should be outside; definition list as a list
             // of intertwined words and definitions.
             if (filePath.toString().contains("highdpi.xml")) {
-                Pattern regex = Pattern.compile("</db:listitem>\n" +
-                        "<db:section xml:id=\"glossary\">\n" +
-                        "<db:title>Glossary</db:title>\n" +
-                        "</db:section>\n" +
+                Pattern regex = Pattern.compile("</db:listitem>\\R" +
+                        "<db:section xml:id=\"glossary\">\\R" +
+                        "<db:title>Glossary</db:title>\\R" +
+                        "</db:section>\\R" +
                         "<db:listitem>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -753,15 +753,15 @@ public class QDocFixHandler {
 
             // Raw HTML.
             if (filePath.toString().contains("qt5-intro.xml")) {
-                Pattern regex = Pattern.compile("    <div class=\"table\">\n" +
-                        "     <table style=\"background:transparent; border: none\">\n" +
-                        "      <tr><td style=\"width:50%; border: none; vertical-align: top\">\n" +
-                        "    <db:para>Qt now comes with production-ready ports for Android, iOS, and WinRT. Extensive work has gone into these platform ports, which now extend Qt’s multi-platform promise to cover desktop, embedded, and mobile platforms.</db:para>\n" +
-                        "     <br>\n" +
-                        "    <db:para>With full support for Android, iOS, and WinRT, Qt is a great solution for targeting the mobile markets with a single codebase. It is fast and easy to bring existing desktop or embedded application to mobile, by simply recompiling it.</db:para>\n" +
-                        "     <br>\n" +
-                        "    <db:para>You can install several demo applications that showcase the power of Qt on these mobile platforms. Here is a small list of such applications:</db:para>\n" +
-                        "     <br>\n" +
+                Pattern regex = Pattern.compile("    <div class=\"table\">\\R" +
+                        "     <table style=\"background:transparent; border: none\">\\R" +
+                        "      <tr><td style=\"width:50%; border: none; vertical-align: top\">\\R" +
+                        "    <db:para>Qt now comes with production-ready ports for Android, iOS, and WinRT. Extensive work has gone into these platform ports, which now extend Qt’s multi-platform promise to cover desktop, embedded, and mobile platforms.</db:para>\\R" +
+                        "     <br>\\R" +
+                        "    <db:para>With full support for Android, iOS, and WinRT, Qt is a great solution for targeting the mobile markets with a single codebase. It is fast and easy to bring existing desktop or embedded application to mobile, by simply recompiling it.</db:para>\\R" +
+                        "     <br>\\R" +
+                        "    <db:para>You can install several demo applications that showcase the power of Qt on these mobile platforms. Here is a small list of such applications:</db:para>\\R" +
+                        "     <br>\\R" +
                         "    <db:para>Demo applications:</db:para>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -777,7 +777,7 @@ public class QDocFixHandler {
             }
             if (filePath.toString().contains("qt5-intro.xml")) {
                 // The pattern ends with <db:figure> for disambiguation.
-                Pattern regex = Pattern.compile("      </db:td><td style=\"width:50%; vertical-align:top;border: none;\">\n" +
+                Pattern regex = Pattern.compile("      </db:td><td style=\"width:50%; vertical-align:top;border: none;\">\\R" +
                         "    <db:figure>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -789,9 +789,9 @@ public class QDocFixHandler {
             }
             if (filePath.toString().contains("qt5-intro.xml")) {
                 // The pattern ends with <db:figure> for disambiguation.
-                Pattern regex = Pattern.compile("    <div class=\"table\">\n" +
-                        "     <table style=\"background:transparent; border: none\">\n" +
-                        "      <tr><td style=\"width:50%; vertical-align:top;border: none;\">\n" +
+                Pattern regex = Pattern.compile("    <div class=\"table\">\\R" +
+                        "     <table style=\"background:transparent; border: none\">\\R" +
+                        "      <tr><td style=\"width:50%; vertical-align:top;border: none;\">\\R" +
                         "    <db:figure>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -803,10 +803,10 @@ public class QDocFixHandler {
                 }
             }
             if (filePath.toString().contains("qt5-intro.xml")) {
-                Pattern regex = Pattern.compile("      </db:td><td style=\"width:50%; border: none; vertical-align: top\">\n" +
-                        "    <db:para>Qt 5 uses an OpenGL-based scene graph to accelerate the graphics of Qt Quick, making it possible to do visually appealing user interfaces with animations, impressive graphical effects and particle systems, even on the constrained hardware environments of mobile and embedded devices.</db:para>\n" +
-                        "     <br>\n" +
-                        "    <db:para>The benefits of this architectural change in the rendering engine are well demonstrated by the following projects:</db:para>\n" +
+                Pattern regex = Pattern.compile("      </db:td><td style=\"width:50%; border: none; vertical-align: top\">\\R" +
+                        "    <db:para>Qt 5 uses an OpenGL-based scene graph to accelerate the graphics of Qt Quick, making it possible to do visually appealing user interfaces with animations, impressive graphical effects and particle systems, even on the constrained hardware environments of mobile and embedded devices.</db:para>\\R" +
+                        "     <br>\\R" +
+                        "    <db:para>The benefits of this architectural change in the rendering engine are well demonstrated by the following projects:</db:para>\\R" +
                         "<db:itemizedlist>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -819,10 +819,10 @@ public class QDocFixHandler {
                 }
             }
             if (filePath.toString().contains("qt5-intro.xml")) {
-                Pattern regex = Pattern.compile("      </db:td><td style=\"width:50%; border: none; vertical-align: top\">\n" +
-                        "    <db:para>Qt 5 uses an OpenGL-based scene graph to accelerate the graphics of Qt Quick, making it possible to do visually appealing user interfaces with animations, impressive graphical effects and particle systems, even on the constrained hardware environments of mobile and embedded devices.</db:para>\n" +
-                        "     <br>\n" +
-                        "    <db:para>The benefits of this architectural change in the rendering engine are well demonstrated by the following projects:</db:para>\n" +
+                Pattern regex = Pattern.compile("      </db:td><td style=\"width:50%; border: none; vertical-align: top\">\\R" +
+                        "    <db:para>Qt 5 uses an OpenGL-based scene graph to accelerate the graphics of Qt Quick, making it possible to do visually appealing user interfaces with animations, impressive graphical effects and particle systems, even on the constrained hardware environments of mobile and embedded devices.</db:para>\\R" +
+                        "     <br>\\R" +
+                        "    <db:para>The benefits of this architectural change in the rendering engine are well demonstrated by the following projects:</db:para>\\R" +
                         "<db:itemizedlist>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -835,10 +835,10 @@ public class QDocFixHandler {
                 }
             }
             if (filePath.toString().contains("qt5-intro.xml")) {
-                Pattern regex = Pattern.compile("    <div class=\"table\">\n" +
-                        "     <table style=\"background:transparent; border: none;\">\n" +
-                        "      <tr><td style=\"width:50%; vertical-align:top;\">\n" +
-                        "    <db:para><db:link xlink:href=\"qtquick-index.xml\">Qt Quick</db:link> provides the necessary infrastructure to develop QML applications. The latest version (v2.0) of this technology also introduces a set of new C++ classes as a replacement for the QDeclarative* equivalents in Qt Quick 1. New features in Qt Quick include:</db:para>\n" +
+                Pattern regex = Pattern.compile("    <div class=\"table\">\\R" +
+                        "     <table style=\"background:transparent; border: none;\">\\R" +
+                        "      <tr><td style=\"width:50%; vertical-align:top;\">\\R" +
+                        "    <db:para><db:link xlink:href=\"qtquick-index.xml\">Qt Quick</db:link> provides the necessary infrastructure to develop QML applications. The latest version (v2.0) of this technology also introduces a set of new C++ classes as a replacement for the QDeclarative* equivalents in Qt Quick 1. New features in Qt Quick include:</db:para>\\R" +
                         "<db:itemizedlist>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -850,9 +850,9 @@ public class QDocFixHandler {
                 }
             }
             if (filePath.toString().contains("qt5-intro.xml")) {
-                Pattern regex = Pattern.compile("</db:itemizedlist>\n" +
-                        "      </db:td><td style=\"width:50%; vertical-align:top;border: none;\">\n" +
-                        "    <db:figure>\n" +
+                Pattern regex = Pattern.compile("</db:itemizedlist>\\R" +
+                        "      </db:td><td style=\"width:50%; vertical-align:top;border: none;\">\\R" +
+                        "    <db:figure>\\R" +
                         "<db:title>Qt Quick's <db:link xlink:href=\"qtquick-particles-qmlmodule.xml\">Particle System</db:link></db:title>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -864,9 +864,9 @@ public class QDocFixHandler {
                 }
             }
             if (filePath.toString().contains("qt5-intro.xml")) {
-                Pattern regex = Pattern.compile("      </db:td></db:tr><tr><td style=\"width:50%; vertical-align:top;border: none;\">\n" +
-                        "    <db:para>The <db:link xlink:href=\"qtgraphicaleffects-index.xml\">Qt Graphical Effects</db:link> module provides a number of ready-made effects for use in Qt Quick applications, including soft drop shadow, blur, glow and colorize.</db:para>\n" +
-                        "      </td><td style=\"width:50%; vertical-align:top;border: none;\">\n" +
+                Pattern regex = Pattern.compile("      </db:td></db:tr><tr><td style=\"width:50%; vertical-align:top;border: none;\">\\R" +
+                        "    <db:para>The <db:link xlink:href=\"qtgraphicaleffects-index.xml\">Qt Graphical Effects</db:link> module provides a number of ready-made effects for use in Qt Quick applications, including soft drop shadow, blur, glow and colorize.</db:para>\\R" +
+                        "      </td><td style=\"width:50%; vertical-align:top;border: none;\">\\R" +
                         "    <db:figure>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -882,14 +882,14 @@ public class QDocFixHandler {
                 }
             }
             if (filePath.toString().contains("qt5-intro.xml")) {
-                Pattern regex = Pattern.compile("      </db:td></db:tr>\n" +
-                        "     </db:informaltable>\n" +
-                        "    </db:section>\n" +
-                        "<db:section xml:id=\"designing-ui-made-simpler\">\n" +
-                        "<db:title>Designing UI Made Simpler</db:title>\n" +
-                        "    <div class=\"table\">\n" +
-                        "     <table style=\"background:transparent; border: none\">\n" +
-                        "      <tr><td style=\"width:50%; border: none; vertical-align: top\">\n" +
+                Pattern regex = Pattern.compile("      </db:td></db:tr>\\R" +
+                        "     </db:informaltable>\\R" +
+                        "    </db:section>\\R" +
+                        "<db:section xml:id=\"designing-ui-made-simpler\">\\R" +
+                        "<db:title>Designing UI Made Simpler</db:title>\\R" +
+                        "    <div class=\"table\">\\R" +
+                        "     <table style=\"background:transparent; border: none\">\\R" +
+                        "      <tr><td style=\"width:50%; border: none; vertical-align: top\">\\R" +
                         "    <db:figure>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -906,12 +906,12 @@ public class QDocFixHandler {
                 }
             }
             if (filePath.toString().contains("qt5-intro.xml")) {
-                Pattern regex = Pattern.compile("      </db:td><td style=\"width:50%; border: none; vertical-align: top\">\n" +
-                        "    <db:para>UI designing can be time consuming if there are not enough tools to help. Qt Quick reduces the effort considerably compared to the traditional native (C or C++) approach, especially if the <db:link xlink:href=\"qtquickcontrols-index.xml\">Qt Quick Controls</db:link> or <db:link xlink:href=\"qtquickcontrols-index.xml\">Qt Quick Controls 2</db:link> and <db:link xlink:href=\"qtquicklayouts-index.xml\">Qt Quick Layouts</db:link> modules are used. These modules provide ready-to-use UI controls and layouts to enable faster application development with less code. For a comparison of the two sets of controls, see <db:link xlink:href=\"\">Differences between Qt Quick Controls</db:link>.</db:para>\n" +
-                        "      <br>\n" +
-                        "    <db:para>Qt Quick Controls and Qt Quick Layouts provide a vast set of UI controls ranging from the most basic text field and button to the more complex stack view and tumbler. The controls are also made available in <db:link xlink:href=\"\">Qt Quick Designer</db:link>.</db:para>\n" +
-                        "      </td></db:tr>\n" +
-                        "     </db:informaltable>\n" +
+                Pattern regex = Pattern.compile("      </db:td><td style=\"width:50%; border: none; vertical-align: top\">\\R" +
+                        "    <db:para>UI designing can be time consuming if there are not enough tools to help. Qt Quick reduces the effort considerably compared to the traditional native (C or C++) approach, especially if the <db:link xlink:href=\"qtquickcontrols-index.xml\">Qt Quick Controls</db:link> or <db:link xlink:href=\"qtquickcontrols-index.xml\">Qt Quick Controls 2</db:link> and <db:link xlink:href=\"qtquicklayouts-index.xml\">Qt Quick Layouts</db:link> modules are used. These modules provide ready-to-use UI controls and layouts to enable faster application development with less code. For a comparison of the two sets of controls, see <db:link xlink:href=\"\">Differences between Qt Quick Controls</db:link>.</db:para>\\R" +
+                        "      <br>\\R" +
+                        "    <db:para>Qt Quick Controls and Qt Quick Layouts provide a vast set of UI controls ranging from the most basic text field and button to the more complex stack view and tumbler. The controls are also made available in <db:link xlink:href=\"\">Qt Quick Designer</db:link>.</db:para>\\R" +
+                        "      </td></db:tr>\\R" +
+                        "     </db:informaltable>\\R" +
                         "    </db:section>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -928,10 +928,10 @@ public class QDocFixHandler {
             }
             if (filePath.toString().contains("qt5-intro.xml")) {
                 // title at the end of the pattern for disambiguation.
-                Pattern regex = Pattern.compile("    <div class=\"table\">\n" +
-                        "     <table style=\"background:transparent; border: none\">\n" +
-                        "      <tr><td style=\"width:50%; vertical-align:top;border: none;\">\n" +
-                        "    <db:figure>\n" +
+                Pattern regex = Pattern.compile("    <div class=\"table\">\\R" +
+                        "     <table style=\"background:transparent; border: none\">\\R" +
+                        "      <tr><td style=\"width:50%; vertical-align:top;border: none;\">\\R" +
+                        "    <db:figure>\\R" +
                         "<db:title>Accelerating SVG image</db:title>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -945,8 +945,8 @@ public class QDocFixHandler {
             }
             if (filePath.toString().contains("qt5-intro.xml")) {
                 // title at the end of the pattern for disambiguation.
-                Pattern regex = Pattern.compile("      </db:td><td style=\"width:50%; vertical-align:top;border: none;\">\n" +
-                        "    <db:figure>\n" +
+                Pattern regex = Pattern.compile("      </db:td><td style=\"width:50%; vertical-align:top;border: none;\">\\R" +
+                        "    <db:figure>\\R" +
                         "<db:title>Location-based weather information</db:title>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -958,10 +958,10 @@ public class QDocFixHandler {
             }
             if (filePath.toString().contains("qt5-intro.xml")) {
                 // title at the end of the pattern for disambiguation.
-                Pattern regex = Pattern.compile("    <div class=\"table\">\n" +
-                        "     <table style=\"background:transparent; border: none\">\n" +
-                        "      <tr><td colspan=2 style=\"width:50%; border: none; vertical-align: top\">\n" +
-                        "    <db:figure>\n" +
+                Pattern regex = Pattern.compile("    <div class=\"table\">\\R" +
+                        "     <table style=\"background:transparent; border: none\">\\R" +
+                        "      <tr><td colspan=2 style=\"width:50%; border: none; vertical-align: top\">\\R" +
+                        "    <db:figure>\\R" +
                         "<db:title>Qt Quick nano browser</db:title>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -975,7 +975,7 @@ public class QDocFixHandler {
             }
             if (filePath.toString().contains("qt5-intro.xml")) {
                 // link at the end of the pattern for disambiguation.
-                Pattern regex = Pattern.compile("      </td><td style=\"width:50%; border: none; vertical-align: top\">\n" +
+                Pattern regex = Pattern.compile("      </td><td style=\"width:50%; border: none; vertical-align: top\">\\R" +
                         "    <db:para><db:link xlink:href=\"qtwebengine-index.xml\">Qt WebEngine</db:link>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -986,10 +986,10 @@ public class QDocFixHandler {
                 }
             }
             if (filePath.toString().contains("qt5-intro.xml")) {
-                Pattern regex = Pattern.compile("     <br>\n" +
-                        "    <db:para>This Chromium-based Web Engine support in Qt is complemented with <db:link xlink:href=\"qtwebchannel-index.xml\">Qt WebChannel</db:link>, which bridges the gap between QML/C++ and HTML/JavaScript. It enables sharing QObjects from QML/C++ with HTML/JavaScript-based clients.</db:para>\n" +
-                        "      </db:td></db:tr>\n" +
-                        "     </db:informaltable>\n" +
+                Pattern regex = Pattern.compile("     <br>\\R" +
+                        "    <db:para>This Chromium-based Web Engine support in Qt is complemented with <db:link xlink:href=\"qtwebchannel-index.xml\">Qt WebChannel</db:link>, which bridges the gap between QML/C++ and HTML/JavaScript. It enables sharing QObjects from QML/C++ with HTML/JavaScript-based clients.</db:para>\\R" +
+                        "      </db:td></db:tr>\\R" +
+                        "     </db:informaltable>\\R" +
                         "    </db:section>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -1003,10 +1003,10 @@ public class QDocFixHandler {
             }
             if (filePath.toString().contains("qt5-intro.xml")) {
                 // link at the end of the pattern for disambiguation.
-                Pattern regex = Pattern.compile("<db:title>Multimedia</db:title>\n" +
-                        "    <div class=\"table\">\n" +
-                        "     <table style=\"background:transparent; border: none\">\n" +
-                        "      <tr><td colspan=2 style=\"width:50%; border: none; vertical-align: top\">\n" +
+                Pattern regex = Pattern.compile("<db:title>Multimedia</db:title>\\R" +
+                        "    <div class=\"table\">\\R" +
+                        "     <table style=\"background:transparent; border: none\">\\R" +
+                        "      <tr><td colspan=2 style=\"width:50%; border: none; vertical-align: top\">\\R" +
                         "    <db:para><db:link xlink:href=\"qtmultimedia-index.xml\">Qt Multimedia</db:link>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -1019,8 +1019,8 @@ public class QDocFixHandler {
             }
             if (filePath.toString().contains("qt5-intro.xml")) {
                 // title at the end of the pattern for disambiguation.
-                Pattern regex = Pattern.compile("      </db:td><td style=\"width:50%; border: none;\">\n" +
-                        "    <db:figure>\n" +
+                Pattern regex = Pattern.compile("      </db:td><td style=\"width:50%; border: none;\">\\R" +
+                        "    <db:figure>\\R" +
                         "<db:title>Video embedded into a Qt Quick application with a displacement effect</db:title>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -1033,10 +1033,10 @@ public class QDocFixHandler {
             }
             if (filePath.toString().contains("qt5-intro.xml")) {
                 // title at the end of the pattern for disambiguation.
-                Pattern regex = Pattern.compile("    <div class=\"table\">\n" +
-                        "     <table style=\"background:transparent; border: none\">\n" +
-                        "      <tr><td colspan=2 style=\"width:50%; border: none; vertical-align: top\">\n" +
-                        "    <db:figure>\n" +
+                Pattern regex = Pattern.compile("    <div class=\"table\">\\R" +
+                        "     <table style=\"background:transparent; border: none\">\\R" +
+                        "      <tr><td colspan=2 style=\"width:50%; border: none; vertical-align: top\">\\R" +
+                        "    <db:figure>\\R" +
                         "<db:title>Screen capture of a widget application.</db:title>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -1049,8 +1049,8 @@ public class QDocFixHandler {
                 }
             }
             if (filePath.toString().contains("qt5-intro.xml")) {
-                Pattern regex = Pattern.compile("      </td></db:tr>\n" +
-                        "     </db:informaltable>\n" +
+                Pattern regex = Pattern.compile("      </td></db:tr>\\R" +
+                        "     </db:informaltable>\\R" +
                         "    <db:para>Designing the UI for widget-based applications can be quick with <db:link xlink:href=\"qtdesigner-manual.xml\">Qt Designer</db:link>.</db:para>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -1062,11 +1062,11 @@ public class QDocFixHandler {
                 }
             }
             if (filePath.toString().contains("qt5-intro.xml")) {
-                Pattern regex = Pattern.compile("    <div class=\"table\">\n" +
-                        "     <table style=\"background:transparent; border: none\">\n" +
-                        "      <tr><td style=\"width:50%; vertical-align:top;border: none;\">\n" +
-                        "    <db:para>In today's world, location and maps information is more widely used, be it to look up nearby restaurants or plan commute to the office. With Qt, it is now possible to cater to these use cases by consuming map data provided by the third-party vendors. The <db:link xlink:href=\"qtlocation-module.xml\">Qt Location</db:link> module provides the APIs and the necessary backend to fetch map data from some of the popular third-party mapping solutions. Here is a snapshot of the demo application running on Android, presenting OpenStreetMap data from <db:link xlink:href=\"http://www.mapquest.com/\">www.mapquest.com</db:link>.</db:para>\n" +
-                        "      </td><td style=\"width:50%; border: none; vertical-align: top\">\n" +
+                Pattern regex = Pattern.compile("    <div class=\"table\">\\R" +
+                        "     <table style=\"background:transparent; border: none\">\\R" +
+                        "      <tr><td style=\"width:50%; vertical-align:top;border: none;\">\\R" +
+                        "    <db:para>In today's world, location and maps information is more widely used, be it to look up nearby restaurants or plan commute to the office. With Qt, it is now possible to cater to these use cases by consuming map data provided by the third-party vendors. The <db:link xlink:href=\"qtlocation-module.xml\">Qt Location</db:link> module provides the APIs and the necessary backend to fetch map data from some of the popular third-party mapping solutions. Here is a snapshot of the demo application running on Android, presenting OpenStreetMap data from <db:link xlink:href=\"http://www.mapquest.com/\">www.mapquest.com</db:link>.</db:para>\\R" +
+                        "      </td><td style=\"width:50%; border: none; vertical-align: top\">\\R" +
                         "    <db:figure>");
                 Matcher matches = regex.matcher(fileContents);
                 if (matches.find()) {
@@ -1176,7 +1176,7 @@ public class QDocFixHandler {
         // </db:abstract>
         // </db:info>
         // Insert the dates just there.
-        Pattern regex = Pattern.compile("</db:abstract>\n</db:info>");
+        Pattern regex = Pattern.compile("</db:abstract>\\R</db:info>");
         String replacement = "</db:abstract>\n<db:pubdate>" + java.time.LocalDate.now() + "</db:pubdate>\n<db:date>" + java.time.LocalDate.now() + "</db:date>\n</db:info>";
 
         int nFiles = 0;
@@ -1220,7 +1220,7 @@ public class QDocFixHandler {
         //            <db:orgname class="corporation">The Qt Company Ltd.</db:orgname>
         //        </db:author>
         //    </db:authorgroup>
-        Pattern regex = Pattern.compile("</db:date>\n</db:info>");
+        Pattern regex = Pattern.compile("</db:date>\\R</db:info>");
         String replacement = "</db:date>\n<db:authorgroup>\n<db:author>\n<db:orgname class=\"corporation\">The Qt Company Ltd.</db:orgname>\n</db:author>\n</db:authorgroup>\n</db:info>";
 
         int nFiles = 0;
