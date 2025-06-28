@@ -56,6 +56,13 @@ public class QDocRunningHandler {
         this.reduceIncludeListSize = reduceIncludeListSize; // TODO: implement when really needed.
         this.cppCompilerIncludes = cppCompilerIncludes;
 
+        if (qdocPath.isEmpty()) {
+            throw new IOException("Path to QDoc empty!");
+        }
+        if (!Paths.get(qdocPath).toFile().exists()) {
+            throw new IOException("Path to QDoc wrong: file " + qdocPath + " does not exist!");
+        }
+
         // TODO: for qtAttributionsScannerPath, qdocPath, test whether you can run these binaries (i.e. they don't
         // merely exist, they have their required shared library accessible)?
 
