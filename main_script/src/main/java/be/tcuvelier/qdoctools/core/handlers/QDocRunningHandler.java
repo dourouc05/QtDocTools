@@ -449,6 +449,9 @@ public class QDocRunningHandler {
 
     public void runQtAttributionsScanner(@NotNull List<Pair<String, Path>> modules)
             throws IOException, InterruptedException {
+        if (qtAttributionsScannerPath.isEmpty()) {
+            throw new IOException("Path to QtAttributionsScanner empty!");
+        }
         if (!new File(qtAttributionsScannerPath).exists()) {
             throw new IOException("Path to QtAttributionsScanner wrong: file " +
                     qtAttributionsScannerPath + " does not exist!");
