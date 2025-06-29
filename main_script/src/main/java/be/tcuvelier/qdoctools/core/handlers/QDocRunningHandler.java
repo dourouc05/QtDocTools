@@ -423,7 +423,9 @@ public class QDocRunningHandler {
         }
         if (commandLength >= 32768) {
             System.out.println("!!> Command and arguments are too long for some platforms! Number of characters: " + commandLength);
-            System.out.println("!!> Think about --reduce-include-list-size");
+            if (!reduceIncludeListSize) {
+                System.out.println("!!> Think about --reduce-include-list-size");
+            }
         }
 
         Process process = pb.start();
