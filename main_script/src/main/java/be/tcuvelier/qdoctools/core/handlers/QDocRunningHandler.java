@@ -60,7 +60,7 @@ public class QDocRunningHandler {
         this.qdocPath = qdocPath; // TODO: either read this from `config` or from `installed`.
         this.qtVersion = qtVersion;
         this.qdocDebug = qdocDebug;
-        this.reduceIncludeListSize = reduceIncludeListSize; // TODO: implement when really needed.
+        this.reduceIncludeListSize = reduceIncludeListSize;
         this.cppCompilerIncludes = cppCompilerIncludes;
 
         // TODO: for qtAttributionsScannerPath, qdocPath, test whether you can run these binaries (i.e. they don't
@@ -547,6 +547,15 @@ public class QDocRunningHandler {
             params.add("-I" + includePath);
         }
         for (String includePath : findIncludes()) {
+            // Filtering when the list is too long: avoid paths that end with a version, avoid private folders.
+            // It would probably better not to generate these paths in the first place, which would mean passing
+            // reduceIncludeListSize around when generating cppCompilerIncludes.
+            if (reduceIncludeListSize) {
+                if (includePath.matches("\\d\\.\\d+(.\\d+)?$") || includePath.endsWith("private")) {
+                    continue;
+                }
+            }
+
             params.add("-I" + includePath);
         }
         ProcessBuilder pb = new ProcessBuilder(params);
