@@ -42,6 +42,13 @@ public class QDocRunningHandler {
         outputFolder = Paths.get(output);
         mainQdocconfPath = outputFolder.resolve("qtdoctools-main.qdocconf");
 
+        if (qdocPath.isEmpty()) {
+            throw new IOException("Path to QDoc empty!");
+        }
+        if (!Paths.get(qdocPath).toFile().exists()) {
+            throw new IOException("Path to QDoc wrong: file " + qdocPath + " does not exist!");
+        }
+
         this.config = config; // TODO: remove or use! (e.g., to determine qdocPath)
         Path qdocContainingFolder = Paths.get(qdocPath).getParent();
         this.qtAttributionsScannerPath = Arrays.stream(
@@ -55,13 +62,6 @@ public class QDocRunningHandler {
         this.qdocDebug = qdocDebug;
         this.reduceIncludeListSize = reduceIncludeListSize; // TODO: implement when really needed.
         this.cppCompilerIncludes = cppCompilerIncludes;
-
-        if (qdocPath.isEmpty()) {
-            throw new IOException("Path to QDoc empty!");
-        }
-        if (!Paths.get(qdocPath).toFile().exists()) {
-            throw new IOException("Path to QDoc wrong: file " + qdocPath + " does not exist!");
-        }
 
         // TODO: for qtAttributionsScannerPath, qdocPath, test whether you can run these binaries (i.e. they don't
         // merely exist, they have their required shared library accessible)?
